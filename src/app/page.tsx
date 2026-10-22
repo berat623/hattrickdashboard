@@ -11,6 +11,7 @@ import { DashboardOverview } from "@/components/DashboardOverview";
 import { EconomyArenaHub } from "@/components/EconomyArenaHub";
 import { TransferScoutHub } from "@/components/TransferScoutHub";
 import { PlayerDetailModal } from "@/components/PlayerDetailModal";
+import { ExpertAITactician } from "@/components/ExpertAITactician";
 import { HattrickConnectModal } from "@/components/HattrickConnectModal";
 import { LoginView } from "@/components/LoginView";
 import {
@@ -418,6 +419,18 @@ export default function Home() {
               <div className="flex flex-col gap-5">
                 {lineup ? (
                   <>
+                    <ExpertAITactician
+                      players={players}
+                      matches={matches}
+                      currentLineup={lineup}
+                      onApplyAILineup={(newLineup, form, tac, att) => {
+                        setLineup(newLineup);
+                        showToast(
+                          `Uzman AI: ${form} (${tac} • ${att}) kadrosu sahaya dizildi!`
+                        );
+                      }}
+                    />
+
                     <FormationSelector
                       currentFormation={lineup.formation}
                       currentTactic={lineup.tactic}
@@ -482,6 +495,7 @@ export default function Home() {
             {activeTab === "matches" && (
               <MatchCenter
                 matches={matches}
+                players={players}
                 activeLineupRatings={lineup?.sectorRatings}
               />
             )}
