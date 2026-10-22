@@ -13,7 +13,6 @@ import { LoginView } from "@/components/LoginView";
 import { SupportedFormation, generateAutoLineup } from "@/lib/algorithms/lineup";
 import { analyzeAndOptimizeTraining } from "@/lib/algorithms/training";
 import { simulateMatch } from "@/lib/algorithms/match-predictor";
-import { MOCK_PLAYERS, MOCK_TEAM, MOCK_MATCHES, MOCK_TRAINING } from "@/lib/chpp/mock-data";
 import { 
   Player, 
   TeamDetails, 
@@ -23,29 +22,25 @@ import {
   UserSession, 
   TrainingRecommendation 
 } from "@/types/hattrick";
-import { CheckCircle2, AlertCircle } from "lucide-react";
+import { CheckCircle2, AlertCircle, ShieldAlert } from "lucide-react";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<NavTab>("dashboard");
   const [user, setUser] = useState<UserSession>({
-    id: "user-1",
-    email: "berat.torun@gmail.com",
-    name: "Berat Torun",
-    image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80",
-    googleLoggedIn: true,
-    hattrickConnected: true,
-    hattrickUsername: "berat623",
-    hattrickTeamId: 1042319,
-    hattrickTeamName: "Anadolu Kartalları SK",
+    id: "guest",
+    email: "",
+    name: "Ziyaretçi",
+    googleLoggedIn: false,
+    hattrickConnected: false,
   });
 
-  const [team, setTeam] = useState<TeamDetails | null>(MOCK_TEAM);
-  const [players, setPlayers] = useState<Player[]>(MOCK_PLAYERS);
+  const [team, setTeam] = useState<TeamDetails | null>(null);
+  const [players, setPlayers] = useState<Player[]>([]);
   const [lineup, setLineup] = useState<TacticalLineup | null>(null);
-  const [training, setTraining] = useState<TrainingData | null>(MOCK_TRAINING);
+  const [training, setTraining] = useState<TrainingData | null>(null);
   const [trainingRec, setTrainingRec] = useState<TrainingRecommendation | null>(null);
   const [matches, setMatches] = useState<Match[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [loadingLineup, setLoadingLineup] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
@@ -55,126 +50,21 @@ export default function Home() {
     setTimeout(() => setToast(null), 4000);
   };
 
-  // Initial Data Fetching
-  useEffect(() => {
-    async function loadData() {
-      try {
-        setLoading(true);
-
-        // 1. User Session
-        try {
-          const userRes = await fetch("/api/auth/me");
-          if (userRes.ok) {
-            const data = await userRes.json();
-            if (data?.user) setUser(data.user);
-          }
-        } catch {
-          // Keep current session
-        }
-
-        // 2. Team Details
-        let loadedTeam = MOCK_TEAM;
-        try {
-          const teamRes = await fetch("/api/hattrick/team");
-          if (teamRes.ok) {
-            const data = await teamRes.json();
-            if (data?.team) loadedTeam = data.team;
-          }
-        } catch {
-          // Fallback
-        }
-        setTeam(loadedTeam);
-
-        // 3. Players
-        let loadedPlayers = MOCK_PLAYERS;
-        try {
-          const playersRes = await fetch("/api/hattrick/players");
-          if (playersRes.ok) {
-            const data = await playersRes.json();
-            if (data?.players && data.players.length > 0) loadedPlayers = data.players;
-          }
-        } catch {
-          // Fallback
-        }
-        setPlayers(loadedPlayers);
-
-        // 4. Initial Lineup
-        let loadedLineup = generateAutoLineup(loadedPlayers, "3-5-2");
-        try {
-          const lineupRes = await fetch("/api/hattrick/lineup/auto", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ formation: "3-5-2" }),
-          });
-          if (lineupRes.ok) {
-            const data = await lineupRes.json();
-            if (data?.lineup) loadedLineup = data.lineup;
-          }
-        } catch {
-          // Fallback
-        }
-        setLineup(loadedLineup);
-
-        // 5. Training & Recommendation
-        let loadedTraining = MOCK_TRAINING;
-        try {
-          const trainingRes = await fetch("/api/hattrick/training");
-          if (trainingRes.ok) {
-            const data = await trainingRes.json();
-            if (data?.training) loadedTraining = data.training;
-          }
-        } catch {
-          // Fallback
-        }
-        setTraining(loadedTraining);
-
-        const rec = analyzeAndOptimizeTraining(loadedPlayers);
-        setTrainingRec(rec);
-
-        // 6. Matches & Simulation
-        let loadedMatches = MOCK_MATCHES.map((m) => {
-          if (m.homeRatings && m.awayRatings) {
-            const sim = simulateMatch(m.homeRatings, m.awayRatings);
-            return {
-              ...m,
-              winProbability: m.myTeamIsHome ? sim.homeWinProb : sim.awayWinProb,
-              drawProbability: sim.drawProb,
-              lossProbability: m.myTeamIsHome ? sim.awayWinProb : sim.homeWinProb,
-            };
-          }
-          return m;
-        });
-
-        try {
-          const matchesRes = await fetch("/api/hattrick/matches");
-          if (matchesRes.ok) {
-            const data = await matchesRes.json();
-            if (data?.matches) loadedMatches = data.matches;
-          }
-        } catch {
-          // Fallback
-        }
-        setMatches(loadedMatches);
-      } catch (err) {
-        console.error("Dashboard init error:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadData();
-  }, []);
-
-  // Check URL parameters for OAuth callbacks
+  // Check URL parameters on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       if (params.get("ht_connected")) {
         showToast("Hattrick hesabınız başarıyla bağlandı!");
-        setUser((prev) => ({ ...prev, hattrickConnected: true }));
+        setUser((prev) => ({
+          ...prev,
+          googleLoggedIn: true,
+          hattrickConnected: true,
+          hattrickTeamName: "Hattrick Takımınız",
+        }));
         window.history.replaceState({}, "", window.location.pathname);
       } else if (params.get("google_connected")) {
-        showToast("Google hesabınızla başarıyla giriş yapıldı!");
+        showToast("Google hesabınız başarıyla bağlandı!");
         setUser((prev) => ({ ...prev, googleLoggedIn: true }));
         window.history.replaceState({}, "", window.location.pathname);
       } else if (params.get("auth_error")) {
@@ -184,29 +74,53 @@ export default function Home() {
     }
   }, []);
 
+  // Fetch real team data when Hattrick is connected
+  useEffect(() => {
+    if (!user.hattrickConnected) return;
+
+    async function fetchTeamData() {
+      try {
+        setLoading(true);
+
+        const [teamRes, playersRes, matchesRes, trainingRes] = await Promise.all([
+          fetch("/api/hattrick/team").then((r) => (r.ok ? r.json() : null)).catch(() => null),
+          fetch("/api/hattrick/players").then((r) => (r.ok ? r.json() : null)).catch(() => null),
+          fetch("/api/hattrick/matches").then((r) => (r.ok ? r.json() : null)).catch(() => null),
+          fetch("/api/hattrick/training").then((r) => (r.ok ? r.json() : null)).catch(() => null),
+        ]);
+
+        if (teamRes?.team) setTeam(teamRes.team);
+        if (playersRes?.players && playersRes.players.length > 0) {
+          setPlayers(playersRes.players);
+          const autoLine = generateAutoLineup(playersRes.players, "3-5-2");
+          setLineup(autoLine);
+          const optRec = analyzeAndOptimizeTraining(playersRes.players);
+          setTrainingRec(optRec);
+        }
+        if (matchesRes?.matches) setMatches(matchesRes.matches);
+        if (trainingRes?.training) setTraining(trainingRes.training);
+      } catch (err) {
+        console.error("Takım verisi yüklenemedi:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchTeamData();
+  }, [user.hattrickConnected]);
+
   // Handle Formation Change or Auto Lineup
   const handleAutoLineup = async (preferredFormation?: SupportedFormation) => {
+    if (players.length === 0) {
+      showToast("Önce Hattrick takımınızı bağlamanız gerekmektedir.", "error");
+      return;
+    }
+
     setLoadingLineup(true);
     try {
-      const res = await fetch("/api/hattrick/lineup/auto", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ formation: preferredFormation }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (data.ok && data.lineup) {
-          setLineup(data.lineup);
-          showToast(data.message || "Kadro başarıyla dizildi!");
-          return;
-        }
-      }
-      throw new Error("Client fallback");
-    } catch {
-      const pool = players.length > 0 ? players : MOCK_PLAYERS;
-      const clientLineup = generateAutoLineup(pool, preferredFormation);
+      const clientLineup = generateAutoLineup(players, preferredFormation);
       setLineup(clientLineup);
-      showToast(`En yüksek reytingli ${clientLineup.formation} kadrosu otomatik oluşturuldu!`);
+      showToast(`En yüksek reytingli ${clientLineup.formation} kadrosu dizildi!`);
     } finally {
       setLoadingLineup(false);
     }
@@ -250,27 +164,46 @@ export default function Home() {
       googleLoggedIn: false,
       hattrickConnected: false,
     });
+    setTeam(null);
+    setPlayers([]);
+    setLineup(null);
+    setMatches([]);
     showToast("Oturum kapatıldı.");
   };
 
-  // If user is not logged in, show Login Screen
+  // If not logged in with Google or Hattrick, display Login View
   if (!user.googleLoggedIn && !user.hattrickConnected) {
     return (
       <LoginView
-        onDirectLogin={() => {
-          setUser({
-            id: "user-1",
-            email: "berat.torun@gmail.com",
-            name: "Berat Torun",
-            image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80",
+        onGoogleSuccess={(userData) => {
+          setUser((prev) => ({
+            ...prev,
+            id: "google-" + userData.email,
+            email: userData.email,
+            name: userData.name,
+            image: userData.picture,
             googleLoggedIn: true,
-            hattrickConnected: true,
-            hattrickUsername: "berat623",
-            hattrickTeamId: 1042319,
-            hattrickTeamName: "Anadolu Kartalları SK",
-          });
-          showToast("Giriş yapıldı!");
+          }));
+          showToast(`Hoş geldiniz, ${userData.name}!`);
         }}
+        onHattrickSuccess={async (creds) => {
+          setUser((prev) => ({
+            ...prev,
+            hattrickConnected: true,
+            hattrickUsername: "Hattrick Menajeri",
+            hattrickTeamName: "Takımınız",
+          }));
+          showToast("Hattrick anahtarlarınız kaydedildi!");
+        }}
+        onHattrickOAuthRedirect={() => {
+          // If on static GitHub Pages, warn about backend requirement or redirect to live API
+          if (typeof window !== "undefined" && window.location.hostname.includes("github.io")) {
+            showToast("GitHub Pages statik bir barındırıcıdır. Hattrick OAuth akışı canlı backend gerektirir. Lütfen CHPP Anahtarları sekmesini kullanın.", "error");
+          } else {
+            window.location.href = "/api/auth/hattrick/connect";
+          }
+        }}
+        loading={loading}
       />
     );
   }
@@ -301,11 +234,34 @@ export default function Home() {
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {!user.hattrickConnected ? (
+          /* Notice banner if only Google is connected but not Hattrick */
+          <div className="p-6 rounded-2xl border border-amber-300 dark:border-amber-800/80 bg-amber-500/10 dark:bg-amber-950/30 flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+            <div className="flex items-center gap-3 text-left">
+              <ShieldAlert className="w-8 h-8 text-amber-500 shrink-0" />
+              <div>
+                <h3 className="font-bold text-sm text-slate-900 dark:text-white">
+                  Hattrick Hesabınız Henüz Bağlanmadı
+                </h3>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                  Google ile giriş yaptınız. Gerçek kadronuzu, oyuncularınızı ve maç fikstürünüzü çekmek için lütfen Hattrick CHPP hesabınızı bağlayın.
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setSettingsOpen(true)}
+              className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 shrink-0 shadow-md transition-all active:scale-95"
+            >
+              Hattrick CHPP Bağla
+            </button>
+          </div>
+        ) : null}
+
         {loading ? (
           <div className="flex flex-col items-center justify-center min-h-[50vh] gap-3">
             <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
             <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-              Hattrick verileri yükleniyor ve yapay zeka analiz ediliyor...
+              Hattrick verileriniz çekiliyor...
             </p>
           </div>
         ) : (
@@ -325,24 +281,34 @@ export default function Home() {
             )}
 
             {/* Tab 2: Taktik & Otomatik Kadro Dizilişi */}
-            {activeTab === "lineup" && lineup && (
+            {activeTab === "lineup" && (
               <div className="flex flex-col gap-6">
-                <FormationSelector
-                  currentFormation={lineup.formation}
-                  onFormationChange={(f) => handleAutoLineup(f)}
-                  onAutoLineup={() => handleAutoLineup()}
-                  loading={loadingLineup}
-                  totalRating={lineup.totalRating}
-                />
+                {lineup ? (
+                  <>
+                    <FormationSelector
+                      currentFormation={lineup.formation}
+                      onFormationChange={(f) => handleAutoLineup(f)}
+                      onAutoLineup={() => handleAutoLineup()}
+                      loading={loadingLineup}
+                      totalRating={lineup.totalRating}
+                    />
 
-                <PitchBoard
-                  lineup={lineup}
-                  onSelectSlot={(slot) => {
-                    if (slot.assignedPlayer) {
-                      showToast(`${slot.assignedPlayer.name} (${slot.role} - Reyting: ${slot.rating})`);
-                    }
-                  }}
-                />
+                    <PitchBoard
+                      lineup={lineup}
+                      onSelectSlot={(slot) => {
+                        if (slot.assignedPlayer) {
+                          showToast(`${slot.assignedPlayer.name} (${slot.role} - Reyting: ${slot.rating})`);
+                        }
+                      }}
+                    />
+                  </>
+                ) : (
+                  <div className="p-12 text-center border rounded-2xl border-dashed border-slate-300 dark:border-slate-800">
+                    <p className="text-sm text-slate-500">
+                      Kadro dizilimini görmek için lütfen önce Hattrick hesabınızı bağlayın.
+                    </p>
+                  </div>
+                )}
               </div>
             )}
 
@@ -393,7 +359,7 @@ export default function Home() {
       <footer className="border-t border-slate-200 dark:border-slate-800/80 py-6 mt-12 bg-white dark:bg-slate-950 text-center text-xs text-slate-500 dark:text-slate-400">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>
-            Hattrick Dashboard © 2026 • Gelişmiş CHPP OAuth 1.0a & Otomatik Taktik Motoru
+            Hattrick Dashboard © 2026 • Resmi CHPP OAuth 1.0a & Google Giriş
           </span>
           <div className="flex items-center gap-3">
             <span className="text-emerald-500 font-semibold">Ultimate Hattrick Modeli</span>
