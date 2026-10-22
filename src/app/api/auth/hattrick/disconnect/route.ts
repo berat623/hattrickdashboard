@@ -14,7 +14,6 @@ export async function POST() {
       hattrickConnected: false,
       hattrickTeamId: undefined,
       hattrickTeamName: undefined,
-      demoMode: true,
     },
   });
 

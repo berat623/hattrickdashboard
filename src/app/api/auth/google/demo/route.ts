@@ -13,7 +13,6 @@ export async function GET(req: NextRequest) {
       hattrickUsername: "berat623",
       hattrickTeamId: 1042319,
       hattrickTeamName: "Anadolu Kartalları SK",
-      demoMode: true,
     },
   });
 

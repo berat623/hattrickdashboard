@@ -136,7 +136,6 @@ export interface UserSession {
   hattrickUsername?: string;
   hattrickTeamId?: number;
   hattrickTeamName?: string;
-  demoMode: boolean;
 }
 
 export interface TrainingRecommendation {

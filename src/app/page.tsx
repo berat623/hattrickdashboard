@@ -9,6 +9,7 @@ import { TrainingOptimizerCard } from "@/components/TrainingOptimizerCard";
 import { MatchCenter } from "@/components/MatchCenter";
 import { DashboardOverview } from "@/components/DashboardOverview";
 import { HattrickConnectModal } from "@/components/HattrickConnectModal";
+import { LoginView } from "@/components/LoginView";
 import { SupportedFormation, generateAutoLineup } from "@/lib/algorithms/lineup";
 import { analyzeAndOptimizeTraining } from "@/lib/algorithms/training";
 import { simulateMatch } from "@/lib/algorithms/match-predictor";
@@ -32,11 +33,10 @@ export default function Home() {
     name: "Berat Torun",
     image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80",
     googleLoggedIn: true,
-    hattrickConnected: false,
+    hattrickConnected: true,
     hattrickUsername: "berat623",
     hattrickTeamId: 1042319,
     hattrickTeamName: "Anadolu Kartalları SK",
-    demoMode: true,
   });
 
   const [team, setTeam] = useState<TeamDetails | null>(MOCK_TEAM);
@@ -55,7 +55,7 @@ export default function Home() {
     setTimeout(() => setToast(null), 4000);
   };
 
-  // Initial Data Fetching (Supports both Node backend and GitHub Pages static hosting)
+  // Initial Data Fetching
   useEffect(() => {
     async function loadData() {
       try {
@@ -69,7 +69,7 @@ export default function Home() {
             if (data?.user) setUser(data.user);
           }
         } catch {
-          // Keep default session
+          // Keep current session
         }
 
         // 2. Team Details
@@ -81,7 +81,7 @@ export default function Home() {
             if (data?.team) loadedTeam = data.team;
           }
         } catch {
-          // Fallback to MOCK_TEAM
+          // Fallback
         }
         setTeam(loadedTeam);
 
@@ -94,11 +94,11 @@ export default function Home() {
             if (data?.players && data.players.length > 0) loadedPlayers = data.players;
           }
         } catch {
-          // Fallback to MOCK_PLAYERS
+          // Fallback
         }
         setPlayers(loadedPlayers);
 
-        // 4. Initial Lineup (computed locally or from server)
+        // 4. Initial Lineup
         let loadedLineup = generateAutoLineup(loadedPlayers, "3-5-2");
         try {
           const lineupRes = await fetch("/api/hattrick/lineup/auto", {
@@ -170,10 +170,12 @@ export default function Home() {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       if (params.get("ht_connected")) {
-        showToast("Hattrick CHPP bağlantısı başarıyla tamamlandı!");
+        showToast("Hattrick hesabınız başarıyla bağlandı!");
+        setUser((prev) => ({ ...prev, hattrickConnected: true }));
         window.history.replaceState({}, "", window.location.pathname);
       } else if (params.get("google_connected")) {
-        showToast("Google hesabı başarıyla bağlandı!");
+        showToast("Google hesabınızla başarıyla giriş yapıldı!");
+        setUser((prev) => ({ ...prev, googleLoggedIn: true }));
         window.history.replaceState({}, "", window.location.pathname);
       } else if (params.get("auth_error")) {
         showToast(decodeURIComponent(params.get("auth_error") || "Yetkilendirme hatası"), "error");
@@ -186,7 +188,6 @@ export default function Home() {
   const handleAutoLineup = async (preferredFormation?: SupportedFormation) => {
     setLoadingLineup(true);
     try {
-      // First attempt server endpoint (for Node.js runtime)
       const res = await fetch("/api/hattrick/lineup/auto", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -200,9 +201,8 @@ export default function Home() {
           return;
         }
       }
-      throw new Error("Fallback to client calculation");
+      throw new Error("Client fallback");
     } catch {
-      // Runs directly in browser for GitHub Pages static hosting
       const pool = players.length > 0 ? players : MOCK_PLAYERS;
       const clientLineup = generateAutoLineup(pool, preferredFormation);
       setLineup(clientLineup);
@@ -210,24 +210,6 @@ export default function Home() {
     } finally {
       setLoadingLineup(false);
     }
-  };
-
-  // Toggle Demo Mode
-  const handleToggleDemoMode = async () => {
-    try {
-      const res = await fetch("/api/auth/hattrick/demo-toggle", { method: "POST" });
-      if (res.ok) {
-        const data = await res.json();
-        setUser((prev) => ({ ...prev, demoMode: data.demoMode }));
-        showToast(data.demoMode ? "Demo Modu aktif edildi" : "Canlı CHPP Modu aktif edildi");
-        return;
-      }
-    } catch {
-      // Client-side fallback
-    }
-    const nextMode = !user.demoMode;
-    setUser((prev) => ({ ...prev, demoMode: nextMode }));
-    showToast(nextMode ? "Demo Modu aktif edildi" : "Canlı CHPP Modu aktif edildi");
   };
 
   // Apply Training Recommendation
@@ -254,6 +236,45 @@ export default function Home() {
     showToast("Yeni antrenman programı kaydedildi!");
   };
 
+  // Handle Logout
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } catch {
+      // client reset
+    }
+    setUser({
+      id: "guest",
+      email: "",
+      name: "Ziyaretçi",
+      googleLoggedIn: false,
+      hattrickConnected: false,
+    });
+    showToast("Oturum kapatıldı.");
+  };
+
+  // If user is not logged in, show Login Screen
+  if (!user.googleLoggedIn && !user.hattrickConnected) {
+    return (
+      <LoginView
+        onDirectLogin={() => {
+          setUser({
+            id: "user-1",
+            email: "berat.torun@gmail.com",
+            name: "Berat Torun",
+            image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80",
+            googleLoggedIn: true,
+            hattrickConnected: true,
+            hattrickUsername: "berat623",
+            hattrickTeamId: 1042319,
+            hattrickTeamName: "Anadolu Kartalları SK",
+          });
+          showToast("Giriş yapıldı!");
+        }}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col">
       {/* Toast Notification */}
@@ -275,7 +296,7 @@ export default function Home() {
         user={user}
         team={team}
         onOpenSettings={() => setSettingsOpen(true)}
-        onToggleDemoMode={handleToggleDemoMode}
+        onLogout={handleLogout}
       />
 
       {/* Main Content Area */}
@@ -354,7 +375,6 @@ export default function Home() {
                   isOpen={true}
                   onClose={() => setActiveTab("dashboard")}
                   user={user}
-                  onToggleDemoMode={handleToggleDemoMode}
                 />
               </div>
             )}
@@ -367,7 +387,6 @@ export default function Home() {
         isOpen={settingsOpen}
         onClose={() => setSettingsOpen(false)}
         user={user}
-        onToggleDemoMode={handleToggleDemoMode}
       />
 
       {/* Footer */}

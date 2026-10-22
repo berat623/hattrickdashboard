@@ -18,16 +18,11 @@ export interface TokenPayload {
 }
 
 const DEFAULT_USER: UserSession = {
-  id: "demo-user-1",
-  email: "yonetici@hattrickdashboard.com",
-  name: "Burak Berat",
-  image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
-  googleLoggedIn: true,
+  id: "guest",
+  email: "",
+  name: "Ziyaretçi",
+  googleLoggedIn: false,
   hattrickConnected: false,
-  hattrickUsername: "berat623",
-  hattrickTeamId: 1042319,
-  hattrickTeamName: "Anadolu Kartalları SK",
-  demoMode: true,
 };
 
 export async function createSession(data: Partial<TokenPayload>): Promise<string> {

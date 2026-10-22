@@ -12,7 +12,6 @@ export async function POST(req: NextRequest) {
     const client = new CHPPClient({
       accessToken: session?.hattrickOAuth?.accessToken,
       accessTokenSecret: session?.hattrickOAuth?.accessTokenSecret,
-      demoMode: session?.user?.demoMode ?? true,
     });
 
     const players = await client.getPlayers(session?.user?.hattrickTeamId);

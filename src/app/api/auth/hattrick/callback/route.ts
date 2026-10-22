@@ -31,7 +31,6 @@ export async function GET(req: NextRequest) {
     const client = new CHPPClient({
       accessToken,
       accessTokenSecret,
-      demoMode: false,
     });
 
     let teamName = "Hattrick Takımı";
@@ -57,12 +56,10 @@ export async function GET(req: NextRequest) {
           name: teamName,
           googleLoggedIn: false,
           hattrickConnected: true,
-          demoMode: false,
         }),
         hattrickConnected: true,
         hattrickTeamId: teamId,
         hattrickTeamName: teamName,
-        demoMode: false,
       },
       requestTokenSecret: undefined, // cleanup
     });

@@ -50,7 +50,6 @@ export async function GET(req: NextRequest) {
         image: profile.picture,
         googleLoggedIn: true,
         hattrickConnected: false,
-        demoMode: true,
       },
     });
 

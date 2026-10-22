@@ -6,19 +6,16 @@ import { MOCK_PLAYERS, MOCK_TEAM, MOCK_MATCHES, MOCK_TRAINING } from "./mock-dat
 export interface CHPPClientOptions {
   accessToken?: string;
   accessTokenSecret?: string;
-  demoMode?: boolean;
 }
 
 export class CHPPClient {
   private accessToken?: string;
   private accessTokenSecret?: string;
-  private demoMode: boolean;
   private parser: XMLParser;
 
   constructor(options: CHPPClientOptions = {}) {
     this.accessToken = options.accessToken;
     this.accessTokenSecret = options.accessTokenSecret;
-    this.demoMode = options.demoMode ?? (!options.accessToken || !options.accessTokenSecret);
     this.parser = new XMLParser({
       ignoreAttributes: false,
       attributeNamePrefix: "@_",
@@ -36,8 +33,8 @@ export class CHPPClient {
    * Fetches signed XML from Hattrick CHPP API
    */
   async fetchXml(file: string, params: Record<string, string | number> = {}): Promise<Record<string, unknown>> {
-    if (this.demoMode || !this.accessToken || !this.accessTokenSecret) {
-      throw new Error("Demo mode aktif veya CHPP erişim anahtarları eksik.");
+    if (!this.accessToken || !this.accessTokenSecret) {
+      throw new Error("Hattrick CHPP erişim anahtarları eksik.");
     }
 
     const queryParams: Record<string, string> = {
@@ -80,7 +77,7 @@ export class CHPPClient {
    * Oyuncu Listesini Çeker (file=players)
    */
   async getPlayers(teamId?: number): Promise<Player[]> {
-    if (this.demoMode || !this.accessToken) {
+    if (!this.accessToken || !this.accessTokenSecret) {
       return MOCK_PLAYERS;
     }
 
@@ -155,7 +152,7 @@ export class CHPPClient {
    * Takım Detaylarını Çeker (file=teamdetails)
    */
   async getTeamDetails(teamId?: number): Promise<TeamDetails> {
-    if (this.demoMode || !this.accessToken) {
+    if (!this.accessToken || !this.accessTokenSecret) {
       return MOCK_TEAM;
     }
 
@@ -198,7 +195,7 @@ export class CHPPClient {
    * Maçları Çeker (file=matches)
    */
   async getMatches(teamId?: number): Promise<Match[]> {
-    if (this.demoMode || !this.accessToken) {
+    if (!this.accessToken || !this.accessTokenSecret) {
       return MOCK_MATCHES;
     }
 
@@ -264,7 +261,7 @@ export class CHPPClient {
    * Antrenman Bilgisini Çeker (file=training)
    */
   async getTraining(teamId?: number): Promise<TrainingData> {
-    if (this.demoMode || !this.accessToken) {
+    if (!this.accessToken || !this.accessTokenSecret) {
       return MOCK_TRAINING;
     }
 

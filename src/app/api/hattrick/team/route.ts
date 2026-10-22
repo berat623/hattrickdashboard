@@ -8,7 +8,6 @@ export async function GET() {
     const client = new CHPPClient({
       accessToken: session?.hattrickOAuth?.accessToken,
       accessTokenSecret: session?.hattrickOAuth?.accessTokenSecret,
-      demoMode: session?.user?.demoMode ?? true,
     });
 
     const team = await client.getTeamDetails(session?.user?.hattrickTeamId);
