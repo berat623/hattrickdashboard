@@ -1,16 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Navbar, NavTab } from "@/components/Navbar";
+import { useEffect, useState, useCallback } from "react";
+import { Navbar, NavTab, NAV_ITEMS } from "@/components/Navbar";
 import { PitchBoard } from "@/components/PitchBoard";
 import { FormationSelector } from "@/components/FormationSelector";
 import { PlayersTable } from "@/components/PlayersTable";
 import { TrainingOptimizerCard } from "@/components/TrainingOptimizerCard";
 import { MatchCenter } from "@/components/MatchCenter";
 import { DashboardOverview } from "@/components/DashboardOverview";
+import { EconomyArenaHub } from "@/components/EconomyArenaHub";
+import { TransferScoutHub } from "@/components/TransferScoutHub";
+import { PlayerDetailModal } from "@/components/PlayerDetailModal";
 import { HattrickConnectModal } from "@/components/HattrickConnectModal";
 import { LoginView } from "@/components/LoginView";
-import { SupportedFormation, generateAutoLineup } from "@/lib/algorithms/lineup";
+import {
+  SupportedFormation,
+  SupportedTactic,
+  SupportedAttitude,
+  generateAutoLineup,
+  swapPlayerInSlot,
+  updateLineupTactics,
+} from "@/lib/algorithms/lineup";
 import { analyzeAndOptimizeTraining } from "@/lib/algorithms/training";
 import {
   Player,
@@ -21,7 +31,13 @@ import {
   UserSession,
   TrainingRecommendation,
 } from "@/types/hattrick";
-import { CheckCircle2, AlertCircle, ShieldAlert } from "lucide-react";
+import {
+  CheckCircle2,
+  AlertCircle,
+  ShieldAlert,
+  Sparkles,
+  RefreshCw,
+} from "lucide-react";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<NavTab>("dashboard");
@@ -37,18 +53,27 @@ export default function Home() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [lineup, setLineup] = useState<TacticalLineup | null>(null);
   const [training, setTraining] = useState<TrainingData | null>(null);
-  const [trainingRec, setTrainingRec] = useState<TrainingRecommendation | null>(null);
+  const [trainingRec, setTrainingRec] =
+    useState<TrainingRecommendation | null>(null);
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
   const [loadingLineup, setLoadingLineup] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [inspectedPlayer, setInspectedPlayer] = useState<Player | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
-  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
 
-  const showToast = (message: string, type: "success" | "error" = "success") => {
+  const showToast = (
+    message: string,
+    type: "success" | "error" = "success"
+  ) => {
     setToast({ message, type });
-    setTimeout(() => setToast(null), 5000);
+    setTimeout(() => setToast(null), 4500);
   };
 
   // Restore session and check URL parameters on mount
@@ -58,7 +83,9 @@ export default function Home() {
         if (typeof window !== "undefined") {
           const params = new URLSearchParams(window.location.search);
           if (params.get("auth_error")) {
-            const errStr = decodeURIComponent(params.get("auth_error") || "Yetkilendirme hatası");
+            const errStr = decodeURIComponent(
+              params.get("auth_error") || "Yetkilendirme hatası"
+            );
             setAuthError(errStr);
             showToast(errStr, "error");
             window.history.replaceState({}, "", window.location.pathname);
@@ -88,48 +115,56 @@ export default function Home() {
     initSession();
   }, []);
 
+  const fetchTeamData = useCallback(async (isSilentRefresh = false) => {
+    try {
+      if (isSilentRefresh) {
+        setRefreshing(true);
+      } else {
+        setLoading(true);
+      }
+
+      const [teamRes, playersRes, matchesRes, trainingRes] = await Promise.all([
+        fetch("/api/hattrick/team", { cache: "no-store" })
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null),
+        fetch("/api/hattrick/players", { cache: "no-store" })
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null),
+        fetch("/api/hattrick/matches", { cache: "no-store" })
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null),
+        fetch("/api/hattrick/training", { cache: "no-store" })
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null),
+      ]);
+
+      if (teamRes?.team) setTeam(teamRes.team);
+      if (playersRes?.players && playersRes.players.length > 0) {
+        setPlayers(playersRes.players);
+        const autoLine = generateAutoLineup(playersRes.players);
+        setLineup(autoLine);
+        const optRec = analyzeAndOptimizeTraining(playersRes.players);
+        setTrainingRec(optRec);
+      }
+      if (matchesRes?.matches) setMatches(matchesRes.matches);
+      if (trainingRes?.training) setTraining(trainingRes.training);
+
+      if (isSilentRefresh) {
+        showToast("Hattrick CHPP verileriniz canlı olarak güncellendi!");
+      }
+    } catch (err) {
+      console.error("Takım verisi yüklenemedi:", err);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, []);
+
   // Fetch real team data when Hattrick is connected
   useEffect(() => {
     if (!user.hattrickConnected) return;
-
-    async function fetchTeamData() {
-      try {
-        setLoading(true);
-
-        const [teamRes, playersRes, matchesRes, trainingRes] = await Promise.all([
-          fetch("/api/hattrick/team", { cache: "no-store" })
-            .then((r) => (r.ok ? r.json() : null))
-            .catch(() => null),
-          fetch("/api/hattrick/players", { cache: "no-store" })
-            .then((r) => (r.ok ? r.json() : null))
-            .catch(() => null),
-          fetch("/api/hattrick/matches", { cache: "no-store" })
-            .then((r) => (r.ok ? r.json() : null))
-            .catch(() => null),
-          fetch("/api/hattrick/training", { cache: "no-store" })
-            .then((r) => (r.ok ? r.json() : null))
-            .catch(() => null),
-        ]);
-
-        if (teamRes?.team) setTeam(teamRes.team);
-        if (playersRes?.players && playersRes.players.length > 0) {
-          setPlayers(playersRes.players);
-          const autoLine = generateAutoLineup(playersRes.players, "3-5-2");
-          setLineup(autoLine);
-          const optRec = analyzeAndOptimizeTraining(playersRes.players);
-          setTrainingRec(optRec);
-        }
-        if (matchesRes?.matches) setMatches(matchesRes.matches);
-        if (trainingRes?.training) setTraining(trainingRes.training);
-      } catch (err) {
-        console.error("Takım verisi yüklenemedi:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchTeamData();
-  }, [user.hattrickConnected]);
+    fetchTeamData(false);
+  }, [user.hattrickConnected, fetchTeamData]);
 
   // Handle Formation Change or Auto Lineup
   const handleAutoLineup = async (preferredFormation?: SupportedFormation) => {
@@ -140,12 +175,38 @@ export default function Home() {
 
     setLoadingLineup(true);
     try {
-      const clientLineup = generateAutoLineup(players, preferredFormation);
+      const clientLineup = generateAutoLineup(
+        players,
+        preferredFormation,
+        lineup?.tactic || "Normal",
+        lineup?.attitude || "Normal"
+      );
       setLineup(clientLineup);
-      showToast(`En yüksek reytingli ${clientLineup.formation} kadrosu dizildi!`);
+      showToast(
+        `En yüksek reytingli ${clientLineup.formation} kadrosu (${clientLineup.totalRating.toFixed(1)}★) dizildi!`
+      );
     } finally {
       setLoadingLineup(false);
     }
+  };
+
+  // Handle Tactic or Attitude Change
+  const handleTacticOrAttitudeChange = (
+    newTactic: SupportedTactic,
+    newAttitude: SupportedAttitude
+  ) => {
+    if (!lineup) return;
+    const updated = updateLineupTactics(lineup, newTactic, newAttitude);
+    setLineup(updated);
+    showToast(`Taktik: ${newTactic} • Motivasyon: ${newAttitude}`);
+  };
+
+  // Handle Player Swap on Pitch
+  const handleSwapPlayer = (slotId: string, newPlayer: Player) => {
+    if (!lineup) return;
+    const updated = swapPlayerInSlot(lineup, slotId, newPlayer);
+    setLineup(updated);
+    showToast(`${newPlayer.name} kadroya yerleştirildi!`);
   };
 
   // Apply Training Recommendation
@@ -154,7 +215,10 @@ export default function Home() {
       await fetch("/api/hattrick/training", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ trainingType: typeId, staminaTrainingPart: staminaShare }),
+        body: JSON.stringify({
+          trainingType: typeId,
+          staminaTrainingPart: staminaShare,
+        }),
       });
     } catch {
       // client update
@@ -164,7 +228,6 @@ export default function Home() {
         ? {
             ...prev,
             trainingType: typeId,
-            trainingTypeName: trainingRec?.recommendedType || prev.trainingTypeName,
             staminaTrainingPart: staminaShare,
           }
         : null
@@ -202,8 +265,12 @@ export default function Home() {
         onHattrickOAuthRedirect={() => {
           setRedirecting(true);
           setAuthError(null);
-          if (typeof window !== "undefined" && window.location.hostname.includes("github.io")) {
-            window.location.href = "https://hattrickdashboard.vercel.app/api/auth/hattrick/connect";
+          if (
+            typeof window !== "undefined" &&
+            window.location.hostname.includes("github.io")
+          ) {
+            window.location.href =
+              "https://hattrickdashboard.vercel.app/api/auth/hattrick/connect";
           } else {
             window.location.href = "/api/auth/hattrick/connect";
           }
@@ -230,21 +297,24 @@ export default function Home() {
     );
   }
 
+  const activeNavMeta =
+    NAV_ITEMS.find((i) => i.id === activeTab) || NAV_ITEMS[0];
+
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#060b14] text-slate-900 dark:text-slate-100 flex flex-col lg:pl-68">
       {/* Toast Notification */}
       {toast && (
-        <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2 px-4 py-3 rounded-xl shadow-2xl border text-xs font-semibold backdrop-blur-md animate-fade-in bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white border-slate-200 dark:border-slate-800">
+        <div className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-bold backdrop-blur-xl animate-fade-in bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white border-slate-200 dark:border-slate-800">
           {toast.type === "success" ? (
-            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
           ) : (
-            <AlertCircle className="w-4 h-4 text-rose-500" />
+            <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
           )}
           <span>{toast.message}</span>
         </div>
       )}
 
-      {/* Main Navbar */}
+      {/* Navigation System (Desktop Sidebar + Mobile Header & Bottom Tab Bar) */}
       <Navbar
         activeTab={activeTab}
         onTabChange={setActiveTab}
@@ -252,16 +322,57 @@ export default function Home() {
         team={team}
         onOpenSettings={() => setSettingsOpen(true)}
         onLogout={handleLogout}
+        onRefreshData={() => fetchTeamData(true)}
+        refreshing={refreshing}
       />
 
-      {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      {/* Desktop Top Command Bar (visible only on lg+) */}
+      <div className="hidden lg:flex items-center justify-between px-8 py-4 border-b border-slate-200 dark:border-slate-800/80 bg-white/70 dark:bg-[#09101f]/70 backdrop-blur-md sticky top-0 z-30">
+        <div>
+          <h2 className="text-lg font-extrabold text-slate-900 dark:text-white tracking-tight">
+            {activeNavMeta.label}
+          </h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            {team?.name || "Hattrick Kulübünüz"} • {players.length} Lisanslı Oyuncu
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => {
+              setActiveTab("lineup");
+              handleAutoLineup();
+            }}
+            disabled={loadingLineup}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-extrabold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 transition-all cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>⚡ Hızlı Kadro Kur</span>
+          </button>
+
+          <button
+            onClick={() => fetchTeamData(true)}
+            disabled={refreshing}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
+          >
+            <RefreshCw
+              className={`w-3.5 h-3.5 text-emerald-500 ${
+                refreshing ? "animate-spin" : ""
+              }`}
+            />
+            <span>Senkronize Et</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Main Content Area (extra bottom padding on mobile for native bottom tab bar) */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3.5 sm:px-6 lg:px-8 py-5 pb-24 lg:pb-10">
         {!user.hattrickConnected ? (
-          <div className="p-6 rounded-2xl border border-amber-300 dark:border-amber-800/80 bg-amber-500/10 dark:bg-amber-950/30 flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+          <div className="p-6 rounded-3xl border border-amber-300 dark:border-amber-800/80 bg-amber-500/10 dark:bg-amber-950/30 flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-3 text-left">
               <ShieldAlert className="w-8 h-8 text-amber-500 shrink-0" />
               <div>
-                <h3 className="font-bold text-sm text-slate-900 dark:text-white">
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
                   Hattrick Hesabınız Henüz Bağlanmadı
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
@@ -271,7 +382,7 @@ export default function Home() {
             </div>
             <a
               href="/api/auth/hattrick/connect"
-              className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 shrink-0 shadow-md transition-all active:scale-95"
+              className="px-4 py-2.5 rounded-xl text-xs font-extrabold text-white bg-emerald-600 hover:bg-emerald-500 shrink-0 shadow-md transition-all active:scale-95"
             >
               Hattrick CHPP Bağla
             </a>
@@ -279,10 +390,10 @@ export default function Home() {
         ) : null}
 
         {loading ? (
-          <div className="flex flex-col items-center justify-center min-h-[50vh] gap-3">
-            <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-              Hattrick sunucularından takım ve oyuncu verileriniz çekiliyor...
+          <div className="flex flex-col items-center justify-center min-h-[55vh] gap-3">
+            <div className="w-11 h-11 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">
+              Hattrick CHPP sunucularından canlı takım verileriniz çekiliyor...
             </p>
           </div>
         ) : (
@@ -297,18 +408,27 @@ export default function Home() {
                 players={players}
                 onNavigate={setActiveTab}
                 onAutoLineup={() => handleAutoLineup()}
+                onSelectPlayer={(p) => setInspectedPlayer(p)}
                 loadingLineup={loadingLineup}
               />
             )}
 
             {/* Tab 2: Taktik & Otomatik Kadro Dizilişi */}
             {activeTab === "lineup" && (
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-5">
                 {lineup ? (
                   <>
                     <FormationSelector
                       currentFormation={lineup.formation}
+                      currentTactic={lineup.tactic}
+                      currentAttitude={lineup.attitude}
                       onFormationChange={(f) => handleAutoLineup(f)}
+                      onTacticChange={(t) =>
+                        handleTacticOrAttitudeChange(t, lineup.attitude)
+                      }
+                      onAttitudeChange={(a) =>
+                        handleTacticOrAttitudeChange(lineup.tactic, a)
+                      }
                       onAutoLineup={() => handleAutoLineup()}
                       loading={loadingLineup}
                       totalRating={lineup.totalRating}
@@ -316,15 +436,21 @@ export default function Home() {
 
                     <PitchBoard
                       lineup={lineup}
-                      onSelectSlot={(slot) => {
-                        if (slot.assignedPlayer) {
-                          showToast(`${slot.assignedPlayer.name} (${slot.role} - Reyting: ${slot.rating})`);
-                        }
+                      allPlayers={players}
+                      onSwapPlayer={handleSwapPlayer}
+                      onInspectPlayer={(p) => setInspectedPlayer(p)}
+                      onUpdateCaptainOrSP={(capId, spId) => {
+                        setLineup({
+                          ...lineup,
+                          captainId: capId,
+                          setPiecesTakerId: spId,
+                        });
+                        showToast("Kaptan ve Duran Top ustası güncellendi!");
                       }}
                     />
                   </>
                 ) : (
-                  <div className="p-12 text-center border rounded-2xl border-dashed border-slate-300 dark:border-slate-800">
+                  <div className="p-12 text-center border rounded-3xl border-dashed border-slate-300 dark:border-slate-800">
                     <p className="text-sm text-slate-500">
                       Kadro dizilimini görmek için lütfen önce Hattrick hesabınızı bağlayın.
                     </p>
@@ -337,9 +463,7 @@ export default function Home() {
             {activeTab === "players" && (
               <PlayersTable
                 players={players}
-                onSelectPlayer={(p) =>
-                  showToast(`${p.name} - En İyi Mevki: ${p.bestPosition} (${p.positionRating}★)`)
-                }
+                onSelectPlayer={(p) => setInspectedPlayer(p)}
               />
             )}
 
@@ -348,14 +472,39 @@ export default function Home() {
               <TrainingOptimizerCard
                 currentTraining={training}
                 recommendation={trainingRec}
+                players={players}
                 onApplyTraining={handleApplyTraining}
+                onSelectPlayer={(p) => setInspectedPlayer(p)}
               />
             )}
 
-            {/* Tab 5: Maçlar & Oranlar (Ultimate Hattrick Modeli) */}
-            {activeTab === "matches" && <MatchCenter matches={matches} />}
+            {/* Tab 5: Maçlar & Simülatör */}
+            {activeTab === "matches" && (
+              <MatchCenter
+                matches={matches}
+                activeLineupRatings={lineup?.sectorRatings}
+              />
+            )}
 
-            {/* Tab 6: Ayarlar */}
+            {/* Tab 6: Ekonomi & Stadyum */}
+            {activeTab === "economy" && (
+              <EconomyArenaHub
+                team={team}
+                players={players}
+                onSelectPlayer={(p) => setInspectedPlayer(p)}
+              />
+            )}
+
+            {/* Tab 7: Transfer & Gözlemci */}
+            {activeTab === "transfers" && (
+              <TransferScoutHub
+                players={players}
+                team={team}
+                onSelectPlayer={(p) => setInspectedPlayer(p)}
+              />
+            )}
+
+            {/* Tab 8: Ayarlar */}
             {activeTab === "settings" && (
               <div className="max-w-2xl mx-auto">
                 <HattrickConnectModal
@@ -369,31 +518,19 @@ export default function Home() {
         )}
       </main>
 
-      {/* Settings Modal (when triggered from Navbar) */}
+      {/* Player Detail & Comparison Modal */}
+      <PlayerDetailModal
+        player={inspectedPlayer}
+        allPlayers={players}
+        onClose={() => setInspectedPlayer(null)}
+      />
+
+      {/* Settings Modal */}
       <HattrickConnectModal
         isOpen={settingsOpen}
         onClose={() => setSettingsOpen(false)}
         user={user}
       />
-
-      {/* Footer */}
-      <footer className="border-t border-slate-200 dark:border-slate-800/80 py-6 mt-12 bg-white dark:bg-slate-950 text-center text-xs text-slate-500 dark:text-slate-400">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>
-            Hattrick Dashboard © 2026 • Resmi CHPP OAuth 1.0a & Google Giriş
-          </span>
-          <div className="flex items-center gap-3">
-            <span className="text-emerald-500 font-semibold">Ultimate Hattrick Modeli</span>
-            <span>•</span>
-            <button
-              onClick={() => setSettingsOpen(true)}
-              className="hover:underline text-slate-700 dark:text-slate-300"
-            >
-              CHPP Yapılandırması
-            </button>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
