@@ -1,3 +1,15 @@
-:HL["/hattrickdashboard/_next/static/chunks/2o7kubdbz1ii6.css","style"]
+:HL["/hattrickdashboard/_next/static/chunks/1nr1xxc6rud7h.css","style"]
+:HL["/hattrickdashboard/_next/static/media/0da9c7f357bd9d4d-s.p.1975l3y3401x_.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/hattrickdashboard/_next/static/media/2094fb60fd9c8287-s.p.3qxy1tqak831c.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/hattrickdashboard/_next/static/media/47fe1b7cd6e6ed85-s.p.3bh2vc0w-r-ll.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/hattrickdashboard/_next/static/media/5f9d24ebef5d5292-s.p.19xuq3td7fwu_.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/hattrickdashboard/_next/static/media/6c55a692938ebbbc-s.p.1emuuracu50qd.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/hattrickdashboard/_next/static/media/798ea22d9983e047-s.p.3go-kn2r40gie.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/hattrickdashboard/_next/static/media/829ba4228c966254-s.p.2mm3nq9i83l-m.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/hattrickdashboard/_next/static/media/8cf1ea7b03cdeb83-s.p.3dbq0oou7i_24.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/hattrickdashboard/_next/static/media/8e6fa89aa22d24ec-s.p.2o7m9ogm38dql.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/hattrickdashboard/_next/static/media/a218039a3287bcfd-s.p.43zbiuwnnoiok.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/hattrickdashboard/_next/static/media/c875c6f5d3e977ac-s.p.1h18_wedhzk4h.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/hattrickdashboard/_next/static/media/e2334d715941921e-s.p.3o_v2fun1jzxk.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 1:[["children",{"s":"__PAGE__","h":160}]]
-0:{"b":"58uV8ozkMK--7rzXWoU4w","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"cUFYgFPk1smQau2aXpiSd","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
