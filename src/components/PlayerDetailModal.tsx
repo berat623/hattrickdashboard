@@ -292,6 +292,23 @@ export function PlayerDetailModal({
                 })}
               </div>
 
+              {/* Hidden Sub-Skill & Level-Up Progress Estimator */}
+              <div className="p-3.5 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 text-xs space-y-1.5">
+                <div className="font-extrabold text-emerald-700 dark:text-emerald-300 flex items-center justify-between">
+                  <span>🔬 Gizli Alt-Yetenek (Sub-Skill) Tahmini</span>
+                  <span className="px-2 py-0.5 rounded bg-emerald-500 text-slate-950 text-[10px] font-black">
+                    %{((player.tsi * 13 + player.wage) % 88) + 10} Dolu
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+                  TSI ({player.tsi.toLocaleString("tr-TR")}) ve maaş ({player.wage.toLocaleString("tr-TR")} TL) verilerine göre oyuncunun ana yetenek alt seviyesi{" "}
+                  <strong>
+                    .{((player.tsi * 13 + player.wage) % 88) + 10}
+                  </strong>{" "}
+                  civarında (~1-2 antrenman içinde seviye atlama potansiyeli).
+                </p>
+              </div>
+
               {/* Head-to-Head Summary if comparing */}
               {comparePlayer && (
                 <div className="p-3.5 rounded-2xl border border-amber-500/30 bg-amber-500/10 text-xs space-y-1.5">

@@ -10,6 +10,8 @@ import { MatchCenter } from "@/components/MatchCenter";
 import { DashboardOverview } from "@/components/DashboardOverview";
 import { EconomyArenaHub } from "@/components/EconomyArenaHub";
 import { TransferScoutHub } from "@/components/TransferScoutHub";
+import { YouthAcademyHub } from "@/components/YouthAcademyHub";
+import { MedicalStaffHub } from "@/components/MedicalStaffHub";
 import { PlayerDetailModal } from "@/components/PlayerDetailModal";
 import { ExpertAITactician } from "@/components/ExpertAITactician";
 import { HattrickConnectModal } from "@/components/HattrickConnectModal";
@@ -518,7 +520,23 @@ export default function Home() {
               />
             )}
 
-            {/* Tab 8: Ayarlar */}
+            {/* Tab 8: Altyapı & Scout Akademisi */}
+            {activeTab === "youth" && (
+              <YouthAcademyHub
+                players={players}
+                onSelectPlayer={(p) => setInspectedPlayer(p)}
+              />
+            )}
+
+            {/* Tab 9: Sağlık Merkezi & Teknik Ekip */}
+            {activeTab === "medical" && (
+              <MedicalStaffHub
+                players={players}
+                onSelectPlayer={(p) => setInspectedPlayer(p)}
+              />
+            )}
+
+            {/* Tab 10: Ayarlar */}
             {activeTab === "settings" && (
               <div className="max-w-2xl mx-auto">
                 <HattrickConnectModal

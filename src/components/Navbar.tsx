@@ -9,14 +9,14 @@ import {
   Calendar,
   Settings,
   CheckCircle2,
-  ShieldAlert,
   LogOut,
   SlidersHorizontal,
   LayoutDashboard,
   Coins,
   Compass,
   RefreshCw,
-  Sparkles,
+  GraduationCap,
+  Stethoscope,
 } from "lucide-react";
 
 export type NavTab =
@@ -27,6 +27,8 @@ export type NavTab =
   | "matches"
   | "economy"
   | "transfers"
+  | "youth"
+  | "medical"
   | "settings";
 
 interface NavbarProps {
@@ -42,12 +44,14 @@ interface NavbarProps {
 
 export const NAV_ITEMS = [
   { id: "dashboard", label: "Genel Bakış", shortLabel: "Genel", icon: LayoutDashboard },
-  { id: "lineup", label: "Taktik & Kadro", shortLabel: "Taktik", icon: SlidersHorizontal, badge: "AI" },
+  { id: "lineup", label: "Taktik & AI Kadro", shortLabel: "Taktik", icon: SlidersHorizontal, badge: "AI" },
+  { id: "matches", label: "Canlı Maç & 2D", shortLabel: "Canlı 2D", icon: Calendar, badge: "CANLI" },
   { id: "players", label: "Oyuncu Havuzu", shortLabel: "Kadro", icon: Users },
-  { id: "matches", label: "Maç & Simülatör", shortLabel: "Maçlar", icon: Calendar },
+  { id: "transfers", label: "Transfer & Pazarlık", shortLabel: "Transfer", icon: Compass, badge: "PRO" },
   { id: "training", label: "Antrenman Üssü", shortLabel: "İdman", icon: Dumbbell },
   { id: "economy", label: "Ekonomi & Stadyum", shortLabel: "Finans", icon: Coins },
-  { id: "transfers", label: "Transfer & Analiz", shortLabel: "Gözlem", icon: Compass },
+  { id: "youth", label: "Altyapı & Scout", shortLabel: "Altyapı", icon: GraduationCap },
+  { id: "medical", label: "Sağlık & Teknik Ekip", shortLabel: "Revir", icon: Stethoscope },
 ] as const;
 
 export function Navbar({
@@ -65,8 +69,8 @@ export function Navbar({
       {/* =====================================================================
           1. DESKTOP SIDEBAR (lg and up: Fixed Left Navigation Panel)
          ===================================================================== */}
-      <aside className="hidden lg:flex flex-col fixed inset-y-0 left-0 z-40 w-68 border-r border-slate-200 dark:border-slate-800/80 bg-white/95 dark:bg-[#09101f]/95 backdrop-blur-xl justify-between p-4 select-none">
-        <div className="space-y-5">
+      <aside className="hidden lg:flex flex-col fixed inset-y-0 left-0 z-40 w-68 border-r border-slate-200 dark:border-slate-800/80 bg-white/95 dark:bg-[#09101f]/95 backdrop-blur-xl justify-between p-4 select-none overflow-y-auto">
+        <div className="space-y-4">
           {/* Brand Logo */}
           <div className="flex items-center justify-between px-2 pt-1">
             <div className="flex items-center gap-3">
@@ -78,7 +82,7 @@ export function Navbar({
                   Hattrick <span className="text-emerald-500">Pro</span>
                 </div>
                 <span className="text-[10px] font-semibold text-slate-400">
-                  CHPP Menajer Üssü
+                  AI Menajerlik Stüdyosu
                 </span>
               </div>
             </div>
@@ -102,7 +106,7 @@ export function Navbar({
               {team?.name || user.hattrickTeamName || "Hattrick Takımınız"}
             </div>
             <div className="flex items-center justify-between text-[11px] text-slate-300 mt-2 pt-2 border-t border-white/10">
-              <span>Kasa:</span>
+              <span>Kulüp Kasası:</span>
               <span className="font-bold text-amber-300">
                 {(team?.cash ?? 0).toLocaleString("tr-TR")} TL
               </span>
@@ -112,7 +116,7 @@ export function Navbar({
           {/* Navigation Menu */}
           <nav className="space-y-1">
             <div className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-              Menajerlik Modülleri
+              9 Profesyonel Modül
             </div>
             {NAV_ITEMS.map((item) => {
               const Icon = item.icon;
@@ -133,7 +137,7 @@ export function Navbar({
                   </div>
                   {"badge" in item && (
                     <span
-                      className={`px-1.5 py-0.2 rounded-full text-[10px] font-extrabold ${
+                      className={`px-1.5 py-0.2 rounded-full text-[9px] font-extrabold ${
                         isActive
                           ? "bg-white text-emerald-700"
                           : "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400"
@@ -184,7 +188,7 @@ export function Navbar({
       {/* =====================================================================
           2. MOBILE TOP HEADER & BOTTOM APP BAR (< lg: Phones & Tablets)
          ===================================================================== */}
-      <header className="lg:hidden sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-[#09101f]/90 backdrop-blur-xl">
+      <header className="lg:hidden sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800/80 bg-white/95 dark:bg-[#09101f]/95 backdrop-blur-xl">
         <div className="px-3.5 h-14 flex items-center justify-between gap-2">
           {/* Left: Logo + Team Name */}
           <div className="flex items-center gap-2.5 min-w-0">
@@ -205,7 +209,7 @@ export function Navbar({
             </div>
           </div>
 
-          {/* Right: Sync, Settings, Theme, Logout */}
+          {/* Right: Sync, Theme, Settings */}
           <div className="flex items-center gap-1.5 shrink-0">
             {onRefreshData && (
               <button
@@ -229,9 +233,9 @@ export function Navbar({
         </div>
       </header>
 
-      {/* Mobile Native Bottom Navigation Bar */}
-      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-slate-200 dark:border-slate-800/90 bg-white/95 dark:bg-[#09101f]/95 backdrop-blur-xl px-1.5 py-1.5">
-        <div className="grid grid-cols-7 gap-0.5 max-w-lg mx-auto">
+      {/* Mobile Native Bottom Navigation Bar (Swipeable 9-item Dock) */}
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-slate-200 dark:border-slate-800/90 bg-white/95 dark:bg-[#09101f]/95 backdrop-blur-xl px-2 py-1.5">
+        <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -239,14 +243,14 @@ export function Navbar({
               <button
                 key={item.id}
                 onClick={() => onTabChange(item.id as NavTab)}
-                className={`flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl transition-all ${
+                className={`flex flex-col items-center justify-center py-1.5 px-2.5 rounded-xl shrink-0 min-w-[60px] transition-all ${
                   isActive
                     ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold"
                     : "text-slate-500 dark:text-slate-400"
                 }`}
               >
                 <Icon className={`w-4 h-4 ${isActive ? "stroke-[2.5]" : ""}`} />
-                <span className="text-[9px] mt-0.5 truncate max-w-full leading-tight">
+                <span className="text-[10px] mt-0.5 whitespace-nowrap leading-tight">
                   {item.shortLabel}
                 </span>
               </button>

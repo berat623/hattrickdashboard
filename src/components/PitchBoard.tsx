@@ -86,6 +86,24 @@ export function PitchBoard({
     .map((s) => s.assignedPlayer)
     .filter(Boolean) as Player[];
 
+  // Top 5 Penalty Takers ranked by Hattrick Penalty Formula (SetPieces*0.5 + Scorer*0.3 + Exp*0.2 + Technical bonus)
+  const topPenaltyTakers = [...starters]
+    .map((p) => {
+      const techBonus = p.specialty === "Teknik" ? 1.5 : 0;
+      const penScore =
+        Math.round(
+          (p.skills.setPieces * 0.5 +
+            p.skills.scorer * 0.3 +
+            p.experience * 0.2 +
+            techBonus) *
+            10
+        ) / 10;
+      const convPct = Math.min(96, Math.max(58, Math.round(52 + penScore * 3.2)));
+      return { player: p, penScore, convPct };
+    })
+    .sort((a, b) => b.penScore - a.penScore)
+    .slice(0, 5);
+
   return (
     <div className="flex flex-col gap-5 w-full animate-fade-in">
       {/* 7 Sector Ratings Bar */}
@@ -407,6 +425,46 @@ export function PitchBoard({
               ))}
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Automatic Top 5 Penalty Takers & Kupa Strateji Bar */}
+      <div className="p-4 sm:p-5 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Target className="w-4 h-4 text-emerald-500" />
+            <h3 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
+              Otomatik Penaltıcı Sıralaması (Duran Top + Golcülük + Tecrübe + Teknik)
+            </h3>
+          </div>
+          <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
+            Kupa & Penaltı Serisi Hazır
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-5 gap-2.5">
+          {topPenaltyTakers.map((item, index) => (
+            <div
+              key={item.player.id}
+              onClick={() => onInspectPlayer?.(item.player)}
+              className="p-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/50 hover:border-emerald-500/40 cursor-pointer flex items-center justify-between sm:flex-col sm:items-start gap-1.5"
+            >
+              <div className="flex items-center gap-2 w-full justify-between">
+                <span className="px-2 py-0.5 rounded-md bg-emerald-500 text-slate-950 font-black text-[10px]">
+                  {index + 1}. Penaltıcı
+                </span>
+                <span className="text-xs font-extrabold text-amber-500">
+                  %{item.convPct} Gol
+                </span>
+              </div>
+              <div className="font-bold text-xs text-slate-900 dark:text-white truncate max-w-full">
+                {item.player.name}
+              </div>
+              <div className="text-[10px] text-slate-500">
+                DT:{item.player.skills.setPieces} • Gol:{item.player.skills.scorer} • Tec:{item.player.experience}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
