@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { TacticalLineup, FormationSlot, Player } from "@/types/hattrick";
 import { getPlayerScoreForRole } from "@/lib/algorithms/lineup";
+import { PlayerAvatar } from "./PlayerAvatar";
 import {
   Star,
   Shield,
   ArrowLeftRight,
-  UserCheck,
   Award,
   Target,
   Info,
@@ -206,16 +206,23 @@ export function PitchBoard({
                   className="absolute z-10 cursor-pointer group transition-transform duration-200 hover:scale-110"
                 >
                   <div
-                    className={`flex flex-col items-center justify-center px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-2xl transition-all shadow-xl backdrop-blur-md ${
+                    className={`flex flex-col items-center justify-center px-1.5 py-1 sm:px-2 sm:py-1.5 rounded-2xl transition-all shadow-xl backdrop-blur-md ${
                       isSelected
                         ? "bg-amber-400 text-slate-950 ring-4 ring-white scale-110"
                         : "bg-slate-950/90 hover:bg-slate-900 text-white border border-white/25"
                     }`}
                   >
-                    {/* Role Pill & Badges */}
-                    <div className="flex items-center gap-1 mb-0.5">
+                    {/* Player Avatar with Role & Captain Badges */}
+                    <div className="relative mb-0.5">
+                      <PlayerAvatar
+                        avatar={player?.avatar}
+                        name={player?.name || slot.label}
+                        shirtNumber={player?.shirtNumber}
+                        size="xs"
+                        className="ring-1 ring-white/30"
+                      />
                       <span
-                        className={`text-[9px] sm:text-[10px] px-1.5 py-0.2 rounded-md border ${getRoleBadgeColor(
+                        className={`absolute -top-1 -left-1 text-[8px] px-1 rounded border ${getRoleBadgeColor(
                           slot.role
                         )}`}
                       >
@@ -223,15 +230,15 @@ export function PitchBoard({
                       </span>
                       {isCaptain && (
                         <span
-                          className="text-[9px] font-black px-1 rounded bg-amber-400 text-slate-950"
+                          className="absolute -top-1 -right-1 text-[8px] font-black px-1 rounded bg-amber-400 text-slate-950 shadow"
                           title="Takım Kaptanı"
                         >
                           K
                         </span>
                       )}
-                      {isSetPieces && (
+                      {isSetPieces && !isCaptain && (
                         <span
-                          className="text-[9px] font-black px-1 rounded bg-cyan-400 text-slate-950"
+                          className="absolute -top-1 -right-1 text-[8px] font-black px-1 rounded bg-cyan-400 text-slate-950 shadow"
                           title="Duran Top Ustası"
                         >
                           DT
@@ -239,25 +246,18 @@ export function PitchBoard({
                       )}
                     </div>
 
-                    {/* Player Shirt Number & Surname */}
+                    {/* Player Name Underneath */}
                     <div className="flex items-center gap-1">
-                      <span
-                        className={`text-[10px] sm:text-xs font-extrabold ${
-                          isSelected ? "text-slate-950" : "text-amber-300"
-                        }`}
-                      >
-                        #{player?.shirtNumber || "?"}
-                      </span>
-                      <span className="text-[10px] sm:text-xs font-bold truncate max-w-[64px] sm:max-w-[90px]">
+                      <span className="text-[9px] sm:text-[11px] font-extrabold truncate max-w-[66px] sm:max-w-[92px]">
                         {player?.name
-                          ? player.name.split(" ").slice(-1)[0]
+                          ? player.lastName || player.name.split(" ").slice(-1)[0]
                           : slot.label}
                       </span>
                     </div>
 
                     {/* Rating Star */}
                     <div
-                      className={`flex items-center gap-0.5 mt-0.5 text-[10px] font-extrabold ${
+                      className={`flex items-center gap-0.5 text-[9px] sm:text-[10px] font-extrabold ${
                         isSelected ? "text-slate-950" : "text-amber-400"
                       }`}
                     >
@@ -393,9 +393,12 @@ export function PitchBoard({
                   }`}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-8 h-8 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center text-xs font-extrabold shrink-0">
-                      #{player.shirtNumber || "-"}
-                    </div>
+                    <PlayerAvatar
+                      avatar={player.avatar}
+                      name={player.name}
+                      shirtNumber={player.shirtNumber}
+                      size="xs"
+                    />
                     <div className="min-w-0">
                       <div className="text-xs font-bold text-slate-900 dark:text-white truncate">
                         {player.name}

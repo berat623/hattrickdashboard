@@ -3,7 +3,10 @@
 import { useEffect, useState, useCallback } from "react";
 import { Navbar, NavTab, NAV_ITEMS } from "@/components/Navbar";
 import { PitchBoard } from "@/components/PitchBoard";
-import { FormationSelector } from "@/components/FormationSelector";
+import {
+  FormationSelector,
+  ServerSyncReport,
+} from "@/components/FormationSelector";
 import { PlayersTable } from "@/components/PlayersTable";
 import { TrainingOptimizerCard } from "@/components/TrainingOptimizerCard";
 import { MatchCenter } from "@/components/MatchCenter";
@@ -23,6 +26,8 @@ import {
   generateAutoLineup,
   swapPlayerInSlot,
   updateLineupTactics,
+  buildLineupFromServerState,
+  extractRolePositionsFromLineup,
 } from "@/lib/algorithms/lineup";
 import { analyzeAndOptimizeTraining } from "@/lib/algorithms/training";
 import {
@@ -63,6 +68,9 @@ export default function Home() {
   const [refreshing, setRefreshing] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
   const [loadingLineup, setLoadingLineup] = useState(false);
+  const [savingToServer, setSavingToServer] = useState(false);
+  const [serverSyncReport, setServerSyncReport] =
+    useState<ServerSyncReport | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [inspectedPlayer, setInspectedPlayer] = useState<Player | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
@@ -126,26 +134,38 @@ export default function Home() {
         setLoading(true);
       }
 
-      const [teamRes, playersRes, matchesRes, trainingRes] = await Promise.all([
-        fetch("/api/hattrick/team", { cache: "no-store" })
-          .then((r) => (r.ok ? r.json() : null))
-          .catch(() => null),
-        fetch("/api/hattrick/players", { cache: "no-store" })
-          .then((r) => (r.ok ? r.json() : null))
-          .catch(() => null),
-        fetch("/api/hattrick/matches", { cache: "no-store" })
-          .then((r) => (r.ok ? r.json() : null))
-          .catch(() => null),
-        fetch("/api/hattrick/training", { cache: "no-store" })
-          .then((r) => (r.ok ? r.json() : null))
-          .catch(() => null),
-      ]);
+      const [teamRes, playersRes, matchesRes, trainingRes, serverLineupRes] =
+        await Promise.all([
+          fetch("/api/hattrick/team", { cache: "no-store" })
+            .then((r) => (r.ok ? r.json() : null))
+            .catch(() => null),
+          fetch("/api/hattrick/players", { cache: "no-store" })
+            .then((r) => (r.ok ? r.json() : null))
+            .catch(() => null),
+          fetch("/api/hattrick/matches", { cache: "no-store" })
+            .then((r) => (r.ok ? r.json() : null))
+            .catch(() => null),
+          fetch("/api/hattrick/training", { cache: "no-store" })
+            .then((r) => (r.ok ? r.json() : null))
+            .catch(() => null),
+          fetch("/api/hattrick/lineup/save", { cache: "no-store" })
+            .then((r) => (r.ok ? r.json() : null))
+            .catch(() => null),
+        ]);
 
       if (teamRes?.team) setTeam(teamRes.team);
       if (playersRes?.players && playersRes.players.length > 0) {
         setPlayers(playersRes.players);
-        const autoLine = generateAutoLineup(playersRes.players);
-        setLineup(autoLine);
+        if (serverLineupRes?.serverState) {
+          const syncedLineup = buildLineupFromServerState(
+            playersRes.players,
+            serverLineupRes.serverState
+          );
+          setLineup(syncedLineup);
+        } else {
+          const autoLine = generateAutoLineup(playersRes.players);
+          setLineup(autoLine);
+        }
         const optRec = analyzeAndOptimizeTraining(playersRes.players);
         setTrainingRec(optRec);
       }
@@ -153,7 +173,9 @@ export default function Home() {
       if (trainingRes?.training) setTraining(trainingRes.training);
 
       if (isSilentRefresh) {
-        showToast("Hattrick CHPP verileriniz canlı olarak güncellendi!");
+        showToast(
+          "Hattrick CHPP sunucusundan oyuncu resimleri, takım logoları ve taktikler güncellendi!"
+        );
       }
     } catch (err) {
       console.error("Takım verisi yüklenemedi:", err);
@@ -184,7 +206,12 @@ export default function Home() {
         lineup?.tactic || "Normal",
         lineup?.attitude || "Normal"
       );
-      setLineup(clientLineup);
+      setLineup({
+        ...clientLineup,
+        serverSource: "auto",
+        sourceMatchId: lineup?.sourceMatchId,
+        sourceOpponentName: lineup?.sourceOpponentName,
+      });
       showToast(
         `En yüksek reytingli ${clientLineup.formation} kadrosu (${clientLineup.totalRating.toFixed(1)}★) dizildi!`
       );
@@ -200,7 +227,10 @@ export default function Home() {
   ) => {
     if (!lineup) return;
     const updated = updateLineupTactics(lineup, newTactic, newAttitude);
-    setLineup(updated);
+    setLineup({
+      ...updated,
+      serverSource: "auto",
+    });
     showToast(`Taktik: ${newTactic} • Motivasyon: ${newAttitude}`);
   };
 
@@ -208,14 +238,102 @@ export default function Home() {
   const handleSwapPlayer = (slotId: string, newPlayer: Player) => {
     if (!lineup) return;
     const updated = swapPlayerInSlot(lineup, slotId, newPlayer);
-    setLineup(updated);
+    setLineup({
+      ...updated,
+      serverSource: "auto",
+    });
     showToast(`${newPlayer.name} kadroya yerleştirildi!`);
   };
 
-  // Apply Training Recommendation
+  // Save Lineup & Tactics to Hattrick Game Server and Verify
+  const handleSaveLineupToServer = async () => {
+    if (!lineup) return;
+    setSavingToServer(true);
+    try {
+      const positions = extractRolePositionsFromLineup(lineup);
+      const res = await fetch("/api/hattrick/lineup/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          matchId: lineup.sourceMatchId,
+          formation: lineup.formation,
+          tactic: lineup.tactic,
+          attitude: lineup.attitude,
+          captainId: lineup.captainId,
+          setPiecesTakerId: lineup.setPiecesTakerId,
+          positions,
+        }),
+      });
+      const data = await res.json();
+      const report: ServerSyncReport = {
+        savedToServer: Boolean(data.savedToServer),
+        verifiedFromServer: Boolean(data.verifiedFromServer),
+        requiresWriteScope: Boolean(data.requiresWriteScope),
+        message:
+          data.message ||
+          "Hattrick oyun sunucusu kontrolü tamamlandı.",
+        serverFormation: data.serverFormation,
+        serverTactic: data.serverTactic,
+        hattrickMatchOrderUrl: data.hattrickMatchOrderUrl,
+        checkedAt: new Date().toLocaleTimeString("tr-TR"),
+      };
+      setServerSyncReport(report);
+      if (report.savedToServer) {
+        setLineup((prev) =>
+          prev ? { ...prev, serverSource: "matchorders", ordersGiven: true } : null
+        );
+        showToast(report.message, "success");
+      } else {
+        showToast(report.message, "error");
+      }
+    } catch {
+      showToast("Sunucu kontrolü sırasında bağlantı hatası oluştu.", "error");
+    } finally {
+      setSavingToServer(false);
+    }
+  };
+
+  // Reload Lineup & Tactics Directly From Hattrick Game Server
+  const handleReloadLineupFromServer = async () => {
+    if (players.length === 0) return;
+    setSavingToServer(true);
+    try {
+      const res = await fetch("/api/hattrick/lineup/save", {
+        cache: "no-store",
+      });
+      const data = await res.json();
+      if (data?.serverState) {
+        const synced = buildLineupFromServerState(players, data.serverState);
+        setLineup(synced);
+        setServerSyncReport({
+          savedToServer: data.serverState.source === "matchorders",
+          verifiedFromServer: true,
+          message:
+            data.serverState.source === "matchorders"
+              ? `Hattrick sunucusunda kayıtlı gelecek maç emriniz (${synced.formation} • ${synced.tactic}) doğrulandı ve sahaya yüklendi.`
+              : `Gelecek maç için henüz Hattrick'te kayıtlı emir bulunamadı; son resmi maç kadronuz (${synced.formation} • ${synced.tactic}) yüklendi.`,
+          serverFormation: synced.formation,
+          serverTactic: synced.tactic,
+          hattrickMatchOrderUrl: synced.sourceMatchId
+            ? `https://www.hattrick.org/Club/Matches/MatchOrder/Default.aspx?matchID=${synced.sourceMatchId}`
+            : undefined,
+          checkedAt: new Date().toLocaleTimeString("tr-TR"),
+        });
+        showToast(
+          `Sunucudaki gerçek diziliş (${synced.formation} • ${synced.tactic}) yüklendi!`
+        );
+      }
+    } catch {
+      showToast("Sunucudaki taktik durumu okunamadı.", "error");
+    } finally {
+      setSavingToServer(false);
+    }
+  };
+
+  // Apply Training Recommendation and Verify on Hattrick Server
   const handleApplyTraining = async (typeId: number, staminaShare: number) => {
     try {
-      await fetch("/api/hattrick/training", {
+      const res = await fetch("/api/hattrick/training", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -223,19 +341,33 @@ export default function Home() {
           staminaTrainingPart: staminaShare,
         }),
       });
+      const data = await res.json();
+      if (data?.updatedTraining) {
+        setTraining((prev) =>
+          prev
+            ? {
+                ...prev,
+                ...data.updatedTraining,
+              }
+            : null
+        );
+      }
+      showToast(
+        data?.message || "Antrenman isteği kontrol edildi.",
+        data?.savedToServer ? "success" : "error"
+      );
+      return {
+        savedToServer: Boolean(data?.savedToServer),
+        requiresWriteScope: Boolean(data?.requiresWriteScope),
+        message: data?.message || "Kontrol tamamlandı",
+      };
     } catch {
-      // client update
+      showToast("Antrenman sunucuya gönderilirken hata oluştu.", "error");
+      return {
+        savedToServer: false,
+        message: "Sunucu bağlantı hatası.",
+      };
     }
-    setTraining((prev) =>
-      prev
-        ? {
-            ...prev,
-            trainingType: typeId,
-            staminaTrainingPart: staminaShare,
-          }
-        : null
-    );
-    showToast("Yeni antrenman programı kaydedildi!");
   };
 
   // Handle Logout
@@ -307,7 +439,7 @@ export default function Home() {
     <div className="min-h-screen bg-slate-50 dark:bg-[#060b14] text-slate-900 dark:text-slate-100 flex flex-col lg:pl-68">
       {/* Toast Notification */}
       {toast && (
-        <div className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-bold backdrop-blur-xl animate-fade-in bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white border-slate-200 dark:border-slate-800">
+        <div className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-2xl border text-xs font-bold backdrop-blur-xl animate-fade-in bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white border-slate-200 dark:border-slate-800 max-w-md">
           {toast.type === "success" ? (
             <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
           ) : (
@@ -396,7 +528,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center min-h-[55vh] gap-3">
             <div className="w-11 h-11 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
             <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">
-              Hattrick CHPP sunucularından canlı takım verileriniz çekiliyor...
+              Hattrick CHPP sunucularından canlı takım verileriniz, oyuncu avatarlarınız ve logolarınız çekiliyor...
             </p>
           </div>
         ) : (
@@ -426,7 +558,12 @@ export default function Home() {
                       matches={matches}
                       currentLineup={lineup}
                       onApplyAILineup={(newLineup, form, tac, att) => {
-                        setLineup(newLineup);
+                        setLineup({
+                          ...newLineup,
+                          serverSource: "auto",
+                          sourceMatchId: lineup.sourceMatchId,
+                          sourceOpponentName: lineup.sourceOpponentName,
+                        });
                         showToast(
                           `Uzman AI: ${form} (${tac} • ${att}) kadrosu sahaya dizildi!`
                         );
@@ -445,6 +582,13 @@ export default function Home() {
                         handleTacticOrAttitudeChange(lineup.tactic, a)
                       }
                       onAutoLineup={() => handleAutoLineup()}
+                      onSaveToHattrickServer={handleSaveLineupToServer}
+                      onReloadFromHattrickServer={handleReloadLineupFromServer}
+                      savingToServer={savingToServer}
+                      serverSyncReport={serverSyncReport}
+                      serverSource={lineup.serverSource}
+                      sourceOpponentName={lineup.sourceOpponentName}
+                      ordersGiven={lineup.ordersGiven}
                       loading={loadingLineup}
                       totalRating={lineup.totalRating}
                     />
@@ -459,6 +603,7 @@ export default function Home() {
                           ...lineup,
                           captainId: capId,
                           setPiecesTakerId: spId,
+                          serverSource: "auto",
                         });
                         showToast("Kaptan ve Duran Top ustası güncellendi!");
                       }}
@@ -499,6 +644,7 @@ export default function Home() {
                 matches={matches}
                 players={players}
                 activeLineupRatings={lineup?.sectorRatings}
+                onSelectPlayer={(p) => setInspectedPlayer(p)}
               />
             )}
 

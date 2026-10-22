@@ -2,6 +2,7 @@
 
 import { UserSession, TeamDetails } from "@/types/hattrick";
 import { ThemeToggle } from "./ThemeToggle";
+import { TeamCrest } from "./PlayerAvatar";
 import {
   Trophy,
   Users,
@@ -102,8 +103,16 @@ export function Navbar({
                 </span>
               )}
             </div>
-            <div className="font-extrabold text-sm truncate">
-              {team?.name || user.hattrickTeamName || "Hattrick Takımınız"}
+            <div className="flex items-center gap-2.5 mt-1">
+              <TeamCrest
+                logoUrl={team?.logoUrl}
+                dressUri={team?.dressUri}
+                name={team?.name || user.hattrickTeamName || "Hattrick Takımınız"}
+                size="sm"
+              />
+              <div className="font-extrabold text-sm truncate">
+                {team?.name || user.hattrickTeamName || "Hattrick Takımınız"}
+              </div>
             </div>
             <div className="flex items-center justify-between text-[11px] text-slate-300 mt-2 pt-2 border-t border-white/10">
               <span>Kulüp Kasası:</span>
@@ -192,9 +201,12 @@ export function Navbar({
         <div className="px-3.5 h-14 flex items-center justify-between gap-2">
           {/* Left: Logo + Team Name */}
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 text-slate-950 shadow-md shadow-emerald-500/20 shrink-0">
-              <Trophy className="w-4 h-4 stroke-[2.5]" />
-            </div>
+            <TeamCrest
+              logoUrl={team?.logoUrl}
+              dressUri={team?.dressUri}
+              name={team?.name || user.hattrickTeamName || "Hattrick Pro"}
+              size="sm"
+            />
             <div className="min-w-0">
               <div className="flex items-center gap-1.5">
                 <span className="font-extrabold text-sm text-slate-900 dark:text-white truncate">

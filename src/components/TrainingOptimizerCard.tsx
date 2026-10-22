@@ -3,32 +3,42 @@
 import { useState } from "react";
 import { TrainingData, TrainingRecommendation, Player } from "@/types/hattrick";
 import { getHattrickSkillName } from "@/lib/algorithms/lineup";
+import { PlayerAvatar } from "./PlayerAvatar";
 import {
   Dumbbell,
   Sparkles,
   CheckCircle2,
+  AlertTriangle,
   Clock,
   Users,
   ArrowRight,
   Sliders,
+  KeyRound,
 } from "lucide-react";
 
 interface TrainingOptimizerProps {
   currentTraining: TrainingData | null;
   recommendation: TrainingRecommendation | null;
   players?: Player[];
-  onApplyTraining: (typeId: number, staminaShare: number) => Promise<void>;
+  onApplyTraining: (
+    typeId: number,
+    staminaShare: number
+  ) => Promise<{
+    savedToServer: boolean;
+    requiresWriteScope?: boolean;
+    message: string;
+  } | void>;
   onSelectPlayer?: (player: Player) => void;
 }
 
 const TRAINING_OPTIONS = [
-  { id: 3, name: "Savunma (Defending)", skillKey: "defender" as const },
-  { id: 4, name: "Golcülük (Scoring)", skillKey: "scorer" as const },
-  { id: 5, name: "Kanat (Winger)", skillKey: "winger" as const },
-  { id: 7, name: "Kısa Pas (Short Passes)", skillKey: "passer" as const },
-  { id: 8, name: "Oyun Kuruculuk (Playmaking)", skillKey: "playmaker" as const },
-  { id: 9, name: "Kalecilik (Goalkeeping)", skillKey: "keeper" as const },
-  { id: 2, name: "Duran Top (Set Pieces)", skillKey: "setPieces" as const },
+  { id: 4, name: "Defans (Defending)", skillKey: "defender" as const },
+  { id: 5, name: "Golcülük (Scoring)", skillKey: "scorer" as const },
+  { id: 6, name: "Kanat (Crossing / Winger)", skillKey: "winger" as const },
+  { id: 8, name: "Kısa Pas (Short Passes)", skillKey: "passer" as const },
+  { id: 9, name: "Oyun Kuruculuk (Playmaking)", skillKey: "playmaker" as const },
+  { id: 10, name: "Kalecilik (Goalkeeping)", skillKey: "keeper" as const },
+  { id: 3, name: "Duran Top (Set Pieces)", skillKey: "setPieces" as const },
 ];
 
 export function TrainingOptimizerCard({
@@ -39,15 +49,18 @@ export function TrainingOptimizerCard({
   onSelectPlayer,
 }: TrainingOptimizerProps) {
   const [applying, setApplying] = useState(false);
-  const [successMsg, setSuccessMsg] = useState("");
+  const [serverVerifyStatus, setServerVerifyStatus] = useState<{
+    savedToServer: boolean;
+    requiresWriteScope?: boolean;
+    message: string;
+  } | null>(null);
 
-  // Interactive Training Simulator Controls
   const [selectedTypeId, setSelectedTypeId] = useState<number>(
-    recommendation?.recommendedTypeId || currentTraining?.trainingType || 8
+    currentTraining?.trainingType || recommendation?.recommendedTypeId || 9
   );
   const [staminaShare, setStaminaShare] = useState<number>(
-    recommendation?.recommendedStaminaShare ||
-      currentTraining?.staminaTrainingPart ||
+    currentTraining?.staminaTrainingPart ||
+      recommendation?.recommendedStaminaShare ||
       15
   );
   const [coachLevel, setCoachLevel] = useState<number>(
@@ -57,10 +70,17 @@ export function TrainingOptimizerCard({
 
   const handleApply = async (typeId: number, stam: number) => {
     setApplying(true);
+    setServerVerifyStatus(null);
     try {
-      await onApplyTraining(typeId, stam);
-      setSuccessMsg("Antrenman programı başarıyla güncellendi!");
-      setTimeout(() => setSuccessMsg(""), 4000);
+      const res = await onApplyTraining(typeId, stam);
+      if (res && typeof res === "object" && "message" in res) {
+        setServerVerifyStatus(res);
+      } else {
+        setServerVerifyStatus({
+          savedToServer: true,
+          message: "Antrenman programı güncellendi.",
+        });
+      }
     } finally {
       setApplying(false);
     }
@@ -138,15 +158,38 @@ export function TrainingOptimizerCard({
           >
             <Dumbbell className="w-4 h-4" />
             <span>
-              {applying ? "Uygulanıyor..." : "⚡ AI Önerisini Hemen Uygula"}
+              {applying
+                ? "Hattrick Sunucusuna Gönderiliyor..."
+                : "⚡ AI Önerisini Sunucuya Kaydet & Doğrula"}
             </span>
           </button>
         </div>
 
-        {successMsg && (
-          <div className="mt-4 flex items-center gap-2 p-3 rounded-2xl bg-emerald-500/15 border border-emerald-400 text-emerald-800 dark:text-emerald-300 text-xs font-bold">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-            <span>{successMsg}</span>
+        {serverVerifyStatus && (
+          <div
+            className={`mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-2xl border text-xs font-bold ${
+              serverVerifyStatus.savedToServer
+                ? "bg-emerald-500/15 border-emerald-400 text-emerald-800 dark:text-emerald-200"
+                : "bg-amber-500/15 border-amber-400 text-amber-900 dark:text-amber-200"
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              {serverVerifyStatus.savedToServer ? (
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+              ) : (
+                <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />
+              )}
+              <span>{serverVerifyStatus.message}</span>
+            </div>
+            {serverVerifyStatus.requiresWriteScope && (
+              <a
+                href="/api/auth/hattrick/connect"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-extrabold text-[11px] shrink-0"
+              >
+                <KeyRound className="w-3.5 h-3.5" />
+                <span>Yazma İzniyle Yeniden Bağla</span>
+              </a>
+            )}
           </div>
         )}
       </div>
@@ -158,10 +201,10 @@ export function TrainingOptimizerCard({
           <div className="p-5 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
               <span className="text-xs font-extrabold text-slate-400 uppercase">
-                MEVCUT ANTRENMAN DURUMU
+                SUNUCUDAKİ MEVCUT ANTRENMAN DURUMU
               </span>
               <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
-                CHPP Aktif
+                CHPP Sunucu Kaydı
               </span>
             </div>
             <div>
@@ -270,7 +313,9 @@ export function TrainingOptimizerCard({
                 disabled={applying}
                 className="w-full py-2.5 px-4 rounded-xl font-bold bg-slate-900 dark:bg-emerald-600 text-white hover:opacity-90 transition-all cursor-pointer"
               >
-                Seçili Programı Kaydet (%{staminaShare} Kondisyon)
+                {applying
+                  ? "Hattrick Sunucusuna Gönderiliyor..."
+                  : `Sunucuya Kaydet & Kontrol Et (%${staminaShare} Kondisyon)`}
               </button>
             </div>
           </div>
@@ -298,24 +343,32 @@ export function TrainingOptimizerCard({
                   onClick={() => onSelectPlayer?.(item.player)}
                   className="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/50 hover:border-emerald-500/50 cursor-pointer transition-all flex flex-col justify-between gap-2"
                 >
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-extrabold text-slate-900 dark:text-white truncate">
-                        {item.player.name}
-                      </span>
-                      <span className="text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold">
-                        {item.player.age}y {item.player.ageDays}g
-                      </span>
-                    </div>
+                  <div className="flex items-center gap-2.5">
+                    <PlayerAvatar
+                      avatar={item.player.avatar}
+                      name={item.player.name}
+                      shirtNumber={item.player.shirtNumber}
+                      size="xs"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-xs font-extrabold text-slate-900 dark:text-white truncate">
+                          {item.player.name}
+                        </span>
+                        <span className="text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
+                          {item.player.age}y {item.player.ageDays}g
+                        </span>
+                      </div>
 
-                    <div className="flex items-center gap-1.5 mt-2 text-xs font-bold text-slate-700 dark:text-slate-300">
-                      <span>
-                        {getHattrickSkillName(item.currentSkill)} ({item.currentSkill})
-                      </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-emerald-500" />
-                      <span className="text-emerald-600 dark:text-emerald-400">
-                        {getHattrickSkillName(item.targetSkill)} ({item.targetSkill})
-                      </span>
+                      <div className="flex items-center gap-1.5 mt-1 text-xs font-bold text-slate-700 dark:text-slate-300">
+                        <span>
+                          {getHattrickSkillName(item.currentSkill)} ({item.currentSkill})
+                        </span>
+                        <ArrowRight className="w-3.5 h-3.5 text-emerald-500" />
+                        <span className="text-emerald-600 dark:text-emerald-400">
+                          {getHattrickSkillName(item.targetSkill)} ({item.targetSkill})
+                        </span>
+                      </div>
                     </div>
                   </div>
 

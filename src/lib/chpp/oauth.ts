@@ -43,7 +43,10 @@ export interface AccessTokenResult {
   oauthTokenSecret: string;
 }
 
-export async function getRequestToken(callbackUrl: string): Promise<RequestTokenResult> {
+export async function getRequestToken(
+  callbackUrl: string,
+  includeWriteScope = true
+): Promise<RequestTokenResult> {
   const { oauth } = getOAuthConfig();
 
   const requestData = {
@@ -79,7 +82,10 @@ export async function getRequestToken(callbackUrl: string): Promise<RequestToken
     throw new Error(`Hattrick CHPP geçerli token döndürmedi: ${text}`);
   }
 
-  const authorizeUrl = `${AUTHORIZE_URL}?oauth_token=${encodeURIComponent(oauthToken)}`;
+  const scopeParam = includeWriteScope
+    ? `&scope=${encodeURIComponent("manage_matchorders,manage_training")}`
+    : "";
+  const authorizeUrl = `${AUTHORIZE_URL}?oauth_token=${encodeURIComponent(oauthToken)}${scopeParam}`;
 
   return {
     oauthToken,
@@ -141,13 +147,14 @@ export async function getAccessToken(
 export function buildSignedChppUrl(
   params: Record<string, string>,
   accessToken: string,
-  accessTokenSecret: string
+  accessTokenSecret: string,
+  method: "GET" | "POST" = "GET"
 ): string {
   const { oauth } = getOAuthConfig();
 
   const requestData = {
     url: CHPP_XML_URL,
-    method: "GET",
+    method,
     data: params,
   };
 

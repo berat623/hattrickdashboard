@@ -4,8 +4,8 @@ import { useState } from "react";
 import { Player, PositionCode } from "@/types/hattrick";
 import {
   estimatePlayerMarketValue,
-  getHattrickSkillName,
 } from "@/lib/algorithms/lineup";
+import { PlayerAvatar } from "./PlayerAvatar";
 import {
   Search,
   Star,
@@ -14,7 +14,6 @@ import {
   GitCompare,
   Sparkles,
   Users,
-  Coins,
 } from "lucide-react";
 
 interface PlayersTableProps {
@@ -227,26 +226,44 @@ export function PlayersTable({ players, onSelectPlayer }: PlayersTableProps) {
                   </td>
 
                   <td className="py-3.5 px-4">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                        {player.name}
-                      </span>
-                      {player.specialty && player.specialty !== "Yok" && (
-                        <span className="px-1.5 py-0.2 rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-[10px] font-bold">
-                          ⚡ {player.specialty}
-                        </span>
-                      )}
-                      {player.injuryDays > 0 && (
-                        <span className="flex items-center gap-0.5 text-[10px] font-bold text-rose-500 bg-rose-500/10 px-1.5 py-0.2 rounded border border-rose-300">
-                          <HeartPulse className="w-3 h-3" />
-                          {player.injuryDays}h
-                        </span>
-                      )}
-                      {player.cards > 0 && (
-                        <span className="text-[10px] font-bold text-amber-500 bg-amber-500/10 px-1 py-0.2 rounded border border-amber-300">
-                          {player.cards}🟨
-                        </span>
-                      )}
+                    <div className="flex items-center gap-2.5">
+                      <PlayerAvatar
+                        avatar={player.avatar}
+                        name={player.name}
+                        shirtNumber={player.shirtNumber}
+                        size="xs"
+                      />
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                            {player.name}
+                          </span>
+                          {player.specialty && player.specialty !== "Yok" && (
+                            <span className="px-1.5 py-0.2 rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-[10px] font-bold">
+                              ⚡ {player.specialty}
+                            </span>
+                          )}
+                          {player.injuryDays > 0 && (
+                            <span className="flex items-center gap-0.5 text-[10px] font-bold text-rose-500 bg-rose-500/10 px-1.5 py-0.2 rounded border border-rose-300">
+                              <HeartPulse className="w-3 h-3" />
+                              {player.injuryDays}h
+                            </span>
+                          )}
+                          {player.cards > 0 && (
+                            <span className="text-[10px] font-bold text-amber-500 bg-amber-500/10 px-1 py-0.2 rounded border border-amber-300">
+                              {player.cards}🟨
+                            </span>
+                          )}
+                        </div>
+                        {(player.careerGoals || 0) > 0 && (
+                          <div className="text-[10px] text-slate-400 mt-0.5">
+                            ⚽ {player.careerGoals} Kariyer Golü
+                            {player.careerHattricks
+                              ? ` • 🎩 ${player.careerHattricks} Hattrick`
+                              : ""}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </td>
 
@@ -354,12 +371,15 @@ export function PlayersTable({ players, onSelectPlayer }: PlayersTableProps) {
               onClick={() => onSelectPlayer?.(player)}
               className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm active:scale-[0.99] transition-all flex flex-col gap-3"
             >
-              {/* Top Row: Number, Name, Position, Star Rating */}
+              {/* Top Row: Avatar, Name, Position, Star Rating */}
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-white font-extrabold text-xs flex items-center justify-center shrink-0">
-                    #{player.shirtNumber || "-"}
-                  </div>
+                  <PlayerAvatar
+                    avatar={player.avatar}
+                    name={player.name}
+                    shirtNumber={player.shirtNumber}
+                    size="sm"
+                  />
                   <div className="min-w-0">
                     <div className="font-extrabold text-sm text-slate-900 dark:text-white truncate">
                       {player.name}

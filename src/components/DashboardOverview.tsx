@@ -8,10 +8,10 @@ import {
   Player,
 } from "@/types/hattrick";
 import { estimatePlayerMarketValue } from "@/lib/algorithms/lineup";
+import { PlayerAvatar, TeamCrest } from "./PlayerAvatar";
 import {
   Trophy,
   Coins,
-  Users,
   Building2,
   Sparkles,
   ArrowRight,
@@ -21,7 +21,6 @@ import {
   Shield,
   Star,
   Compass,
-  HeartPulse,
   Wallet,
 } from "lucide-react";
 import { NavTab } from "./Navbar";
@@ -74,21 +73,30 @@ export function DashboardOverview({
       {/* Hero Banner: Responsive Desktop & Mobile Club Command Center */}
       <div className="relative overflow-hidden p-5 sm:p-7 rounded-3xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-950 text-white shadow-2xl">
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <div className="inline-flex flex-wrap items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-              <Trophy className="w-3.5 h-3.5" />
-              <span>
-                {team?.seriesName || "-"} Ligi{" "}
-                {team?.rank ? `• ${team.rank}. Sırada` : ""}
-              </span>
-              {team?.regionName && <span>• {team.regionName}</span>}
+          <div className="flex items-start sm:items-center gap-4">
+            <TeamCrest
+              logoUrl={team?.logoUrl}
+              dressUri={team?.dressUri}
+              name={team?.name || "Hattrick Takımınız"}
+              size="xl"
+              className="border-emerald-400/40"
+            />
+            <div className="space-y-2">
+              <div className="inline-flex flex-wrap items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <Trophy className="w-3.5 h-3.5" />
+                <span>
+                  {team?.seriesName || "-"} Ligi{" "}
+                  {team?.rank ? `• ${team.rank}. Sırada` : ""}
+                </span>
+                {team?.regionName && <span>• {team.regionName}</span>}
+              </div>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
+                {team?.name || "Hattrick Takımınız"}
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
+                CHPP canlı verileriniz senkronize edildi. Yapay zeka destekli kadro dizilimi, antrenman hızı simülatörü, stadyum hesaplayıcı ve transfer gözlemci üssünüz hazır.
+              </p>
             </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-              {team?.name || "Hattrick Takımınız"}
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-              CHPP canlı verileriniz senkronize edildi. Yapay zeka destekli kadro dizilimi, antrenman hızı simülatörü, stadyum hesaplayıcı ve transfer gözlemci üssünüz hazır.
-            </p>
           </div>
 
           {/* Quick Action Buttons */}
@@ -368,17 +376,25 @@ export function DashboardOverview({
               onClick={() => onSelectPlayer?.(p)}
               className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/60 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-2"
             >
-              <div className="min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-extrabold text-slate-900 dark:text-white truncate">
-                    {p.name}
-                  </span>
-                  <span className="text-[10px] px-1.5 py-0.2 rounded-md font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 shrink-0">
-                    {p.bestPosition}
-                  </span>
-                </div>
-                <div className="text-[11px] text-slate-500 mt-1">
-                  {p.age}y • ~{estimatePlayerMarketValue(p).toLocaleString("tr-TR")} TL
+              <div className="flex items-center gap-2.5 min-w-0">
+                <PlayerAvatar
+                  avatar={p.avatar}
+                  name={p.name}
+                  shirtNumber={p.shirtNumber}
+                  size="sm"
+                />
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-extrabold text-slate-900 dark:text-white truncate">
+                      {p.name}
+                    </span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded-md font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 shrink-0">
+                      {p.bestPosition}
+                    </span>
+                  </div>
+                  <div className="text-[11px] text-slate-500 mt-1">
+                    {p.age}y • ~{estimatePlayerMarketValue(p).toLocaleString("tr-TR")} TL
+                  </div>
                 </div>
               </div>
 

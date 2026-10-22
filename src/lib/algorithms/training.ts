@@ -18,32 +18,32 @@ export function analyzeAndOptimizeTraining(players: Player[]): TrainingRecommend
   else if (avgAge > 25) recommendedStaminaShare = 18;
   else if (avgAge < 22) recommendedStaminaShare = 12;
 
-  // Score training categories
+  // Score training categories (using official Hattrick CHPP TrainingType IDs)
   const categories = [
     {
       name: "Oyun Kuruculuk (Playmaking)",
-      id: 7,
+      id: 9,
       candidates: playmakers,
       targetSkillKey: "playmaker" as const,
       maxSlots: 6, // 6 full training slots for IMs in 2 matches a week
     },
     {
       name: "Defans (Defending)",
-      id: 3,
+      id: 4,
       candidates: defenders,
       targetSkillKey: "defender" as const,
       maxSlots: 10, // 10 slots for defenders in 2 matches
     },
     {
       name: "Golcülük (Scoring)",
-      id: 6,
+      id: 5,
       candidates: scorers,
       targetSkillKey: "scorer" as const,
       maxSlots: 6, // 6 slots for forwards
     },
     {
-      name: "Kanat (Winger)",
-      id: 5,
+      name: "Kanat (Crossing / Winger)",
+      id: 6,
       candidates: wingers,
       targetSkillKey: "winger" as const,
       maxSlots: 4, // 4 slots for wingers

@@ -7,7 +7,8 @@ export type SupportedTactic =
   | "Ortadan Hücum"
   | "Kontra Atak"
   | "Uzaktan Şut"
-  | "Yaratıcı Oyna";
+  | "Yaratıcı Oyna"
+  | "Baskı (Pressing)";
 export type SupportedAttitude = "Normal" | "Sezonun Maçı" | "Gevşek";
 
 export const HATTRICK_SKILL_NAMES: Record<number, string> = {
@@ -57,6 +58,7 @@ export function estimatePlayerMarketValue(player: Player): number {
 interface SlotTemplate {
   id: string;
   role: PositionCode;
+  roleId: number;
   x: number; // 0 - 100%
   y: number; // 0 - 100% (top: 10% FW, bottom: 88% GK)
   label: string;
@@ -64,82 +66,82 @@ interface SlotTemplate {
 
 export const FORMATION_SLOTS: Record<SupportedFormation, SlotTemplate[]> = {
   "4-4-2": [
-    { id: "gk", role: "GK", x: 50, y: 88, label: "Kaleci" },
-    { id: "lb", role: "LB", x: 15, y: 70, label: "Sol Bek" },
-    { id: "cd1", role: "CD", x: 38, y: 72, label: "Sol Stoper" },
-    { id: "cd2", role: "CD", x: 62, y: 72, label: "Sağ Stoper" },
-    { id: "rb", role: "RB", x: 85, y: 70, label: "Sağ Bek" },
-    { id: "lw", role: "LW", x: 15, y: 44, label: "Sol Kanat" },
-    { id: "im1", role: "IM", x: 38, y: 46, label: "İç Saha (Sol)" },
-    { id: "im2", role: "IM", x: 62, y: 46, label: "İç Saha (Sağ)" },
-    { id: "rw", role: "RW", x: 85, y: 44, label: "Sağ Kanat" },
-    { id: "fw1", role: "FW", x: 36, y: 18, label: "Forvet (Sol)" },
-    { id: "fw2", role: "FW", x: 64, y: 18, label: "Forvet (Sağ)" },
+    { id: "gk", role: "GK", roleId: 100, x: 50, y: 88, label: "Kaleci" },
+    { id: "lb", role: "LB", roleId: 105, x: 15, y: 70, label: "Sol Bek" },
+    { id: "cd1", role: "CD", roleId: 104, x: 38, y: 72, label: "Sol Stoper" },
+    { id: "cd2", role: "CD", roleId: 102, x: 62, y: 72, label: "Sağ Stoper" },
+    { id: "rb", role: "RB", roleId: 101, x: 85, y: 70, label: "Sağ Bek" },
+    { id: "lw", role: "LW", roleId: 110, x: 15, y: 44, label: "Sol Kanat" },
+    { id: "im1", role: "IM", roleId: 109, x: 38, y: 46, label: "İç Saha (Sol)" },
+    { id: "im2", role: "IM", roleId: 107, x: 62, y: 46, label: "İç Saha (Sağ)" },
+    { id: "rw", role: "RW", roleId: 106, x: 85, y: 44, label: "Sağ Kanat" },
+    { id: "fw1", role: "FW", roleId: 113, x: 36, y: 18, label: "Forvet (Sol)" },
+    { id: "fw2", role: "FW", roleId: 111, x: 64, y: 18, label: "Forvet (Sağ)" },
   ],
   "3-5-2": [
-    { id: "gk", role: "GK", x: 50, y: 88, label: "Kaleci" },
-    { id: "cd1", role: "CD", x: 25, y: 72, label: "Sol Stoper" },
-    { id: "cd2", role: "CD", x: 50, y: 74, label: "Merkez Stoper" },
-    { id: "cd3", role: "CD", x: 75, y: 72, label: "Sağ Stoper" },
-    { id: "lw", role: "LW", x: 12, y: 45, label: "Sol Kanat" },
-    { id: "im1", role: "IM", x: 31, y: 48, label: "İç Saha (Sol)" },
-    { id: "im2", role: "IM", x: 50, y: 50, label: "İç Saha (Merkez)" },
-    { id: "im3", role: "IM", x: 69, y: 48, label: "İç Saha (Sağ)" },
-    { id: "rw", role: "RW", x: 88, y: 45, label: "Sağ Kanat" },
-    { id: "fw1", role: "FW", x: 36, y: 18, label: "Forvet (Sol)" },
-    { id: "fw2", role: "FW", x: 64, y: 18, label: "Forvet (Sağ)" },
+    { id: "gk", role: "GK", roleId: 100, x: 50, y: 88, label: "Kaleci" },
+    { id: "cd1", role: "CD", roleId: 104, x: 25, y: 72, label: "Sol Stoper" },
+    { id: "cd2", role: "CD", roleId: 103, x: 50, y: 74, label: "Merkez Stoper" },
+    { id: "cd3", role: "CD", roleId: 102, x: 75, y: 72, label: "Sağ Stoper" },
+    { id: "lw", role: "LW", roleId: 110, x: 12, y: 45, label: "Sol Kanat" },
+    { id: "im1", role: "IM", roleId: 109, x: 31, y: 48, label: "İç Saha (Sol)" },
+    { id: "im2", role: "IM", roleId: 108, x: 50, y: 50, label: "İç Saha (Merkez)" },
+    { id: "im3", role: "IM", roleId: 107, x: 69, y: 48, label: "İç Saha (Sağ)" },
+    { id: "rw", role: "RW", roleId: 106, x: 88, y: 45, label: "Sağ Kanat" },
+    { id: "fw1", role: "FW", roleId: 113, x: 36, y: 18, label: "Forvet (Sol)" },
+    { id: "fw2", role: "FW", roleId: 111, x: 64, y: 18, label: "Forvet (Sağ)" },
   ],
   "4-3-3": [
-    { id: "gk", role: "GK", x: 50, y: 88, label: "Kaleci" },
-    { id: "lb", role: "LB", x: 15, y: 70, label: "Sol Bek" },
-    { id: "cd1", role: "CD", x: 38, y: 72, label: "Sol Stoper" },
-    { id: "cd2", role: "CD", x: 62, y: 72, label: "Sağ Stoper" },
-    { id: "rb", role: "RB", x: 85, y: 70, label: "Sağ Bek" },
-    { id: "im1", role: "IM", x: 28, y: 46, label: "İç Saha (Sol)" },
-    { id: "im2", role: "IM", x: 50, y: 49, label: "İç Saha (Merkez)" },
-    { id: "im3", role: "IM", x: 72, y: 46, label: "İç Saha (Sağ)" },
-    { id: "fw1", role: "FW", x: 20, y: 20, label: "Sol Forvet" },
-    { id: "fw2", role: "FW", x: 50, y: 16, label: "Merkez Forvet" },
-    { id: "fw3", role: "FW", x: 80, y: 20, label: "Sağ Forvet" },
+    { id: "gk", role: "GK", roleId: 100, x: 50, y: 88, label: "Kaleci" },
+    { id: "lb", role: "LB", roleId: 105, x: 15, y: 70, label: "Sol Bek" },
+    { id: "cd1", role: "CD", roleId: 104, x: 38, y: 72, label: "Sol Stoper" },
+    { id: "cd2", role: "CD", roleId: 102, x: 62, y: 72, label: "Sağ Stoper" },
+    { id: "rb", role: "RB", roleId: 101, x: 85, y: 70, label: "Sağ Bek" },
+    { id: "im1", role: "IM", roleId: 109, x: 28, y: 46, label: "İç Saha (Sol)" },
+    { id: "im2", role: "IM", roleId: 108, x: 50, y: 49, label: "İç Saha (Merkez)" },
+    { id: "im3", role: "IM", roleId: 107, x: 72, y: 46, label: "İç Saha (Sağ)" },
+    { id: "fw1", role: "FW", roleId: 113, x: 20, y: 20, label: "Sol Forvet" },
+    { id: "fw2", role: "FW", roleId: 112, x: 50, y: 16, label: "Merkez Forvet" },
+    { id: "fw3", role: "FW", roleId: 111, x: 80, y: 20, label: "Sağ Forvet" },
   ],
   "4-5-1": [
-    { id: "gk", role: "GK", x: 50, y: 88, label: "Kaleci" },
-    { id: "lb", role: "LB", x: 15, y: 70, label: "Sol Bek" },
-    { id: "cd1", role: "CD", x: 38, y: 72, label: "Sol Stoper" },
-    { id: "cd2", role: "CD", x: 62, y: 72, label: "Sağ Stoper" },
-    { id: "rb", role: "RB", x: 85, y: 70, label: "Sağ Bek" },
-    { id: "lw", role: "LW", x: 12, y: 44, label: "Sol Kanat" },
-    { id: "im1", role: "IM", x: 31, y: 47, label: "İç Saha (Sol)" },
-    { id: "im2", role: "IM", x: 50, y: 50, label: "Merkez Orta Saha" },
-    { id: "im3", role: "IM", x: 69, y: 47, label: "İç Saha (Sağ)" },
-    { id: "rw", role: "RW", x: 88, y: 44, label: "Sağ Kanat" },
-    { id: "fw1", role: "FW", x: 50, y: 18, label: "Tek Forvet" },
+    { id: "gk", role: "GK", roleId: 100, x: 50, y: 88, label: "Kaleci" },
+    { id: "lb", role: "LB", roleId: 105, x: 15, y: 70, label: "Sol Bek" },
+    { id: "cd1", role: "CD", roleId: 104, x: 38, y: 72, label: "Sol Stoper" },
+    { id: "cd2", role: "CD", roleId: 102, x: 62, y: 72, label: "Sağ Stoper" },
+    { id: "rb", role: "RB", roleId: 101, x: 85, y: 70, label: "Sağ Bek" },
+    { id: "lw", role: "LW", roleId: 110, x: 12, y: 44, label: "Sol Kanat" },
+    { id: "im1", role: "IM", roleId: 109, x: 31, y: 47, label: "İç Saha (Sol)" },
+    { id: "im2", role: "IM", roleId: 108, x: 50, y: 50, label: "Merkez Orta Saha" },
+    { id: "im3", role: "IM", roleId: 107, x: 69, y: 47, label: "İç Saha (Sağ)" },
+    { id: "rw", role: "RW", roleId: 106, x: 88, y: 44, label: "Sağ Kanat" },
+    { id: "fw1", role: "FW", roleId: 112, x: 50, y: 18, label: "Tek Forvet" },
   ],
   "3-4-3": [
-    { id: "gk", role: "GK", x: 50, y: 88, label: "Kaleci" },
-    { id: "cd1", role: "CD", x: 25, y: 72, label: "Sol Stoper" },
-    { id: "cd2", role: "CD", x: 50, y: 74, label: "Merkez Stoper" },
-    { id: "cd3", role: "CD", x: 75, y: 72, label: "Sağ Stoper" },
-    { id: "lw", role: "LW", x: 15, y: 46, label: "Sol Kanat" },
-    { id: "im1", role: "IM", x: 38, y: 48, label: "İç Saha (Sol)" },
-    { id: "im2", role: "IM", x: 62, y: 48, label: "İç Saha (Sağ)" },
-    { id: "rw", role: "RW", x: 85, y: 46, label: "Sağ Kanat" },
-    { id: "fw1", role: "FW", x: 22, y: 19, label: "Sol Forvet" },
-    { id: "fw2", role: "FW", x: 50, y: 16, label: "Merkez Forvet" },
-    { id: "fw3", role: "FW", x: 78, y: 19, label: "Sağ Forvet" },
+    { id: "gk", role: "GK", roleId: 100, x: 50, y: 88, label: "Kaleci" },
+    { id: "cd1", role: "CD", roleId: 104, x: 25, y: 72, label: "Sol Stoper" },
+    { id: "cd2", role: "CD", roleId: 103, x: 50, y: 74, label: "Merkez Stoper" },
+    { id: "cd3", role: "CD", roleId: 102, x: 75, y: 72, label: "Sağ Stoper" },
+    { id: "lw", role: "LW", roleId: 110, x: 15, y: 46, label: "Sol Kanat" },
+    { id: "im1", role: "IM", roleId: 109, x: 38, y: 48, label: "İç Saha (Sol)" },
+    { id: "im2", role: "IM", roleId: 107, x: 62, y: 48, label: "İç Saha (Sağ)" },
+    { id: "rw", role: "RW", roleId: 106, x: 85, y: 46, label: "Sağ Kanat" },
+    { id: "fw1", role: "FW", roleId: 113, x: 22, y: 19, label: "Sol Forvet" },
+    { id: "fw2", role: "FW", roleId: 112, x: 50, y: 16, label: "Merkez Forvet" },
+    { id: "fw3", role: "FW", roleId: 111, x: 78, y: 19, label: "Sağ Forvet" },
   ],
   "5-3-2": [
-    { id: "gk", role: "GK", x: 50, y: 88, label: "Kaleci" },
-    { id: "lb", role: "LB", x: 10, y: 68, label: "Sol Kanat Bek" },
-    { id: "cd1", role: "CD", x: 30, y: 73, label: "Sol Stoper" },
-    { id: "cd2", role: "CD", x: 50, y: 75, label: "Merkez Stoper" },
-    { id: "cd3", role: "CD", x: 70, y: 73, label: "Sağ Stoper" },
-    { id: "rb", role: "RB", x: 90, y: 68, label: "Sağ Kanat Bek" },
-    { id: "im1", role: "IM", x: 28, y: 47, label: "İç Saha (Sol)" },
-    { id: "im2", role: "IM", x: 50, y: 49, label: "Merkez Orta Saha" },
-    { id: "im3", role: "IM", x: 72, y: 47, label: "İç Saha (Sağ)" },
-    { id: "fw1", role: "FW", x: 36, y: 18, label: "Forvet (Sol)" },
-    { id: "fw2", role: "FW", x: 64, y: 18, label: "Forvet (Sağ)" },
+    { id: "gk", role: "GK", roleId: 100, x: 50, y: 88, label: "Kaleci" },
+    { id: "lb", role: "LB", roleId: 105, x: 10, y: 68, label: "Sol Kanat Bek" },
+    { id: "cd1", role: "CD", roleId: 104, x: 30, y: 73, label: "Sol Stoper" },
+    { id: "cd2", role: "CD", roleId: 103, x: 50, y: 75, label: "Merkez Stoper" },
+    { id: "cd3", role: "CD", roleId: 102, x: 70, y: 73, label: "Sağ Stoper" },
+    { id: "rb", role: "RB", roleId: 101, x: 90, y: 68, label: "Sağ Kanat Bek" },
+    { id: "im1", role: "IM", roleId: 109, x: 28, y: 47, label: "İç Saha (Sol)" },
+    { id: "im2", role: "IM", roleId: 108, x: 50, y: 49, label: "Merkez Orta Saha" },
+    { id: "im3", role: "IM", roleId: 107, x: 72, y: 47, label: "İç Saha (Sağ)" },
+    { id: "fw1", role: "FW", roleId: 113, x: 36, y: 18, label: "Forvet (Sol)" },
+    { id: "fw2", role: "FW", roleId: 111, x: 64, y: 18, label: "Forvet (Sağ)" },
   ],
 };
 
@@ -538,4 +540,209 @@ export function calculateLineupSectorRatings(
     midAtt,
     leftAtt,
   };
+}
+
+/**
+ * Hattrick sunucusundan okunan (matchorders veya matchlineup) gerçek kadro ve taktik bilgisini
+ * saha dizilişine (TacticalLineup) dönüştürür.
+ */
+export function buildLineupFromServerState(
+  players: Player[],
+  serverState: {
+    source: "matchorders" | "matchlineup" | "none";
+    matchId?: number;
+    opponentName?: string;
+    formation: string;
+    tactic: string;
+    attitude: string;
+    captainId?: number;
+    setPiecesTakerId?: number;
+    rolePlayers: { roleId: number; playerId: number; behaviour: number }[];
+    ordersGiven?: boolean;
+  }
+): TacticalLineup {
+  const validFormations: SupportedFormation[] = [
+    "4-4-2",
+    "3-5-2",
+    "4-3-3",
+    "4-5-1",
+    "3-4-3",
+    "5-3-2",
+  ];
+  const formation: SupportedFormation = validFormations.includes(
+    serverState.formation as SupportedFormation
+  )
+    ? (serverState.formation as SupportedFormation)
+    : "4-4-2";
+
+  const validTactics: SupportedTactic[] = [
+    "Normal",
+    "Kanatlardan Hücum",
+    "Ortadan Hücum",
+    "Kontra Atak",
+    "Uzaktan Şut",
+    "Yaratıcı Oyna",
+    "Baskı (Pressing)",
+  ];
+  const tactic: SupportedTactic = validTactics.includes(
+    serverState.tactic as SupportedTactic
+  )
+    ? (serverState.tactic as SupportedTactic)
+    : "Normal";
+
+  const validAttitudes: SupportedAttitude[] = [
+    "Normal",
+    "Sezonun Maçı",
+    "Gevşek",
+  ];
+  const attitude: SupportedAttitude = validAttitudes.includes(
+    serverState.attitude as SupportedAttitude
+  )
+    ? (serverState.attitude as SupportedAttitude)
+    : "Normal";
+
+  if (!serverState.rolePlayers || serverState.rolePlayers.length === 0) {
+    const auto = generateAutoLineup(players, formation, tactic, attitude);
+    return {
+      ...auto,
+      syncedFromServer: false,
+      serverSource: "auto",
+    };
+  }
+
+  const playerById = new Map<number, Player>();
+  for (const p of players) {
+    playerById.set(p.id, p);
+  }
+
+  const templates = FORMATION_SLOTS[formation];
+  const assignedPlayerIds = new Set<number>();
+  const remainingRolePlayers = [...serverState.rolePlayers];
+
+  const slots: FormationSlot[] = templates.map((tpl) => {
+    // 1. Exact RoleID match
+    let matchIdx = remainingRolePlayers.findIndex(
+      (rp) => rp.roleId === tpl.roleId && playerById.has(rp.playerId)
+    );
+
+    // 2. Same line match (Defense 101..105, Midfield 106..110, Attack 111..113)
+    if (matchIdx === -1) {
+      matchIdx = remainingRolePlayers.findIndex((rp) => {
+        if (!playerById.has(rp.playerId)) return false;
+        if (tpl.role === "GK") return rp.roleId === 100;
+        if (["LB", "CD", "RB"].includes(tpl.role))
+          return rp.roleId >= 101 && rp.roleId <= 105;
+        if (["LW", "IM", "RW"].includes(tpl.role))
+          return rp.roleId >= 106 && rp.roleId <= 110;
+        if (tpl.role === "FW") return rp.roleId >= 111 && rp.roleId <= 113;
+        return false;
+      });
+    }
+
+    if (matchIdx !== -1) {
+      const rp = remainingRolePlayers.splice(matchIdx, 1)[0];
+      const pl = playerById.get(rp.playerId)!;
+      assignedPlayerIds.add(pl.id);
+      return {
+        ...tpl,
+        playerId: pl.id,
+        assignedPlayer: pl,
+        rating: getPlayerScoreForRole(pl, tpl.role),
+      };
+    }
+
+    // 3. Fallback to best unassigned player in squad
+    const fallback = players
+      .filter((p) => !assignedPlayerIds.has(p.id) && p.injuryDays === 0)
+      .map((p) => ({ player: p, score: getPlayerScoreForRole(p, tpl.role) }))
+      .sort((a, b) => b.score - a.score)[0];
+
+    if (fallback) {
+      assignedPlayerIds.add(fallback.player.id);
+      return {
+        ...tpl,
+        playerId: fallback.player.id,
+        assignedPlayer: fallback.player,
+        rating: fallback.score,
+      };
+    }
+
+    return { ...tpl };
+  });
+
+  // Fill 5 substitutes
+  const subRoles: ("SUB_GK" | "SUB_DEF" | "SUB_MID" | "SUB_WING" | "SUB_FW")[] =
+    ["SUB_GK", "SUB_DEF", "SUB_MID", "SUB_WING", "SUB_FW"];
+  const subTargetRole: Record<string, PositionCode> = {
+    SUB_GK: "GK",
+    SUB_DEF: "CD",
+    SUB_MID: "IM",
+    SUB_WING: "RW",
+    SUB_FW: "FW",
+  };
+
+  const substitutes = subRoles.map((subSlot) => {
+    const targetRole = subTargetRole[subSlot];
+    const available = players
+      .filter((p) => !assignedPlayerIds.has(p.id) && p.injuryDays === 0)
+      .map((p) => ({ player: p, score: getPlayerScoreForRole(p, targetRole) }))
+      .sort((a, b) => b.score - a.score);
+
+    if (available.length > 0) {
+      assignedPlayerIds.add(available[0].player.id);
+      return {
+        slot: subSlot,
+        playerId: available[0].player.id,
+        player: available[0].player,
+      };
+    }
+    return { slot: subSlot };
+  });
+
+  const starters = slots
+    .map((s) => s.assignedPlayer)
+    .filter(Boolean) as Player[];
+  const defaultCaptain = [...starters].sort(
+    (a, b) =>
+      b.experience * 1.5 +
+      b.leadership * 2 -
+      (a.experience * 1.5 + a.leadership * 2)
+  )[0];
+  const defaultSP = [...starters].sort(
+    (a, b) => b.skills.setPieces - a.skills.setPieces
+  )[0];
+
+  const sectorRatings = calculateLineupSectorRatings(slots, tactic, attitude);
+  const totalRating =
+    Math.round(slots.reduce((acc, s) => acc + (s.rating || 0), 0) * 10) / 10;
+
+  return {
+    formation,
+    tactic,
+    attitude,
+    captainId: serverState.captainId || defaultCaptain?.id,
+    setPiecesTakerId: serverState.setPiecesTakerId || defaultSP?.id,
+    slots,
+    substitutes,
+    totalRating,
+    sectorRatings,
+    syncedFromServer: serverState.source !== "none",
+    serverSource:
+      serverState.source === "none" ? "auto" : serverState.source,
+    sourceMatchId: serverState.matchId,
+    sourceOpponentName: serverState.opponentName,
+    ordersGiven: serverState.ordersGiven,
+  };
+}
+
+export function extractRolePositionsFromLineup(
+  lineup: TacticalLineup
+): { roleId: number; playerId: number; behaviour: number }[] {
+  return lineup.slots
+    .filter((s) => Boolean(s.playerId))
+    .map((s) => ({
+      roleId: s.roleId || 108,
+      playerId: s.playerId!,
+      behaviour: 0,
+    }));
 }

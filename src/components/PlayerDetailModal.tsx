@@ -7,14 +7,11 @@ import {
   estimatePlayerMarketValue,
   getAllRoleScoresForPlayer,
 } from "@/lib/algorithms/lineup";
+import { PlayerAvatar } from "./PlayerAvatar";
 import {
   X,
   Star,
-  Coins,
-  TrendingUp,
   Shield,
-  HeartPulse,
-  Award,
   Sparkles,
   GitCompare,
   UserCheck,
@@ -69,10 +66,14 @@ export function PlayerDetailModal({
           </button>
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pr-10">
-            <div className="flex items-center gap-3.5">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-400 text-slate-950 font-extrabold text-xl flex items-center justify-center shadow-lg shadow-emerald-500/30 shrink-0">
-                #{player.shirtNumber || "-"}
-              </div>
+            <div className="flex items-center gap-4">
+              <PlayerAvatar
+                avatar={player.avatar}
+                name={player.name}
+                shirtNumber={player.shirtNumber}
+                size="lg"
+                className="ring-2 ring-emerald-400/50"
+              />
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <h2 className="text-lg sm:text-xl font-extrabold tracking-tight">
@@ -96,6 +97,9 @@ export function PlayerDetailModal({
                   <strong className="text-emerald-300">
                     {player.wage.toLocaleString("tr-TR")} TL/hf
                   </strong>
+                  {player.careerGoals !== undefined
+                    ? ` • ⚽ ${player.careerGoals} Gol`
+                    : ""}
                 </p>
               </div>
             </div>

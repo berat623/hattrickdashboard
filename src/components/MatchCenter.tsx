@@ -7,6 +7,7 @@ import {
   MatchSimulationResult,
 } from "@/lib/algorithms/match-predictor";
 import { LiveMatchViewer } from "./LiveMatchViewer";
+import { TeamCrest } from "./PlayerAvatar";
 import {
   Calendar,
   Trophy,
@@ -23,15 +24,26 @@ interface MatchCenterProps {
   matches: Match[];
   players?: Player[];
   activeLineupRatings?: SectorRatings;
+  onSelectPlayer?: (player: Player) => void;
 }
 
 export function MatchCenter({
   matches,
   players = [],
   activeLineupRatings,
+  onSelectPlayer,
 }: MatchCenterProps) {
+  // ONLY LIVE and FINISHED matches can be watched in the 2D Live Match Viewer
+  const liveAndFinishedMatches = matches
+    .filter((m) => m.status === "LIVE" || m.status === "FINISHED")
+    .sort((a, b) => {
+      if (a.status === "LIVE" && b.status !== "LIVE") return -1;
+      if (b.status === "LIVE" && a.status !== "LIVE") return 1;
+      return new Date(b.matchDate).getTime() - new Date(a.matchDate).getTime();
+    });
+
   const finishedMatches = matches.filter((m) => m.status === "FINISHED");
-  const upcomingMatches = matches.filter((m) => m.status === "UPCOMING");
+  const liveMatches = matches.filter((m) => m.status === "LIVE");
 
   const totalFinished = finishedMatches.length;
   const wins = finishedMatches.filter((m) => m.result === "WIN").length;
@@ -45,67 +57,68 @@ export function MatchCenter({
   const lossRate =
     totalFinished > 0 ? Math.round((losses / totalFinished) * 100) : 0;
 
-  const nextMatch = upcomingMatches[0] || matches[0];
-  const [selectedMatch, setSelectedMatch] = useState<Match | null>(
-    nextMatch || null
+  const [selectedLiveMatchId, setSelectedLiveMatchId] = useState<number | null>(
+    liveAndFinishedMatches[0]?.id || null
+  );
+  const selectedLiveMatch =
+    liveAndFinishedMatches.find((m) => m.id === selectedLiveMatchId) ||
+    liveAndFinishedMatches[0] ||
+    null;
+
+  const [selectedSimMatch, setSelectedSimMatch] = useState<Match | null>(
+    matches[0] || null
   );
   const [viewMode, setViewMode] = useState<"live2d" | "simulator">("live2d");
 
   // Interactive Custom Simulation State ("What-If" Sliders)
   const [customMode, setCustomMode] = useState(false);
-  const [homeMid, setHomeMid] = useState(
-    activeLineupRatings?.midfield || 52
-  );
-  const [homeDef, setHomeDef] = useState(
-    activeLineupRatings?.midDef || 50
-  );
-  const [homeAtt, setHomeAtt] = useState(
-    activeLineupRatings?.midAtt || 48
-  );
+  const [homeMid, setHomeMid] = useState(activeLineupRatings?.midfield || 40);
+  const [homeDef, setHomeDef] = useState(activeLineupRatings?.midDef || 40);
+  const [homeAtt, setHomeAtt] = useState(activeLineupRatings?.midAtt || 40);
 
-  const [awayMid, setAwayMid] = useState(44);
-  const [awayDef, setAwayDef] = useState(45);
-  const [awayAtt, setAwayAtt] = useState(42);
+  const [awayMid, setAwayMid] = useState(36);
+  const [awayDef, setAwayDef] = useState(36);
+  const [awayAtt, setAwayAtt] = useState(36);
 
   const effectiveHomeRatings: SectorRatings = customMode
     ? {
         midfield: homeMid,
-        rightDef: Math.max(10, homeDef - 3),
+        rightDef: Math.max(10, homeDef - 2),
         midDef: homeDef,
-        leftDef: Math.max(10, homeDef - 3),
+        leftDef: Math.max(10, homeDef - 2),
         rightAtt: Math.max(10, homeAtt - 2),
         midAtt: homeAtt,
         leftAtt: Math.max(10, homeAtt - 2),
       }
-    : selectedMatch?.homeRatings ||
+    : selectedSimMatch?.homeRatings ||
       activeLineupRatings || {
-        midfield: 52,
-        rightDef: 48,
-        midDef: 54,
-        leftDef: 46,
-        rightAtt: 44,
-        midAtt: 50,
-        leftAtt: 48,
+        midfield: 40,
+        rightDef: 38,
+        midDef: 42,
+        leftDef: 38,
+        rightAtt: 38,
+        midAtt: 40,
+        leftAtt: 38,
       };
 
   const effectiveAwayRatings: SectorRatings = customMode
     ? {
         midfield: awayMid,
-        rightDef: Math.max(10, awayDef - 3),
+        rightDef: Math.max(10, awayDef - 2),
         midDef: awayDef,
-        leftDef: Math.max(10, awayDef - 3),
+        leftDef: Math.max(10, awayDef - 2),
         rightAtt: Math.max(10, awayAtt - 2),
         midAtt: awayAtt,
         leftAtt: Math.max(10, awayAtt - 2),
       }
-    : selectedMatch?.awayRatings || {
-        midfield: 44,
-        rightDef: 41,
-        midDef: 46,
-        leftDef: 42,
-        rightAtt: 38,
-        midAtt: 42,
-        leftAtt: 39,
+    : selectedSimMatch?.awayRatings || {
+        midfield: 36,
+        rightDef: 35,
+        midDef: 38,
+        leftDef: 35,
+        rightAtt: 34,
+        midAtt: 36,
+        leftAtt: 34,
       };
 
   const simulation: MatchSimulationResult = simulateMatch(
@@ -129,11 +142,16 @@ export function MatchCenter({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <div className="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
           <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 text-[11px] font-bold">
-            <span>OYNANAN MAÇLAR</span>
+            <span>OYNANAN RESMİ MAÇLAR</span>
             <Calendar className="w-4 h-4 text-emerald-500" />
           </div>
           <div className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-1">
             {totalFinished}
+            {liveMatches.length > 0 && (
+              <span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-rose-500 text-white font-black">
+                {liveMatches.length} CANLI
+              </span>
+            )}
           </div>
           <div className="flex items-center gap-1.5 mt-2 text-[11px] text-slate-500">
             <span className="text-emerald-500 font-bold">{wins}G</span> •{" "}
@@ -191,7 +209,7 @@ export function MatchCenter({
         </div>
       </div>
 
-      {/* Mode Switcher: 2D Live Broadcast vs Deep Probability Simulator */}
+      {/* Mode Switcher: 2D Live/Past Official Match Viewer vs 7-Sector Tactical Analyzer */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
         <div className="grid grid-cols-2 sm:flex items-center gap-2">
           <button
@@ -204,7 +222,7 @@ export function MatchCenter({
             }`}
           >
             <Radio className="w-4 h-4" />
-            <span>📺 Canlı 2D Maç İzle & Telemetri</span>
+            <span>📺 Canlı & Geçmiş Maçlar (2D Saha)</span>
           </button>
 
           <button
@@ -217,58 +235,59 @@ export function MatchCenter({
             }`}
           >
             <BarChart3 className="w-4 h-4" />
-            <span>📊 7 Bölge Olasılık & Skor Motoru</span>
+            <span>📊 Fikstür & 7 Bölge Taktik Analizi</span>
           </button>
         </div>
 
-        {matches.length > 0 && (
+        {/* Match Selector in 2D Live/Past Mode: ONLY LIVE & FINISHED matches */}
+        {viewMode === "live2d" && liveAndFinishedMatches.length > 0 && (
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-slate-400 shrink-0">
-              İzlenecek Maç:
+              Canlı / Geçmiş Maç Seç:
             </span>
             <select
-              value={selectedMatch?.id || ""}
+              value={selectedLiveMatch?.id || ""}
               onChange={(e) => {
-                const found = matches.find(
-                  (m) => m.id === Number(e.target.value)
-                );
-                if (found) setSelectedMatch(found);
+                setSelectedLiveMatchId(Number(e.target.value));
               }}
               className="w-full sm:w-auto px-3 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white cursor-pointer"
             >
-              {matches.map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.homeTeamName} vs {m.awayTeamName} (
-                  {m.status === "FINISHED"
-                    ? `${m.homeGoals}-${m.awayGoals}`
-                    : "Gelecek"}
-                  )
-                </option>
-              ))}
+              {liveAndFinishedMatches.map((m) => {
+                const dStr = new Date(m.matchDate).toLocaleDateString("tr-TR", {
+                  day: "numeric",
+                  month: "short",
+                });
+                return (
+                  <option key={m.id} value={m.id}>
+                    {m.status === "LIVE" ? "🔴 CANLI: " : `${dStr} • `}
+                    {m.homeTeamName} {m.homeGoals ?? 0} - {m.awayGoals ?? 0}{" "}
+                    {m.awayTeamName}
+                  </option>
+                );
+              })}
             </select>
           </div>
         )}
       </div>
 
-      {/* Mode 1: 2D Live Match Broadcast & Advanced Telemetry */}
+      {/* Mode 1: 2D Live & Past Match Viewer (Strictly LIVE & FINISHED matches only) */}
       {viewMode === "live2d" && (
         <LiveMatchViewer
-          match={selectedMatch}
+          match={selectedLiveMatch}
           players={players}
-          activeLineupRatings={activeLineupRatings}
+          onSelectPlayer={onSelectPlayer}
         />
       )}
 
-      {/* Mode 2: Deep Probability Simulator & Fixture List */}
+      {/* Mode 2: 7-Sector Tactical Analyzer & Full Fixture List */}
       {viewMode === "simulator" && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Next Match & Interactive Simulator Card (7 cols) */}
           <div className="lg:col-span-7 flex flex-col gap-4 p-5 sm:p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
             <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-2">
                 <Swords className="w-4 h-4 text-emerald-500" />
                 <h3 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white uppercase tracking-wider">
-                  Detaylı Olasılık & 7 Bölge Hücum/Savunma Motoru
+                  7 Bölge Hücum & Savunma Karşılaştırma Motoru
                 </h3>
               </div>
 
@@ -298,7 +317,6 @@ export function MatchCenter({
               </div>
             </div>
 
-            {/* Interactive Sliders when Custom Mode is active */}
             {customMode && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-950/20 text-xs">
                 <div className="space-y-2.5">
@@ -403,7 +421,8 @@ export function MatchCenter({
             <div className="space-y-2.5 pt-1">
               <div className="flex items-center justify-between text-xs font-extrabold">
                 <span className="text-emerald-600 dark:text-emerald-400">
-                  Galibiyet: %{simulation.homeWinProb} ({simulation.homeExpectedPoints} xPts)
+                  Galibiyet: %{simulation.homeWinProb} (
+                  {simulation.homeExpectedPoints} xPts)
                 </span>
                 <span className="text-amber-500">
                   Beraberlik: %{simulation.drawProb}
@@ -434,7 +453,8 @@ export function MatchCenter({
                     Gol Beklentisi (xG)
                   </span>
                   <strong className="text-emerald-600 dark:text-emerald-400 text-xs">
-                    {simulation.expectedHomeGoals} vs {simulation.expectedAwayGoals}
+                    {simulation.expectedHomeGoals} vs{" "}
+                    {simulation.expectedAwayGoals}
                   </strong>
                 </div>
                 <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-950/50 border border-slate-100 dark:border-slate-800">
@@ -447,7 +467,7 @@ export function MatchCenter({
                 </div>
                 <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-950/50 border border-slate-100 dark:border-slate-800">
                   <span className="text-slate-400 block text-[10px]">
-                    Gol Yememe (Clean Sheet)
+                    Gol Yememe
                   </span>
                   <strong className="text-blue-500 text-xs">
                     %{simulation.cleanSheetHomeProb}
@@ -516,7 +536,7 @@ export function MatchCenter({
 
             <div className="space-y-2.5 overflow-y-auto max-h-[520px] pr-1">
               {matches.map((m) => {
-                const isSelected = !customMode && selectedMatch?.id === m.id;
+                const isSelected = !customMode && selectedSimMatch?.id === m.id;
                 const dateStr = new Date(m.matchDate).toLocaleDateString(
                   "tr-TR",
                   {
@@ -530,7 +550,7 @@ export function MatchCenter({
                     key={m.id}
                     onClick={() => {
                       setCustomMode(false);
-                      setSelectedMatch(m);
+                      setSelectedSimMatch(m);
                     }}
                     className={`p-3.5 rounded-2xl border cursor-pointer transition-all ${
                       isSelected
@@ -540,34 +560,62 @@ export function MatchCenter({
                   >
                     <div className="flex items-center justify-between text-[11px] text-slate-400 mb-1.5">
                       <span className="font-semibold">
-                        {dateStr} • {m.matchType === "LEAGUE" ? "Lig" : "Kupa"}
+                        {dateStr} •{" "}
+                        {m.matchType === "LEAGUE"
+                          ? "Lig"
+                          : m.matchType === "CUP"
+                          ? "Kupa"
+                          : "Dostluk"}
                       </span>
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedMatch(m);
-                          setViewMode("live2d");
-                        }}
-                        className="px-2 py-0.5 rounded-md text-[10px] bg-emerald-500 text-slate-950 font-extrabold cursor-pointer"
-                      >
-                        📺 Canlı İzle
-                      </button>
+                      {(m.status === "FINISHED" || m.status === "LIVE") && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedLiveMatchId(m.id);
+                            setViewMode("live2d");
+                          }}
+                          className="px-2.5 py-0.5 rounded-md text-[10px] bg-emerald-500 text-slate-950 font-extrabold cursor-pointer"
+                        >
+                          {m.status === "LIVE"
+                            ? "🔴 Canlı 2D İzle"
+                            : "📺 2D Maç Özeti"}
+                        </button>
+                      )}
+                      {m.status === "UPCOMING" && (
+                        <span className="px-2 py-0.5 rounded-md text-[10px] bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold">
+                          Gelecek Maç
+                        </span>
+                      )}
                     </div>
 
                     <div className="flex items-center justify-between gap-2">
-                      <div className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate flex-1">
-                        {m.homeTeamName}
+                      <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                        <TeamCrest
+                          logoUrl={m.homeLogoUrl}
+                          name={m.homeTeamName}
+                          size="xs"
+                        />
+                        <span className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">
+                          {m.homeTeamName}
+                        </span>
                       </div>
 
                       <div className="px-2.5 py-1 rounded-lg bg-slate-900 text-white dark:bg-slate-800 font-extrabold text-xs shrink-0">
-                        {m.status === "FINISHED"
-                          ? `${m.homeGoals} - ${m.awayGoals}`
+                        {m.status === "FINISHED" || m.status === "LIVE"
+                          ? `${m.homeGoals ?? 0} - ${m.awayGoals ?? 0}`
                           : "VS"}
                       </div>
 
-                      <div className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate flex-1 text-right">
-                        {m.awayTeamName}
+                      <div className="flex items-center justify-end gap-1.5 min-w-0 flex-1 text-right">
+                        <span className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">
+                          {m.awayTeamName}
+                        </span>
+                        <TeamCrest
+                          logoUrl={m.awayLogoUrl}
+                          name={m.awayTeamName}
+                          size="xs"
+                        />
                       </div>
                     </div>
                   </div>
