@@ -9,7 +9,10 @@ import { TrainingOptimizerCard } from "@/components/TrainingOptimizerCard";
 import { MatchCenter } from "@/components/MatchCenter";
 import { DashboardOverview } from "@/components/DashboardOverview";
 import { HattrickConnectModal } from "@/components/HattrickConnectModal";
-import { SupportedFormation } from "@/lib/algorithms/lineup";
+import { SupportedFormation, generateAutoLineup } from "@/lib/algorithms/lineup";
+import { analyzeAndOptimizeTraining } from "@/lib/algorithms/training";
+import { simulateMatch } from "@/lib/algorithms/match-predictor";
+import { MOCK_PLAYERS, MOCK_TEAM, MOCK_MATCHES, MOCK_TRAINING } from "@/lib/chpp/mock-data";
 import { 
   Player, 
   TeamDetails, 
@@ -36,10 +39,10 @@ export default function Home() {
     demoMode: true,
   });
 
-  const [team, setTeam] = useState<TeamDetails | null>(null);
-  const [players, setPlayers] = useState<Player[]>([]);
+  const [team, setTeam] = useState<TeamDetails | null>(MOCK_TEAM);
+  const [players, setPlayers] = useState<Player[]>(MOCK_PLAYERS);
   const [lineup, setLineup] = useState<TacticalLineup | null>(null);
-  const [training, setTraining] = useState<TrainingData | null>(null);
+  const [training, setTraining] = useState<TrainingData | null>(MOCK_TRAINING);
   const [trainingRec, setTrainingRec] = useState<TrainingRecommendation | null>(null);
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
@@ -52,44 +55,106 @@ export default function Home() {
     setTimeout(() => setToast(null), 4000);
   };
 
-  // Initial Data Fetching
+  // Initial Data Fetching (Supports both Node backend and GitHub Pages static hosting)
   useEffect(() => {
     async function loadData() {
       try {
         setLoading(true);
 
         // 1. User Session
-        const userRes = await fetch("/api/auth/me").then((r) => r.json()).catch(() => null);
-        if (userRes?.user) {
-          setUser(userRes.user);
+        try {
+          const userRes = await fetch("/api/auth/me");
+          if (userRes.ok) {
+            const data = await userRes.json();
+            if (data?.user) setUser(data.user);
+          }
+        } catch {
+          // Keep default session
         }
 
         // 2. Team Details
-        const teamRes = await fetch("/api/hattrick/team").then((r) => r.json()).catch(() => null);
-        if (teamRes?.team) setTeam(teamRes.team);
+        let loadedTeam = MOCK_TEAM;
+        try {
+          const teamRes = await fetch("/api/hattrick/team");
+          if (teamRes.ok) {
+            const data = await teamRes.json();
+            if (data?.team) loadedTeam = data.team;
+          }
+        } catch {
+          // Fallback to MOCK_TEAM
+        }
+        setTeam(loadedTeam);
 
         // 3. Players
-        const playersRes = await fetch("/api/hattrick/players").then((r) => r.json()).catch(() => null);
-        if (playersRes?.players) setPlayers(playersRes.players);
+        let loadedPlayers = MOCK_PLAYERS;
+        try {
+          const playersRes = await fetch("/api/hattrick/players");
+          if (playersRes.ok) {
+            const data = await playersRes.json();
+            if (data?.players && data.players.length > 0) loadedPlayers = data.players;
+          }
+        } catch {
+          // Fallback to MOCK_PLAYERS
+        }
+        setPlayers(loadedPlayers);
 
-        // 4. Initial Auto Lineup
-        const lineupRes = await fetch("/api/hattrick/lineup/auto", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ formation: "3-5-2" }),
-        }).then((r) => r.json()).catch(() => null);
-        if (lineupRes?.lineup) setLineup(lineupRes.lineup);
+        // 4. Initial Lineup (computed locally or from server)
+        let loadedLineup = generateAutoLineup(loadedPlayers, "3-5-2");
+        try {
+          const lineupRes = await fetch("/api/hattrick/lineup/auto", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ formation: "3-5-2" }),
+          });
+          if (lineupRes.ok) {
+            const data = await lineupRes.json();
+            if (data?.lineup) loadedLineup = data.lineup;
+          }
+        } catch {
+          // Fallback
+        }
+        setLineup(loadedLineup);
 
         // 5. Training & Recommendation
-        const trainingRes = await fetch("/api/hattrick/training").then((r) => r.json()).catch(() => null);
-        if (trainingRes?.training) setTraining(trainingRes.training);
+        let loadedTraining = MOCK_TRAINING;
+        try {
+          const trainingRes = await fetch("/api/hattrick/training");
+          if (trainingRes.ok) {
+            const data = await trainingRes.json();
+            if (data?.training) loadedTraining = data.training;
+          }
+        } catch {
+          // Fallback
+        }
+        setTraining(loadedTraining);
 
-        const recRes = await fetch("/api/hattrick/training/optimize").then((r) => r.json()).catch(() => null);
-        if (recRes?.recommendation) setTrainingRec(recRes.recommendation);
+        const rec = analyzeAndOptimizeTraining(loadedPlayers);
+        setTrainingRec(rec);
 
-        // 6. Matches
-        const matchesRes = await fetch("/api/hattrick/matches").then((r) => r.json()).catch(() => null);
-        if (matchesRes?.matches) setMatches(matchesRes.matches);
+        // 6. Matches & Simulation
+        let loadedMatches = MOCK_MATCHES.map((m) => {
+          if (m.homeRatings && m.awayRatings) {
+            const sim = simulateMatch(m.homeRatings, m.awayRatings);
+            return {
+              ...m,
+              winProbability: m.myTeamIsHome ? sim.homeWinProb : sim.awayWinProb,
+              drawProbability: sim.drawProb,
+              lossProbability: m.myTeamIsHome ? sim.awayWinProb : sim.homeWinProb,
+            };
+          }
+          return m;
+        });
+
+        try {
+          const matchesRes = await fetch("/api/hattrick/matches");
+          if (matchesRes.ok) {
+            const data = await matchesRes.json();
+            if (data?.matches) loadedMatches = data.matches;
+          }
+        } catch {
+          // Fallback
+        }
+        setMatches(loadedMatches);
       } catch (err) {
         console.error("Dashboard init error:", err);
       } finally {
@@ -102,16 +167,18 @@ export default function Home() {
 
   // Check URL parameters for OAuth callbacks
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("ht_connected")) {
-      showToast("Hattrick CHPP bağlantısı başarıyla tamamlandı!");
-      window.history.replaceState({}, "", "/");
-    } else if (params.get("google_connected")) {
-      showToast("Google hesabı başarıyla bağlandı!");
-      window.history.replaceState({}, "", "/");
-    } else if (params.get("auth_error")) {
-      showToast(decodeURIComponent(params.get("auth_error") || "Yetkilendirme hatası"), "error");
-      window.history.replaceState({}, "", "/");
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("ht_connected")) {
+        showToast("Hattrick CHPP bağlantısı başarıyla tamamlandı!");
+        window.history.replaceState({}, "", window.location.pathname);
+      } else if (params.get("google_connected")) {
+        showToast("Google hesabı başarıyla bağlandı!");
+        window.history.replaceState({}, "", window.location.pathname);
+      } else if (params.get("auth_error")) {
+        showToast(decodeURIComponent(params.get("auth_error") || "Yetkilendirme hatası"), "error");
+        window.history.replaceState({}, "", window.location.pathname);
+      }
     }
   }, []);
 
@@ -119,18 +186,27 @@ export default function Home() {
   const handleAutoLineup = async (preferredFormation?: SupportedFormation) => {
     setLoadingLineup(true);
     try {
+      // First attempt server endpoint (for Node.js runtime)
       const res = await fetch("/api/hattrick/lineup/auto", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ formation: preferredFormation }),
       });
-      const data = await res.json();
-      if (data.ok && data.lineup) {
-        setLineup(data.lineup);
-        showToast(data.message || "Kadro başarıyla dizildi!");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.ok && data.lineup) {
+          setLineup(data.lineup);
+          showToast(data.message || "Kadro başarıyla dizildi!");
+          return;
+        }
       }
+      throw new Error("Fallback to client calculation");
     } catch {
-      showToast("Kadro dizilirken hata meydana geldi", "error");
+      // Runs directly in browser for GitHub Pages static hosting
+      const pool = players.length > 0 ? players : MOCK_PLAYERS;
+      const clientLineup = generateAutoLineup(pool, preferredFormation);
+      setLineup(clientLineup);
+      showToast(`En yüksek reytingli ${clientLineup.formation} kadrosu otomatik oluşturuldu!`);
     } finally {
       setLoadingLineup(false);
     }
@@ -140,38 +216,42 @@ export default function Home() {
   const handleToggleDemoMode = async () => {
     try {
       const res = await fetch("/api/auth/hattrick/demo-toggle", { method: "POST" });
-      const data = await res.json();
-      if (data.ok) {
+      if (res.ok) {
+        const data = await res.json();
         setUser((prev) => ({ ...prev, demoMode: data.demoMode }));
         showToast(data.demoMode ? "Demo Modu aktif edildi" : "Canlı CHPP Modu aktif edildi");
-        window.location.reload();
+        return;
       }
     } catch {
-      showToast("Mod değiştirilemedi", "error");
+      // Client-side fallback
     }
+    const nextMode = !user.demoMode;
+    setUser((prev) => ({ ...prev, demoMode: nextMode }));
+    showToast(nextMode ? "Demo Modu aktif edildi" : "Canlı CHPP Modu aktif edildi");
   };
 
   // Apply Training Recommendation
   const handleApplyTraining = async (typeId: number, staminaShare: number) => {
-    const res = await fetch("/api/hattrick/training", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ trainingType: typeId, staminaTrainingPart: staminaShare }),
-    });
-    const data = await res.json();
-    if (data.ok) {
-      setTraining((prev) =>
-        prev
-          ? {
-              ...prev,
-              trainingType: typeId,
-              trainingTypeName: trainingRec?.recommendedType || prev.trainingTypeName,
-              staminaTrainingPart: staminaShare,
-            }
-          : null
-      );
-      showToast("Yeni antrenman programı kaydedildi!");
+    try {
+      await fetch("/api/hattrick/training", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ trainingType: typeId, staminaTrainingPart: staminaShare }),
+      });
+    } catch {
+      // client update
     }
+    setTraining((prev) =>
+      prev
+        ? {
+            ...prev,
+            trainingType: typeId,
+            trainingTypeName: trainingRec?.recommendedType || prev.trainingTypeName,
+            staminaTrainingPart: staminaShare,
+          }
+        : null
+    );
+    showToast("Yeni antrenman programı kaydedildi!");
   };
 
   return (

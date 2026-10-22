@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *));
-
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
@@ -11,6 +9,8 @@
   --pitch-grass: #15803d;
 }
 
+:root[class~="dark"],
+[data-theme="dark"],
 .dark {
   --background: #090d16;
   --foreground: #f1f5f9;
