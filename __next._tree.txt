@@ -1,3 +1,3 @@
-:HL["/hattrickdashboard/_next/static/chunks/1gu14-ci7du95.css","style"]
+:HL["/hattrickdashboard/_next/static/chunks/3mbfnio61f_81.css","style"]
 1:[["children",{"s":"__PAGE__","h":160}]]
-0:{"b":"bEmhEWxcZaCw8qgahw6z0","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"aZc2JVlvqr6ZwIUTxwcpG","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
