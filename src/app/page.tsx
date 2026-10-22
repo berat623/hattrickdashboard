@@ -12,15 +12,14 @@ import { HattrickConnectModal } from "@/components/HattrickConnectModal";
 import { LoginView } from "@/components/LoginView";
 import { SupportedFormation, generateAutoLineup } from "@/lib/algorithms/lineup";
 import { analyzeAndOptimizeTraining } from "@/lib/algorithms/training";
-import { simulateMatch } from "@/lib/algorithms/match-predictor";
-import { 
-  Player, 
-  TeamDetails, 
-  TacticalLineup, 
-  TrainingData, 
-  Match, 
-  UserSession, 
-  TrainingRecommendation 
+import {
+  Player,
+  TeamDetails,
+  TacticalLineup,
+  TrainingData,
+  Match,
+  UserSession,
+  TrainingRecommendation,
 } from "@/types/hattrick";
 import { CheckCircle2, AlertCircle, ShieldAlert } from "lucide-react";
 
@@ -40,38 +39,53 @@ export default function Home() {
   const [training, setTraining] = useState<TrainingData | null>(null);
   const [trainingRec, setTrainingRec] = useState<TrainingRecommendation | null>(null);
   const [matches, setMatches] = useState<Match[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [redirecting, setRedirecting] = useState(false);
   const [loadingLineup, setLoadingLineup] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
 
   const showToast = (message: string, type: "success" | "error" = "success") => {
     setToast({ message, type });
-    setTimeout(() => setToast(null), 4000);
+    setTimeout(() => setToast(null), 5000);
   };
 
-  // Check URL parameters on mount
+  // Restore session and check URL parameters on mount
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("ht_connected")) {
-        showToast("Hattrick hesabınız başarıyla bağlandı!");
-        setUser((prev) => ({
-          ...prev,
-          googleLoggedIn: true,
-          hattrickConnected: true,
-          hattrickTeamName: "Hattrick Takımınız",
-        }));
-        window.history.replaceState({}, "", window.location.pathname);
-      } else if (params.get("google_connected")) {
-        showToast("Google hesabınız başarıyla bağlandı!");
-        setUser((prev) => ({ ...prev, googleLoggedIn: true }));
-        window.history.replaceState({}, "", window.location.pathname);
-      } else if (params.get("auth_error")) {
-        showToast(decodeURIComponent(params.get("auth_error") || "Yetkilendirme hatası"), "error");
-        window.history.replaceState({}, "", window.location.pathname);
+    async function initSession() {
+      try {
+        if (typeof window !== "undefined") {
+          const params = new URLSearchParams(window.location.search);
+          if (params.get("auth_error")) {
+            const errStr = decodeURIComponent(params.get("auth_error") || "Yetkilendirme hatası");
+            setAuthError(errStr);
+            showToast(errStr, "error");
+            window.history.replaceState({}, "", window.location.pathname);
+          } else if (params.get("ht_connected")) {
+            showToast("Hattrick hesabınız başarıyla bağlandı!");
+            window.history.replaceState({}, "", window.location.pathname);
+          } else if (params.get("google_connected")) {
+            showToast("Google hesabınız başarıyla bağlandı!");
+            window.history.replaceState({}, "", window.location.pathname);
+          }
+        }
+
+        const meRes = await fetch("/api/auth/me", { cache: "no-store" });
+        if (meRes.ok) {
+          const data = await meRes.json();
+          if (data?.user) {
+            setUser(data.user);
+          }
+        }
+      } catch {
+        // Ignore on static
+      } finally {
+        setLoading(false);
       }
     }
+
+    initSession();
   }, []);
 
   // Fetch real team data when Hattrick is connected
@@ -83,10 +97,18 @@ export default function Home() {
         setLoading(true);
 
         const [teamRes, playersRes, matchesRes, trainingRes] = await Promise.all([
-          fetch("/api/hattrick/team").then((r) => (r.ok ? r.json() : null)).catch(() => null),
-          fetch("/api/hattrick/players").then((r) => (r.ok ? r.json() : null)).catch(() => null),
-          fetch("/api/hattrick/matches").then((r) => (r.ok ? r.json() : null)).catch(() => null),
-          fetch("/api/hattrick/training").then((r) => (r.ok ? r.json() : null)).catch(() => null),
+          fetch("/api/hattrick/team", { cache: "no-store" })
+            .then((r) => (r.ok ? r.json() : null))
+            .catch(() => null),
+          fetch("/api/hattrick/players", { cache: "no-store" })
+            .then((r) => (r.ok ? r.json() : null))
+            .catch(() => null),
+          fetch("/api/hattrick/matches", { cache: "no-store" })
+            .then((r) => (r.ok ? r.json() : null))
+            .catch(() => null),
+          fetch("/api/hattrick/training", { cache: "no-store" })
+            .then((r) => (r.ok ? r.json() : null))
+            .catch(() => null),
         ]);
 
         if (teamRes?.team) setTeam(teamRes.team);
@@ -171,39 +193,39 @@ export default function Home() {
     showToast("Oturum kapatıldı.");
   };
 
-  // If not logged in with Google or Hattrick, display Login View
-  if (!user.googleLoggedIn && !user.hattrickConnected) {
+  // If not logged in with Hattrick or Google, display Login View
+  if (!user.hattrickConnected && !user.googleLoggedIn) {
     return (
       <LoginView
-        onGoogleSuccess={(userData) => {
-          setUser((prev) => ({
-            ...prev,
-            id: "google-" + userData.email,
-            email: userData.email,
-            name: userData.name,
-            image: userData.picture,
-            googleLoggedIn: true,
-          }));
-          showToast(`Hoş geldiniz, ${userData.name}!`);
-        }}
-        onHattrickSuccess={async (creds) => {
-          setUser((prev) => ({
-            ...prev,
-            hattrickConnected: true,
-            hattrickUsername: "Hattrick Menajeri",
-            hattrickTeamName: "Takımınız",
-          }));
-          showToast("Hattrick anahtarlarınız kaydedildi!");
-        }}
+        loading={redirecting}
+        errorMsg={authError}
         onHattrickOAuthRedirect={() => {
-          // If on static GitHub Pages, warn about backend requirement or redirect to live API
+          setRedirecting(true);
+          setAuthError(null);
           if (typeof window !== "undefined" && window.location.hostname.includes("github.io")) {
-            showToast("GitHub Pages statik bir barındırıcıdır. Hattrick OAuth akışı canlı backend gerektirir. Lütfen CHPP Anahtarları sekmesini kullanın.", "error");
+            window.location.href = "https://hattrickdashboard.vercel.app/api/auth/hattrick/connect";
           } else {
             window.location.href = "/api/auth/hattrick/connect";
           }
         }}
-        loading={loading}
+        onManualTokenSubmit={async ({ accessToken, accessTokenSecret }) => {
+          setRedirecting(true);
+          setAuthError(null);
+          try {
+            const res = await fetch("/api/auth/hattrick/token", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ accessToken, accessTokenSecret }),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+              throw new Error(data.error || "Token doğrulanamadı");
+            }
+            window.location.href = "/?ht_connected=true";
+          } finally {
+            setRedirecting(false);
+          }
+        }}
       />
     );
   }
@@ -235,7 +257,6 @@ export default function Home() {
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {!user.hattrickConnected ? (
-          /* Notice banner if only Google is connected but not Hattrick */
           <div className="p-6 rounded-2xl border border-amber-300 dark:border-amber-800/80 bg-amber-500/10 dark:bg-amber-950/30 flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-3 text-left">
               <ShieldAlert className="w-8 h-8 text-amber-500 shrink-0" />
@@ -244,16 +265,16 @@ export default function Home() {
                   Hattrick Hesabınız Henüz Bağlanmadı
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-                  Google ile giriş yaptınız. Gerçek kadronuzu, oyuncularınızı ve maç fikstürünüzü çekmek için lütfen Hattrick CHPP hesabınızı bağlayın.
+                  Gerçek kadronuzu, oyuncularınızı ve maç fikstürünüzü çekmek için lütfen Hattrick CHPP hesabınızı bağlayın.
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => setSettingsOpen(true)}
+            <a
+              href="/api/auth/hattrick/connect"
               className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 shrink-0 shadow-md transition-all active:scale-95"
             >
               Hattrick CHPP Bağla
-            </button>
+            </a>
           </div>
         ) : null}
 
@@ -261,7 +282,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center min-h-[50vh] gap-3">
             <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
             <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-              Hattrick verileriniz çekiliyor...
+              Hattrick sunucularından takım ve oyuncu verileriniz çekiliyor...
             </p>
           </div>
         ) : (

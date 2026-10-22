@@ -53,10 +53,10 @@ export function DashboardOverview({
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
               <Trophy className="w-3.5 h-3.5" />
-              <span>{team?.seriesName || "III.12"} Ligi • {team?.rank || 2}. Sırada</span>
+              <span>{team?.seriesName || "-"} Ligi {team?.rank ? `• ${team.rank}. Sırada` : ""}</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              {team?.name || "Anadolu Kartalları SK"}
+              {team?.name || "Hattrick Takımınız"}
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
               Hattrick akıllı menajerlik asistanınız hazır. Kadronuzu, antrenmanınızı ve maç simülasyonlarınızı tek tıkla otomatik yönetin.
@@ -90,7 +90,7 @@ export function DashboardOverview({
             <div>
               <div className="text-[11px] text-slate-400">Kulüp Kasası</div>
               <div className="font-bold text-white">
-                {team?.cash.toLocaleString("tr-TR") || "18.450.000"} TL
+                {(team?.cash ?? 0).toLocaleString("tr-TR")} TL
               </div>
             </div>
           </div>
@@ -100,7 +100,7 @@ export function DashboardOverview({
             <div>
               <div className="text-[11px] text-slate-400">Taraftar Kulübü</div>
               <div className="font-bold text-white">
-                {team?.fanClubSize.toLocaleString("tr-TR") || "2.140"} Üye
+                {(team?.fanClubSize ?? 0).toLocaleString("tr-TR")} Üye
               </div>
             </div>
           </div>
@@ -110,7 +110,7 @@ export function DashboardOverview({
             <div>
               <div className="text-[11px] text-slate-400">Stadyum</div>
               <div className="font-bold text-white truncate max-w-[120px]">
-                {team?.arenaName || "Kartal Yuvası"} ({team?.arenaCapacity.toLocaleString("tr-TR") || "48.500"})
+                {team?.arenaName || "-"} ({(team?.arenaCapacity ?? 0).toLocaleString("tr-TR")})
               </div>
             </div>
           </div>

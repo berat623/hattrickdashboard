@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     const requestTokenSecret = session?.requestTokenSecret;
 
     if (!requestTokenSecret) {
-      throw new Error("Oturum zaman aşımına uğradı veya istek anahtarı bulunamadı.");
+      throw new Error("Oturum zaman aşımına uğradı veya istek anahtarı bulunamadı. Lütfen tekrar giriş yapın.");
     }
 
     // 1. Exchange request token for access token & secret
@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
       oauthVerifier
     );
 
-    // 2. Fetch basic team info with new credentials
+    // 2. Fetch real team info with new credentials
     const client = new CHPPClient({
       accessToken,
       accessTokenSecret,
@@ -35,36 +35,47 @@ export async function GET(req: NextRequest) {
 
     let teamName = "Hattrick Takımı";
     let teamId = 0;
+    let loginname = "Hattrick Menajeri";
     try {
       const teamDetails = await client.getTeamDetails();
       teamName = teamDetails.name;
       teamId = teamDetails.id;
-    } catch {
-      // fallback
+      if (teamDetails.loginname) {
+        loginname = teamDetails.loginname;
+      }
+    } catch (e) {
+      console.error("Team details fetch warning in callback:", e);
     }
 
     // 3. Store permanent access token in encrypted cookie session
-    await createSession({
+    const jwt = await createSession({
       hattrickOAuth: {
         accessToken,
         accessTokenSecret,
       },
       user: {
-        ...(session?.user || {
-          id: "ht-user-" + teamId,
-          email: "hattrick-user@chpp.org",
-          name: teamName,
-          googleLoggedIn: false,
-          hattrickConnected: true,
-        }),
+        id: "ht-user-" + (teamId || Date.now()),
+        email: session?.user?.email || `${loginname}@hattrick.org`,
+        name: session?.user?.googleLoggedIn ? session.user.name : loginname,
+        image: session?.user?.image,
+        googleLoggedIn: session?.user?.googleLoggedIn || false,
         hattrickConnected: true,
+        hattrickUsername: loginname,
         hattrickTeamId: teamId,
         hattrickTeamName: teamName,
       },
-      requestTokenSecret: undefined, // cleanup
+      requestTokenSecret: undefined,
     });
 
-    return NextResponse.redirect(new URL("/?ht_connected=true", req.nextUrl.origin));
+    const response = NextResponse.redirect(new URL("/?ht_connected=true", req.nextUrl.origin));
+    response.cookies.set("ht_session", jwt, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30,
+    });
+    return response;
   } catch (error: unknown) {
     console.error("Hattrick Callback Error:", error);
     const errorMessage = error instanceof Error ? error.message : "Onay işlemi başarısız oldu";

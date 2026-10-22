@@ -7,9 +7,13 @@ const AUTHORIZE_URL = `${CHPP_BASE_URL}/oauth/authorize.aspx`;
 const ACCESS_TOKEN_URL = `${CHPP_BASE_URL}/oauth/access_token.ashx`;
 export const CHPP_XML_URL = `${CHPP_BASE_URL}/chppxml.ashx`;
 
-export function getOAuthConfig() {
-  const consumerKey = process.env.HATTRICK_CONSUMER_KEY || "YOUR_HATTRICK_CONSUMER_KEY";
-  const consumerSecret = process.env.HATTRICK_CONSUMER_SECRET || "YOUR_HATTRICK_CONSUMER_SECRET";
+// Default registered CHPP credentials if user has not set custom env vars
+const DEFAULT_CONSUMER_KEY = "sKDixHQBSGgdJ3a9O6lRtL";
+const DEFAULT_CONSUMER_SECRET = "DIZIDBTX64d0+-9fPq8GrYN5PNHtMxYhpS9ZKsbcPqf";
+
+export function getOAuthConfig(customKey?: string, customSecret?: string) {
+  const consumerKey = customKey || process.env.HATTRICK_CONSUMER_KEY || DEFAULT_CONSUMER_KEY;
+  const consumerSecret = customSecret || process.env.HATTRICK_CONSUMER_SECRET || DEFAULT_CONSUMER_SECRET;
 
   const oauth = new OAuth({
     consumer: {
@@ -50,19 +54,20 @@ export async function getRequestToken(callbackUrl: string): Promise<RequestToken
     },
   };
 
-  const headers = oauth.toHeader(oauth.authorize(requestData));
+  const authData = oauth.authorize(requestData);
+  const queryParams = new URLSearchParams({
+    ...Object.fromEntries(Object.entries(authData).map(([k, v]) => [k, String(v)])),
+    oauth_callback: callbackUrl,
+  });
 
-  const response = await fetch(REQUEST_TOKEN_URL, {
+  const response = await fetch(`${REQUEST_TOKEN_URL}?${queryParams.toString()}`, {
     method: "GET",
-    headers: {
-      ...headers,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
+    cache: "no-store",
   });
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`Hattrick CHPP Request Token error: ${response.status} - ${errorText}`);
+    throw new Error(`Hattrick CHPP Request Token hatası: ${response.status} - ${errorText}`);
   }
 
   const text = await response.text();
@@ -71,13 +76,10 @@ export async function getRequestToken(callbackUrl: string): Promise<RequestToken
   const oauthTokenSecret = params.get("oauth_token_secret");
 
   if (!oauthToken || !oauthTokenSecret) {
-    throw new Error(`Hattrick CHPP failed to return valid tokens. Response: ${text}`);
+    throw new Error(`Hattrick CHPP geçerli token döndürmedi: ${text}`);
   }
 
-  // Request scopes: manage_training, manage_lineup (needed to change lineups and training automatically)
-  const authorizeUrl = `${AUTHORIZE_URL}?oauth_token=${encodeURIComponent(
-    oauthToken
-  )}&scope=manage_training,manage_lineup`;
+  const authorizeUrl = `${AUTHORIZE_URL}?oauth_token=${encodeURIComponent(oauthToken)}`;
 
   return {
     oauthToken,
@@ -101,24 +103,24 @@ export async function getAccessToken(
     },
   };
 
-  const headers = oauth.toHeader(
-    oauth.authorize(requestData, {
-      key: requestToken,
-      secret: requestTokenSecret,
-    })
-  );
+  const authData = oauth.authorize(requestData, {
+    key: requestToken,
+    secret: requestTokenSecret,
+  });
 
-  const response = await fetch(ACCESS_TOKEN_URL, {
+  const queryParams = new URLSearchParams({
+    ...Object.fromEntries(Object.entries(authData).map(([k, v]) => [k, String(v)])),
+    oauth_verifier: oauthVerifier,
+  });
+
+  const response = await fetch(`${ACCESS_TOKEN_URL}?${queryParams.toString()}`, {
     method: "GET",
-    headers: {
-      ...headers,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
+    cache: "no-store",
   });
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`Hattrick CHPP Access Token error: ${response.status} - ${errorText}`);
+    throw new Error(`Hattrick CHPP Access Token hatası: ${response.status} - ${errorText}`);
   }
 
   const text = await response.text();
@@ -127,7 +129,7 @@ export async function getAccessToken(
   const oauthTokenSecret = params.get("oauth_token_secret");
 
   if (!oauthToken || !oauthTokenSecret) {
-    throw new Error(`Hattrick CHPP failed to return access tokens. Response: ${text}`);
+    throw new Error(`Hattrick CHPP erişim anahtarlarını döndürmedi: ${text}`);
   }
 
   return {
@@ -136,27 +138,28 @@ export async function getAccessToken(
   };
 }
 
-export function getSignedHeaders(
-  url: string,
-  method: string,
+export function buildSignedChppUrl(
+  params: Record<string, string>,
   accessToken: string,
-  accessTokenSecret: string,
-  params?: Record<string, string | number | boolean>
-): Record<string, string> {
+  accessTokenSecret: string
+): string {
   const { oauth } = getOAuthConfig();
 
   const requestData = {
-    url,
-    method,
+    url: CHPP_XML_URL,
+    method: "GET",
     data: params,
   };
 
-  const headers = oauth.toHeader(
-    oauth.authorize(requestData, {
-      key: accessToken,
-      secret: accessTokenSecret,
-    })
-  );
+  const authData = oauth.authorize(requestData, {
+    key: accessToken,
+    secret: accessTokenSecret,
+  });
 
-  return headers;
+  const allParams = new URLSearchParams({
+    ...params,
+    ...Object.fromEntries(Object.entries(authData).map(([k, v]) => [k, String(v)])),
+  });
+
+  return `${CHPP_XML_URL}?${allParams.toString()}`;
 }

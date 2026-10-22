@@ -11,12 +11,20 @@ export async function GET(req: NextRequest) {
     const { oauthToken, oauthTokenSecret, authorizeUrl } = await getRequestToken(callbackUrl);
 
     // 2. Temporarily store requestTokenSecret in secure session cookie
-    await createSession({
+    const jwt = await createSession({
       requestTokenSecret: oauthTokenSecret,
     });
 
     // 3. Redirect user to Hattrick CHPP authorization page
-    return NextResponse.redirect(authorizeUrl);
+    const response = NextResponse.redirect(authorizeUrl);
+    response.cookies.set("ht_session", jwt, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30,
+    });
+    return response;
   } catch (error: unknown) {
     console.error("Hattrick OAuth Connect Error:", error);
     const errorMessage = error instanceof Error ? error.message : "Bilinmeyen bir hata oluştu";

@@ -5,8 +5,8 @@ export async function GET(req: NextRequest) {
   const redirectUri = `${req.nextUrl.origin}/api/auth/google/callback`;
 
   if (!clientId) {
-    // If user has not configured Google Client ID in .env yet, redirect directly to Google Demo login
-    return NextResponse.redirect(new URL("/api/auth/google/demo", req.nextUrl.origin));
+    // Redirect to Hattrick CHPP OAuth which includes official "Allow with Google" login for Hattrick accounts
+    return NextResponse.redirect(new URL("/api/auth/hattrick/connect", req.nextUrl.origin));
   }
 
   const scope = encodeURIComponent("openid email profile");
