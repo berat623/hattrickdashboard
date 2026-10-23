@@ -7,6 +7,7 @@ import {
   ZodiacSignInfo,
 } from "@/types/horoscope";
 import {
+  formatPredictionSections,
   isEnglishText,
   translateColorToTurkish,
   translateToTurkish,
@@ -26,23 +27,23 @@ const DAY_LABELS: Record<string, string> = {
 
 export function HoroscopeCard({ item, sign }: HoroscopeCardProps) {
   const [copied, setCopied] = useState<boolean>(false);
-  const [predictionText, setPredictionText] = useState<string>(
-    item.predictionTr
+  const [predictionText, setPredictionText] = useState<string>(() =>
+    formatPredictionSections(item.predictionTr)
   );
 
   const sourceMeta = HOROSCOPE_SOURCES[item.sourceId];
 
-  // Built-in Lightning-Fast Client Translation Engine
+  // Built-in Lightning-Fast Client Translation Engine & Formatter
   useEffect(() => {
     // If the text happens to be in English, translate it instantly on the client
     if (isEnglishText(item.predictionTr)) {
       translateToTurkish(item.predictionTr).then((translated) => {
         if (translated && translated.trim().length > 0) {
-          setPredictionText(translated);
+          setPredictionText(formatPredictionSections(translated));
         }
       });
     } else {
-      setPredictionText(item.predictionTr);
+      setPredictionText(formatPredictionSections(item.predictionTr));
     }
   }, [item.predictionTr]);
 
@@ -102,9 +103,34 @@ export function HoroscopeCard({ item, sign }: HoroscopeCardProps) {
         </button>
       </div>
 
-      {/* Pure Turkish Prediction Body */}
-      <div className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
-        <p>{predictionText}</p>
+      {/* Pure Turkish Prediction Body with Clean Headings & No Emojis */}
+      <div className="space-y-3.5 text-xs sm:text-sm leading-relaxed font-normal">
+        {predictionText
+          .split(/\n\n+/)
+          .map((p) => p.trim())
+          .filter(Boolean)
+          .map((para, idx) => {
+            const headingMatch = para.match(
+              /^([A-Za-zÇçĞğİıÖöŞşÜü\s]{2,25}:)\s*([\s\S]*)/
+            );
+            if (headingMatch) {
+              return (
+                <div key={idx} className="space-y-1">
+                  <span className="font-semibold text-zinc-900 dark:text-zinc-100 block text-xs">
+                    {headingMatch[1]}
+                  </span>
+                  <p className="text-zinc-700 dark:text-zinc-300">
+                    {headingMatch[2]}
+                  </p>
+                </div>
+              );
+            }
+            return (
+              <p key={idx} className="text-zinc-700 dark:text-zinc-300">
+                {para}
+              </p>
+            );
+          })}
       </div>
 
       {/* Lucky Details (Only Number & Color in Turkish) */}

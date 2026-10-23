@@ -168,9 +168,9 @@ export const STATIC_HOROSCOPES: Record<
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
         predictionTr:
-          "❤️ Aşk: Kıskançlıktan uzak durun, huzur bulmanın yolu bu. Kalbinizin sesini dinlerseniz pişman olmayacağınız bir karar verirsiniz. Romantizm akşam saatlerinde artıyor, keyfini çıkarın. İlişkinizde keyif enerjisi sizi destekliyor. Kalbinizi ısıtacak bir haber yolda, hazır olun. 💼 İş: Detaylar yarın daha netleşecek, sabırlı olun. Keyif bugün işteki en büyük gücünüz. Acele karar vermek yerine bekleyin. Toplantıda kısa ve net konuşun, dağıtmadan. Küçük bir hatanın büyüyebileceğini unutmayın, dikkatli olun. 🌿 Sağlık: Dengeli beslenmek bugün önemli, atlamayın. Bedeninizde keyif hissi hakim. Duruşunuza dikkat etmek ağrıyı azaltır. Nefesinizi düzenlemek sakinleştirir. Şekerli içecekleri bugün azaltın. Omurga esnetmesi yapmayı unutmayın.",
+          "Aşk: Kıskançlıktan uzak durun, huzur bulmanın yolu bu. Kalbinizin sesini dinlerseniz pişman olmayacağınız bir karar verirsiniz. Romantizm akşam saatlerinde artıyor, keyfini çıkarın. İlişkinizde keyif enerjisi sizi destekliyor. Kalbinizi ısıtacak bir haber yolda, hazır olun.\n\nİş: Detaylar yarın daha netleşecek, sabırlı olun. Keyif bugün işteki en büyük gücünüz. Acele karar vermek yerine bekleyin. Toplantıda kısa ve net konuşun, dağıtmadan. Küçük bir hatanın büyüyebileceğini unutmayın, dikkatli olun.\n\nSağlık: Dengeli beslenmek bugün önemli, atlamayın. Bedeninizde keyif hissi hakim. Duruşunuza dikkat etmek ağrıyı azaltır. Nefesinizi düzenlemek sakinleştirir. Şekerli içecekleri bugün azaltın. Omurga esnetmesi yapmayı unutmayın.",
         predictionEn:
-          "❤️ Aşk: Kıskançlıktan uzak durun, huzur bulmanın yolu bu. Kalbinizin sesini dinlerseniz pişman olmayacağınız bir karar verirsiniz.",
+          "Aşk: Kıskançlıktan uzak durun, huzur bulmanın yolu bu. Kalbinizin sesini dinlerseniz pişman olmayacağınız bir karar verirsiniz.\n\nİş: Detaylar yarın daha netleşecek, sabırlı olun.\n\nSağlık: Dengeli beslenmek bugün önemli, atlamayın.",
         luckyColor: "Yeşil",
         luckyColorTr: "Yeşil",
         luckyNumber: "6",
@@ -230,9 +230,9 @@ export const STATIC_HOROSCOPES: Record<
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
         predictionTr:
-          "❤️ Aşk: Duygularınızı açık söylemekten çekinmeyin, bugün tam zamanı. İlişkinizde aile enerjisi sizi destekliyor. Kalbiniz bugün biraz hızlı atıyor, heyecana hazır olun. Geçmişe takılmak yerine bugüne odaklanırsanız hafifleyeceksiniz. Duygusal dalgalanmalar bugün normal, kendinize yüklenmeyin. 💼 İş: Not almayı unutmayın, sonra ararsınız. Zamanı iyi yönetirseniz günü rahat bitirirsiniz. Risk almadan önce iki kez düşünün. Aile bugün işteki en büyük gücünüz. Harcamaları kısmak bu hafta akıllıca olur. 🌿 Sağlık: Nefesinizi düzenlemek sakinleştirir. Bedeniniz bugün sinyal veriyor, dinleyin. Koruma enerjisi sağlığınıza iyi geliyor. Yavaşlamak bazen en hızlı yol olur, unutmayın. Baş ağrısına karşı su için önce.",
+          "Aşk: Duygularınızı açık söylemekten çekinmeyin, bugün tam zamanı. İlişkinizde aile enerjisi sizi destekliyor. Kalbiniz bugün biraz hızlı atıyor, heyecana hazır olun. Geçmişe takılmak yerine bugüne odaklanırsanız hafifleyeceksiniz. Duygusal dalgalanmalar bugün normal, kendinize yüklenmeyin.\n\nİş: Not almayı unutmayın, sonra ararsınız. Zamanı iyi yönetirseniz günü rahat bitirirsiniz. Risk almadan önce iki kez düşünün. Aile bugün işteki en büyük gücünüz. Harcamaları kısmak bu hafta akıllıca olur.\n\nSağlık: Nefesinizi düzenlemek sakinleştirir. Bedeniniz bugün sinyal veriyor, dinleyin. Koruma enerjisi sağlığınıza iyi geliyor. Yavaşlamak bazen en hızlı yol olur, unutmayın. Baş ağrısına karşı su için önce.",
         predictionEn:
-          "❤️ Aşk: Duygularınızı açık söylemekten çekinmeyin, bugün tam zamanı. İlişkinizde aile enerjisi sizi destekliyor.",
+          "Aşk: Duygularınızı açık söylemekten çekinmeyin, bugün tam zamanı. İlişkinizde aile enerjisi sizi destekliyor.\n\nİş: Not almayı unutmayın, sonra ararsınız.\n\nSağlık: Nefesinizi düzenlemek sakinleştirir.",
         luckyColor: "Beyaz",
         luckyColorTr: "Beyaz",
         luckyNumber: "2",
@@ -292,9 +292,9 @@ export const STATIC_HOROSCOPES: Record<
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
         predictionTr:
-          "❤️ Aşk: Duygularınızı bastırmayın, paylaşın. Romantizm akşam saatlerinde artıyor, keyfini çıkarın. Partnerinizle küçük bir plan yapmak ikinize de iyi gelecek. Sevgi dilinizi göstermekten korkmayın, karşılık bulur. Bugün cömertlik ile hareket etmek size kazandırıyor. 💼 İş: Odaklanmanız bugün artıyor, değerlendirin. Yeni bir sorumluluk veriliyor, hazır olun. Bugün daha çok gözlem yapın, konuşmaktan değerli. Parada temkinli olmakta fayda var bu aralar. 🌿 Sağlık: Bel bölgeniz bugün biraz hassas, dikkat edin. Kafeini bugün biraz azaltın, farkı görün. Vücudunuz cömertlik istiyor, dinleyin. Duruşunuza dikkat etmek ağrıyı azaltır. Akşam erken yatmak enerjinizi toplayacak.",
+          "Aşk: Duygularınızı bastırmayın, paylaşın. Romantizm akşam saatlerinde artıyor, keyfini çıkarın. Partnerinizle küçük bir plan yapmak ikinize de iyi gelecek. Sevgi dilinizi göstermekten korkmayın, karşılık bulur. Bugün cömertlik ile hareket etmek size kazandırıyor.\n\nİş: Odaklanmanız bugün artıyor, değerlendirin. Yeni bir sorumluluk veriliyor, hazır olun. Bugün daha çok gözlem yapın, konuşmaktan değerli. Parada temkinli olmakta fayda var bu aralar.\n\nSağlık: Bel bölgeniz bugün biraz hassas, dikkat edin. Kafeini bugün biraz azaltın, farkı görün. Vücudunuz cömertlik istiyor, dinleyin. Duruşunuza dikkat etmek ağrıyı azaltır. Akşam erken yatmak enerjinizi toplayacak.",
         predictionEn:
-          "❤️ Aşk: Duygularınızı bastırmayın, paylaşın. Romantizm akşam saatlerinde artıyor, keyfini çıkarın.",
+          "Aşk: Duygularınızı bastırmayın, paylaşın. Romantizm akşam saatlerinde artıyor, keyfini çıkarın.\n\nİş: Odaklanmanız bugün artıyor, değerlendirin.\n\nSağlık: Bel bölgeniz bugün biraz hassas, dikkat edin.",
         luckyColor: "Altın Sarısı",
         luckyColorTr: "Altın Sarısı",
         luckyNumber: "1",
@@ -354,9 +354,9 @@ export const STATIC_HOROSCOPES: Record<
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
         predictionTr:
-          "❤️ Aşk: Romantizm akşam saatlerinde artıyor, keyfini çıkarın. Kalbinizde titizlik var, bunu karşınızdaki hissedecek. Karşınızdakini anlamaya çalışın, yeterli olacak. Kalbiniz bugün biraz hızlı atıyor, heyecana hazır olun. Kalbiniz doğruyu fısıldıyor, dinleyin yeter. 💼 İş: Karar vermeden önce mutlaka düşünün. Bugün detay ile öne çıkıyorsunuz. İş dışı konuşmalara girmemek iyi olur. Bugün büyük adım atmak için erken, bekleyin. İletişim kazaları olabilir, kelimeleri seçin. 🌿 Sağlık: Temiz hava almak zihninizi beklediğinizden fazla açacak. Kendinize zaman ayırmak artık şart oldu. Bedeninizde titizlik hissi hakim. Baş ağrısına karşı su için önce. Ekran molası vermek gözleri dinlendirir.",
+          "Aşk: Romantizm akşam saatlerinde artıyor, keyfini çıkarın. Kalbinizde titizlik var, bunu karşınızdaki hissedecek. Karşınızdakini anlamaya çalışın, yeterli olacak. Kalbiniz bugün biraz hızlı atıyor, heyecana hazır olun. Kalbiniz doğruyu fısıldıyor, dinleyin yeter.\n\nİş: Karar vermeden önce mutlaka düşünün. Bugün detay ile öne çıkıyorsunuz. İş dışı konuşmalara girmemek iyi olur. Bugün büyük adım atmak için erken, bekleyin. İletişim kazaları olabilir, kelimeleri seçin.\n\nSağlık: Temiz hava almak zihninizi beklediğinizden fazla açacak. Kendinize zaman ayırmak artık şart oldu. Bedeninizde titizlik hissi hakim. Baş ağrısına karşı su için önce. Ekran molası vermek gözleri dinlendirir.",
         predictionEn:
-          "❤️ Aşk: Romantizm akşam saatlerinde artıyor, keyfini çıkarın. Kalbinizde titizlik var, bunu karşınızdaki hissedecek.",
+          "Aşk: Romantizm akşam saatlerinde artıyor, keyfini çıkarın. Kalbinizde titizlik var, bunu karşınızdaki hissedecek.\n\nİş: Karar vermeden önce mutlaka düşünün.\n\nSağlık: Temiz hava almak zihninizi beklediğinizden fazla açacak.",
         luckyColor: "Lacivert",
         luckyColorTr: "Lacivert",
         luckyNumber: "5",

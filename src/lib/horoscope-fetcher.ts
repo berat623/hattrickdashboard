@@ -6,7 +6,9 @@ import {
   ZODIAC_SIGNS,
 } from "@/types/horoscope";
 import {
+  cleanEmojis,
   cleanHtmlText,
+  formatPredictionSections,
   parseSourceDateToTurkish,
   translateColorToTurkish,
   translateToTurkish,
@@ -266,22 +268,24 @@ export async function fetchAstrolojiOrg(
     }
     const formattedDate = parseSourceDateToTurkish(rawDate) || getFallbackDayDate("today");
 
-    // Extract kutu segments (Aşk, İş, Sağlık)
+    // Extract kutu segments (Aşk, İş, Sağlık) - Emojisiz ve alt alta
     const kutuMatches = [...html.matchAll(/<div class="kutu">([\s\S]*?)<\/div>/gi)];
     let predictionTr = "";
 
     if (kutuMatches.length > 0) {
       predictionTr = kutuMatches
-        .map((m) => cleanHtmlText(m[1]))
+        .map((m) => cleanEmojis(cleanHtmlText(m[1])))
         .filter((t) => t.length > 10)
-        .join(" ");
+        .join("\n\n");
     } else {
       // Fallback description match
       const descMatch = html.match(/<div class="yorum[^"]*">([\s\S]*?)<\/div>/i);
       if (descMatch) {
-        predictionTr = cleanHtmlText(descMatch[1]);
+        predictionTr = cleanEmojis(cleanHtmlText(descMatch[1]));
       }
     }
+
+    predictionTr = formatPredictionSections(predictionTr);
 
     if (!predictionTr || predictionTr.length < 25) {
       throw new Error("Astroloji.org prediction text empty");
