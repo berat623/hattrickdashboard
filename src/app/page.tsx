@@ -178,15 +178,6 @@ export default function HomePage() {
             </div>
           )}
         </section>
-
-        {/* 7. Minimal Disclaimer */}
-        <div className="pt-4 border-t border-zinc-100 dark:border-zinc-900 text-[11px] text-zinc-400 dark:text-zinc-500 text-center leading-relaxed">
-          <p>
-            Yorumlar <strong>AskGanesha</strong>, <strong>GaneshaSpeaks</strong> ve{" "}
-            <strong>AstroSage</strong> (yalnızca Aslan ve Başak) üzerinden
-            alınarak Türkçeye çevrilmektedir.
-          </p>
-        </div>
       </main>
 
       {/* Dedicated Mobile Quick-Switch Sticky Bar */}

@@ -77,6 +77,8 @@ export async function fetchAskGanesha(
       const cleaned = rawText
         .replace(/Your Lucky color is[^.<]*\.?/gi, "")
         .replace(/Your Lucky number is[^.<]*\.?/gi, "")
+        .replace(/Sunsign Horoscope[\s\S]*$/gi, "")
+        .replace(/<span class="blue-link"[\s\S]*$/gi, "")
         .replace(/<p[\s\S]*$/gi, "");
       predictionEn = cleanHtmlText(cleaned);
     }
@@ -85,7 +87,11 @@ export async function fetchAskGanesha(
       throw new Error("AskGanesha prediction text empty");
     }
 
-    const predictionTr = await translateToTurkish(predictionEn);
+    let predictionTr = await translateToTurkish(predictionEn);
+    predictionTr = predictionTr
+      .replace(/\s*Güneş Burcu Burcu\s*\([^)]*\)/gi, "")
+      .replace(/\s*Güneş Burcu\s*\([^)]*\)/gi, "")
+      .trim();
     const luckyColorTr = translateColorToTurkish(luckyColorEn);
 
     return {
