@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   DailyHoroscopeItem,
   HoroscopeApiResponse,
+  HoroscopeDay,
   HoroscopeSourceId,
   ZodiacSignId,
   ZODIAC_SIGNS,
@@ -11,9 +12,12 @@ import {
   fetchAstroSage,
   fetchGaneshaSpeaks,
 } from "@/lib/horoscope-fetcher";
-import { INITIAL_HOROSCOPES } from "@/lib/horoscope-data";
+import {
+  getFormattedDayDate,
+  STATIC_HOROSCOPES,
+} from "@/lib/horoscope-data";
 
-// In-memory cache with 30-minute TTL
+// In-memory cache with 30-minute TTL per (sign_source_day) key
 interface CacheEntry {
   data: HoroscopeApiResponse;
   timestamp: number;
@@ -25,6 +29,7 @@ export async function GET(req: NextRequest) {
   try {
     const sp = req.nextUrl.searchParams;
     const signParam = (sp.get("sign") || "taurus").toLowerCase() as ZodiacSignId;
+    const dayParam = (sp.get("day") || "today").toLowerCase() as HoroscopeDay;
     const sourceParam = sp.get("source")?.toLowerCase() as
       | HoroscopeSourceId
       | undefined;
@@ -41,7 +46,14 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const cacheKey = `${signParam}_${sourceParam || "all"}`;
+    // Validate day
+    const validDay: HoroscopeDay = ["yesterday", "today", "tomorrow"].includes(
+      dayParam
+    )
+      ? dayParam
+      : "today";
+
+    const cacheKey = `${signParam}_${validDay}_${sourceParam || "all"}`;
     const cached = apiCache.get(cacheKey);
     const now = Date.now();
 
@@ -52,12 +64,14 @@ export async function GET(req: NextRequest) {
     const signInfo = ZODIAC_SIGNS[signParam];
     const items: DailyHoroscopeItem[] = [];
 
-    // Sources to fetch
-    const fetchPromises: Promise<{ sourceId: HoroscopeSourceId; item: DailyHoroscopeItem | null }>[] = [];
+    const fetchPromises: Promise<{
+      sourceId: HoroscopeSourceId;
+      item: DailyHoroscopeItem | null;
+    }>[] = [];
 
     if (!sourceParam || sourceParam === "askganesha") {
       fetchPromises.push(
-        fetchAskGanesha(signParam)
+        fetchAskGanesha(signParam, validDay)
           .then((item) => ({ sourceId: "askganesha" as HoroscopeSourceId, item }))
           .catch(() => ({ sourceId: "askganesha" as HoroscopeSourceId, item: null }))
       );
@@ -65,34 +79,36 @@ export async function GET(req: NextRequest) {
 
     if (!sourceParam || sourceParam === "ganeshaspeaks") {
       fetchPromises.push(
-        fetchGaneshaSpeaks(signParam)
+        fetchGaneshaSpeaks(signParam, validDay)
           .then((item) => ({ sourceId: "ganeshaspeaks" as HoroscopeSourceId, item }))
           .catch(() => ({ sourceId: "ganeshaspeaks" as HoroscopeSourceId, item: null }))
       );
     }
 
-    // AstroSage is STRICTLY only for Leo (Aslan) and Virgo (Başak)
+    // AstroSage: Strictly only for Leo and Virgo AND only today & tomorrow
     if (
       (!sourceParam || sourceParam === "astrosage") &&
-      (signParam === "leo" || signParam === "virgo")
+      (signParam === "leo" || signParam === "virgo") &&
+      validDay !== "yesterday"
     ) {
       fetchPromises.push(
-        fetchAstroSage(signParam)
+        fetchAstroSage(signParam, validDay)
           .then((item) => ({ sourceId: "astrosage" as HoroscopeSourceId, item }))
           .catch(() => ({ sourceId: "astrosage" as HoroscopeSourceId, item: null }))
       );
     }
 
     const results = await Promise.allSettled(fetchPromises);
-    const signFallbacks = INITIAL_HOROSCOPES[signParam];
+    const dayFallbacks =
+      STATIC_HOROSCOPES[validDay]?.[signParam] ||
+      STATIC_HOROSCOPES.today[signParam];
 
     for (const res of results) {
       if (res.status === "fulfilled") {
         if (res.value.item) {
           items.push(res.value.item);
         } else {
-          // Fallback to pre-bundled high-quality data if remote provider is unreachable or blocks serverless IP
-          const fallback = signFallbacks[res.value.sourceId];
+          const fallback = dayFallbacks[res.value.sourceId];
           if (fallback) {
             items.push(fallback);
           }
@@ -101,18 +117,14 @@ export async function GET(req: NextRequest) {
     }
 
     const availableSources: HoroscopeSourceId[] =
-      signParam === "leo" || signParam === "virgo"
+      (signParam === "leo" || signParam === "virgo") && validDay !== "yesterday"
         ? ["askganesha", "ganeshaspeaks", "astrosage"]
         : ["askganesha", "ganeshaspeaks"];
 
     const responsePayload: HoroscopeApiResponse = {
       success: true,
-      date: new Date().toLocaleDateString("tr-TR", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }),
+      day: validDay,
+      date: items[0]?.date || getFormattedDayDate(validDay),
       sign: signInfo,
       items,
       availableSources,

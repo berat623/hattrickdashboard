@@ -104,3 +104,74 @@ export async function translateToTurkish(textEn: string): Promise<string> {
   // Fallback: If translation API is unavailable, return cleaned English text
   return cleaned;
 }
+
+/**
+ * Converts English or raw date strings from astrology sources into accurate Turkish date format.
+ * Examples:
+ * - "Saturday Oct 24th, 2026" -> "24 Ekim 2026, Cumartesi"
+ * - "24-10-2026" -> "24 Ekim 2026, Cumartesi"
+ * - "Saturday, October 24, 2026" -> "24 Ekim 2026, Cumartesi"
+ */
+export function parseSourceDateToTurkish(raw?: string): string {
+  if (!raw) return "";
+  const trimmed = raw.trim();
+
+  // Format 1: DD-MM-YYYY or DD/MM/YYYY
+  const dmyMatch = trimmed.match(/(\d{1,2})[-/](\d{1,2})[-/](\d{4})/);
+  if (dmyMatch) {
+    const day = parseInt(dmyMatch[1], 10);
+    const month = parseInt(dmyMatch[2], 10) - 1;
+    const year = parseInt(dmyMatch[3], 10);
+    const d = new Date(year, month, day);
+    if (!isNaN(d.getTime())) {
+      return d.toLocaleDateString("tr-TR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        weekday: "long",
+      });
+    }
+  }
+
+  // Format 2: "Saturday Oct 24th, 2026" or "Saturday, October 24, 2026"
+  const noWeekday = trimmed.replace(
+    /^(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday),?\s*/i,
+    ""
+  );
+  const cleaned = noWeekday.replace(/(?:st|nd|rd|th),?/i, "");
+  const months: Record<string, number> = {
+    jan: 0,
+    feb: 1,
+    mar: 2,
+    apr: 3,
+    may: 4,
+    jun: 5,
+    jul: 6,
+    aug: 7,
+    sep: 8,
+    oct: 9,
+    nov: 10,
+    dec: 11,
+  };
+
+  const engMatch = cleaned.match(/([a-zA-Z]+)\s+(\d{1,2})\s*,?\s*(\d{4})/);
+  if (engMatch) {
+    const mStr = engMatch[1].slice(0, 3).toLowerCase();
+    const day = parseInt(engMatch[2], 10);
+    const year = parseInt(engMatch[3], 10);
+    const mIdx = months[mStr];
+    if (mIdx !== undefined) {
+      const d = new Date(year, mIdx, day);
+      if (!isNaN(d.getTime())) {
+        return d.toLocaleDateString("tr-TR", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+          weekday: "long",
+        });
+      }
+    }
+  }
+
+  return cleanHtmlText(trimmed);
+}

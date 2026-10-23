@@ -1,11 +1,13 @@
 import {
   DailyHoroscopeItem,
+  HoroscopeDay,
   HoroscopeSourceId,
   ZodiacSignId,
   ZODIAC_SIGNS,
 } from "@/types/horoscope";
 import {
   cleanHtmlText,
+  parseSourceDateToTurkish,
   translateColorToTurkish,
   translateToTurkish,
 } from "./translator";
@@ -19,19 +21,22 @@ const COMMON_HEADERS = {
 };
 
 /**
- * 1. AskGanesha Daily Horoscope Fetcher
- * Supported: Taurus, Cancer, Leo, Virgo
+ * 1. AskGanesha Fetcher
+ * Supports: Taurus, Cancer, Leo, Virgo
+ * Days: yesterday, today, tomorrow
  */
 export async function fetchAskGanesha(
-  signId: ZodiacSignId
+  signId: ZodiacSignId,
+  day: HoroscopeDay = "today"
 ): Promise<DailyHoroscopeItem | null> {
-  const signInfo = ZODIAC_SIGNS[signId];
-  const url = `https://www.askganesha.com/sun-sign-horoscope/${signId}-daily-horoscope`;
+  const daySuffix =
+    day === "yesterday" ? "/yesterday" : day === "tomorrow" ? "/tomorrow" : "";
+  const url = `https://www.askganesha.com/sun-sign-horoscope/${signId}-daily-horoscope${daySuffix}`;
 
   try {
     const res = await fetch(url, {
       headers: COMMON_HEADERS,
-      next: { revalidate: 3600 }, // 1 hour cache
+      next: { revalidate: 3600 },
     });
 
     if (!res.ok) {
@@ -40,24 +45,18 @@ export async function fetchAskGanesha(
 
     const html = await res.text();
 
-    // Extract prediction container
-    // Pattern: <div class="prediction-container">...<h4><strong>{date}</strong></h4><p>{text}</p>
-    let dateStr = new Date().toLocaleDateString("tr-TR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-
+    // Extract raw date from <h4><strong>{Date}</strong></h4>
+    let rawDate = "";
     const dateMatch = html.match(/<h4><strong>([^<]+)<\/strong><\/h4>/i);
     if (dateMatch) {
-      dateStr = cleanHtmlText(dateMatch[1]);
+      rawDate = cleanHtmlText(dateMatch[1]);
     }
+    const formattedDate = parseSourceDateToTurkish(rawDate) || getFallbackDayDate(day);
 
     let predictionEn = "";
     let luckyColorEn: string | undefined;
     let luckyNumber: string | undefined;
 
-    // Look for paragraph after date
     const bodyMatch = html.match(
       /<div class="prediction-container">[\s\S]*?<\/h4>\s*<p>([\s\S]*?)<\/p>/i
     );
@@ -65,20 +64,17 @@ export async function fetchAskGanesha(
     if (bodyMatch) {
       const rawText = bodyMatch[1];
 
-      // Extract lucky color
       const colorMatch = rawText.match(/Your Lucky color is\s+([^.<]+)/i);
       if (colorMatch) {
         luckyColorEn = cleanHtmlText(colorMatch[1]);
       }
 
-      // Extract lucky number
       const numMatch = rawText.match(/Your Lucky number is\s+([^.<]+)/i);
       if (numMatch) {
         luckyNumber = cleanHtmlText(numMatch[1]);
       }
 
-      // Clean prediction text: remove lucky color & number sentences and navigation links
-      let cleaned = rawText
+      const cleaned = rawText
         .replace(/Your Lucky color is[^.<]*\.?/gi, "")
         .replace(/Your Lucky number is[^.<]*\.?/gi, "")
         .replace(/<p[\s\S]*$/gi, "");
@@ -96,7 +92,9 @@ export async function fetchAskGanesha(
       signId,
       sourceId: "askganesha",
       sourceName: "AskGanesha",
-      date: dateStr,
+      day,
+      date: formattedDate,
+      rawDate,
       predictionEn,
       predictionTr,
       luckyColor: luckyColorEn,
@@ -105,19 +103,24 @@ export async function fetchAskGanesha(
       fetchedAt: new Date().toISOString(),
     };
   } catch (err) {
-    console.warn(`[AskGanesha] Fetch failed for ${signId}:`, err);
-    return getFallbackAskGanesha(signId);
+    console.warn(`[AskGanesha] Fetch failed for ${signId} (${day}):`, err);
+    return null;
   }
 }
 
 /**
- * 2. GaneshaSpeaks Daily Horoscope Fetcher
- * Supported: Taurus, Cancer, Leo, Virgo
+ * 2. GaneshaSpeaks Fetcher
+ * Supports: Taurus, Cancer, Leo, Virgo
+ * Days: yesterday, today, tomorrow
  */
 export async function fetchGaneshaSpeaks(
-  signId: ZodiacSignId
+  signId: ZodiacSignId,
+  day: HoroscopeDay = "today"
 ): Promise<DailyHoroscopeItem | null> {
-  const url = `https://www.ganeshaspeaks.com/horoscopes/daily-horoscope/${signId}/`;
+  const url =
+    day === "today"
+      ? `https://www.ganeshaspeaks.com/horoscopes/daily-horoscope/${signId}/`
+      : `https://www.ganeshaspeaks.com/horoscopes/${day}-horoscope/${signId}/`;
 
   try {
     const res = await fetch(url, {
@@ -132,20 +135,15 @@ export async function fetchGaneshaSpeaks(
     const html = await res.text();
 
     // Extract date
-    let dateStr = new Date().toLocaleDateString("tr-TR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-    const dateMatch = html.match(
-      /<div class="horoscope-description">[\s\S]*?<p>([^<]+)<\/p>/i
-    );
+    let rawDate = "";
+    const dateMatch =
+      html.match(/<div class="horoscope-description">[\s\S]*?<p>([^<]+)<\/p>/i) ||
+      html.match(/(\d{1,2}-\d{1,2}-\d{4})/);
     if (dateMatch) {
-      dateStr = cleanHtmlText(dateMatch[1]);
+      rawDate = cleanHtmlText(dateMatch[1]);
     }
+    const formattedDate = parseSourceDateToTurkish(rawDate) || getFallbackDayDate(day);
 
-    // Extract main prediction paragraphs
-    // Pattern: <div class="horoscope-description">...</div>\s*<p><p>...</p><p>...</p></p>
     let predictionEn = "";
     const pBlockMatch = html.match(
       /<\/div>\s*<p>((?:<p>[\s\S]*?<\/p>\s*)+)<\/p>/i
@@ -153,7 +151,6 @@ export async function fetchGaneshaSpeaks(
     if (pBlockMatch) {
       predictionEn = cleanHtmlText(pBlockMatch[1]);
     } else {
-      // Secondary search for prediction paragraphs
       const altMatches =
         html.match(/<p class="card-text[^"]*">([\s\S]*?)<\/p>/gi) ||
         html.match(/<p>([\s\S]*?)<\/p>/gi) ||
@@ -173,7 +170,6 @@ export async function fetchGaneshaSpeaks(
       }
     }
 
-    // Extract lucky color & number
     let luckyColorEn: string | undefined;
     let luckyNumber: string | undefined;
 
@@ -202,7 +198,9 @@ export async function fetchGaneshaSpeaks(
       signId,
       sourceId: "ganeshaspeaks",
       sourceName: "GaneshaSpeaks",
-      date: dateStr,
+      day,
+      date: formattedDate,
+      rawDate,
       predictionEn,
       predictionTr,
       luckyColor: luckyColorEn,
@@ -211,24 +209,34 @@ export async function fetchGaneshaSpeaks(
       fetchedAt: new Date().toISOString(),
     };
   } catch (err) {
-    console.warn(`[GaneshaSpeaks] Fetch failed for ${signId}:`, err);
-    return getFallbackGaneshaSpeaks(signId);
+    console.warn(`[GaneshaSpeaks] Fetch failed for ${signId} (${day}):`, err);
+    return null;
   }
 }
 
 /**
- * 3. AstroSage Daily Horoscope Fetcher
- * ONLY supported for: Leo, Virgo ("astrosage den de çeksin onu da aslan ve başak burcundan çeksin sadece")
+ * 3. AstroSage Fetcher
+ * ONLY supported for: Leo, Virgo
+ * Days: today, tomorrow (yesterday not provided by AstroSage)
  */
 export async function fetchAstroSage(
-  signId: ZodiacSignId
+  signId: ZodiacSignId,
+  day: HoroscopeDay = "today"
 ): Promise<DailyHoroscopeItem | null> {
-  // Enforce restriction: Only Leo and Virgo
+  // STRICT RULE: Only Leo and Virgo
   if (signId !== "leo" && signId !== "virgo") {
     return null;
   }
 
-  const url = `https://www.astrosage.com/horoscope/daily-${signId}-horoscope.asp`;
+  // AstroSage only offers today and tomorrow
+  if (day === "yesterday") {
+    return null;
+  }
+
+  const url =
+    day === "tomorrow"
+      ? `https://www.astrosage.com/horoscope/${signId}-tomorrow-horoscope.asp?ref=tomorrow`
+      : `https://www.astrosage.com/horoscope/daily-${signId}-horoscope.asp`;
 
   try {
     const res = await fetch(url, {
@@ -242,20 +250,15 @@ export async function fetchAstroSage(
 
     const html = await res.text();
 
-    // Extract Date
-    let dateStr = new Date().toLocaleDateString("tr-TR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
+    let rawDate = "";
     const dateMatch = html.match(
       /(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday),\s*[A-Za-z]+\s*\d{1,2},\s*\d{4}/i
     );
     if (dateMatch) {
-      dateStr = cleanHtmlText(dateMatch[0]);
+      rawDate = cleanHtmlText(dateMatch[0]);
     }
+    const formattedDate = parseSourceDateToTurkish(rawDate) || getFallbackDayDate(day);
 
-    // Extract main horoscope paragraph from <div class='ui-large-content text-justify'>
     let predictionEn = "";
     const contentDivs =
       html.match(
@@ -263,11 +266,9 @@ export async function fetchAstroSage(
       ) || [];
 
     if (contentDivs.length > 0 && contentDivs[0]) {
-      // The first large content div is the main prediction
       predictionEn = cleanHtmlText(contentDivs[0]);
     }
 
-    // Extract Lucky Number, Color, Remedy
     let luckyNumber: string | undefined;
     let luckyColorEn: string | undefined;
     let remedyEn: string | undefined;
@@ -299,7 +300,9 @@ export async function fetchAstroSage(
       signId,
       sourceId: "astrosage",
       sourceName: "AstroSage",
-      date: dateStr,
+      day,
+      date: formattedDate,
+      rawDate,
       predictionEn,
       predictionTr,
       luckyColor: luckyColorEn,
@@ -310,170 +313,25 @@ export async function fetchAstroSage(
       fetchedAt: new Date().toISOString(),
     };
   } catch (err) {
-    console.warn(`[AstroSage] Fetch failed for ${signId}:`, err);
-    return getFallbackAstroSage(signId);
+    console.warn(`[AstroSage] Fetch failed for ${signId} (${day}):`, err);
+    return null;
   }
 }
 
 /**
- * Fallback Generators for High Reliability & 100% Uptime
+ * Calculates a clean Turkish date relative to today (UTC+3)
  */
-function getTodayString(): string {
-  return new Date().toLocaleDateString("tr-TR", {
+function getFallbackDayDate(day: HoroscopeDay): string {
+  const d = new Date();
+  if (day === "yesterday") {
+    d.setDate(d.getDate() - 1);
+  } else if (day === "tomorrow") {
+    d.setDate(d.getDate() + 1);
+  }
+  return d.toLocaleDateString("tr-TR", {
     day: "numeric",
     month: "long",
     year: "numeric",
+    weekday: "long",
   });
-}
-
-function getFallbackAskGanesha(signId: ZodiacSignId): DailyHoroscopeItem {
-  const fallbacks: Record<
-    ZodiacSignId,
-    { en: string; tr: string; color: string; colorTr: string; number: string }
-  > = {
-    taurus: {
-      en: "Today brings stability and financial clarity. You will find comfort in your steady approach to challenges. Focus on your long-term investments and spend quality time with loved ones.",
-      tr: "Bugün istikrar ve finansal netlik getiriyor. Zorluklara karşı kararlı yaklaşımınızda rahatlık bulacaksınız. Uzun vadeli yatırımlarınıza odaklanın ve sevdiklerinizle kaliteli vakit geçirin.",
-      color: "Emerald Green",
-      colorTr: "Zümrüt Yeşili",
-      number: "6",
-    },
-    cancer: {
-      en: "Your intuition is extraordinarily sharp today. Trust your inner feelings when making personal decisions. A heartwarming conversation with family will bring emotional peace.",
-      tr: "Sezgileriniz bugün olağanüstü derecede keskin. Kişisel kararlar alırken iç sesinize güvenin. Ailenizle yapacağınız içten bir konuşma duygusal huzur getirecektir.",
-      color: "Silver White",
-      colorTr: "Gümüş Beyazı",
-      number: "2",
-    },
-    leo: {
-      en: "Your natural charisma and leadership shine brightly today. New opportunities at work or in creative projects are on the horizon. Walk with confidence, but remain humble.",
-      tr: "Doğal karizmanız ve liderliğiniz bugün ışıl ışıl parlıyor. İşte veya yaratıcı projelerde ufukta yeni fırsatlar var. Kendinizden emin bir şekilde ilerleyin ama alçakgönüllülüğü elden bırakmayın.",
-      color: "Golden Yellow",
-      colorTr: "Altın Sarısı",
-      number: "1",
-    },
-    virgo: {
-      en: "A productive day for organizing and problem-solving. Your attention to detail will help you catch errors that others missed. Remember to take a break and nurture your health.",
-      tr: "Organize olmak ve problem çözmek için son derece verimli bir gün. Detaylara gösterdiğiniz özen, başkalarının gözden kaçırdığı hataları yakalamanıza yardımcı olacak. Dinlenmeyi ve sağlığınıza dikkat etmeyi unutmayın.",
-      color: "Navy Blue",
-      colorTr: "Lacivert",
-      number: "5",
-    },
-  };
-
-  const data = fallbacks[signId];
-  return {
-    signId,
-    sourceId: "askganesha",
-    sourceName: "AskGanesha",
-    date: getTodayString(),
-    predictionEn: data.en,
-    predictionTr: data.tr,
-    luckyColor: data.color,
-    luckyColorTr: data.colorTr,
-    luckyNumber: data.number,
-    fetchedAt: new Date().toISOString(),
-  };
-}
-
-function getFallbackGaneshaSpeaks(signId: ZodiacSignId): DailyHoroscopeItem {
-  const fallbacks: Record<
-    ZodiacSignId,
-    { en: string; tr: string; color: string; colorTr: string; number: string }
-  > = {
-    taurus: {
-      en: "Ganesha advises you to remain practical and avoid unnecessary arguments today. Financial prospects look promising, especially if you stick to your well-planned budget.",
-      tr: "Ganesha bugün pratik kalmanızı ve gereksiz tartışmalardan kaçınmanızı tavsiye ediyor. Finansal beklentiler, özellikle iyi planlanmış bütçenize sadık kaldığınız takdirde umut verici görünüyor.",
-      color: "Cream",
-      colorTr: "Krem",
-      number: "6",
-    },
-    cancer: {
-      en: "Ganesha predicts a day filled with warmth and emotional bonding. You may feel deeply connected to your roots. Channel your creative energy into something you truly love.",
-      tr: "Ganesha, sıcaklık ve duygusal bağlarla dolu bir gün öngörüyor. Köklerinize derinden bağlı hissedebilirsiniz. Yaratıcı enerjinizi gerçekten sevdiğiniz bir şeye yönlendirin.",
-      color: "Pearl White",
-      colorTr: "İnci Beyazı",
-      number: "7",
-    },
-    leo: {
-      en: "Ganesha foresee an energetic and rewarding day for you. Your enthusiasm will motivate everyone around you. Take the lead in negotiations and trust your bold instincts.",
-      tr: "Ganesha sizin için enerjik ve ödüllendirici bir gün öngörüyor. Coşkunuz çevrenizdeki herkesi motive edecek. Görüşmelerde liderliği üstlenin ve cesur içgüdülerinize güvenin.",
-      color: "Orange",
-      colorTr: "Turuncu",
-      number: "9",
-    },
-    virgo: {
-      en: "Ganesha says your analytical skills will be your greatest asset today. Tackle demanding tasks with methodical precision. A colleague may seek your expert advice.",
-      tr: "Ganesha, analitik becerilerinizin bugün en büyük varlığınız olacağını söylüyor. Zorlu görevleri metodik bir hassasiyetle ele alın. Bir iş arkadaşınız uzman tavsiyenize başvurabilir.",
-      color: "Forest Green",
-      colorTr: "Orman Yeşili",
-      number: "4",
-    },
-  };
-
-  const data = fallbacks[signId];
-  return {
-    signId,
-    sourceId: "ganeshaspeaks",
-    sourceName: "GaneshaSpeaks",
-    date: getTodayString(),
-    predictionEn: data.en,
-    predictionTr: data.tr,
-    luckyColor: data.color,
-    luckyColorTr: data.colorTr,
-    luckyNumber: data.number,
-    fetchedAt: new Date().toISOString(),
-  };
-}
-
-function getFallbackAstroSage(signId: ZodiacSignId): DailyHoroscopeItem {
-  const fallbacks: Record<
-    "leo" | "virgo",
-    {
-      en: string;
-      tr: string;
-      color: string;
-      colorTr: string;
-      number: string;
-      remedy: string;
-      remedyTr: string;
-    }
-  > = {
-    leo: {
-      en: "Cosmic alignments favor your courage and self-expression today. Avoid friction in financial transactions and stay composed. A heartwarming moment in your personal relationship will lift your spirits.",
-      tr: "Kozmik hizalanmalar bugün cesaretinizi ve kendinizi ifade etmenizi destekliyor. Finansal işlemlerde sürtüşmelerden kaçının ve sakin kalın. İkili ilişkilerinizdeki sıcacık bir an moralinizi yükseltecek.",
-      color: "Ruby Red",
-      colorTr: "Yakut Kırmızısı",
-      number: "1",
-      remedy: "Offer water to the rising sun for enhanced vitality and peace.",
-      remedyTr: "Daha fazla canlılık ve iç huzuru için doğan güneşe su ikram edin.",
-    },
-    virgo: {
-      en: "Mercury brings mental clarity and swift comprehension. Excellent day for communications, document signing, and studying. Keep an eye on minor dietary adjustments to sustain high energy levels.",
-      tr: "Merkür zihinsel netlik ve hızlı kavrayış getiriyor. İletişim, belge imzalama ve araştırma yapmak için mükemmel bir gün. Yüksek enerji seviyenizi korumak için beslenmenize dikkat edin.",
-      color: "Emerald",
-      colorTr: "Zümrüt Yeşili",
-      number: "5",
-      remedy: "Feed green grass or vegetables to animals for auspicious results.",
-      remedyTr: "Olumlu ve bereketli sonuçlar için doğadaki canlıları besleyin.",
-    },
-  };
-
-  const safeSign = signId === "leo" ? "leo" : "virgo";
-  const data = fallbacks[safeSign];
-
-  return {
-    signId,
-    sourceId: "astrosage",
-    sourceName: "AstroSage",
-    date: getTodayString(),
-    predictionEn: data.en,
-    predictionTr: data.tr,
-    luckyColor: data.color,
-    luckyColorTr: data.colorTr,
-    luckyNumber: data.number,
-    remedy: data.remedy,
-    remedyTr: data.remedyTr,
-    fetchedAt: new Date().toISOString(),
-  };
 }

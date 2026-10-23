@@ -7,24 +7,23 @@ import {
   ZodiacSignInfo,
 } from "@/types/horoscope";
 import {
-  Sparkles,
   Volume2,
   VolumeX,
   Copy,
   Check,
-  ExternalLink,
-  Calendar,
-  Compass,
-  Palette,
-  Hash,
-  Award,
-  Globe2,
+  Sparkles,
 } from "lucide-react";
 
 interface HoroscopeCardProps {
   item: DailyHoroscopeItem;
   sign: ZodiacSignInfo;
 }
+
+const DAY_LABELS: Record<string, string> = {
+  yesterday: "Dün",
+  today: "Bugün",
+  tomorrow: "Yarın",
+};
 
 export function HoroscopeCard({ item, sign }: HoroscopeCardProps) {
   const [showOriginal, setShowOriginal] = useState<boolean>(false);
@@ -33,7 +32,6 @@ export function HoroscopeCard({ item, sign }: HoroscopeCardProps) {
 
   const sourceMeta = HOROSCOPE_SOURCES[item.sourceId];
 
-  // Speech synthesis for listening to the Turkish horoscope
   const handleToggleSpeech = () => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
       alert("Tarayıcınız sesli okuma özelliğini desteklemiyor.");
@@ -50,7 +48,7 @@ export function HoroscopeCard({ item, sign }: HoroscopeCardProps) {
     const textToRead = showOriginal ? item.predictionEn : item.predictionTr;
     const utterance = new SpeechSynthesisUtterance(textToRead);
     utterance.lang = showOriginal ? "en-US" : "tr-TR";
-    utterance.rate = 0.95; // Natural calm reading speed
+    utterance.rate = 0.95;
     utterance.pitch = 1.0;
 
     utterance.onend = () => setIsPlaying(false);
@@ -60,200 +58,159 @@ export function HoroscopeCard({ item, sign }: HoroscopeCardProps) {
     setIsPlaying(true);
   };
 
-  const handleCopy = () => {
-    const textToCopy = `${sign.nameTr} Burcu Yorumu (${sourceMeta.name} - ${item.date}):\n\n${
+  const handleCopy = async () => {
+    const textToCopy = `[${sourceMeta?.name || item.sourceName} • ${sign.nameTr} Burcu • ${item.date}]\n\n${
       showOriginal ? item.predictionEn : item.predictionTr
-    }\n\nŞanslı Sayı: ${item.luckyNumber || "-"}\nŞanslı Renk: ${
-      item.luckyColorTr || item.luckyColor || "-"
     }`;
-
-    navigator.clipboard.writeText(textToCopy);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Fallback
+    }
   };
 
+  const dayLabel = DAY_LABELS[item.day] || "Bugün";
+
   return (
-    <div className="p-5 sm:p-7 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg hover:shadow-xl transition-all space-y-5 flex flex-col justify-between">
-      {/* Header: Source, Date & Quick Action Tools */}
-      <div className="space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-500/15 via-purple-500/10 to-amber-500/15 border border-indigo-500/20 flex items-center justify-center text-xl shrink-0">
-              {item.sourceId === "askganesha" && "🕉️"}
-              {item.sourceId === "ganeshaspeaks" && "✨"}
-              {item.sourceId === "astrosage" && "🔮"}
-            </div>
-
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-extrabold text-base sm:text-lg text-slate-900 dark:text-white">
-                  {item.sourceName}
-                </h3>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
-                  {sourceMeta.origin}
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs text-slate-400 font-semibold mt-0.5">
-                <Calendar className="w-3.5 h-3.5" />
-                <span>{item.date}</span>
-              </div>
-            </div>
+    <article className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 flex flex-col justify-between gap-4 transition-all hover:border-zinc-300 dark:hover:border-zinc-700">
+      {/* Header */}
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <div className="flex items-center gap-2">
+            <h3 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white">
+              {sourceMeta?.name || item.sourceName}
+            </h3>
+            <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">
+              {dayLabel}
+            </span>
           </div>
-
-          {/* Action Tools */}
-          <div className="flex items-center gap-1.5">
-            {/* Language Switcher */}
-            <div className="flex items-center p-0.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold">
-              <button
-                type="button"
-                onClick={() => setShowOriginal(false)}
-                className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
-                  !showOriginal
-                    ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs font-extrabold"
-                    : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
-                }`}
-              >
-                🇹🇷 Türkçe
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowOriginal(true)}
-                className={`px-2.5 py-1 rounded-lg transition-colors cursor-pointer ${
-                  showOriginal
-                    ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs font-extrabold"
-                    : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
-                }`}
-              >
-                🇬🇧 English
-              </button>
-            </div>
-
-            {/* TTS Audio Player */}
-            <button
-              type="button"
-              onClick={handleToggleSpeech}
-              className={`p-2 rounded-xl border transition-all cursor-pointer ${
-                isPlaying
-                  ? "bg-amber-500 text-slate-950 border-amber-600 animate-pulse shadow-md"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700"
-              }`}
-              title={isPlaying ? "Durdur" : "Sesli Dinle"}
-            >
-              {isPlaying ? (
-                <VolumeX className="w-4 h-4" />
-              ) : (
-                <Volume2 className="w-4 h-4" />
-              )}
-            </button>
-
-            {/* Copy Button */}
-            <button
-              type="button"
-              onClick={handleCopy}
-              className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
-              title="Yorumu Kopyala"
-            >
-              {copied ? (
-                <Check className="w-4 h-4 text-emerald-500" />
-              ) : (
-                <Copy className="w-4 h-4" />
-              )}
-            </button>
-
-            {/* Source Website External Link */}
-            <a
-              href={sourceMeta.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-              title="Orijinal Web Sitesini Ziyaret Et"
-            >
-              <ExternalLink className="w-4 h-4" />
-            </a>
+          <div className="text-xs text-zinc-400 dark:text-zinc-500 mt-0.5">
+            {item.date}
           </div>
         </div>
 
-        {/* Prediction Body */}
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <span
-              className={`text-xs font-black uppercase tracking-wider px-2 py-0.5 rounded-md ${sign.colorScheme.badge}`}
-            >
-              {sign.symbol} {sign.nameTr} Burcu Günlük Yorumu
-            </span>
-            <span className="text-[11px] text-slate-400">
-              {showOriginal ? "(Orijinal Metin)" : "(Türkçe Çeviri)"}
-            </span>
-          </div>
-
-          <p className="text-sm sm:text-base text-slate-800 dark:text-slate-200 leading-relaxed font-normal whitespace-pre-line selection:bg-indigo-500 selection:text-white">
-            {showOriginal ? item.predictionEn : item.predictionTr}
-          </p>
+        {/* Language Toggle */}
+        <div className="inline-flex p-0.5 rounded-lg bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/60 text-xs">
+          <button
+            type="button"
+            onClick={() => setShowOriginal(false)}
+            className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-all cursor-pointer ${
+              !showOriginal
+                ? "bg-white dark:bg-zinc-700 text-zinc-950 dark:text-white shadow-xs"
+                : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200"
+            }`}
+          >
+            TR
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowOriginal(true)}
+            className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-all cursor-pointer ${
+              showOriginal
+                ? "bg-white dark:bg-zinc-700 text-zinc-950 dark:text-white shadow-xs"
+                : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200"
+            }`}
+          >
+            EN
+          </button>
         </div>
       </div>
 
-      {/* Footer Indicators: Lucky Number, Lucky Color, Remedy */}
-      <div className="pt-4 border-t border-slate-100 dark:border-slate-800/80 space-y-3">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-          {/* Lucky Number */}
-          <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-800 flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-              <Hash className="w-4 h-4" />
-            </div>
-            <div className="min-w-0">
-              <div className="text-[10px] text-slate-400 uppercase font-bold">
-                Şanslı Sayı
-              </div>
-              <div className="text-sm font-black text-slate-900 dark:text-white truncate">
-                {item.luckyNumber || "7"}
-              </div>
-            </div>
-          </div>
-
-          {/* Lucky Color */}
-          <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-800 flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-purple-500/15 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
-              <Palette className="w-4 h-4" />
-            </div>
-            <div className="min-w-0">
-              <div className="text-[10px] text-slate-400 uppercase font-bold">
-                Şanslı Renk
-              </div>
-              <div className="text-sm font-black text-slate-900 dark:text-white truncate">
-                {item.luckyColorTr || item.luckyColor || "Zümrüt"}
-              </div>
-            </div>
-          </div>
-
-          {/* Source Tag */}
-          <div className="col-span-2 sm:col-span-1 p-3 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-100 dark:border-slate-800 flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-              <Compass className="w-4 h-4" />
-            </div>
-            <div className="min-w-0">
-              <div className="text-[10px] text-slate-400 uppercase font-bold">
-                Astro Ekolü
-              </div>
-              <div className="text-sm font-black text-slate-900 dark:text-white truncate">
-                {item.sourceId === "astrosage" ? "Vedik Ay Burcu" : "Hint Astrolojisi"}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* AstroSage Remedy if available */}
-        {(item.remedy || item.remedyTr) && (
-          <div className="p-3.5 rounded-2xl bg-amber-500/10 dark:bg-amber-950/20 border border-amber-500/30 text-xs space-y-1">
-            <div className="flex items-center gap-1.5 font-extrabold text-amber-700 dark:text-amber-400">
-              <Award className="w-3.5 h-3.5" />
-              <span>Günün Vedik İyileştirici Tavsiyesi (Remedy):</span>
-            </div>
-            <p className="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">
-              {showOriginal ? item.remedy : item.remedyTr || item.remedy}
-            </p>
-          </div>
+      {/* Prediction Body */}
+      <div className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
+        {showOriginal ? (
+          <p className="italic text-zinc-600 dark:text-zinc-400">
+            &ldquo;{item.predictionEn}&rdquo;
+          </p>
+        ) : (
+          <p>{item.predictionTr}</p>
         )}
       </div>
-    </div>
+
+      {/* Astro Details & Remedy */}
+      {(item.luckyNumber || item.luckyColor || item.remedy) && (
+        <div className="space-y-2 pt-2 border-t border-zinc-100 dark:border-zinc-800/60">
+          <div className="flex flex-wrap items-center gap-2 text-xs">
+            {item.luckyNumber && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-zinc-50 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-400 border border-zinc-200/60 dark:border-zinc-700/50">
+                <span>Şanslı Sayı:</span>
+                <strong className="text-zinc-900 dark:text-white font-semibold">
+                  {item.luckyNumber}
+                </strong>
+              </span>
+            )}
+
+            {item.luckyColor && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-zinc-50 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-400 border border-zinc-200/60 dark:border-zinc-700/50">
+                <span>Renk:</span>
+                <strong className="text-zinc-900 dark:text-white font-semibold">
+                  {item.luckyColorTr || item.luckyColor}
+                </strong>
+              </span>
+            )}
+          </div>
+
+          {/* Vedik Remedy */}
+          {item.remedy && (
+            <div className="text-[11px] text-zinc-500 dark:text-zinc-400 flex items-start gap-1.5 bg-zinc-50 dark:bg-zinc-800/40 p-2 rounded-lg border border-zinc-200/50 dark:border-zinc-700/40">
+              <Sparkles className="w-3.5 h-3.5 text-zinc-400 shrink-0 mt-0.5" />
+              <span>
+                <strong className="text-zinc-700 dark:text-zinc-300">Öneri:</strong>{" "}
+                {showOriginal ? item.remedy : item.remedyTr || item.remedy}
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Card Footer Actions */}
+      <div className="flex items-center justify-between pt-2 border-t border-zinc-100 dark:border-zinc-800/60 text-xs">
+        <button
+          type="button"
+          onClick={handleToggleSpeech}
+          className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
+            isPlaying
+              ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-950"
+              : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+          }`}
+          title="Sesli Dinle"
+        >
+          {isPlaying ? (
+            <>
+              <VolumeX className="w-3.5 h-3.5" />
+              <span>Durdur</span>
+            </>
+          ) : (
+            <>
+              <Volume2 className="w-3.5 h-3.5" />
+              <span>Dinle</span>
+            </>
+          )}
+        </button>
+
+        <button
+          type="button"
+          onClick={handleCopy}
+          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium transition-colors cursor-pointer"
+          title="Yorumu Kopyala"
+        >
+          {copied ? (
+            <>
+              <Check className="w-3.5 h-3.5 text-emerald-500" />
+              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
+                Kopyalandı
+              </span>
+            </>
+          ) : (
+            <>
+              <Copy className="w-3.5 h-3.5" />
+              <span>Kopyala</span>
+            </>
+          )}
+        </button>
+      </div>
+    </article>
   );
 }
