@@ -13,6 +13,7 @@ import {
   fetchGaneshaSpeaks,
 } from "@/lib/horoscope-fetcher";
 import {
+  DAY_DATES,
   getFormattedDayDate,
   STATIC_HOROSCOPES,
 } from "@/lib/horoscope-data";
@@ -63,6 +64,7 @@ export async function GET(req: NextRequest) {
 
     const signInfo = ZODIAC_SIGNS[signParam];
     const items: DailyHoroscopeItem[] = [];
+    const expectedDate = DAY_DATES[validDay];
 
     const fetchPromises: Promise<{
       sourceId: HoroscopeSourceId;
@@ -106,11 +108,19 @@ export async function GET(req: NextRequest) {
     for (const res of results) {
       if (res.status === "fulfilled") {
         if (res.value.item) {
-          items.push(res.value.item);
+          items.push({
+            ...res.value.item,
+            date: expectedDate,
+            day: validDay,
+          });
         } else {
           const fallback = dayFallbacks[res.value.sourceId];
           if (fallback) {
-            items.push(fallback);
+            items.push({
+              ...fallback,
+              date: expectedDate,
+              day: validDay,
+            });
           }
         }
       }
@@ -124,7 +134,7 @@ export async function GET(req: NextRequest) {
     const responsePayload: HoroscopeApiResponse = {
       success: true,
       day: validDay,
-      date: items[0]?.date || getFormattedDayDate(validDay),
+      date: expectedDate,
       sign: signInfo,
       items,
       availableSources,

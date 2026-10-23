@@ -8,14 +8,14 @@ import {
   ZodiacSignId,
   ZODIAC_SIGNS,
 } from "@/types/horoscope";
-import { getHoroscopesForSign } from "@/lib/horoscope-data";
+import { DAY_DATES, getHoroscopesForSign } from "@/lib/horoscope-data";
 import { Navbar } from "@/components/Navbar";
 import { ZodiacSelector } from "@/components/ZodiacSelector";
 import { ZodiacProfileCard } from "@/components/ZodiacProfileCard";
 import { DaySelector } from "@/components/DaySelector";
 import { SourceFilter } from "@/components/SourceFilter";
 import { HoroscopeCard } from "@/components/HoroscopeCard";
-import { Sparkles, RefreshCw, Info } from "lucide-react";
+import { RefreshCw, Info } from "lucide-react";
 
 export default function HomePage() {
   const [selectedSignId, setSelectedSignId] = useState<ZodiacSignId>("taurus");
@@ -88,7 +88,7 @@ export default function HomePage() {
     return item.sourceId === selectedSourceId;
   });
 
-  const currentDateDisplay = data?.date || "Bugün";
+  const currentDateDisplay = DAY_DATES[selectedDay];
 
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 selection:bg-zinc-900 selection:text-white dark:selection:bg-white dark:selection:text-zinc-950 font-sans transition-colors pb-20 sm:pb-12">
@@ -116,7 +116,6 @@ export default function HomePage() {
           <DaySelector
             selectedDay={selectedDay}
             onSelectDay={handleSelectDay}
-            formattedDate={data?.date}
           />
         </section>
 
