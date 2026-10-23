@@ -11,9 +11,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Hattrick Pro Dashboard | Akıllı Menajerlik & Taktik Üssü",
+  title: "AstroVeda | Günlük Burç Yorumları (AskGanesha, GaneshaSpeaks & AstroSage)",
   description:
-    "Resmi Hattrick CHPP OAuth 1.0a entegrasyonu, yapay zeka destekli otomatik kadro dizilimi, antrenman simülatörü, stadyum & ekonomi merkezi ve canlı maç tahmin motoru.",
+    "AskGanesha ve GaneshaSpeaks üzerinden Boğa, Yengeç, Aslan ve Başak burçları; AstroSage üzerinden Aslan ve Başak burçları için günlük astroloji yorumları, Türkçe çeviri, şanslı sayılar ve renkler.",
 };
 
 export const viewport: Viewport = {
@@ -33,7 +33,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="tr" className={poppins.variable} suppressHydrationWarning>
-      <body className="min-h-screen font-sans bg-slate-50 dark:bg-[#060b14] text-slate-900 dark:text-slate-100 antialiased selection:bg-emerald-500 selection:text-white">
+      <body className="min-h-screen font-sans bg-slate-50 dark:bg-[#060b14] text-slate-900 dark:text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
