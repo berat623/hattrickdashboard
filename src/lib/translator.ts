@@ -27,8 +27,20 @@ export const COLOR_MAP_TR: Record<string, string> = {
   saffron: "Safran Sarısı",
   coral: "Mercan",
   lavender: "Lavanta",
+  amber: "Kehribar Sarısı",
+  mustard: "Hardal Sarısı",
+  metallic: "Metalik",
+  copper: "Bakır",
+  bronze: "Bronz",
+  indigo: "Çivit Mavisi",
+  magenta: "Macenta",
+  cyan: "Camgöbeği",
+  ruby: "Yakut Kırmızısı",
+  emerald: "Zümrüt Yeşili",
+  sapphire: "Safir Mavisi",
   "black and blue": "Siyah ve Mavi",
   "red and white": "Kırmızı ve Beyaz",
+  "red and maroon": "Kırmızı ve Bordo",
   "yellow and orange": "Sarı ve Turuncu",
   "light brown": "Açık Kahverengi",
   "dark brown": "Koyu Kahverengi",
@@ -42,30 +54,20 @@ export const COLOR_MAP_TR: Record<string, string> = {
   "sea green": "Deniz Yeşili",
   "ruby red": "Yakut Kırmızısı",
   "pearl white": "İnci Beyazı",
-  amber: "Kehribar Sarısı",
-  mustard: "Hardal Sarısı",
   "light bright yellow": "Açık Parlak Sarı",
   "transparent and pink": "Şeffaf ve Pembe",
-  metallic: "Metalik",
 };
 
-/**
- * Robust Turkish color translator for all astrology color names.
- */
-export function translateColorToTurkish(colorEn?: string): string {
-  if (!colorEn) return "";
-  const normalized = colorEn.trim().toLowerCase();
+function translateSingleColor(c: string): string {
+  if (!c) return "";
+  const trimmed = c.trim().toLowerCase().replace(/\.+$/, "");
+  if (!trimmed) return "";
 
-  // 1. Direct dictionary match
-  if (COLOR_MAP_TR[normalized]) {
-    return COLOR_MAP_TR[normalized];
-  }
+  if (COLOR_MAP_TR[trimmed]) return COLOR_MAP_TR[trimmed];
 
-  // 2. Light / Dark modifiers
-  const isLight = normalized.includes("light");
-  const isDark = normalized.includes("dark");
-  const cleanBase = normalized.replace(/\b(light|dark)\b/g, "").trim();
-
+  const isLight = trimmed.includes("light");
+  const isDark = trimmed.includes("dark");
+  const cleanBase = trimmed.replace(/\b(light|dark)\b/g, "").trim();
   if (COLOR_MAP_TR[cleanBase]) {
     const base = COLOR_MAP_TR[cleanBase];
     if (isLight) return `Açık ${base}`;
@@ -73,14 +75,44 @@ export function translateColorToTurkish(colorEn?: string): string {
     return base;
   }
 
-  // 3. Substring match
   for (const [k, v] of Object.entries(COLOR_MAP_TR)) {
-    if (normalized.includes(k)) {
-      return v;
+    if (trimmed.includes(k)) return v;
+  }
+  return c.trim();
+}
+
+/**
+ * Robust Turkish color translator for all astrology color names.
+ */
+export function translateColorToTurkish(colorEn?: string): string {
+  if (!colorEn) return "";
+  const cleaned = colorEn.trim().replace(/\.+$/, "").trim();
+  if (!cleaned) return "";
+
+  // If already native Turkish or matching a known Turkish name
+  const turkishColors = Object.values(COLOR_MAP_TR);
+  if (turkishColors.some((tc) => tc.toLowerCase() === cleaned.toLowerCase())) {
+    return cleaned;
+  }
+
+  // Check if composite: e.g. "Black and Blue" or "White, cream, red and yellow"
+  if (/\b(?:and|ve|,|\/)\b/i.test(cleaned) || cleaned.includes(",")) {
+    const parts = cleaned
+      .split(/(?:,|\s+and\s+|\s+ve\s+|\/)+/i)
+      .map((p) => p.trim())
+      .filter(Boolean);
+    if (parts.length > 1) {
+      const translatedParts = parts.map((p) => translateSingleColor(p));
+      if (translatedParts.length === 2) {
+        return `${translatedParts[0]} ve ${translatedParts[1]}`;
+      }
+      return `${translatedParts.slice(0, -1).join(", ")} ve ${
+        translatedParts[translatedParts.length - 1]
+      }`;
     }
   }
 
-  return colorEn;
+  return translateSingleColor(cleaned);
 }
 
 export function cleanHtmlText(text: string): string {

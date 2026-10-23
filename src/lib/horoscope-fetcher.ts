@@ -221,19 +221,114 @@ export async function fetchGaneshaSpeaks(
 }
 
 /**
- * 3. AstroSage Fetcher
- * ONLY supported for: Leo, Virgo
- * Days: today, tomorrow (yesterday not provided by AstroSage)
+ * 3. Astroloji.org Fetcher (Yerli / Türkçe Kaynak)
+ * Desteklenen Burçlar: Boğa, Yengeç, Aslan, Başak
+ * Desteklenen Günler: SADECE BUGÜN (today)
+ */
+export async function fetchAstrolojiOrg(
+  signId: ZodiacSignId,
+  day: HoroscopeDay = "today"
+): Promise<DailyHoroscopeItem | null> {
+  // Astroloji.org sadece o günün yorumunu yayınlar
+  if (day !== "today") {
+    return null;
+  }
+
+  const slugMap: Record<ZodiacSignId, string> = {
+    taurus: "boga",
+    cancer: "yengec",
+    leo: "aslan",
+    virgo: "basak",
+  };
+
+  const slug = slugMap[signId] || "boga";
+  const url = `https://www.astroloji.org/${slug}-burcu-gunluk-yorumu.aspx`;
+
+  try {
+    const res = await fetch(url, {
+      headers: COMMON_HEADERS,
+      next: { revalidate: 3600 },
+    });
+
+    if (!res.ok) {
+      throw new Error(`Astroloji.org HTTP ${res.status}`);
+    }
+
+    const html = await res.text();
+
+    // Extract date (e.g. 24 Ekim 2026 Cumartesi)
+    let rawDate = "";
+    const dateMatch =
+      html.match(/<p[^>]*style="[^"]*#7a5a2a[^"]*"[^>]*>([^<]+)<\/p>/i) ||
+      html.match(/(\d{1,2}\s+[A-Za-zÇçĞğİıÖöŞşÜü]+\s+\d{4}\s+[A-Za-zÇçĞğİıÖöŞşÜü]+)/);
+    if (dateMatch) {
+      rawDate = cleanHtmlText(dateMatch[1]);
+    }
+    const formattedDate = parseSourceDateToTurkish(rawDate) || getFallbackDayDate("today");
+
+    // Extract kutu segments (Aşk, İş, Sağlık)
+    const kutuMatches = [...html.matchAll(/<div class="kutu">([\s\S]*?)<\/div>/gi)];
+    let predictionTr = "";
+
+    if (kutuMatches.length > 0) {
+      predictionTr = kutuMatches
+        .map((m) => cleanHtmlText(m[1]))
+        .filter((t) => t.length > 10)
+        .join(" ");
+    } else {
+      // Fallback description match
+      const descMatch = html.match(/<div class="yorum[^"]*">([\s\S]*?)<\/div>/i);
+      if (descMatch) {
+        predictionTr = cleanHtmlText(descMatch[1]);
+      }
+    }
+
+    if (!predictionTr || predictionTr.length < 25) {
+      throw new Error("Astroloji.org prediction text empty");
+    }
+
+    // Lucky number & color
+    let luckyNumber: string | undefined;
+    let luckyColorTr: string | undefined;
+
+    const luckyMatch = html.match(
+      /U[ğg]urlu Say[ıi]n[ıi]z:\s*<\/b>\s*(\d+)[\s\S]*?U[ğg]urlu Renginiz:\s*<\/b>\s*([^<]+)/i
+    );
+    if (luckyMatch) {
+      luckyNumber = cleanHtmlText(luckyMatch[1]);
+      const rawColor = cleanHtmlText(luckyMatch[2]);
+      luckyColorTr = translateColorToTurkish(rawColor);
+    }
+
+    return {
+      signId,
+      sourceId: "astrolojiorg",
+      sourceName: "Astroloji.org",
+      day: "today",
+      date: formattedDate,
+      rawDate,
+      predictionEn: predictionTr,
+      predictionTr,
+      luckyColor: luckyColorTr,
+      luckyColorTr,
+      luckyNumber,
+      fetchedAt: new Date().toISOString(),
+    };
+  } catch (err) {
+    console.warn(`[Astroloji.org] Fetch failed for ${signId}:`, err);
+    return null;
+  }
+}
+
+/**
+ * 4. AstroSage Fetcher
+ * Desteklenen Burçlar: Boğa, Yengeç, Aslan, Başak
+ * Günler: today, tomorrow (yesterday not provided by AstroSage)
  */
 export async function fetchAstroSage(
   signId: ZodiacSignId,
   day: HoroscopeDay = "today"
 ): Promise<DailyHoroscopeItem | null> {
-  // STRICT RULE: Only Leo and Virgo
-  if (signId !== "leo" && signId !== "virgo") {
-    return null;
-  }
-
   // AstroSage only offers today and tomorrow
   if (day === "yesterday") {
     return null;

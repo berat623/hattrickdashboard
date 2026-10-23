@@ -15,9 +15,8 @@ export function SourceFilter({
   currentSignId,
   currentDay,
 }: SourceFilterProps) {
-  const isAstroSageAvailable =
-    (currentSignId === "leo" || currentSignId === "virgo") &&
-    currentDay !== "yesterday";
+  const isAstroSageAvailable = currentDay !== "yesterday";
+  const isAstrolojiOrgAvailable = currentDay === "today";
 
   return (
     <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
@@ -32,6 +31,20 @@ export function SourceFilter({
       >
         Tüm Kaynaklar
       </button>
+
+      {isAstrolojiOrgAvailable && (
+        <button
+          type="button"
+          onClick={() => onSelectSource("astrolojiorg")}
+          className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+            selectedSourceId === "astrolojiorg"
+              ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-semibold shadow-xs"
+              : "bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
+          }`}
+        >
+          Astroloji.org
+        </button>
+      )}
 
       <button
         type="button"

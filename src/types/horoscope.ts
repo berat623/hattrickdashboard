@@ -1,6 +1,10 @@
 export type ZodiacSignId = "taurus" | "cancer" | "leo" | "virgo";
 
-export type HoroscopeSourceId = "askganesha" | "ganeshaspeaks" | "astrosage";
+export type HoroscopeSourceId =
+  | "astrolojiorg"
+  | "askganesha"
+  | "ganeshaspeaks"
+  | "astrosage";
 
 export type HoroscopeDay = "yesterday" | "today" | "tomorrow";
 
@@ -94,6 +98,13 @@ export const ZODIAC_SIGNS: Record<ZodiacSignId, ZodiacSignInfo> = {
 };
 
 export const HOROSCOPE_SOURCES: Record<HoroscopeSourceId, HoroscopeSourceInfo> = {
+  astrolojiorg: {
+    id: "astrolojiorg",
+    name: "Astroloji.org",
+    origin: "Türk Astroloji Portalı",
+    supportedSigns: ["taurus", "cancer", "leo", "virgo"],
+    supportedDays: ["today"], // Sadece o günün yorumunu gösterir
+  },
   askganesha: {
     id: "askganesha",
     name: "AskGanesha",
@@ -112,7 +123,7 @@ export const HOROSCOPE_SOURCES: Record<HoroscopeSourceId, HoroscopeSourceInfo> =
     id: "astrosage",
     name: "AstroSage",
     origin: "Ay Burcu & Vedik Rehberi",
-    supportedSigns: ["leo", "virgo"], // Strictly Leo & Virgo
+    supportedSigns: ["taurus", "cancer", "leo", "virgo"], // Boğa, Yengeç, Aslan ve Başak
     supportedDays: ["today", "tomorrow"], // AstroSage only has today & tomorrow
   },
 };

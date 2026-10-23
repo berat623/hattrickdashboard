@@ -9,6 +9,7 @@ import {
 } from "@/types/horoscope";
 import {
   fetchAskGanesha,
+  fetchAstrolojiOrg,
   fetchAstroSage,
   fetchGaneshaSpeaks,
 } from "@/lib/horoscope-fetcher";
@@ -71,6 +72,14 @@ export async function GET(req: NextRequest) {
       item: DailyHoroscopeItem | null;
     }>[] = [];
 
+    if ((!sourceParam || sourceParam === "astrolojiorg") && validDay === "today") {
+      fetchPromises.push(
+        fetchAstrolojiOrg(signParam, validDay)
+          .then((item) => ({ sourceId: "astrolojiorg" as HoroscopeSourceId, item }))
+          .catch(() => ({ sourceId: "astrolojiorg" as HoroscopeSourceId, item: null }))
+      );
+    }
+
     if (!sourceParam || sourceParam === "askganesha") {
       fetchPromises.push(
         fetchAskGanesha(signParam, validDay)
@@ -87,10 +96,9 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // AstroSage: Strictly only for Leo and Virgo AND only today & tomorrow
+    // AstroSage: Boğa, Yengeç, Aslan ve Başak (Bugün ve Yarın)
     if (
       (!sourceParam || sourceParam === "astrosage") &&
-      (signParam === "leo" || signParam === "virgo") &&
       validDay !== "yesterday"
     ) {
       fetchPromises.push(
@@ -127,7 +135,9 @@ export async function GET(req: NextRequest) {
     }
 
     const availableSources: HoroscopeSourceId[] =
-      (signParam === "leo" || signParam === "virgo") && validDay !== "yesterday"
+      validDay === "today"
+        ? ["astrolojiorg", "askganesha", "ganeshaspeaks", "astrosage"]
+        : validDay === "tomorrow"
         ? ["askganesha", "ganeshaspeaks", "astrosage"]
         : ["askganesha", "ganeshaspeaks"];
 

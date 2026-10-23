@@ -23,14 +23,17 @@ export const STATIC_HOROSCOPES: Record<
 > = {
   yesterday: {
     taurus: {
+      astrolojiorg: null,
       askganesha: {
         signId: "taurus",
         sourceId: "askganesha",
         sourceName: "AskGanesha",
         day: "yesterday",
         date: "23 Ekim 2026, Cuma",
-        predictionTr: "İster ilişki ister iş fırsatları konusunda sezgilerinize güvenin, bir adım daha ileri gitmekten çekinmeyin. Kendinize duyulan güven ve doğru karar size iyi şanslar getirecektir. Sağlık kartları bugün akıllı bir tedavi talep ediyor, taviz vermeyin.",
-        predictionEn: "Trust your intuition be it about relationship or business opportunities, do not hesitate to take a step further. The confidence in you and the right decision will bring good fortune. Health cards request a wise treatment today, do not compromise.",
+        predictionTr:
+          "İster ilişki ister iş fırsatları konusunda sezgilerinize güvenin, bir adım daha ileri gitmekten çekinmeyin. Kendinize duyulan güven ve doğru karar size iyi şanslar getirecektir. Sağlık kartları bugün akıllı bir tedavi talep ediyor, taviz vermeyin.",
+        predictionEn:
+          "Trust your intuition be it about relationship or business opportunities, do not hesitate to take a step further. The confidence in you and the right decision will bring good fortune. Health cards request a wise treatment today, do not compromise.",
         luckyColor: "Red",
         luckyColorTr: "Kırmızı",
         luckyNumber: "33",
@@ -42,8 +45,10 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "GaneshaSpeaks",
         day: "yesterday",
         date: "23 Ekim 2026, Cuma",
-        predictionTr: "Ganesha, bir yönetici olarak bugün demir yumrukla komuta edeceğinizi öngörüyor. Öğleden sonra değişimin yavaş yavaş yaklaştığını görebilirsiniz; Diktatörce bir tarza kıyasla insanları yönetme konusunda daha uyumlu bir yaklaşım keşfedebilirsiniz. Her türlü olumsuz durumdan başarılı bir şekilde çıkacaksınız.",
-        predictionEn: "As an administrator, you will command with an iron fist today, predicts Ganesha. In the afternoon, you may find change slowly creeping in; you may discover a more harmonious approach to managing people as compared to a dictatorial style. You will come out with flying colours from any adverse situations.",
+        predictionTr:
+          "Ganesha, bir yönetici olarak bugün demir yumrukla komuta edeceğinizi öngörüyor. Öğleden sonra değişimin yavaş yavaş yaklaştığını görebilirsiniz; Diktatörce bir tarza kıyasla insanları yönetme konusunda daha uyumlu bir yaklaşım keşfedebilirsiniz. Her türlü olumsuz durumdan başarılı bir şekilde çıkacaksınız.",
+        predictionEn:
+          "As an administrator, you will command with an iron fist today, predicts Ganesha. In the afternoon, you may find change slowly creeping in; you may discover a more harmonious approach to managing people as compared to a dictatorial style. You will come out with flying colours from any adverse situations.",
         luckyColor: undefined,
         luckyColorTr: undefined,
         luckyNumber: undefined,
@@ -52,14 +57,17 @@ export const STATIC_HOROSCOPES: Record<
       astrosage: null,
     },
     cancer: {
+      astrolojiorg: null,
       askganesha: {
         signId: "cancer",
         sourceId: "askganesha",
         sourceName: "AskGanesha",
         day: "yesterday",
         date: "23 Ekim 2026, Cuma",
-        predictionTr: "Geçmişte, şu anda veya gelecekte karşılaştığınız zorluklara rağmen başarılı olma cesaretini bulacağınızı hissedebilirsiniz. İster sağlıksızlıktan, ister bozulmuş bir evlilikten veya ilişkiden ya da iş yerindeki zorluklardan kurtuluyor olun, zirveye çıkacak irade gücünü bulacaksınız.",
-        predictionEn: "You may feel that despite the challenges you have been faced in the past, present or future, you will find the courage to succeed. Whether you are recovering from ill health, a broken marriage or relationship, or challenges at work, you will find the willpower to come out on top.",
+        predictionTr:
+          "Geçmişte, şu anda veya gelecekte karşılaştığınız zorluklara rağmen başarılı olma cesaretini bulacağınızı hissedebilirsiniz. İster sağlıksızlıktan, ister bozulmuş bir evlilikten veya ilişkiden ya da iş yerindeki zorluklardan kurtuluyor olun, zirveye çıkacak irade gücünü bulacaksınız.",
+        predictionEn:
+          "You may feel that despite the challenges you have been faced in the past, present or future, you will find the courage to succeed. Whether you are recovering from ill health, a broken marriage or relationship, or challenges at work, you will find the willpower to come out on top.",
         luckyColor: "Green",
         luckyColorTr: "Yeşil",
         luckyNumber: "11",
@@ -71,8 +79,10 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "GaneshaSpeaks",
         day: "yesterday",
         date: "23 Ekim 2026, Cuma",
-        predictionTr: "Ganesha, birkaç olağan durumu alışılmadık bir şekilde ele almaya kendinizi hazırlamanız gerektiğini söylüyor. Öğleden sonra muhtemelen halk psikolojisi üzerine birkaç ders öğreneceksiniz. Ganesha, herhangi bir önemli karara varmadan önce, artıları ve eksileri tarafsız bir zihinle tartın, diyor.",
-        predictionEn: "You must get ready yourself to handle a few usual situations in an unusual way, foretells Ganesha. You will probably learn a few lessons in public psychology during the afternoon. Before arriving at any crucial decision, weigh the pros and cons with an unbiased mind, says Ganesha.",
+        predictionTr:
+          "Ganesha, birkaç olağan durumu alışılmadık bir şekilde ele almaya kendinizi hazırlamanız gerektiğini söylüyor. Öğleden sonra muhtemelen halk psikolojisi üzerine birkaç ders öğreneceksiniz. Ganesha, herhangi bir önemli karara varmadan önce, artıları ve eksileri tarafsız bir zihinle tartın, diyor.",
+        predictionEn:
+          "You must get ready yourself to handle a few usual situations in an unusual way, foretells Ganesha. You will probably learn a few lessons in public psychology during the afternoon. Before arriving at any crucial decision, weigh the pros and cons with an unbiased mind, says Ganesha.",
         luckyColor: undefined,
         luckyColorTr: undefined,
         luckyNumber: undefined,
@@ -81,14 +91,17 @@ export const STATIC_HOROSCOPES: Record<
       astrosage: null,
     },
     leo: {
+      astrolojiorg: null,
       askganesha: {
         signId: "leo",
         sourceId: "askganesha",
         sourceName: "AskGanesha",
         day: "yesterday",
         date: "23 Ekim 2026, Cuma",
-        predictionTr: "Sigara içmek veya içki içmek gibi kötü alışkanlıkları bırakmak istiyorsanız iyi bir zaman. Uzun süredir hastaysanız rahatlama bulacaksınız. Aileniz ya da arkadaşlarınızla tatile çıkabilirsiniz. Sizin için huzurlu ve neşeli bir gün olacak.",
-        predictionEn: "It's a good time if you are looking to quit bad habits such as smoking or drinking. You will find relief if you were sick from long time. You may go out with family or friends on vacation. It is going to be a peaceful and joyful day for you.",
+        predictionTr:
+          "Sigara içmek veya içki içmek gibi kötü alışkanlıkları bırakmak istiyorsanız iyi bir zaman. Uzun süredir hastaysanız rahatlama bulacaksınız. Aileniz ya da arkadaşlarınızla tatile çıkabilirsiniz. Sizin için huzurlu ve neşeli bir gün olacak.",
+        predictionEn:
+          "It's a good time if you are looking to quit bad habits such as smoking or drinking. You will find relief if you were sick from long time. You may go out with family or friends on vacation. It is going to be a peaceful and joyful day for you.",
         luckyColor: "Yellow",
         luckyColorTr: "Sarı",
         luckyNumber: "5",
@@ -100,8 +113,10 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "GaneshaSpeaks",
         day: "yesterday",
         date: "23 Ekim 2026, Cuma",
-        predictionTr: "Peki insanlara sırtlarında paraşütten başka bir şey olmadan dağdan atlamaya ilham veren şey nedir? Sanırım bugün bu sorunun cevabını, kelimenin tam anlamıyla olmasa da en azından mecazi olarak bulacaksınız. Ganesha, bugün yiğit işlerden keyif alacağınızı ve keyif alacağınızı öngörüyor. İç sahada ani kararlar almak anlamına gelse bile, sizin için her şey adrenalin patlamasıyla ilgili. Mevcut tutumunuzu aklınızda tutarak, iş ve işle ilgili kararlardan bazılarını beklemeye almak ve ertelemek iyi bir fikirdir. Ganesha size dinamik ve enerjik bir gün diler. Paraşütünü unutma, tamam mı?",
-        predictionEn: "So what is it that inspires people to jump off a mountain with nothing but a parachute on their back? Guess you are going to find the answer to that question today, if not literally, then at least metaphorically. Ganesha foresees that you will indulge and delight in valorous deeds today. It is all about the adrenaline rush for you, even if it means taking spur-of-the-moment decisions on the home front. Keeping your current attitude in mind, it is a good idea to put on hold and delay some of those work and business related decisions. All in all, Ganesha wishes you a dynamic and energetic day. Just don’t forget the parachute, okay?.",
+        predictionTr:
+          "Peki insanlara sırtlarında paraşütten başka bir şey olmadan dağdan atlamaya ilham veren şey nedir? Sanırım bugün bu sorunun cevabını, kelimenin tam anlamıyla olmasa da en azından mecazi olarak bulacaksınız. Ganesha, bugün yiğit işlerden keyif alacağınızı ve keyif alacağınızı öngörüyor. İç sahada ani kararlar almak anlamına gelse bile, sizin için her şey adrenalin patlamasıyla ilgili. Mevcut tutumunuzu aklınızda tutarak, iş ve işle ilgili kararlardan bazılarını beklemeye almak ve ertelemek iyi bir fikirdir. Ganesha size dinamik ve enerjik bir gün diler. Paraşütünü unutma, tamam mı?",
+        predictionEn:
+          "So what is it that inspires people to jump off a mountain with nothing but a parachute on their back? Guess you are going to find the answer to that question today, if not literally, then at least metaphorically. Ganesha foresees that you will indulge and delight in valorous deeds today. It is all about the adrenaline rush for you, even if it means taking spur-of-the-moment decisions on the home front. Keeping your current attitude in mind, it is a good idea to put on hold and delay some of those work and business related decisions. All in all, Ganesha wishes you a dynamic and energetic day. Just don’t forget the parachute, okay?.",
         luckyColor: undefined,
         luckyColorTr: undefined,
         luckyNumber: undefined,
@@ -110,14 +125,17 @@ export const STATIC_HOROSCOPES: Record<
       astrosage: null,
     },
     virgo: {
+      astrolojiorg: null,
       askganesha: {
         signId: "virgo",
         sourceId: "askganesha",
         sourceName: "AskGanesha",
         day: "yesterday",
         date: "23 Ekim 2026, Cuma",
-        predictionTr: "Maddi veya kişisel olarak zor bir dönemden geçmiş olabilirsiniz. Zorluklar kısa sürede sona erecek, sadece pillerinizi yeniden şarj etmeniz ve yolunuza devam etmeniz gerekiyor. Kısa süre içerisinde kariyerinizle ilgili güzel haberler alabilirsiniz.",
-        predictionEn: "You may have been through difficult period, financially or personally. Difficulties will end in no time, you just have to re-charge your batteries and get back in track. In no time you may receive good news related to your career.",
+        predictionTr:
+          "Maddi veya kişisel olarak zor bir dönemden geçmiş olabilirsiniz. Zorluklar kısa sürede sona erecek, sadece pillerinizi yeniden şarj etmeniz ve yolunuza devam etmeniz gerekiyor. Kısa süre içerisinde kariyerinizle ilgili güzel haberler alabilirsiniz.",
+        predictionEn:
+          "You may have been through difficult period, financially or personally. Difficulties will end in no time, you just have to re-charge your batteries and get back in track. In no time you may receive good news related to your career.",
         luckyColor: "Brown",
         luckyColorTr: "Kahverengi",
         luckyNumber: "09",
@@ -129,8 +147,10 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "GaneshaSpeaks",
         day: "yesterday",
         date: "23 Ekim 2026, Cuma",
-        predictionTr: "İçinde bulunduğunuz durumu değerlendirin. Önce değerlendirin ve ancak ondan sonra harekete geçin, diye uyarıyor Ganesha. Öğleden sonra biraz gevşeyin ve masanızın sıkışık ve aşırı çalışma ortamından kurtulun. Ancak Ganesha, tüm deneyiminizi ve iş anlayışınızı kullanarak tekliflere ve kapalı ihalelere zaman ayırın, diyor.",
-        predictionEn: "Take stock of the situation you are in. Assess first and only then make a move, cautions Ganesha. In the afternoon, get footloose and relieve yourself of the cramped and overworked environment of your desk. But bid your time on bids and sealed tenders using all of your experience and business sense, says Ganesha.",
+        predictionTr:
+          "İçinde bulunduğunuz durumu değerlendirin. Önce değerlendirin ve ancak ondan sonra harekete geçin, diye uyarıyor Ganesha. Öğleden sonra biraz gevşeyin ve masanızın sıkışık ve aşırı çalışma ortamından kurtulun. Ancak Ganesha, tüm deneyiminizi ve iş anlayışınızı kullanarak tekliflere ve kapalı ihalelere zaman ayırın, diyor.",
+        predictionEn:
+          "Take stock of the situation you are in. Assess first and only then make a move, cautions Ganesha. In the afternoon, get footloose and relieve yourself of the cramped and overworked environment of your desk. But bid your time on bids and sealed tenders using all of your experience and business sense, says Ganesha.",
         luckyColor: undefined,
         luckyColorTr: undefined,
         luckyNumber: undefined,
@@ -141,14 +161,31 @@ export const STATIC_HOROSCOPES: Record<
   },
   today: {
     taurus: {
+      astrolojiorg: {
+        signId: "taurus",
+        sourceId: "astrolojiorg",
+        sourceName: "Astroloji.org",
+        day: "today",
+        date: "24 Ekim 2026, Cumartesi",
+        predictionTr:
+          "❤️ Aşk: Kıskançlıktan uzak durun, huzur bulmanın yolu bu. Kalbinizin sesini dinlerseniz pişman olmayacağınız bir karar verirsiniz. Romantizm akşam saatlerinde artıyor, keyfini çıkarın. İlişkinizde keyif enerjisi sizi destekliyor. Kalbinizi ısıtacak bir haber yolda, hazır olun. 💼 İş: Detaylar yarın daha netleşecek, sabırlı olun. Keyif bugün işteki en büyük gücünüz. Acele karar vermek yerine bekleyin. Toplantıda kısa ve net konuşun, dağıtmadan. Küçük bir hatanın büyüyebileceğini unutmayın, dikkatli olun. 🌿 Sağlık: Dengeli beslenmek bugün önemli, atlamayın. Bedeninizde keyif hissi hakim. Duruşunuza dikkat etmek ağrıyı azaltır. Nefesinizi düzenlemek sakinleştirir. Şekerli içecekleri bugün azaltın. Omurga esnetmesi yapmayı unutmayın.",
+        predictionEn:
+          "❤️ Aşk: Kıskançlıktan uzak durun, huzur bulmanın yolu bu. Kalbinizin sesini dinlerseniz pişman olmayacağınız bir karar verirsiniz.",
+        luckyColor: "Yeşil",
+        luckyColorTr: "Yeşil",
+        luckyNumber: "6",
+        fetchedAt: new Date().toISOString(),
+      },
       askganesha: {
         signId: "taurus",
         sourceId: "askganesha",
         sourceName: "AskGanesha",
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
-        predictionTr: "Gün yorucu geçebilir, iş yerinde hedef bazlı termin tarihlerine ulaşma konusunda zorluklarla karşılaşabilirsiniz. Gün boyu moraliniz bozulacak, ne yaparsanız yapın para kazanabileceksiniz. Öğrenciler bugün hedeflerine ulaşmak için daha çok çalışacaklar. Aşk hayatı sizi duygularla dolu bir inişli çıkışlı yolculuğa çıkarabilir, bu yolculuğa dikkatli olun.",
-        predictionEn: "The day would be tiring, you might face difficulties in terms of achieving target based deadlines at work. You will feel low all day, no matter what you do you will be able to earn money. Students are going to work harder to achieve their goals today. Love life might take you on a roller coaster ride full of emotions, be ready to ride carefully.",
+        predictionTr:
+          "Gün yorucu geçebilir, iş yerinde hedef bazlı termin tarihlerine ulaşma konusunda zorluklarla karşılaşabilirsiniz. Gün boyu moraliniz bozulacak, ne yaparsanız yapın para kazanabileceksiniz. Öğrenciler bugün hedeflerine ulaşmak için daha çok çalışacaklar. Aşk hayatı sizi duygularla dolu bir inişli çıkışlı yolculuğa çıkarabilir, bu yolculuğa dikkatli olun.",
+        predictionEn:
+          "The day would be tiring, you might face difficulties in terms of achieving target based deadlines at work. You will feel low all day, no matter what you do you will be able to earn money. Students are going to work harder to achieve their goals today. Love life might take you on a roller coaster ride full of emotions, be ready to ride carefully.",
         luckyColor: "Black",
         luckyColorTr: "Siyah",
         luckyNumber: "12",
@@ -160,24 +197,57 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "GaneshaSpeaks",
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
-        predictionTr: "Ganesha, ailenizin onlardan beklediğiniz desteği sağlayamayacağı için hayal kırıklığına uğrayabileceğinizi söylüyor. Pratik kalmaya çalışmalı ve duygulara kapılmamalısınız. Bugün aile içi kavgaların çıkması kuvvetle muhtemel. Ganesha, çatışmalardan kaçınmanızı ve kazanan olmak için gülümsemeye devam etmenizi tavsiye ediyor.",
-        predictionEn: "You may feel let down as your folks may not extend the support you expected from them, says Ganesha You should try to remain practical and not get swayed by emotions. It is highly likely that family feuds may erupt today. Ganesha advises you to avoid confrontations and keep smiling to emerge a winner.",
+        predictionTr:
+          "Ganesha, ailenizin onlardan beklediğiniz desteği sağlayamayacağı için hayal kırıklığına uğrayabileceğinizi söylüyor. Pratik kalmaya çalışmalı ve duygulara kapılmamalısınız. Bugün aile içi kavgaların çıkması kuvvetle muhtemel. Ganesha, çatışmalardan kaçınmanızı ve kazanan olmak için gülümsemeye devam etmenizi tavsiye ediyor.",
+        predictionEn:
+          "You may feel let down as your folks may not extend the support you expected from them, says Ganesha You should try to remain practical and not get swayed by emotions. It is highly likely that family feuds may erupt today. Ganesha advises you to avoid confrontations and keep smiling to emerge a winner.",
         luckyColor: "Cream",
         luckyColorTr: "Krem",
         luckyNumber: "6",
         fetchedAt: new Date().toISOString(),
       },
-      astrosage: null,
+      astrosage: {
+        signId: "taurus",
+        sourceId: "astrosage",
+        sourceName: "AstroSage",
+        day: "today",
+        date: "24 Ekim 2026, Cumartesi",
+        predictionTr:
+          "Korku mutluluğunuzu gölgeleyebilir. Bunun kendi düşüncelerimizin ve hayal gücümüzün ürünü olduğunu anlamalısınız. Kendiliğindenliği öldürür, yaşama sevincimizi ortadan kaldırır ve verimliliğimizi engeller, bu yüzden sizi bir korkak haline getirmeden önce onu daha kökünden kesseniz iyi olur. Bugün yakın bir akrabanızın yardımıyla işinizde başarılı olabilirsiniz, bu da size maddi açıdan da fayda sağlayacaktır. Ev geliştirme projeleri dikkate alınmalıdır. Bugün siz ve aşk partneriniz aşk okyanusuna dalacak ve aşkın doruklarını deneyimleyeceksiniz. Zaman tamamen ücretsizdir ancak aynı zamanda değerlidir. Bu nedenle, bekleyen tüm görevlerinizi bugün tamamlayın ve yarın rahatlayın.",
+        predictionEn:
+          "Fear may mar your happiness. You need to understand that it is the product of our own thoughts and imagination. It kills spontaneity-blot out joy of living and handicap our efficiency-so better nip it in the bud before it makes you a coward. Today, with the help of a close relative, you can do well in your business, which will also benefit you financially.",
+        luckyColor: "Black and Blue",
+        luckyColorTr: "Siyah ve Mavi",
+        luckyNumber: "8",
+        fetchedAt: new Date().toISOString(),
+      },
     },
     cancer: {
+      astrolojiorg: {
+        signId: "cancer",
+        sourceId: "astrolojiorg",
+        sourceName: "Astroloji.org",
+        day: "today",
+        date: "24 Ekim 2026, Cumartesi",
+        predictionTr:
+          "❤️ Aşk: Duygularınızı açık söylemekten çekinmeyin, bugün tam zamanı. İlişkinizde aile enerjisi sizi destekliyor. Kalbiniz bugün biraz hızlı atıyor, heyecana hazır olun. Geçmişe takılmak yerine bugüne odaklanırsanız hafifleyeceksiniz. Duygusal dalgalanmalar bugün normal, kendinize yüklenmeyin. 💼 İş: Not almayı unutmayın, sonra ararsınız. Zamanı iyi yönetirseniz günü rahat bitirirsiniz. Risk almadan önce iki kez düşünün. Aile bugün işteki en büyük gücünüz. Harcamaları kısmak bu hafta akıllıca olur. 🌿 Sağlık: Nefesinizi düzenlemek sakinleştirir. Bedeniniz bugün sinyal veriyor, dinleyin. Koruma enerjisi sağlığınıza iyi geliyor. Yavaşlamak bazen en hızlı yol olur, unutmayın. Baş ağrısına karşı su için önce.",
+        predictionEn:
+          "❤️ Aşk: Duygularınızı açık söylemekten çekinmeyin, bugün tam zamanı. İlişkinizde aile enerjisi sizi destekliyor.",
+        luckyColor: "Beyaz",
+        luckyColorTr: "Beyaz",
+        luckyNumber: "2",
+        fetchedAt: new Date().toISOString(),
+      },
       askganesha: {
         signId: "cancer",
         sourceId: "askganesha",
         sourceName: "AskGanesha",
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
-        predictionTr: "Bugün, iş yerinde hatalar yapabilir ve dikkatsiz davranabilirsiniz, bu da moralinizi bozabilir. Kendinizi saldırgan bulabilir ve birine sözlü veya fiziksel olarak zarar verebilirsiniz, siz bu değilsiniz. Akıllı bir insan olmaya dikkat edin ve kimseyi incitmeyin.",
-        predictionEn: "Today, you may make mistakes and might be careless at work too, that will get you down. You may find yourself aggressive and can hurt someone verbally or physically, that's not who you are. Make sure to become a wise person and do not hurt anyone.",
+        predictionTr:
+          "Bugün, iş yerinde hatalar yapabilir ve dikkatsiz davranabilirsiniz, bu da moralinizi bozabilir. Kendinizi saldırgan bulabilir ve birine sözlü veya fiziksel olarak zarar verebilirsiniz, siz bu değilsiniz. Akıllı bir insan olmaya dikkat edin ve kimseyi incitmeyin.",
+        predictionEn:
+          "Today, you may make mistakes and might be careless at work too, that will get you down. You may find yourself aggressive and can hurt someone verbally or physically, that's not who you are. Make sure to become a wise person and do not hurt anyone.",
         luckyColor: "Pink",
         luckyColorTr: "Pembe",
         luckyNumber: "42",
@@ -189,24 +259,57 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "GaneshaSpeaks",
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
-        predictionTr: "Bugün muhtemelen sevgi ve şefkatle dolup taşacaksınız. Ancak bazı olumsuz düşünceler tüm iyi çalışmalarınızı mahvedecektir. Ama endişelenme! Ganesha, çabalarınızın boşa gitmeyeceğini ve istediğiniz sonuçları er ya da geç alacağınızı söylüyor.",
-        predictionEn: "Today, you are likely to be brimming with love and compassion. However, certain negative thoughts will spoil all your good work. But don&#8217;t fret! Your efforts won&#8217;t go wasted and you will get the desired results sooner or later, says Ganesha.",
+        predictionTr:
+          "Bugün muhtemelen sevgi ve şefkatle dolup taşacaksınız. Ancak bazı olumsuz düşünceler tüm iyi çalışmalarınızı mahvedecektir. Ama endişelenme! Ganesha, çabalarınızın boşa gitmeyeceğini ve istediğiniz sonuçları er ya da geç alacağınızı söylüyor.",
+        predictionEn:
+          "Today, you are likely to be brimming with love and compassion. However, certain negative thoughts will spoil all your good work. But don&#8217;t fret! Your efforts won&#8217;t go wasted and you will get the desired results sooner or later, says Ganesha.",
         luckyColor: "Silver",
         luckyColorTr: "Gümüş",
         luckyNumber: "8",
         fetchedAt: new Date().toISOString(),
       },
-      astrosage: null,
+      astrosage: {
+        signId: "cancer",
+        sourceId: "astrosage",
+        sourceName: "AstroSage",
+        day: "today",
+        date: "24 Ekim 2026, Cumartesi",
+        predictionTr:
+          "Yiyecekler lezzetini tuza borçlu olduğu için, mutluluğun değerini anladığınız kadar bazı mutsuzluklar da önemlidir. Az miktarda ekstra para kazanmanın yollarını arıyorsanız, güvenli finansal planlara yatırım yapın. Aile üyeleriniz ve arkadaşlarınızla önemli zaman geçireceksiniz. Aşk hayatı bugün sizi kutsuyor gibi görünüyor. Beklenmedik kaynaklardan önemli davetler alacaksınız. Evlendikten sonra aşk kulağa zor gelebilir ama bu gün boyu sizinle oluyor. Bugün yapacak çok işiniz yoksa, zamanınızı evinizdeki eşyaları tamir etmeye harcayabilirsiniz.",
+        predictionEn:
+          "As food owes its flavour to salt-some unhappiness is essential only than you realize the value of happiness. Incase you are looking for ways to make little extra money- invest in secure financial schemes. You will get substantial time with family members and friends.",
+        luckyColor: "Red and Maroon",
+        luckyColorTr: "Kırmızı ve Bordo",
+        luckyNumber: "9",
+        fetchedAt: new Date().toISOString(),
+      },
     },
     leo: {
+      astrolojiorg: {
+        signId: "leo",
+        sourceId: "astrolojiorg",
+        sourceName: "Astroloji.org",
+        day: "today",
+        date: "24 Ekim 2026, Cumartesi",
+        predictionTr:
+          "❤️ Aşk: Duygularınızı bastırmayın, paylaşın. Romantizm akşam saatlerinde artıyor, keyfini çıkarın. Partnerinizle küçük bir plan yapmak ikinize de iyi gelecek. Sevgi dilinizi göstermekten korkmayın, karşılık bulur. Bugün cömertlik ile hareket etmek size kazandırıyor. 💼 İş: Odaklanmanız bugün artıyor, değerlendirin. Yeni bir sorumluluk veriliyor, hazır olun. Bugün daha çok gözlem yapın, konuşmaktan değerli. Parada temkinli olmakta fayda var bu aralar. 🌿 Sağlık: Bel bölgeniz bugün biraz hassas, dikkat edin. Kafeini bugün biraz azaltın, farkı görün. Vücudunuz cömertlik istiyor, dinleyin. Duruşunuza dikkat etmek ağrıyı azaltır. Akşam erken yatmak enerjinizi toplayacak.",
+        predictionEn:
+          "❤️ Aşk: Duygularınızı bastırmayın, paylaşın. Romantizm akşam saatlerinde artıyor, keyfini çıkarın.",
+        luckyColor: "Altın Sarısı",
+        luckyColorTr: "Altın Sarısı",
+        luckyNumber: "1",
+        fetchedAt: new Date().toISOString(),
+      },
       askganesha: {
         signId: "leo",
         sourceId: "askganesha",
         sourceName: "AskGanesha",
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
-        predictionTr: "Ailen sana çok iyi bakacak. Finansal olarak eskisinden daha güçlü olacaksınız. Ayağınızı profesyonelce doğru alana koyduğunuzdan emin olun. Sizi destekleyecek partnerinize sahip olduğunuz için kutsanacaksınız. Bugün gününüz sürprizlerle dolu, eğer durum kötüyse, o zaman iyi olanlar hayatınızı bir nimete dönüştürmek için fazla zaman ayırmıyor demektir.",
-        predictionEn: "Your family will take good care of you. Financially, you will be stronger than before. Make sure to set your foot in the right field professionally. You will be blessed to have your partner who will support you. Your day is full of surprises today, if it's bad then the good ones aren't taking much time to turn your life into a blessing.",
+        predictionTr:
+          "Ailen sana çok iyi bakacak. Finansal olarak eskisinden daha güçlü olacaksınız. Ayağınızı profesyonelce doğru alana koyduğunuzdan emin olun. Sizi destekleyecek partnerinize sahip olduğunuz için kutsanacaksınız. Bugün gününüz sürprizlerle dolu, eğer durum kötüyse, o zaman iyi olanlar hayatınızı bir nimete dönüştürmek için fazla zaman ayırmıyor demektir.",
+        predictionEn:
+          "Your family will take good care of you. Financially, you will be stronger than before. Make sure to set your foot in the right field professionally. You will be blessed to have your partner who will support you. Your day is full of surprises today, if it's bad then the good ones aren't taking much time to turn your life into a blessing.",
         luckyColor: "Mustard",
         luckyColorTr: "Hardal Sarısı",
         luckyNumber: "49",
@@ -218,8 +321,10 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "GaneshaSpeaks",
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
-        predictionTr: "Çok çalışmak ya da çok çalışmak; ikisi arasında çok büyük bir fark var. Ganesha, özellikle başarıyı arzuluyorsanız, bugün çok çalışmanız daha akıllıca olur, diyor. Hiçbir şeyin sıkı çalışmanın yerini alamayacağını ve bunu ne kadar erken fark ederseniz o kadar iyi olduğunu unutmayın. O halde bugün ter atın. Ayrıca sıkı çalışma her zaman karşılığını verir, bu nedenle işte geçen uzun bir günün ardından sevginizle geçireceğiniz büyüleyici bir akşamı sabırsızlıkla bekleyebilirsiniz. Ganesha, gecenin son derece unutulmaz olacağını ima ediyor.",
-        predictionEn: "Working hard, or hardly working — there is a vast difference between the two. You would be wiser to be working hard today, especially if it is success that you desire, says Ganesha. Remember that there is no substitute for hard work, and the sooner you realise this, the better. So sweat it out today. Also, hard work always pays its dividends, so, after a long day at work, you can look forward to an enchanting evening with your love. The night shall be exceptionally memorable, hints Ganesha.",
+        predictionTr:
+          "Çok çalışmak ya da çok çalışmak; ikisi arasında çok büyük bir fark var. Ganesha, özellikle başarıyı arzuluyorsanız, bugün çok çalışmanız daha akıllıca olur, diyor. Hiçbir şeyin sıkı çalışmanın yerini alamayacağını ve bunu ne kadar erken fark ederseniz o kadar iyi olduğunu unutmayın. O halde bugün ter atın. Ayrıca sıkı çalışma her zaman karşılığını verir, bu nedenle işte geçen uzun bir günün ardından sevginizle geçireceğiniz büyüleyici bir akşamı sabırsızlıkla bekleyebilirsiniz. Ganesha, gecenin son derece unutulmaz olacağını ima ediyor.",
+        predictionEn:
+          "Working hard, or hardly working — there is a vast difference between the two. You would be wiser to be working hard today, especially if it is success that you desire, says Ganesha. Remember that there is no substitute for hard work, and the sooner you realise this, the better. So sweat it out today. Also, hard work always pays its dividends, so, after a long day at work, you can look forward to an enchanting evening with your love. The night shall be exceptionally memorable, hints Ganesha.",
         luckyColor: "Light Bright Yellow",
         luckyColorTr: "Açık Parlak Sarı",
         luckyNumber: "9",
@@ -231,25 +336,42 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "AstroSage",
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
-        predictionTr: "Hastalığınızı kötüleştirebileceği için çatışmalardan kaçının. Her ne kadar kimse kimseye borç vermeyi ya da parasını vermeyi tercih etmese de, paranızı ihtiyacı olan bir kişiye ödünç verdiğinizde kendinizi rahatlamış hissedeceksiniz. Onun fikirlerini ihmal ederseniz partnerinizin sabrı tükenecektir. Romantik düşüncelere ve geçmiş hayallere dalacaksınız. Ailenizin genç üyeleriyle biraz zaman geçirmeyi öğrenmelisiniz. Bunu yapmamak aile barışına yönelik çabalarınızı sekteye uğratabilir. Gün, evlilik hayatınız için gerçekten harika. Partnerinize onu ne kadar sevdiğinizi bildirin. Bugün hayatınızda özel olan birini özleyebilirsiniz.",
-        predictionEn: "Avoid conflict as it may worsen your illness. Although no one prefers to lend or give away their money to anyone, but you'll feel relieved by lending your money to a person in need. Your partners will lose patience if you neglect his/her opinions. You are going to be absorbed in romantic thoughts and past dreams. You should learn to spend some time with the younger members of your family. Not doing this can hinder your efforts for familial peace. The day is really great for your married life. Let your partner know how much you love him/her. You may miss someone who is special in your life today.",
+        predictionTr:
+          "Hastalığınızı kötüleştirebileceği için çatışmalardan kaçının. Her ne kadar kimse kimseye borç vermeyi ya da parasını vermeyi tercih etmese de, paranızı ihtiyacı olan bir kişiye ödünç verdiğinizde kendinizi rahatlamış hissedeceksiniz. Onun fikirlerini ihmal ederseniz partnerinizin sabrı tükenecektir. Romantik düşüncelere ve geçmiş hayallere dalacaksınız. Ailenizin genç üyeleriyle biraz zaman geçirmeyi öğrenmelisiniz. Bunu yapmamak aile barışına yönelik çabalarınızı sekteye uğratabilir. Gün, evlilik hayatınız için gerçekten harika. Partnerinize onu ne kadar sevdiğinizi bildirin. Bugün hayatınızda özel olan birini özleyebilirsiniz.",
+        predictionEn:
+          "Avoid conflict as it may worsen your illness. Although no one prefers to lend or give away their money to anyone, but you'll feel relieved by lending your money to a person in need. Your partners will lose patience if you neglect his/her opinions. You are going to be absorbed in romantic thoughts and past dreams. You should learn to spend some time with the younger members of your family. Not doing this can hinder your efforts for familial peace. The day is really great for your married life. Let your partner know how much you love him/her. You may miss someone who is special in your life today.",
         luckyColor: "Black and Blue",
         luckyColorTr: "Siyah ve Mavi",
         luckyNumber: "8",
-        remedy: "Reciting ॐ गं गणपतये नमः (Om Gam Ganapathaye Namaha) 11 times daily in the morning and evening will bring bliss to family life.",
-        remedyTr: "Sabah ve akşam günde 11 kez ॐ गं गणपतये नमः (Om Gam Ganapathaye Namaha) okumak aile hayatına mutluluk getirecektir.",
         fetchedAt: new Date().toISOString(),
       },
     },
     virgo: {
+      astrolojiorg: {
+        signId: "virgo",
+        sourceId: "astrolojiorg",
+        sourceName: "Astroloji.org",
+        day: "today",
+        date: "24 Ekim 2026, Cumartesi",
+        predictionTr:
+          "❤️ Aşk: Romantizm akşam saatlerinde artıyor, keyfini çıkarın. Kalbinizde titizlik var, bunu karşınızdaki hissedecek. Karşınızdakini anlamaya çalışın, yeterli olacak. Kalbiniz bugün biraz hızlı atıyor, heyecana hazır olun. Kalbiniz doğruyu fısıldıyor, dinleyin yeter. 💼 İş: Karar vermeden önce mutlaka düşünün. Bugün detay ile öne çıkıyorsunuz. İş dışı konuşmalara girmemek iyi olur. Bugün büyük adım atmak için erken, bekleyin. İletişim kazaları olabilir, kelimeleri seçin. 🌿 Sağlık: Temiz hava almak zihninizi beklediğinizden fazla açacak. Kendinize zaman ayırmak artık şart oldu. Bedeninizde titizlik hissi hakim. Baş ağrısına karşı su için önce. Ekran molası vermek gözleri dinlendirir.",
+        predictionEn:
+          "❤️ Aşk: Romantizm akşam saatlerinde artıyor, keyfini çıkarın. Kalbinizde titizlik var, bunu karşınızdaki hissedecek.",
+        luckyColor: "Lacivert",
+        luckyColorTr: "Lacivert",
+        luckyNumber: "5",
+        fetchedAt: new Date().toISOString(),
+      },
       askganesha: {
         signId: "virgo",
         sourceId: "askganesha",
         sourceName: "AskGanesha",
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
-        predictionTr: "Yeni iş arayanlar için hayal kırıklığı yaşanacaktır. Maddi açıdan akrabalarınızdan veya arkadaşlarınızdan yardım istemeniz gerekebilir. Sağlık durumu iyi görünüyor. Aşk hayatı istikrarlı olmayabilir bu yüzden bencil olmaktan kaçının. Bir arkadaşınızdan yardım almak başınızı belaya sokabilir, kaçının. İş arkadaşlarınıza karşı dikkatli olun.",
-        predictionEn: "For those who are in search of new jobs will end up in disappointment. Financially, you may have to ask for a helping hand from either your relatives or friends. Health seems to be fine. Love life might not be stable so, avoid being egoistic. Taking help from a friend might get you into trouble, avoid. Be cautious of your co-workers.",
+        predictionTr:
+          "Yeni iş arayanlar için hayal kırıklığı yaşanacaktır. Maddi açıdan akrabalarınızdan veya arkadaşlarınızdan yardım istemeniz gerekebilir. Sağlık durumu iyi görünüyor. Aşk hayatı istikrarlı olmayabilir bu yüzden bencil olmaktan kaçının. Bir arkadaşınızdan yardım almak başınızı belaya sokabilir, kaçının. İş arkadaşlarınıza karşı dikkatli olun.",
+        predictionEn:
+          "For those who are in search of new jobs will end up in disappointment. Financially, you may have to ask for a helping hand from either your relatives or friends. Health seems to be fine. Love life might not be stable so, avoid being egoistic. Taking help from a friend might get you into trouble, avoid. Be cautious of your co-workers.",
         luckyColor: "Navy Blue",
         luckyColorTr: "Lacivert",
         luckyNumber: "12",
@@ -261,8 +383,10 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "GaneshaSpeaks",
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
-        predictionTr: "Fikir ampulü bugün parlak bir şekilde yanacak. Sözleşmeden doğan yükümlülükleriniz ile mevcut görevleriniz arasında olası bir tahterevalli sizi şaşırtabilir. Yeni bağlantılar size fayda sağlayacaktır. Kan yoğunlaşacak ve aileniz ve arkadaşlarınız hayatınızdaki yerlerini sağlamlaştıracak.",
-        predictionEn: "The bulb of ideas will burn bright today. A possible see-saw between your contractual obligation and current duties may baffle you. New contacts will stand you in good stead. Blood will prove thicker, and family and friends will consolidate their place in your life.",
+        predictionTr:
+          "Fikir ampulü bugün parlak bir şekilde yanacak. Sözleşmeden doğan yükümlülükleriniz ile mevcut görevleriniz arasında olası bir tahterevalli sizi şaşırtabilir. Yeni bağlantılar size fayda sağlayacaktır. Kan yoğunlaşacak ve aileniz ve arkadaşlarınız hayatınızdaki yerlerini sağlamlaştıracak.",
+        predictionEn:
+          "The bulb of ideas will burn bright today. A possible see-saw between your contractual obligation and current duties may baffle you. New contacts will stand you in good stead. Blood will prove thicker, and family and friends will consolidate their place in your life.",
         luckyColor: "Light Brown",
         luckyColorTr: "Açık Kahverengi",
         luckyNumber: "5",
@@ -274,27 +398,30 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "AstroSage",
         day: "today",
         date: "24 Ekim 2026, Cumartesi",
-        predictionTr: "En sevdiğiniz hayaliniz gerçekleşecek. Ancak heyecanınızı kontrol altında tutun çünkü çok fazla mutluluk bazı sorunlara neden olabilir. Bugün bir partide ekonomik yönünüzü güçlendirecek önemli tavsiyeler verebilecek bir kişiyle karşılaşabilirsiniz. Arkadaşlarınızı destekleyici bulacaksınız, ancak söylediklerinize dikkat edin. Bugün partnerinizin sevgisinin sizin için gerçekten duygusal olduğunu bileceksiniz. Sınırsız yaratıcılık ve coşku sizi yine faydalı bir güne götürüyor. Bugün ruh eşinizle birlikte olmanın nasıl bir his olduğunu öğreneceksiniz. Evet eşiniz o. Bugün ülkenizle ilgili bazı ilginç gerçekleri öğrendiğinizde şaşırabilirsiniz.",
-        predictionEn: "Your fondest dream will materialize. But keep your excitement under control as too much happiness may cause some problems. Today, you can come across a person in a party who can give you some important advice to strengthen your economic side. You will find friends supportive-but be careful of what you say. You will know today that the love of your partner is truly soulful for you. Boundless creativity and enthusiasm leads you to another beneficial day. Today, you will know how does it feel to be with your soulmate. Yes, your spouse is the one. Today, you can be surprised to know some interesting facts related to your country.",
+        predictionTr:
+          "En sevdiğiniz hayaliniz gerçekleşecek. Ancak heyecanınızı kontrol altında tutun çünkü çok fazla mutluluk bazı sorunlara neden olabilir. Bugün bir partide ekonomik yönünüzü güçlendirecek önemli tavsiyeler verebilecek bir kişiyle karşılaşabilirsiniz. Arkadaşlarınızı destekleyici bulacaksınız, ancak söylediklerinize dikkat edin. Bugün partnerinizin sevgisinin sizin için gerçekten duygusal olduğunu bileceksiniz. Sınırsız yaratıcılık ve coşku sizi yine faydalı bir güne götürüyor. Bugün ruh eşinizle birlikte olmanın nasıl bir his olduğunu öğreneceksiniz. Evet eşiniz o. Bugün ülkenizle ilgili bazı ilginç gerçekleri öğrendiğinizde şaşırabilirsiniz.",
+        predictionEn:
+          "Your fondest dream will materialize. But keep your excitement under control as too much happiness may cause some problems. Today, you can come across a person in a party who can give you some important advice to strengthen your economic side. You will find friends supportive-but be careful of what you say. You will know today that the love of your partner is truly soulful for you. Boundless creativity and enthusiasm leads you to another beneficial day. Today, you will know how does it feel to be with your soulmate. Yes, your spouse is the one. Today, you can be surprised to know some interesting facts related to your country.",
         luckyColor: "Transparent and Pink",
         luckyColorTr: "Şeffaf ve Pembe",
         luckyNumber: "6",
-        remedy: "Family life will run smooth by regular recitation of Ramcharitmanas and Sundarkand.",
-        remedyTr: "Aile hayatı, Ramcharitmanas ve Sundarkand'ın düzenli okunmasıyla sorunsuz ilerleyecektir.",
         fetchedAt: new Date().toISOString(),
       },
     },
   },
   tomorrow: {
     taurus: {
+      astrolojiorg: null,
       askganesha: {
         signId: "taurus",
         sourceId: "askganesha",
         sourceName: "AskGanesha",
         day: "tomorrow",
         date: "25 Ekim 2026, Pazar",
-        predictionTr: "Maddi konularda son derece dikkatli olun; yakınınızdaki bir kişi sizi yanıltmaya veya suiistimal etmeye çalışabilir. Körkütük güvendiğiniz bir arkadaşınızın veya akrabanızın arkanızdan iş çevirme olasılığına karşı temkinli kalmalısınız. Finansal açıdan büyüme fırsatları ufukta görünse de, sağlığınızda ani bir iyileşme beklenmemektedir; kendinize iyi bakın.",
-        predictionEn: "Be careful with the matters related to money as someone close to you may intend to defraud you. There are high probabilities that a close friend or relative whom you trust blindly will stab on your back. Financially, growth can be anticipated while, no improvements in health conditions can be seen.",
+        predictionTr:
+          "Maddi konularda son derece dikkatli olun; yakınınızdaki bir kişi sizi yanıltmaya veya suiistimal etmeye çalışabilir. Körkütük güvendiğiniz bir arkadaşınızın veya akrabanızın arkanızdan iş çevirme olasılığına karşı temkinli kalmalısınız. Finansal açıdan büyüme fırsatları ufukta görünse de, sağlığınızda ani bir iyileşme beklenmemektedir; kendinize iyi bakın.",
+        predictionEn:
+          "Be careful with the matters related to money as someone close to you may intend to defraud you. There are high probabilities that a close friend or relative whom you trust blindly will stab on your back. Financially, growth can be anticipated while, no improvements in health conditions can be seen.",
         luckyColor: "Silver",
         luckyColorTr: "Gümüş",
         luckyNumber: "11",
@@ -306,24 +433,43 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "GaneshaSpeaks",
         day: "tomorrow",
         date: "25 Ekim 2026, Pazar",
-        predictionTr: "Bugün zevk ve acının bir arada yaşanmasını yaşayabilirsiniz. Öğleden sonra ev işleri size ağırlık verebilir. Günün ilerleyen saatlerinde, yalnızca kararlılığınız ve zihinsel gücünüz sayesinde arzuladığınız her şeyi başarabileceksiniz. Ganesha, ruh eşinizin sıcaklığında ve arkadaşlığında zevkin sizi beklediğini söylüyor.",
-        predictionEn: "Today, you may experience the juxtaposition of pleasure and pain. Household tasks may weigh you down around afternoon. Later in the day, you will be able to achieve whatever you desire solely on account of your determination and mental strength. Pleasure awaits in the warmth and company of your soul mate, says Ganesha.",
+        predictionTr:
+          "Bugün zevk ve acının bir arada yaşanmasını yaşayabilirsiniz. Öğleden sonra ev işleri size ağırlık verebilir. Günün ilerleyen saatlerinde, yalnızca kararlılığınız ve zihinsel gücünüz sayesinde arzuladığınız her şeyi başarabileceksiniz. Ganesha, ruh eşinizin sıcaklığında ve arkadaşlığında zevkin sizi beklediğini söylüyor.",
+        predictionEn:
+          "Today, you may experience the juxtaposition of pleasure and pain. Household tasks may weigh you down around afternoon. Later in the day, you will be able to achieve whatever you desire solely on account of your determination and mental strength. Pleasure awaits in the warmth and company of your soul mate, says Ganesha.",
         luckyColor: undefined,
         luckyColorTr: undefined,
         luckyNumber: undefined,
         fetchedAt: new Date().toISOString(),
       },
-      astrosage: null,
+      astrosage: {
+        signId: "taurus",
+        sourceId: "astrosage",
+        sourceName: "AstroSage",
+        day: "tomorrow",
+        date: "25 Ekim 2026, Pazar",
+        predictionTr:
+          "Umudunuz zengin, narin kokulu ve göz kamaştırıcı bir çiçek gibi çiçek açacak. Bugün tecrübeli bir kişinin tavsiyesi olmadan maddi kayıp yaratabilecek herhangi bir adım veya davranışta bulunmayınız. Aile üyelerinin neşeli doğası evdeki atmosferi aydınlatacak. Seyahat, romantik bağlantıyı teşvik edecektir. Dışarı çıkıp yüksek yerlerdeki insanlarla dirsek teması kurmalısınız. Hayat arkadaşınız bugün sizi en mutlu etmek için çok çaba sarf edecek. Sağlık gerçek zenginliktir, bu yüzden tembellikten kurtulun ve aktif bir yaşam sürün.",
+        predictionEn:
+          "Your hope will bloom like a rich delicate fragrant and dazzling flower. Do not take any step or act in such a manner which can cause financial loss today without the advice of an experienced person. The jovial nature of family members will lighten up the atmosphere at home. Travel will promote romantic connection.",
+        luckyColor: undefined,
+        luckyColorTr: undefined,
+        luckyNumber: undefined,
+        fetchedAt: new Date().toISOString(),
+      },
     },
     cancer: {
+      astrolojiorg: null,
       askganesha: {
         signId: "cancer",
         sourceId: "askganesha",
         sourceName: "AskGanesha",
         day: "tomorrow",
         date: "25 Ekim 2026, Pazar",
-        predictionTr: "Öğrenciler akademisyenlerinde iyi performans gösterecek ve hatta öğretmenlerinden veya akıl hocalarından iyi haberler bekleyebilirler. Profesyonel kapasitenizde bazı güçlü hamleler yapmanız istenebilir. Aşk hayatı güçlenecek. Finansal ve sağlık açısından kendinizi güvende ve emniyette hissedeceksiniz. İyimser bir günle kutsandınız.",
-        predictionEn: "Students will perform well in their academics and may even expect good news from their teacher or mentor. You may be asked to make some strong moves in your professional capacity. Love life will gain strength. Financially and health wise, you will feel safe and secure. You are blessed with an optimistic day.",
+        predictionTr:
+          "Öğrenciler akademisyenlerinde iyi performans gösterecek ve hatta öğretmenlerinden veya akıl hocalarından iyi haberler bekleyebilirler. Profesyonel kapasitenizde bazı güçlü hamleler yapmanız istenebilir. Aşk hayatı güçlenecek. Finansal ve sağlık açısından kendinizi güvende ve emniyette hissedeceksiniz. İyimser bir günle kutsandınız.",
+        predictionEn:
+          "Students will perform well in their academics and may even expect good news from their teacher or mentor. You may be asked to make some strong moves in your professional capacity. Love life will gain strength. Financially and health wise, you will feel safe and secure. You are blessed with an optimistic day.",
         luckyColor: "Blue",
         luckyColorTr: "Mavi",
         luckyNumber: "32",
@@ -335,24 +481,43 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "GaneshaSpeaks",
         day: "tomorrow",
         date: "25 Ekim 2026, Pazar",
-        predictionTr: "Ganesha, gününüzü geçmişinizi düşünerek ve neyin yanlış gittiğini düşünerek geçireceğinizi öngörüyor. Ancak nükleer bilim adamı olmadığınız sürece hatalarınızın dünyanın sonunu getirmeyeceğini unutmayın. Bu yüzden harekete geçin ve hatalarınız üzerinde kara kara düşünmeyi bırakın.",
-        predictionEn: "You will spend your day reflecting on your past and thinking what went wrong, predicts Ganesha. But keep in mind that your mistakes won&#8217;t lead to the end of the world, unless you are a nuclear scientist. So get your act together, and stop brooding over your mistakes.",
+        predictionTr:
+          "Ganesha, gününüzü geçmişinizi düşünerek ve neyin yanlış gittiğini düşünerek geçireceğinizi öngörüyor. Ancak nükleer bilim adamı olmadığınız sürece hatalarınızın dünyanın sonunu getirmeyeceğini unutmayın. Bu yüzden harekete geçin ve hatalarınız üzerinde kara kara düşünmeyi bırakın.",
+        predictionEn:
+          "You will spend your day reflecting on your past and thinking what went wrong, predicts Ganesha. But keep in mind that your mistakes won&#8217;t lead to the end of the world, unless you are a nuclear scientist. So get your act together, and stop brooding over your mistakes.",
         luckyColor: undefined,
         luckyColorTr: undefined,
         luckyNumber: undefined,
         fetchedAt: new Date().toISOString(),
       },
-      astrosage: null,
+      astrosage: {
+        signId: "cancer",
+        sourceId: "astrosage",
+        sourceName: "AstroSage",
+        day: "tomorrow",
+        date: "25 Ekim 2026, Pazar",
+        predictionTr:
+          "Muhtemelen bazı aksiliklerle karşı karşıya kalacaksınız. Cesaretinizi kaybetmeyin ancak istediğiniz sonuçları elde etmek için daha çok çalışın. Bu aksiliklerin basamak taşları olmasına izin verin. Akraba, kriz anında da yardımcı olacaktır. Bugün hatırı sayılır miktarda paraya sahip olacaksınız ve bununla birlikte iç huzurunuz da olacak. Sosyal etkinlikler, etkili ve önemli insanlarla ilişkinizi geliştirmek için mükemmel bir fırsat olacaktır. Aşk ilişkiniz büyülü bir hal alıyor; sadece hisset. Bugün üstlenilen inşaat işi sizi memnun edecek şekilde tamamlanacak.",
+        predictionEn:
+          "Likely to face some setbacks. Don't lose heart but work harder to get desired results. Let these setbacks be the stepping stones. Relative will also help at the time of crisis. You will possess a considerable amount of money today, and with it there will be peace of mind. Social events will be perfect opportunity to improve your rapport with influential and important people.",
+        luckyColor: "White, cream, red and yellow",
+        luckyColorTr: "Beyaz, Krem, Kırmızı ve Sarı",
+        luckyNumber: undefined,
+        fetchedAt: new Date().toISOString(),
+      },
     },
     leo: {
+      astrolojiorg: null,
       askganesha: {
         signId: "leo",
         sourceId: "askganesha",
         sourceName: "AskGanesha",
         day: "tomorrow",
         date: "25 Ekim 2026, Pazar",
-        predictionTr: "Bugün çevrenizdeki insanların hayatınıza müdahale etmesi muhtemeldir. Ve bu tavırları sizi korkutabilir. Bu nedenle sakin ve sakin olun ve duygularınızı patlamayın. Kişisel yaşamınız büyük ihtimalle gelişecek. Bir aile üyenizden alacağınız iyi haber muhtemelen sizi memnun edecektir. Sağlık durumu iyi görünüyor.",
-        predictionEn: "People around you are likely to interfere in your life today. And this attitude of theirs might freak you out. So, stay calm and composed and do not outburst your emotions. Your personal life is likely to prosper. Good news from a family member is likely to please you. Health seems to be fine.",
+        predictionTr:
+          "Bugün çevrenizdeki insanların hayatınıza müdahale etmesi muhtemeldir. Ve bu tavırları sizi korkutabilir. Bu nedenle sakin ve sakin olun ve duygularınızı patlamayın. Kişisel yaşamınız büyük ihtimalle gelişecek. Bir aile üyenizden alacağınız iyi haber muhtemelen sizi memnun edecektir. Sağlık durumu iyi görünüyor.",
+        predictionEn:
+          "People around you are likely to interfere in your life today. And this attitude of theirs might freak you out. So, stay calm and composed and do not outburst your emotions. Your personal life is likely to prosper. Good news from a family member is likely to please you. Health seems to be fine.",
         luckyColor: "Yellow",
         luckyColorTr: "Sarı",
         luckyNumber: "21",
@@ -364,8 +529,10 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "GaneshaSpeaks",
         day: "tomorrow",
         date: "25 Ekim 2026, Pazar",
-        predictionTr: "Ganesha, edindiğimiz arkadaşların bizi biz yapmakta uzun bir yol kat ettiğini söylüyor. Yıllar geçtikçe, sosyal bir çekici olma yönündeki doğal içgüdünüzle, her koşulda güvenle güvenebileceğiniz, kendini adamış arkadaşlardan oluşan güzel bir çevre oluşturdunuz. Bugün böyle bir dostluktan yararlanma fırsatını yakalayacağınız bir gün olabilir. Ganesha, \"Arkadaşlarınız bugün size iyi davranacağından emin olabilirsiniz\" diyor.",
-        predictionEn: "The friends we make go a long way in making us who we are, says Ganesha. Over the years, with your natural instinct to be a social charmer, you have built a fine circle of dedicated friends on whom you can bank with confidence under any circumstance. Today might be a day when you get the opportunity to make use of such friendship. Rest assured, says Ganesha, as your friends stand you in good stead today.",
+        predictionTr:
+          "Ganesha, edindiğimiz arkadaşların bizi biz yapmakta uzun bir yol kat ettiğini söylüyor. Yıllar geçtikçe, sosyal bir çekici olma yönündeki doğal içgüdünüzle, her koşulda güvenle güvenebileceğiniz, kendini adamış arkadaşlardan oluşan güzel bir çevre oluşturdunuz. Bugün böyle bir dostluktan yararlanma fırsatını yakalayacağınız bir gün olabilir. Ganesha, \"Arkadaşlarınız bugün size iyi davranacağından emin olabilirsiniz\" diyor.",
+        predictionEn:
+          "The friends we make go a long way in making us who we are, says Ganesha. Over the years, with your natural instinct to be a social charmer, you have built a fine circle of dedicated friends on whom you can bank with confidence under any circumstance. Today might be a day when you get the opportunity to make use of such friendship. Rest assured, says Ganesha, as your friends stand you in good stead today.",
         luckyColor: undefined,
         luckyColorTr: undefined,
         luckyNumber: undefined,
@@ -377,26 +544,29 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "AstroSage",
         day: "tomorrow",
         date: "25 Ekim 2026, Pazar",
-        predictionTr: "Çocuklarla oynamak size harika bir iyileşme deneyimi yaşatacaktır. Kendiniz için para biriktirme fikriniz bugün gerçekleştirilebilir. Bugün uygun şekilde tasarruf edebileceksiniz. Hayat arkadaşınızın ihmali ilişkiye zarar verebilir. Değerli zamanınızı harcayın ve mutlu, altın günlerinizi yeniden kazanmak için tatlı anılarınızı yeniden yaşayın. Sevgilinizin hoşlanmadığı kıyafetleri giymeyin, çünkü bu onu rahatsız edebilir. Bugün işlerin istediğiniz gibi ilerlemeyeceği günlerden biri. Başkalarına sizi kontrol etmeleri için daha iyi olan yarınız dışında daha fazla fırsat veriyorsanız, partnerinizden olumsuz bir tepki alabilirsiniz. Ne güzel bir gün; sinemaya gitmek, parti yapmak ve arkadaşlarla takılmak.",
-        predictionEn: "Playing with kids would give you a wonderful healing experience. Your idea of ​​saving money for yourself can be accomplished today. Today you will be able to save appropriately. Negligence of your life partner may mar the relationship. Spend your valuable time and relive your sweet memories to regain your happy golden days. Don't wear those clothes which your lover doesn't like as it may offend him. Today is one of those days when things will not move the way you want. If you are giving more opportunity to others to control you other than your better half, you might get an adverse reaction from your partner. What a day – movies, partying and hanging out with friends on the cards.",
-        luckyColor: undefined,
-        luckyColorTr: undefined,
-        luckyNumber: undefined,
-        remedy: "Give 1.25 kg of Barley in a goshala or cowshed to gain family happiness.",
-        remedyTr: "Aile mutluluğunu kazanmak için bir goshalaya veya ahıra 1,25 kg Arpa verin.",
+        predictionTr:
+          "Sadece siz neyin sizin için en iyi olduğunu bilirsiniz; bu yüzden güçlü ve cesur olun, hızlı kararlar alın ve sonuçlarla yaşamaya hazır olun. Birikimlerinizi muhafazakar yatırımlara koyarsanız para kazanacaksınız. Dikkatsiz davranışlarınız ailenizin bazı üyelerini üzecektir. Sevgiliniz tüm gün sizi çok özleyecek. Bir sürpriz planlayın ve bunu gününüzün en güzel günü haline getirin. Başkalarını dinleme ve onları takip etme arzusu bugün zirvede olabilir. Eşiniz bugün sizin için gerçekten harika bir şey yapabilir. Kendinize güvenin, çünkü bu her türlü engeli aşmanın anahtarıdır.",
+        predictionEn:
+          "Only you know what is best for you- so be strong and bold and take quick decisions and be prepared to live with the results. You will make money if you put your savings into conservative investments. Your careless attitude will make parents worry. Your lover is going to miss you badly all day. Plan a surprise and make it the most beautiful day of your life. The urge to listen to others and follow them would be high today. Your spouse might do something really fabulous for you today.",
+        luckyColor: "Grey",
+        luckyColorTr: "Gri",
+        luckyNumber: "7",
         fetchedAt: new Date().toISOString(),
       },
     },
     virgo: {
+      astrolojiorg: null,
       askganesha: {
         signId: "virgo",
         sourceId: "askganesha",
         sourceName: "AskGanesha",
         day: "tomorrow",
         date: "25 Ekim 2026, Pazar",
-        predictionTr: "Uzun zamandır kendinizi keşfedebileceğiniz bir günün arayışındaydınız; işte hem yeni fırsatlar hem de tatlı meydan okumalarla dolu o gün geldi. Mesleki kariyerinizde belirgin bir ilerleme bekleniyor. Özel hayatınız huzur ve istikrarı yansıtıyor. Maddi konular bugün lehinize olmadığından borsa ve riskli yatırımlardan kaçının. Sağlığınız gayet iyi görünüyor.",
-        predictionEn: "Since a long time, you were looking for a day when you could explore yourself, well the day has come which is full of opportunities and challenges. Growth in professional career can be anticipated. Personal life reflects stability. Avoid trading on stock exchanges as money matters are not in your favour today. Health seems fine.",
-        luckyColor: "Grey",
+        predictionTr:
+          "Büyük değişiklikler sizi bekliyor. Bunlar daha iyiye yönelik olabileceği gibi daha kötüye de yönelik olabilir, bu nedenle her iki duruma da hazırlıklı olun. Profesyonel olarak büyümeniz beklenebilir. Sağlık ve zenginlikle ilgili konular da bugün lehinize görünüyor. Yeni bir projeye başlamak için iyi bir zaman.",
+        predictionEn:
+          "Great changes are waiting ahead for you. These can either be for better or worse, so be prepared for both the situations. Professionally, your growth can be anticipated. Health and wealth related matters also seem in your favour today. It's a good time to start a new project.",
+        luckyColor: "Gray",
         luckyColorTr: "Gri",
         luckyNumber: "15",
         fetchedAt: new Date().toISOString(),
@@ -407,8 +577,10 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "GaneshaSpeaks",
         day: "tomorrow",
         date: "25 Ekim 2026, Pazar",
-        predictionTr: "Ganesha, vücudunuzdaki son hücreye kadar keskin ve estetik, özellikle sosyal ortamlarda kurnazlığınızla insanları eğlendirin ve büyüleyin, diyor. Ancak bu zevki koruyun ve çok önemli konulara gereken özeni göstermek için zamandan tasarruf edin, diye uyarıyor Ganesha.",
-        predictionEn: "Razor-sharp and aesthetic to the last cell in your body, entertain and enthral people with your guile, especially at a social do, says Ganesha. But conserve that zest and save the time to pay due attention to matters of supreme importance, warns Ganesha.",
+        predictionTr:
+          "Ganesha, vücudunuzdaki son hücreye kadar keskin ve estetik, özellikle sosyal ortamlarda kurnazlığınızla insanları eğlendirin ve büyüleyin, diyor. Ancak bu zevki koruyun ve çok önemli konulara gereken özeni göstermek için zamandan tasarruf edin, diye uyarıyor Ganesha.",
+        predictionEn:
+          "Razor-sharp and aesthetic to the last cell in your body, entertain and enthral people with your guile, especially at a social do, says Ganesha. But conserve that zest and save the time to pay due attention to matters of supreme importance, warns Ganesha.",
         luckyColor: undefined,
         luckyColorTr: undefined,
         luckyNumber: undefined,
@@ -420,13 +592,13 @@ export const STATIC_HOROSCOPES: Record<
         sourceName: "AstroSage",
         day: "tomorrow",
         date: "25 Ekim 2026, Pazar",
-        predictionTr: "Bugün geçmişte alınan kötü kararlar hayal kırıklığına ve zihinsel çalkantılara yol açacak - Zor durumda kalabilirsiniz ve bundan sonra ne yapacağınıza karar veremeyebilirsiniz - Başkalarından yardım isteyin. Ekonomik açıdan bugün karışık bir gün olacak. Gerçekten çok fazla söz verirseniz, bugün parasal kar elde edebilirsiniz. Yeni eve taşınma partisi için hayırlı bir gün. Romantizm fırsatları ortadadır ancak kısa ömürlü olacaktır. Bugün acilen ilgilenilmesi gereken pek çok sorun olacak. Belirli bir durumda partnerinizi hafife alabilirsiniz, bu da kavgaya yol açacaktır. Hiçbir şey yapmamak, sadece varoluşun tadını çıkarmak ve şükran duygusu hissetmek için bir gün – eğer kendinizi gereksiz şeyler yapmaya zorlamazsanız.",
-        predictionEn: "Today bad decisions of the past will lead to frustration and mental turmoil-You may be stranded and unable to decide what to do next-Seek help from others. Economically, today is going to be a mixed day. You can acquire monetary profits today, provided you word really hard. Auspicious day for housewarming. Opportunities for a romance are apparent- but will be short lived. Today there will be lot of issues- which need immediate attention. You may take your partner for granted in certain case, which will lead to a fight. A day for doing nothing, just enjoying existence and feeling a sense of gratitude – if you do not force yourself in doing unnecessary things.",
+        predictionTr:
+          "Bugün geçmişte alınan kötü kararlar hayal kırıklığına ve zihinsel çalkantılara yol açacak - Zor durumda kalabilirsiniz ve bundan sonra ne yapacağınıza karar veremeyebilirsiniz - Başkalarından yardım isteyin. Ekonomik açıdan bugün karışık bir gün olacak. Gerçekten çok fazla söz verirseniz, bugün parasal kar elde edebilirsiniz. Yeni eve taşınma partisi için hayırlı bir gün. Romantizm fırsatları ortadadır ancak kısa ömürlü olacaktır. Bugün acilen ilgilenilmesi gereken pek çok sorun olacak. Belirli bir durumda partnerinizi hafife alabilirsiniz, bu da kavgaya yol açacaktır. Hiçbir şey yapmamak, sadece varoluşun tadını çıkarmak ve şükran duygusu hissetmek için bir gün – eğer kendinizi gereksiz şeyler yapmaya zorlamazsanız.",
+        predictionEn:
+          "Today bad decisions of the past will lead to frustration and mental turmoil-You may be stranded and unable to decide what to do next-Seek help from others. Economically, today is going to be a mixed day. You can acquire monetary profits today, provided you word really hard. Auspicious day for housewarming. Opportunities for a romance are apparent- but will be short lived. Today there will be lot of issues- which need immediate attention. You may take your partner for granted in certain case, which will lead to a fight. A day for doing nothing, just enjoying existence and feeling a sense of gratitude – if you do not force yourself in doing unnecessary things.",
         luckyColor: undefined,
         luckyColorTr: undefined,
         luckyNumber: undefined,
-        remedy: "Regular intake of triphala (a combination of three herbs in powdered form) will bring in great health benefits.",
-        remedyTr: "Regular intake of triphala (a combination of three herbs in powdered form) will bring in great health benefits.",
         fetchedAt: new Date().toISOString(),
       },
     },
@@ -442,14 +614,30 @@ export function getHoroscopesForSign(
   const itemsMap = dayGroup[signId];
   const items: DailyHoroscopeItem[] = [];
 
-  if (itemsMap.askganesha) items.push(itemsMap.askganesha);
-  if (itemsMap.ganeshaspeaks) items.push(itemsMap.ganeshaspeaks);
-  if (itemsMap.astrosage && (signId === "leo" || signId === "virgo") && day !== "yesterday") {
+  // 1. Astroloji.org: SADECE BUGÜN (today) gösterilir
+  if (itemsMap.astrolojiorg && day === "today") {
+    items.push(itemsMap.astrolojiorg);
+  }
+
+  // 2. AskGanesha: Dün, Bugün, Yarın
+  if (itemsMap.askganesha) {
+    items.push(itemsMap.askganesha);
+  }
+
+  // 3. GaneshaSpeaks: Dün, Bugün, Yarın
+  if (itemsMap.ganeshaspeaks) {
+    items.push(itemsMap.ganeshaspeaks);
+  }
+
+  // 4. AstroSage: Boğa, Yengeç, Aslan ve Başak için Bugün ve Yarın
+  if (itemsMap.astrosage && day !== "yesterday") {
     items.push(itemsMap.astrosage);
   }
 
   const availableSources: HoroscopeSourceId[] =
-    (signId === "leo" || signId === "virgo") && day !== "yesterday"
+    day === "today"
+      ? ["astrolojiorg", "askganesha", "ganeshaspeaks", "astrosage"]
+      : day === "tomorrow"
       ? ["askganesha", "ganeshaspeaks", "astrosage"]
       : ["askganesha", "ganeshaspeaks"];
 

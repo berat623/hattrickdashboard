@@ -11,9 +11,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "AstroVeda | Günlük Burç Yorumları (AskGanesha, GaneshaSpeaks & AstroSage)",
+  title: "AstroVeda | Günlük Burç Yorumları (Astroloji.org, AskGanesha, GaneshaSpeaks & AstroSage)",
   description:
-    "AskGanesha ve GaneshaSpeaks üzerinden Boğa, Yengeç, Aslan ve Başak burçları; AstroSage üzerinden Aslan ve Başak burçları için günlük astroloji yorumları, Türkçe çeviri, şanslı sayılar ve renkler.",
+    "Astroloji.org, AskGanesha, GaneshaSpeaks ve AstroSage üzerinden Boğa, Yengeç, Aslan ve Başak burçları için günlük astroloji yorumları, şanslı sayılar ve renkler.",
 };
 
 export const viewport: Viewport = {
