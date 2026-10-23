@@ -209,6 +209,142 @@ export function MatchCenter({
         </div>
       </div>
 
+      {/* Real & Live Hattrick Match Results Strip (Modern Official Match Cards) */}
+      {liveAndFinishedMatches.length > 0 && (
+        <div className="p-4 sm:p-5 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Radio className="w-4 h-4 text-emerald-500" />
+              <h3 className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">
+                Hattrick Canlı & Gerçek Maç Sonuçları (Detaylı Rapor İçin Maça Tıklayın)
+              </h3>
+            </div>
+            <span className="text-[11px] font-bold text-slate-400">
+              {liveAndFinishedMatches.length} Resmi Maç
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {liveAndFinishedMatches.slice(0, 8).map((m) => {
+              const isSelected = selectedLiveMatch?.id === m.id;
+              const dStr = new Date(m.matchDate).toLocaleDateString("tr-TR", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              });
+              const homeHat = m.homeRatings
+                ? m.homeRatings.midfield * 3 +
+                  m.homeRatings.rightDef +
+                  m.homeRatings.midDef +
+                  m.homeRatings.leftDef +
+                  m.homeRatings.rightAtt +
+                  m.homeRatings.midAtt +
+                  m.homeRatings.leftAtt
+                : null;
+              const awayHat = m.awayRatings
+                ? m.awayRatings.midfield * 3 +
+                  m.awayRatings.rightDef +
+                  m.awayRatings.midDef +
+                  m.awayRatings.leftDef +
+                  m.awayRatings.rightAtt +
+                  m.awayRatings.midAtt +
+                  m.awayRatings.leftAtt
+                : null;
+
+              return (
+                <button
+                  key={m.id}
+                  type="button"
+                  onClick={() => {
+                    setSelectedLiveMatchId(m.id);
+                    setViewMode("live2d");
+                  }}
+                  className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-2.5 ${
+                    isSelected && viewMode === "live2d"
+                      ? "border-emerald-500 bg-emerald-500/10 dark:bg-emerald-950/30 shadow-md"
+                      : "border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/50 hover:border-emerald-500/40"
+                  }`}
+                >
+                  <div className="flex items-center justify-between text-[10px] font-bold">
+                    <span className="text-slate-400">{dStr}</span>
+                    {m.status === "LIVE" ? (
+                      <span className="px-2 py-0.5 rounded-full bg-rose-500 text-white font-black animate-pulse">
+                        🔴 CANLI
+                      </span>
+                    ) : (
+                      <span
+                        className={`px-2 py-0.5 rounded-md font-extrabold ${
+                          m.result === "WIN"
+                            ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400"
+                            : m.result === "DRAW"
+                            ? "bg-amber-500/20 text-amber-600 dark:text-amber-400"
+                            : "bg-rose-500/20 text-rose-500"
+                        }`}
+                      >
+                        {m.result === "WIN"
+                          ? "GALİBİYET"
+                          : m.result === "DRAW"
+                          ? "BERABERLİK"
+                          : "MAĞLUBİYET"}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <TeamCrest
+                          logoUrl={m.homeLogoUrl}
+                          name={m.homeTeamName}
+                          size="xs"
+                        />
+                        <span className="text-xs font-extrabold text-slate-900 dark:text-white truncate">
+                          {m.homeTeamName}
+                        </span>
+                      </div>
+                      <span className="text-sm font-black text-slate-900 dark:text-white">
+                        {m.homeGoals ?? 0}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <TeamCrest
+                          logoUrl={m.awayLogoUrl}
+                          name={m.awayTeamName}
+                          size="xs"
+                        />
+                        <span className="text-xs font-extrabold text-slate-900 dark:text-white truncate">
+                          {m.awayTeamName}
+                        </span>
+                      </div>
+                      <span className="text-sm font-black text-slate-900 dark:text-white">
+                        {m.awayGoals ?? 0}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-200/70 dark:border-slate-800 flex items-center justify-between text-[10px] text-slate-500 font-semibold">
+                    <span>
+                      {m.homeFormation || "4-4-2"} vs {m.awayFormation || "4-4-2"}
+                    </span>
+                    {homeHat && awayHat ? (
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+                        HatStats: {homeHat}-{awayHat}
+                      </span>
+                    ) : (
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+                        Raporu Aç →
+                      </span>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Mode Switcher: 2D Live/Past Official Match Viewer vs 7-Sector Tactical Analyzer */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
         <div className="grid grid-cols-2 sm:flex items-center gap-2">

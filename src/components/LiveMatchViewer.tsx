@@ -80,6 +80,79 @@ function computeRealServerMinute(matchDateStr: string, status: string): number {
   return Math.min(90, diffMin - 15);
 }
 
+const HATTRICK_LEVEL_NAMES: Record<number, string> = {
+  1: "Felaket",
+  2: "Berbat",
+  3: "Kötü",
+  4: "Zayıf",
+  5: "Yetersiz",
+  6: "Geçer",
+  7: "İyi",
+  8: "Mükemmel",
+  9: "Üstün",
+  10: "Olağanüstü",
+  11: "Muhteşem",
+  12: "Dünya Çapında",
+  13: "Doğaüstü",
+  14: "Dev",
+  15: "Efsanevi",
+  16: "Dünya Dışı",
+  17: "Mitolojik",
+  18: "Sihirli",
+  19: "Ütopik",
+  20: "İlahi",
+};
+
+const HATTRICK_SUBLEVEL_NAMES = [
+  "çok düşük",
+  "düşük",
+  "yüksek",
+  "çok yüksek",
+];
+
+export function formatHattrickVerbalSectorRating(rawVal: number): {
+  verbal: string;
+  numeric: string;
+} {
+  const clamped = Math.max(1, Math.min(80, Math.round(rawVal || 20)));
+  const level = Math.floor((clamped - 1) / 4) + 1;
+  const subIdx = (clamped - 1) % 4;
+  const levelName = HATTRICK_LEVEL_NAMES[level] || `Seviye ${level}`;
+  const subName = HATTRICK_SUBLEVEL_NAMES[subIdx] || "orta";
+  const numeric = (clamped / 4).toFixed(2).replace(/\.00$/, ".0");
+  return {
+    verbal: `${levelName} (${subName})`,
+    numeric,
+  };
+}
+
+export function calculateHatStats(r: {
+  midfield: number;
+  rightDef: number;
+  midDef: number;
+  leftDef: number;
+  rightAtt: number;
+  midAtt: number;
+  leftAtt: number;
+}): number {
+  return (
+    r.midfield * 3 +
+    r.rightDef +
+    r.midDef +
+    r.leftDef +
+    r.rightAtt +
+    r.midAtt +
+    r.leftAtt
+  );
+}
+
+const WEATHER_LABELS: Record<number, string> = {
+  0: "🌧️ Yağmurlu",
+  1: "☁️ Bulutlu",
+  2: "⛅ Parçalı Bulutlu",
+  3: "☀️ Güneşli",
+};
+
 export function LiveMatchViewer({
   match,
   players,
@@ -92,6 +165,9 @@ export function LiveMatchViewer({
   const [realTimeMode, setRealTimeMode] = useState<boolean>(false);
   const [focusedPitchPlayer, setFocusedPitchPlayer] =
     useState<RealMatchLineupPlayer | null>(null);
+  const [eventFilter, setEventFilter] = useState<"ALL" | "GOALS" | "CARDS">(
+    "ALL"
+  );
 
   const fetchRealMatchDetails = useCallback(
     async (matchId: number, isLivePoll = false) => {
@@ -314,9 +390,22 @@ export function LiveMatchViewer({
                   : ""}
               </span>
             )}
+            {details?.weatherId !== undefined && (
+              <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-slate-200 font-bold text-[11px]">
+                {WEATHER_LABELS[details.weatherId] || "☀️ Açık Hava"}
+              </span>
+            )}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <a
+              href={`https://www.hattrick.org/Club/Matches/Match.aspx?matchID=${match.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-emerald-300 font-bold text-xs transition-all"
+            >
+              Hattrick&apos;te Aç ↗
+            </a>
             <button
               type="button"
               onClick={() => {
@@ -736,13 +825,42 @@ export function LiveMatchViewer({
 
           {/* Official Hattrick Match Events Feed */}
           <div className="p-5 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
-              <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
-                Resmi Hattrick Maç Raporu & Dakika Dakika Olaylar
-              </h4>
-              <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
-                {visibleEvents.length} Resmi Olay
-              </span>
+            <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
+                  Resmi Hattrick Maç Raporu & Dakika Dakika Anlatım
+                </h4>
+                <p className="text-[10px] text-slate-400">
+                  Hattrick CHPP sunucusundan gelen orijinal dakika dakika maç
+                  anlatımı
+                </p>
+              </div>
+              <div className="flex items-center gap-1.5">
+                {[
+                  { id: "ALL" as const, label: `Tümü (${visibleEvents.length})` },
+                  {
+                    id: "GOALS" as const,
+                    label: `⚽ Goller (${goalsUpToMinute.length})`,
+                  },
+                  {
+                    id: "CARDS" as const,
+                    label: `🟨 Kartlar (${(details?.bookings || []).filter((b) => b.minute <= selectedMinute).length})`,
+                  },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setEventFilter(tab.id)}
+                    className={`px-2.5 py-1 rounded-xl text-[10px] font-extrabold transition-colors cursor-pointer ${
+                      eventFilter === tab.id
+                        ? "bg-emerald-500 text-slate-950"
+                        : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
             {visibleEvents.length === 0 ? (
@@ -750,35 +868,64 @@ export function LiveMatchViewer({
                 Bu dakikaya kadar kayıtlı resmi maç olayı bulunmuyor.
               </p>
             ) : (
-              <div className="space-y-2.5 max-h-[320px] overflow-y-auto pr-1">
-                {[...visibleEvents].reverse().map((ev, i) => {
-                  const isGoal = goalsUpToMinute.some(
-                    (g) => g.minute === ev.minute
-                  );
-                  return (
-                    <div
-                      key={`${ev.index}-${i}`}
-                      className={`p-3 rounded-2xl border text-xs flex items-start gap-3 ${
-                        isGoal
-                          ? "border-emerald-500/50 bg-emerald-500/10 dark:bg-emerald-950/30"
-                          : "border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/50"
-                      }`}
-                    >
-                      <span className="px-2 py-1 rounded-lg bg-slate-900 dark:bg-slate-800 text-white font-extrabold text-[11px] shrink-0">
-                        {ev.minute}&apos;
-                      </span>
-                      <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-relaxed font-medium">
-                        {ev.eventText || `Dakika ${ev.minute}' maç olayı (#${ev.eventTypeId})`}
-                      </p>
-                    </div>
-                  );
-                })}
+              <div className="space-y-2.5 max-h-[340px] overflow-y-auto pr-1">
+                {[...visibleEvents]
+                  .reverse()
+                  .filter((ev) => {
+                    if (eventFilter === "GOALS") {
+                      return goalsUpToMinute.some(
+                        (g) => g.minute === ev.minute
+                      );
+                    }
+                    if (eventFilter === "CARDS") {
+                      return (details?.bookings || []).some(
+                        (b) => b.minute === ev.minute
+                      );
+                    }
+                    return true;
+                  })
+                  .map((ev, i) => {
+                    const isGoal = goalsUpToMinute.some(
+                      (g) => g.minute === ev.minute
+                    );
+                    const isCard = (details?.bookings || []).some(
+                      (b) => b.minute === ev.minute
+                    );
+                    return (
+                      <div
+                        key={`${ev.index}-${i}`}
+                        className={`p-3 rounded-2xl border text-xs flex items-start gap-3 ${
+                          isGoal
+                            ? "border-emerald-500/60 bg-emerald-500/10 dark:bg-emerald-950/30"
+                            : isCard
+                            ? "border-amber-500/50 bg-amber-500/10 dark:bg-amber-950/20"
+                            : "border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/50"
+                        }`}
+                      >
+                        <span
+                          className={`px-2 py-1 rounded-lg font-extrabold text-[11px] shrink-0 ${
+                            isGoal
+                              ? "bg-emerald-500 text-slate-950"
+                              : isCard
+                              ? "bg-amber-400 text-slate-950"
+                              : "bg-slate-900 dark:bg-slate-800 text-white"
+                          }`}
+                        >
+                          {ev.minute}&apos;
+                        </span>
+                        <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-relaxed font-medium">
+                          {ev.eventText ||
+                            `Dakika ${ev.minute}' maç olayı (#${ev.eventTypeId})`}
+                        </p>
+                      </div>
+                    );
+                  })}
               </div>
             )}
           </div>
         </div>
 
-        {/* Right 4 Cols: Official Sector Ratings & Starting Lineups */}
+        {/* Right 4 Cols: Official Sector Ratings (Verbal + Numeric + HatStats) & Starting Lineups */}
         <div className="lg:col-span-4 flex flex-col gap-4">
           {/* Official 7-Sector Ratings from Hattrick Server */}
           <div className="p-5 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-4">
@@ -786,80 +933,112 @@ export function LiveMatchViewer({
               <div className="flex items-center gap-2">
                 <Activity className="w-4 h-4 text-emerald-500" />
                 <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 dark:text-white">
-                  Resmi Hattrick 7 Bölge Reytingleri
+                  Hattrick Resmi Bölge Dereceleri & HatStats
                 </h4>
               </div>
               <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold">
-                CHPP Resmi Veri
+                Orijinal Hattrick
               </span>
             </div>
 
             {details && (
-              <div className="space-y-3">
-                {[
-                  {
-                    label: "Orta Saha",
-                    home: details.homeRatings.midfield,
-                    away: details.awayRatings.midfield,
-                  },
-                  {
-                    label: "Sağ Defans",
-                    home: details.homeRatings.rightDef,
-                    away: details.awayRatings.rightDef,
-                  },
-                  {
-                    label: "Merkez Defans",
-                    home: details.homeRatings.midDef,
-                    away: details.awayRatings.midDef,
-                  },
-                  {
-                    label: "Sol Defans",
-                    home: details.homeRatings.leftDef,
-                    away: details.awayRatings.leftDef,
-                  },
-                  {
-                    label: "Sağ Hücum",
-                    home: details.homeRatings.rightAtt,
-                    away: details.awayRatings.rightAtt,
-                  },
-                  {
-                    label: "Merkez Hücum",
-                    home: details.homeRatings.midAtt,
-                    away: details.awayRatings.midAtt,
-                  },
-                  {
-                    label: "Sol Hücum",
-                    home: details.homeRatings.leftAtt,
-                    away: details.awayRatings.leftAtt,
-                  },
-                ].map((sec) => {
-                  const total = sec.home + sec.away || 1;
-                  const homePct = Math.round((sec.home / total) * 100);
-                  const homeLevel = (sec.home / 4).toFixed(1);
-                  const awayLevel = (sec.away / 4).toFixed(1);
-                  return (
-                    <div key={sec.label} className="space-y-1 text-xs">
-                      <div className="flex justify-between font-bold">
-                        <span className="text-emerald-600 dark:text-emerald-400">
-                          {homeLevel} ({sec.home})
-                        </span>
-                        <span className="text-slate-600 dark:text-slate-300 text-[11px]">
-                          {sec.label}
-                        </span>
-                        <span className="text-rose-500">
-                          {awayLevel} ({sec.away})
-                        </span>
-                      </div>
-                      <div className="w-full h-2 rounded-full bg-rose-500/30 overflow-hidden flex">
-                        <div
-                          className="bg-emerald-500 h-full transition-all duration-300"
-                          style={{ width: `${homePct}%` }}
-                        />
-                      </div>
+              <>
+                {/* HatStats + 1st/2nd Half Possession Summary Box */}
+                <div className="grid grid-cols-3 gap-2 p-3 rounded-2xl bg-slate-50 dark:bg-slate-950/70 border border-slate-100 dark:border-slate-800 text-center text-xs">
+                  <div>
+                    <div className="text-[10px] text-slate-400 font-bold">
+                      Ev HatStats
                     </div>
-                  );
-                })}
-              </div>
+                    <div className="text-base font-black text-emerald-600 dark:text-emerald-400">
+                      {calculateHatStats(details.homeRatings)}
+                    </div>
+                  </div>
+                  <div className="border-x border-slate-200 dark:border-slate-800 px-1">
+                    <div className="text-[10px] text-slate-400 font-bold">
+                      1.Y / 2.Y Top
+                    </div>
+                    <div className="text-[11px] font-black text-slate-800 dark:text-slate-200 mt-0.5">
+                      %{homePoss1} / %{homePoss2}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] text-slate-400 font-bold">
+                      Dep HatStats
+                    </div>
+                    <div className="text-base font-black text-rose-500">
+                      {calculateHatStats(details.awayRatings)}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  {[
+                    {
+                      label: "Orta Saha",
+                      home: details.homeRatings.midfield,
+                      away: details.awayRatings.midfield,
+                    },
+                    {
+                      label: "Sağ Defans",
+                      home: details.homeRatings.rightDef,
+                      away: details.awayRatings.rightDef,
+                    },
+                    {
+                      label: "Merkez Defans",
+                      home: details.homeRatings.midDef,
+                      away: details.awayRatings.midDef,
+                    },
+                    {
+                      label: "Sol Defans",
+                      home: details.homeRatings.leftDef,
+                      away: details.awayRatings.leftDef,
+                    },
+                    {
+                      label: "Sağ Hücum",
+                      home: details.homeRatings.rightAtt,
+                      away: details.awayRatings.rightAtt,
+                    },
+                    {
+                      label: "Merkez Hücum",
+                      home: details.homeRatings.midAtt,
+                      away: details.awayRatings.midAtt,
+                    },
+                    {
+                      label: "Sol Hücum",
+                      home: details.homeRatings.leftAtt,
+                      away: details.awayRatings.leftAtt,
+                    },
+                  ].map((sec) => {
+                    const total = sec.home + sec.away || 1;
+                    const homePct = Math.round((sec.home / total) * 100);
+                    const hVerbal = formatHattrickVerbalSectorRating(sec.home);
+                    const aVerbal = formatHattrickVerbalSectorRating(sec.away);
+                    return (
+                      <div key={sec.label} className="space-y-1 text-xs">
+                        <div className="flex items-center justify-between font-bold text-[11px]">
+                          <span className="text-emerald-600 dark:text-emerald-400 truncate max-w-[42%]">
+                            {hVerbal.verbal}{" "}
+                            <span className="opacity-75">[{hVerbal.numeric}]</span>
+                          </span>
+                          <span className="text-slate-800 dark:text-slate-200 font-extrabold text-[10px] uppercase shrink-0">
+                            {sec.label}
+                          </span>
+                          <span className="text-rose-500 text-right truncate max-w-[42%]">
+                            <span className="opacity-75">[{aVerbal.numeric}]</span>{" "}
+                            {aVerbal.verbal}
+                          </span>
+                        </div>
+                        <div className="w-full h-2 rounded-full bg-rose-500/30 overflow-hidden flex">
+                          <div
+                            className="bg-emerald-500 h-full transition-all duration-300"
+                            style={{ width: `${homePct}%` }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
             )}
           </div>
 

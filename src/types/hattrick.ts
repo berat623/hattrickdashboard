@@ -292,3 +292,53 @@ export interface TrainingRecommendation {
     estimatedWeeks: number;
   }[];
 }
+
+export interface TransferMarketPlayer extends Player {
+  askingPrice: number;
+  highestBid: number;
+  currentPrice: number;
+  deadline: string;
+  sellerTeamId?: number;
+  sellerTeamName?: string;
+  bidderTeamName?: string;
+  highestBidderTeamName?: string;
+  hattrickUrl: string;
+  sourceType:
+    | "CHPP_TRANSFERSEARCH"
+    | "CHPP_LEAGUE_TRANSFERLIST"
+    | "CHPP_PLAYERDETAILS"
+    | "transfersearch"
+    | "league_transfer_scan"
+    | "playerdetails";
+  // AI Fit & Advantage Metrics for User's Squad
+  targetRole?: PositionCode;
+  roleScoreForTarget?: number;
+  upgradeDelta?: number; // e.g. +1.8 stars over current weakest starter in that role
+  estimatedFairValue?: number;
+  estimatedMarketValue: number;
+  valueAdvantagePct?: number; // % discount vs fair value
+  advantageScore?: number; // 0-100 overall recommendation score
+  fitsBudget?: boolean;
+  aiVerdict?: string;
+}
+
+export interface TransferSearchFilters {
+  position?: PositionCode | "ALL";
+  targetRole?: PositionCode;
+  skillType1?: number; // 1=Def, 2=PM, 3=Scorer, 4=Winger, 5=GK, 6=Passing, 7=SetPieces
+  minSkillValue1?: number;
+  maxSkillValue1?: number;
+  skillType2?: number;
+  minSkillValue2?: number;
+  maxSkillValue2?: number;
+  ageMin?: number;
+  ageMax?: number;
+  maxPrice?: number;
+  minTsi?: number;
+  tsiMin?: number;
+  specialty?: number; // 0=Any, 1=Tech, 2=Quick, 3=Head, 4=Powerful, 5=Unpred
+  queryPlayerId?: number;
+  customPlayerId?: number;
+  pageIndex?: number;
+}
+

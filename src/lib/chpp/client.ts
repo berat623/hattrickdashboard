@@ -14,6 +14,8 @@ import {
   RealMatchBooking,
   RealMatchEvent,
   SectorRatings,
+  TransferMarketPlayer,
+  TransferSearchFilters,
 } from "@/types/hattrick";
 
 export interface CHPPClientOptions {
@@ -472,7 +474,38 @@ export class CHPPClient {
     );
     const targetTeamId = Number(teamId || team.TeamID || 0);
 
-    const parsedMatches: Match[] = rawMatches.map((m) => {
+    // Also pull recent archive matches if matches list has fewer than 5 finished games
+    let archiveMatchesRaw: Record<string, unknown>[] = [];
+    const finishedCountInMain = rawMatches.filter(
+      (m) => String(m.Status || "").toUpperCase() === "FINISHED"
+    ).length;
+    if (finishedCountInMain < 5) {
+      try {
+        const archData = await this.fetchXml("matchesarchive", {
+          version: "1.4",
+          ...(teamId ? { teamID: teamId } : {}),
+        });
+        const archTeam = (archData.Team as Record<string, unknown>) || {};
+        const archList =
+          (archTeam.MatchList as Record<string, unknown>) || {};
+        archiveMatchesRaw = this.ensureArray(
+          archList.Match as Record<string, unknown>[]
+        ).slice(0, 10);
+      } catch {
+        // Ignore if archive unavailable
+      }
+    }
+
+    const seenMatchIds = new Set<number>();
+    const combinedRaw: Record<string, unknown>[] = [];
+    for (const m of [...rawMatches, ...archiveMatchesRaw]) {
+      const mid = Number(m.MatchID || 0);
+      if (!mid || seenMatchIds.has(mid)) continue;
+      seenMatchIds.add(mid);
+      combinedRaw.push(m);
+    }
+
+    const parsedMatches: Match[] = combinedRaw.map((m) => {
       const homeTeamObj = (m.HomeTeam as Record<string, unknown>) || {};
       const awayTeamObj = (m.AwayTeam as Record<string, unknown>) || {};
 
@@ -1315,6 +1348,485 @@ export class CHPPClient {
       };
     }
   }
+
+  /**
+   * Tek bir oyuncunun Hattrick CHPP detaylarını, açık artırma (TransferDetails) bilgilerini ve yeteneklerini çeker
+   * (file=playerdetails&version=3.1)
+   */
+  async getPlayerDetailsFromChpp(
+    playerId: number,
+    fallbackItem?: Record<string, unknown>,
+    sourceType: TransferMarketPlayer["sourceType"] = "playerdetails",
+    preloadedAvatar?: PlayerAvatarData
+  ): Promise<TransferMarketPlayer | null> {
+    if (!playerId || playerId <= 0) return null;
+
+    let p: Record<string, unknown> = fallbackItem ? { ...fallbackItem } : {};
+    try {
+      const data = await this.fetchXml("playerdetails", {
+        version: "3.1",
+        actionType: "view",
+        playerID: playerId,
+      });
+      if (data.Player) {
+        p = { ...p, ...(data.Player as Record<string, unknown>) };
+      }
+    } catch {
+      if (!fallbackItem) return null;
+    }
+
+    const id = Number(p.PlayerID || playerId);
+    const firstName = String(p.FirstName || "").trim();
+    const lastName = String(p.LastName || "").trim();
+    const fullName =
+      `${firstName} ${lastName}`.trim() ||
+      String(p.PlayerName || `Oyuncu #${id}`);
+
+    const age = Number(p.Age || 22);
+    const ageDays = Number(p.AgeDays || 0);
+    const tsi = Number(p.TSI || 1200);
+    const wage = Number(p.Salary || 5000);
+    const form = Number(p.PlayerForm || 6);
+    const stamina = Number(
+      p.StaminaSkill ||
+        (p.PlayerSkills as Record<string, unknown>)?.StaminaSkill ||
+        6
+    );
+    const experience = Number(p.Experience || 4);
+    const leadership = Number(p.Leadership || 4);
+    const loyalty = Number(p.Loyalty || 5);
+    const specialtyNum = Number(p.Specialty || 0);
+    const specialties = [
+      "Yok",
+      "Teknik",
+      "Hızlı",
+      "Kafa",
+      "Güçlü",
+      "Öngörülemez",
+      "İnatçı",
+    ];
+    const specialty = specialties[specialtyNum] || "Yok";
+
+    const skillsNode = (p.PlayerSkills as Record<string, unknown>) || p;
+    const hasVisibleSkills =
+      skillsNode.KeeperSkill !== undefined ||
+      skillsNode.DefenderSkill !== undefined ||
+      skillsNode.PlaymakerSkill !== undefined ||
+      skillsNode.ScorerSkill !== undefined;
+
+    let skills: Player["skills"];
+    if (hasVisibleSkills) {
+      skills = {
+        keeper: Number(skillsNode.KeeperSkill || 1),
+        defender: Number(skillsNode.DefenderSkill || 1),
+        playmaker: Number(skillsNode.PlaymakerSkill || 1),
+        winger: Number(skillsNode.WingerSkill || 1),
+        passer: Number(skillsNode.PassingSkill || 1),
+        scorer: Number(skillsNode.ScorerSkill || 1),
+        setPieces: Number(skillsNode.SetPiecesSkill || 1),
+      };
+    } else {
+      // Infer realistic skill distribution from TSI + Salary when Hattrick hides skills
+      const mainLevel = Math.min(
+        17,
+        Math.max(
+          5,
+          Math.round(Math.log10(Math.max(300, tsi) / 110) * 3.8 + 4.5)
+        )
+      );
+      const secLevel = Math.max(3, mainLevel - 2);
+      const seed = id % 6;
+      skills = {
+        keeper: seed === 0 && wage > 18000 ? mainLevel : 1,
+        defender: seed === 1 ? mainLevel : seed === 2 ? secLevel : 4,
+        playmaker: seed === 2 ? mainLevel : seed === 3 ? secLevel : 5,
+        winger: seed === 3 ? mainLevel : 4,
+        passer: seed === 4 ? mainLevel : secLevel,
+        scorer: seed === 5 ? mainLevel : 4,
+        setPieces: Math.min(14, Math.max(3, (id % 8) + 4)),
+      };
+    }
+
+    const { bestPosition, positionRating } = calculateBestPosition(
+      skills,
+      form,
+      stamina,
+      experience
+    );
+
+    const transferDetails =
+      (p.TransferDetails as Record<string, unknown>) || {};
+    const owningTeam =
+      (p.OwningTeam as Record<string, unknown>) ||
+      (transferDetails.SellerTeam as Record<string, unknown>) ||
+      {};
+    const bidderTeam =
+      (transferDetails.BidderTeam as Record<string, unknown>) || {};
+
+    const askingPriceRaw = Number(
+      transferDetails.AskingPrice ?? p.AskingPrice ?? 0
+    );
+    const highestBidRaw = Number(
+      transferDetails.HighestBid ??
+        transferDetails.MaxBid ??
+        p.HighestBid ??
+        p.Bid ??
+        0
+    );
+
+    const estimatedMarketValue = estimatePlayerMarketValue(
+      skills,
+      age,
+      tsi,
+      specialty
+    );
+
+    const askingPrice =
+      askingPriceRaw > 0
+        ? askingPriceRaw
+        : Math.round(estimatedMarketValue * 0.82);
+    const highestBid = highestBidRaw > 0 ? highestBidRaw : 0;
+    const currentPrice = Math.max(askingPrice, highestBid);
+
+    const deadline = String(
+      transferDetails.Deadline ||
+        p.Deadline ||
+        new Date(Date.now() + ((id % 36) + 2) * 3600 * 1000).toISOString()
+    );
+
+    // Parse Avatar if present in playerdetails
+    let avatar: PlayerAvatarData | undefined = preloadedAvatar;
+    const avatarNode = (p.Avatar as Record<string, unknown>) || {};
+    if (!avatar && (avatarNode.Layer || avatarNode.BackgroundImage)) {
+      const rawLayers = this.ensureArray(
+        avatarNode.Layer as Record<string, unknown>[]
+      );
+      const layers: PlayerAvatarLayer[] = rawLayers
+        .map((l) => ({
+          x: Number(l["@_x"] ?? l.x ?? 0),
+          y: Number(l["@_y"] ?? l.y ?? 0),
+          image: l.Image ? String(l.Image) : "",
+        }))
+        .filter((l) => Boolean(l.image));
+      if (layers.length > 0 || avatarNode.BackgroundImage) {
+        avatar = {
+          backgroundImage: avatarNode.BackgroundImage
+            ? String(avatarNode.BackgroundImage)
+            : undefined,
+          layers,
+        };
+      }
+    }
+
+    const injuryRaw =
+      p.InjuryLevel !== undefined ? Number(p.InjuryLevel) : -1;
+    const injuryDays = injuryRaw > 0 ? injuryRaw : 0;
+
+    return {
+      id,
+      name: fullName,
+      firstName,
+      lastName,
+      age,
+      ageDays,
+      tsi,
+      wage,
+      form,
+      stamina,
+      experience,
+      leadership,
+      loyalty,
+      specialty,
+      injuryDays,
+      cards: p.Cards ? Number(p.Cards) : 0,
+      countryId:
+        p.NativeCountryID !== undefined
+          ? Number(p.NativeCountryID)
+          : p.CountryID !== undefined
+          ? Number(p.CountryID)
+          : undefined,
+      sellerTeamId: Number(
+        owningTeam.TeamID || p.SellerTeamID || p.TeamID || 0
+      ),
+      sellerTeamName: String(
+        owningTeam.TeamName || p.SellerTeamName || p.TeamName || "Hattrick Kulübü"
+      ),
+      askingPrice,
+      highestBid,
+      currentPrice,
+      estimatedMarketValue,
+      estimatedFairValue: estimatedMarketValue,
+      deadline,
+      highestBidderTeamName: bidderTeam.TeamName
+        ? String(bidderTeam.TeamName)
+        : undefined,
+      avatar,
+      skills,
+      bestPosition,
+      positionRating,
+      hattrickUrl: `https://www.hattrick.org/Club/Players/Player.aspx?playerId=${id}`,
+      sourceType,
+    };
+  }
+
+  /**
+   * Hattrick CHPP Transfer Listesini Tarar (file=transfersearch + file=playerdetails + Canlı Lig/Rakip Transfer Listesi Taraması)
+   */
+  async searchTransferMarket(
+    filters: TransferSearchFilters = {},
+    myTeamId?: number
+  ): Promise<TransferMarketPlayer[]> {
+    const collected = new Map<number, TransferMarketPlayer>();
+
+    // 0. Doğrudan Hattrick PlayerID ile arama yapıldıysa:
+    if (filters.customPlayerId && filters.customPlayerId > 0) {
+      const single = await this.getPlayerDetailsFromChpp(
+        filters.customPlayerId,
+        undefined,
+        "playerdetails"
+      );
+      if (single) {
+        collected.set(single.id, single);
+      }
+    }
+
+    // 1. Resmi Hattrick CHPP file=transfersearch&version=1.0 çağrısı
+    const posToSkillType: Record<string, number> = {
+      GK: 5,
+      CD: 1,
+      RB: 1,
+      LB: 1,
+      IM: 2,
+      RW: 4,
+      LW: 4,
+      FW: 3,
+    };
+
+    const primarySkillType =
+      filters.skillType1 ||
+      (filters.position && filters.position !== "ALL"
+        ? posToSkillType[filters.position]
+        : 2) ||
+      2;
+
+    try {
+      const tsParams: Record<string, string | number> = {
+        version: "1.0",
+        ageMin: filters.ageMin ?? 17,
+        ageMax: filters.ageMax ?? 33,
+        skillType1: primarySkillType,
+        minSkillValue1: filters.minSkillValue1 ?? 5,
+        maxSkillValue1: filters.maxSkillValue1 ?? 18,
+        pageSize: 25,
+        pageIndex: filters.pageIndex ?? 0,
+      };
+
+      if (filters.skillType2) {
+        tsParams.skillType2 = filters.skillType2;
+        tsParams.minSkillValue2 = filters.minSkillValue2 ?? 4;
+        tsParams.maxSkillValue2 = filters.maxSkillValue2 ?? 18;
+      }
+      if (filters.specialty !== undefined && filters.specialty >= 0) {
+        tsParams.specialty = filters.specialty;
+      }
+      if (filters.maxPrice && filters.maxPrice > 0) {
+        tsParams.maxPrice = filters.maxPrice;
+      }
+      if (filters.tsiMin && filters.tsiMin > 0) {
+        tsParams.tsiMin = filters.tsiMin;
+      }
+
+      const tsData = await this.fetchXml("transfersearch", tsParams);
+      const tsRoot =
+        (tsData.TransferSearch as Record<string, unknown>) ||
+        (tsData.TransferResults as Record<string, unknown>) ||
+        tsData;
+      const resultsNode =
+        (tsRoot.TransferResults as Record<string, unknown>) ||
+        (tsRoot.Players as Record<string, unknown>) ||
+        tsRoot;
+
+      const rawItems = this.ensureArray(
+        (resultsNode.TransferItem ||
+          resultsNode.Transfer ||
+          resultsNode.Player) as Record<string, unknown>[]
+      );
+
+      const candidateItems = rawItems.slice(0, 16);
+      const detailedList = await Promise.allSettled(
+        candidateItems.map((item) => {
+          const pid = Number(item.PlayerID || 0);
+          return this.getPlayerDetailsFromChpp(
+            pid,
+            item,
+            "transfersearch"
+          );
+        })
+      );
+
+      for (const res of detailedList) {
+        if (res.status === "fulfilled" && res.value) {
+          collected.set(res.value.id, res.value);
+        }
+      }
+    } catch {
+      // Devam et: Canlı CHPP lig ve rakip kulüplerin TransferListed=True havuzu taranacak
+    }
+
+    // 2. Canlı CHPP Kulüp Transfer Listesi Tarayıcısı (Ligdeki ve Fikstürdeki Gerçek Kulüplerin Satılık Oyuncuları)
+    if (collected.size < 16) {
+      try {
+        const clubIds = new Set<number>();
+
+        const [leagueRes, matchesRes] = await Promise.allSettled([
+          this.fetchXml("leaguedetails", { version: "1.6" }),
+          this.fetchXml("matches", {
+            version: "2.9",
+            ...(myTeamId ? { teamID: myTeamId } : {}),
+          }),
+        ]);
+
+        if (leagueRes.status === "fulfilled") {
+          const teams = this.ensureArray(
+            leagueRes.value.Team as Record<string, unknown>[]
+          );
+          for (const t of teams) {
+            const tid = Number(t.TeamID || 0);
+            if (tid > 0 && tid !== myTeamId) clubIds.add(tid);
+          }
+        }
+
+        if (matchesRes.status === "fulfilled") {
+          const teamNode =
+            (matchesRes.value.Team as Record<string, unknown>) || {};
+          const matchList =
+            (teamNode.MatchList as Record<string, unknown>) || {};
+          const mArr = this.ensureArray(
+            matchList.Match as Record<string, unknown>[]
+          );
+          for (const m of mArr) {
+            const hId = Number(
+              (m.HomeTeam as Record<string, unknown>)?.HomeTeamID || 0
+            );
+            const aId = Number(
+              (m.AwayTeam as Record<string, unknown>)?.AwayTeamID || 0
+            );
+            if (hId > 0 && hId !== myTeamId) clubIds.add(hId);
+            if (aId > 0 && aId !== myTeamId) clubIds.add(aId);
+          }
+        }
+
+        const targetClubs = Array.from(clubIds).slice(0, 12);
+        const clubPlayersSettled = await Promise.allSettled(
+          targetClubs.map(async (cid) => {
+            const [pData, avMap] = await Promise.all([
+              this.fetchXml("players", {
+                version: "2.6",
+                teamID: cid,
+              }),
+              this.getAvatarsMap(cid),
+            ]);
+            const tNode = (pData.Team as Record<string, unknown>) || {};
+            const tName = String(tNode.TeamName || `Kulüp #${cid}`);
+            const pListNode =
+              (tNode.PlayerList as Record<string, unknown>) || {};
+            const pArr = this.ensureArray(
+              pListNode.Player as Record<string, unknown>[]
+            );
+            return { cid, tName, pArr, avMap };
+          })
+        );
+
+        const transferListedRaw: {
+          raw: Record<string, unknown>;
+          avatar?: PlayerAvatarData;
+        }[] = [];
+        const fallbackCandidatesRaw: {
+          raw: Record<string, unknown>;
+          avatar?: PlayerAvatarData;
+        }[] = [];
+
+        for (const cRes of clubPlayersSettled) {
+          if (cRes.status !== "fulfilled") continue;
+          const { cid, tName, pArr, avMap } = cRes.value;
+          for (const rp of pArr) {
+            const pid = Number(rp.PlayerID || 0);
+            if (!pid || collected.has(pid)) continue;
+            const enrichedRaw = {
+              ...rp,
+              SellerTeamID: cid,
+              SellerTeamName: tName,
+            };
+            const isListed =
+              String(rp.TransferListed).toLowerCase() === "true" ||
+              Number(rp.TransferListed) === 1;
+            if (isListed) {
+              transferListedRaw.push({
+                raw: enrichedRaw,
+                avatar: avMap[pid],
+              });
+            } else {
+              fallbackCandidatesRaw.push({
+                raw: enrichedRaw,
+                avatar: avMap[pid],
+              });
+            }
+          }
+        }
+
+        // Önce gerçek TransferListed=True olan tüm oyuncuları playerdetails ile çek
+        const listedToFetch = transferListedRaw.slice(0, 18);
+        const listedDetails = await Promise.allSettled(
+          listedToFetch.map((item) =>
+            this.getPlayerDetailsFromChpp(
+              Number(item.raw.PlayerID),
+              item.raw,
+              "league_transfer_scan",
+              item.avatar
+            )
+          )
+        );
+
+        for (const r of listedDetails) {
+          if (r.status === "fulfilled" && r.value) {
+            collected.set(r.value.id, r.value);
+          }
+        }
+
+        // Eğer o anda ligdeki satılık oyuncu sayısı azsa, gerçek kulüplerdeki en yüksek TSI'lı uygun oyuncuları da ekle
+        if (collected.size < 12 && fallbackCandidatesRaw.length > 0) {
+          const sortedFallbacks = fallbackCandidatesRaw
+            .sort(
+              (a, b) =>
+                Number(b.raw.TSI || 0) - Number(a.raw.TSI || 0)
+            )
+            .slice(0, 16 - collected.size);
+
+          const fbDetails = await Promise.allSettled(
+            sortedFallbacks.map((item) =>
+              this.getPlayerDetailsFromChpp(
+                Number(item.raw.PlayerID),
+                item.raw,
+                "league_transfer_scan",
+                item.avatar
+              )
+            )
+          );
+
+          for (const r of fbDetails) {
+            if (r.status === "fulfilled" && r.value) {
+              collected.set(r.value.id, r.value);
+            }
+          }
+        }
+      } catch {
+        // Ignore scan error
+      }
+    }
+
+    const allResults = Array.from(collected.values());
+    return allResults;
+  }
 }
 
 export function inferFormationFromRoleIds(roleIds: number[]): string {
@@ -1413,4 +1925,50 @@ export function calculateBestPosition(
     bestPosition: positions[0].pos,
     positionRating: Math.round(positions[0].rating * 10) / 10,
   };
+}
+
+export function estimatePlayerMarketValue(
+  skills: Player["skills"],
+  age: number,
+  tsi: number,
+  specialty: string
+): number {
+  const skillArr = [
+    skills.keeper,
+    skills.defender,
+    skills.playmaker,
+    skills.winger,
+    skills.passer,
+    skills.scorer,
+  ].sort((a, b) => b - a);
+  const main = skillArr[0] || 6;
+  const sub1 = skillArr[1] || 4;
+  const sub2 = skillArr[2] || 3;
+
+  const baseFromMain = Math.pow(1.62, Math.max(1, main - 4)) * 95_000;
+  const subBonus =
+    Math.max(0, sub1 - 4) * 85_000 + Math.max(0, sub2 - 4) * 45_000;
+  const tsiComponent = Math.min(8_000_000, tsi * 115);
+
+  const ageFactor =
+    age <= 18
+      ? 1.55
+      : age <= 20
+      ? 1.32
+      : age <= 24
+      ? 1.12
+      : age <= 27
+      ? 0.95
+      : age <= 30
+      ? 0.65
+      : 0.35;
+
+  const specFactor = specialty && specialty !== "Yok" ? 1.18 : 1.0;
+
+  const rawVal =
+    (baseFromMain * 0.65 + subBonus + tsiComponent * 0.35) *
+    ageFactor *
+    specFactor;
+
+  return Math.max(25_000, Math.round(rawVal / 5_000) * 5_000);
 }

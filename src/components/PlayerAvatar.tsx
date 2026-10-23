@@ -28,6 +28,7 @@ interface PlayerAvatarProps {
   className?: string;
   showBackground?: boolean;
   badgeColor?: string;
+  badgeText?: string;
 }
 
 const SIZE_MAP: Record<
@@ -49,6 +50,7 @@ export function PlayerAvatar({
   className = "",
   showBackground = true,
   badgeColor = "bg-emerald-600",
+  badgeText,
 }: PlayerAvatarProps) {
   const [failedLayers, setFailedLayers] = useState<Record<number, boolean>>({});
   const dims = SIZE_MAP[size];
@@ -160,6 +162,14 @@ export function PlayerAvatar({
             {initials || "HT"}
           </span>
         </div>
+      )}
+
+      {badgeText && (
+        <span
+          className="absolute bottom-0.5 left-0.5 px-1 py-0.2 rounded text-[8px] font-black text-slate-950 shadow bg-amber-400 leading-tight"
+        >
+          {badgeText}
+        </span>
       )}
 
       {shirtNumber !== undefined && shirtNumber > 0 && shirtNumber < 100 && (
