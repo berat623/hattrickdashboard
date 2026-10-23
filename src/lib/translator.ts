@@ -1,6 +1,6 @@
 const translationCache = new Map<string, string>();
 
-const COLOR_MAP_TR: Record<string, string> = {
+export const COLOR_MAP_TR: Record<string, string> = {
   black: "Siyah",
   white: "Beyaz",
   red: "Kırmızı",
@@ -21,6 +21,7 @@ const COLOR_MAP_TR: Record<string, string> = {
   beige: "Bej",
   maroon: "Bordo",
   navy: "Lacivert",
+  "navy blue": "Lacivert",
   teal: "Camgöbeği",
   turquoise: "Turkuaz",
   saffron: "Safran Sarısı",
@@ -29,19 +30,56 @@ const COLOR_MAP_TR: Record<string, string> = {
   "black and blue": "Siyah ve Mavi",
   "red and white": "Kırmızı ve Beyaz",
   "yellow and orange": "Sarı ve Turuncu",
+  "light brown": "Açık Kahverengi",
+  "dark brown": "Koyu Kahverengi",
+  "light blue": "Açık Mavi",
+  "dark blue": "Koyu Mavi",
+  "light green": "Açık Yeşil",
+  "dark green": "Koyu Yeşil",
+  "emerald green": "Zümrüt Yeşili",
+  "forest green": "Orman Yeşili",
+  "olive green": "Zeytin Yeşili",
+  "sea green": "Deniz Yeşili",
+  "ruby red": "Yakut Kırmızısı",
+  "pearl white": "İnci Beyazı",
+  amber: "Kehribar Sarısı",
+  mustard: "Hardal Sarısı",
+  "light bright yellow": "Açık Parlak Sarı",
+  "transparent and pink": "Şeffaf ve Pembe",
+  metallic: "Metalik",
 };
 
-export function translateColorToTurkish(colorEn?: string): string | undefined {
-  if (!colorEn) return undefined;
+/**
+ * Robust Turkish color translator for all astrology color names.
+ */
+export function translateColorToTurkish(colorEn?: string): string {
+  if (!colorEn) return "";
   const normalized = colorEn.trim().toLowerCase();
+
+  // 1. Direct dictionary match
   if (COLOR_MAP_TR[normalized]) {
     return COLOR_MAP_TR[normalized];
   }
+
+  // 2. Light / Dark modifiers
+  const isLight = normalized.includes("light");
+  const isDark = normalized.includes("dark");
+  const cleanBase = normalized.replace(/\b(light|dark)\b/g, "").trim();
+
+  if (COLOR_MAP_TR[cleanBase]) {
+    const base = COLOR_MAP_TR[cleanBase];
+    if (isLight) return `Açık ${base}`;
+    if (isDark) return `Koyu ${base}`;
+    return base;
+  }
+
+  // 3. Substring match
   for (const [k, v] of Object.entries(COLOR_MAP_TR)) {
     if (normalized.includes(k)) {
       return v;
     }
   }
+
   return colorEn;
 }
 
@@ -59,8 +97,17 @@ export function cleanHtmlText(text: string): string {
 }
 
 /**
- * Translates English horoscope text into Turkish using Google Translate API
- * with automatic fallback and in-memory caching.
+ * Checks if a string contains common English indicator words.
+ */
+export function isEnglishText(text: string): boolean {
+  if (!text) return false;
+  return /\b(the|and|you|with|will|for|are|this|that|your|have|from|today|careful|growth|stability|health)\b/i.test(
+    text
+  );
+}
+
+/**
+ * Translates English text into Turkish with in-memory caching and fail-safe fallback.
  */
 export async function translateToTurkish(textEn: string): Promise<string> {
   const cleaned = cleanHtmlText(textEn);
@@ -101,16 +148,11 @@ export async function translateToTurkish(textEn: string): Promise<string> {
     console.warn("Translation API warning:", err);
   }
 
-  // Fallback: If translation API is unavailable, return cleaned English text
   return cleaned;
 }
 
 /**
  * Converts English or raw date strings from astrology sources into accurate Turkish date format.
- * Examples:
- * - "Saturday Oct 24th, 2026" -> "24 Ekim 2026, Cumartesi"
- * - "24-10-2026" -> "24 Ekim 2026, Cumartesi"
- * - "Saturday, October 24, 2026" -> "24 Ekim 2026, Cumartesi"
  */
 export function parseSourceDateToTurkish(raw?: string): string {
   if (!raw) return "";

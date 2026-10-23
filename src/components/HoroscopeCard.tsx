@@ -1,12 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   DailyHoroscopeItem,
   HOROSCOPE_SOURCES,
   ZodiacSignInfo,
 } from "@/types/horoscope";
-import { Copy, Check, Sparkles } from "lucide-react";
+import {
+  isEnglishText,
+  translateColorToTurkish,
+  translateToTurkish,
+} from "@/lib/translator";
+import { Copy, Check } from "lucide-react";
 
 interface HoroscopeCardProps {
   item: DailyHoroscopeItem;
@@ -21,10 +26,28 @@ const DAY_LABELS: Record<string, string> = {
 
 export function HoroscopeCard({ item, sign }: HoroscopeCardProps) {
   const [copied, setCopied] = useState<boolean>(false);
+  const [predictionText, setPredictionText] = useState<string>(
+    item.predictionTr
+  );
+
   const sourceMeta = HOROSCOPE_SOURCES[item.sourceId];
 
+  // Built-in Lightning-Fast Client Translation Engine
+  useEffect(() => {
+    // If the text happens to be in English, translate it instantly on the client
+    if (isEnglishText(item.predictionTr)) {
+      translateToTurkish(item.predictionTr).then((translated) => {
+        if (translated && translated.trim().length > 0) {
+          setPredictionText(translated);
+        }
+      });
+    } else {
+      setPredictionText(item.predictionTr);
+    }
+  }, [item.predictionTr]);
+
   const handleCopy = async () => {
-    const textToCopy = `[${sourceMeta?.name || item.sourceName} • ${sign.nameTr} Burcu • ${item.date}]\n\n${item.predictionTr}`;
+    const textToCopy = `[${sourceMeta?.name || item.sourceName} • ${sign.nameTr} Burcu • ${item.date}]\n\n${predictionText}`;
     try {
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
@@ -35,9 +58,11 @@ export function HoroscopeCard({ item, sign }: HoroscopeCardProps) {
   };
 
   const dayLabel = DAY_LABELS[item.day] || "Bugün";
+  const rawColor = item.luckyColorTr || item.luckyColor;
+  const turkishColor = rawColor ? translateColorToTurkish(rawColor) : undefined;
 
   return (
-    <article className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 flex flex-col justify-between gap-4 transition-all hover:border-zinc-300 dark:hover:border-zinc-700">
+    <article className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 flex flex-col justify-between gap-3.5 transition-all hover:border-zinc-300 dark:hover:border-zinc-700">
       {/* Header */}
       <div className="flex items-start justify-between gap-3">
         <div>
@@ -79,12 +104,12 @@ export function HoroscopeCard({ item, sign }: HoroscopeCardProps) {
 
       {/* Pure Turkish Prediction Body */}
       <div className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal">
-        <p>{item.predictionTr}</p>
+        <p>{predictionText}</p>
       </div>
 
-      {/* Lucky Details & Remedy */}
-      {(item.luckyNumber || item.luckyColor || item.remedy) && (
-        <div className="space-y-2 pt-2 border-t border-zinc-100 dark:border-zinc-800/60">
+      {/* Lucky Details (Only Number & Color in Turkish) */}
+      {(item.luckyNumber || turkishColor) && (
+        <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800/60">
           <div className="flex flex-wrap items-center gap-2 text-xs">
             {item.luckyNumber && (
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-zinc-50 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-400 border border-zinc-200/60 dark:border-zinc-700/50">
@@ -95,26 +120,15 @@ export function HoroscopeCard({ item, sign }: HoroscopeCardProps) {
               </span>
             )}
 
-            {item.luckyColor && (
+            {turkishColor && (
               <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-zinc-50 dark:bg-zinc-800/50 text-zinc-600 dark:text-zinc-400 border border-zinc-200/60 dark:border-zinc-700/50">
                 <span>Renk:</span>
                 <strong className="text-zinc-900 dark:text-white font-semibold">
-                  {item.luckyColorTr || item.luckyColor}
+                  {turkishColor}
                 </strong>
               </span>
             )}
           </div>
-
-          {/* AstroSage Remedy */}
-          {item.remedy && (
-            <div className="text-[11px] text-zinc-500 dark:text-zinc-400 flex items-start gap-1.5 bg-zinc-50 dark:bg-zinc-800/40 p-2 rounded-lg border border-zinc-200/50 dark:border-zinc-700/40">
-              <Sparkles className="w-3.5 h-3.5 text-zinc-400 shrink-0 mt-0.5" />
-              <span>
-                <strong className="text-zinc-700 dark:text-zinc-300">Öneri:</strong>{" "}
-                {item.remedyTr || item.remedy}
-              </span>
-            </div>
-          )}
         </div>
       )}
     </article>
