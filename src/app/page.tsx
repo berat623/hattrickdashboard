@@ -7,6 +7,7 @@ import {
   ZodiacSignId,
   ZODIAC_SIGNS,
 } from "@/types/horoscope";
+import { getHoroscopesForSign } from "@/lib/horoscope-data";
 import { Navbar } from "@/components/Navbar";
 import { ZodiacSelector } from "@/components/ZodiacSelector";
 import { ZodiacProfileCard } from "@/components/ZodiacProfileCard";
@@ -27,29 +28,31 @@ export default function HomePage() {
   const [selectedSourceId, setSelectedSourceId] = useState<
     HoroscopeSourceId | "all"
   >("all");
-  const [data, setData] = useState<HoroscopeApiResponse | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [data, setData] = useState<HoroscopeApiResponse>(() =>
+    getHoroscopesForSign("taurus")
+  );
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetchHoroscope = useCallback(async (sign: ZodiacSignId) => {
-    setLoading(true);
+    // If we already have data for this sign from horoscope-data, update immediately
+    const fallbackData = getHoroscopesForSign(sign);
+    setData(fallbackData);
     setError(null);
+
+    // Then try live API fetch if running in an environment with Node.js backend
     try {
       const res = await fetch(`/api/horoscope?sign=${sign}`, {
         cache: "no-store",
       });
-      if (!res.ok) {
-        throw new Error("Burç yorumları alınamadı.");
+      if (res.ok) {
+        const json: HoroscopeApiResponse = await res.json();
+        if (json.success && json.items.length > 0) {
+          setData(json);
+        }
       }
-      const json: HoroscopeApiResponse = await res.json();
-      if (!json.success) {
-        throw new Error(json.error || "Beklenmeyen hata");
-      }
-      setData(json);
-    } catch (err: unknown) {
-      setError(
-        err instanceof Error ? err.message : "Yorumlar yüklenirken hata oluştu"
-      );
+    } catch {
+      // In static environments (e.g. GitHub Pages), fallbackData is already in place
     } finally {
       setLoading(false);
     }

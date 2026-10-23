@@ -11,6 +11,7 @@ import {
   fetchAstroSage,
   fetchGaneshaSpeaks,
 } from "@/lib/horoscope-fetcher";
+import { INITIAL_HOROSCOPES } from "@/lib/horoscope-data";
 
 // In-memory cache with 30-minute TTL
 interface CacheEntry {
@@ -51,15 +52,23 @@ export async function GET(req: NextRequest) {
     const signInfo = ZODIAC_SIGNS[signParam];
     const items: DailyHoroscopeItem[] = [];
 
-    // Determine sources to fetch
-    const fetchPromises: Promise<DailyHoroscopeItem | null>[] = [];
+    // Sources to fetch
+    const fetchPromises: Promise<{ sourceId: HoroscopeSourceId; item: DailyHoroscopeItem | null }>[] = [];
 
     if (!sourceParam || sourceParam === "askganesha") {
-      fetchPromises.push(fetchAskGanesha(signParam));
+      fetchPromises.push(
+        fetchAskGanesha(signParam)
+          .then((item) => ({ sourceId: "askganesha" as HoroscopeSourceId, item }))
+          .catch(() => ({ sourceId: "askganesha" as HoroscopeSourceId, item: null }))
+      );
     }
 
     if (!sourceParam || sourceParam === "ganeshaspeaks") {
-      fetchPromises.push(fetchGaneshaSpeaks(signParam));
+      fetchPromises.push(
+        fetchGaneshaSpeaks(signParam)
+          .then((item) => ({ sourceId: "ganeshaspeaks" as HoroscopeSourceId, item }))
+          .catch(() => ({ sourceId: "ganeshaspeaks" as HoroscopeSourceId, item: null }))
+      );
     }
 
     // AstroSage is STRICTLY only for Leo (Aslan) and Virgo (Başak)
@@ -67,13 +76,27 @@ export async function GET(req: NextRequest) {
       (!sourceParam || sourceParam === "astrosage") &&
       (signParam === "leo" || signParam === "virgo")
     ) {
-      fetchPromises.push(fetchAstroSage(signParam));
+      fetchPromises.push(
+        fetchAstroSage(signParam)
+          .then((item) => ({ sourceId: "astrosage" as HoroscopeSourceId, item }))
+          .catch(() => ({ sourceId: "astrosage" as HoroscopeSourceId, item: null }))
+      );
     }
 
     const results = await Promise.allSettled(fetchPromises);
+    const signFallbacks = INITIAL_HOROSCOPES[signParam];
+
     for (const res of results) {
-      if (res.status === "fulfilled" && res.value) {
-        items.push(res.value);
+      if (res.status === "fulfilled") {
+        if (res.value.item) {
+          items.push(res.value.item);
+        } else {
+          // Fallback to pre-bundled high-quality data if remote provider is unreachable or blocks serverless IP
+          const fallback = signFallbacks[res.value.sourceId];
+          if (fallback) {
+            items.push(fallback);
+          }
+        }
       }
     }
 

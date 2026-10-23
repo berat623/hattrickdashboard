@@ -1,29 +1,42 @@
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
-const ghpages = require('gh-pages');
+const { execSync } = require("child_process");
+const fs = require("fs");
+const path = require("path");
 
-console.log('🚀 GitHub Pages için statik derleme başlatılıyor...');
+const apiPath = path.join(__dirname, "../src/app/api");
+const backupPath = path.join(__dirname, "../src/api_backup");
 
+console.log("🚀 GitHub Pages için statik derleme başlatılıyor...");
+
+let movedApi = false;
 try {
-  // Build Next.js
-  execSync('npx next build', { stdio: 'inherit' });
-
-  console.log('Publishing to gh-pages...');
-  // Check if out exists, else build normal
-  if (fs.existsSync(path.join(__dirname, '..', 'out'))) {
-    fs.writeFileSync(path.join(__dirname, '..', 'out', '.nojekyll'), '');
-    ghpages.publish(path.join(__dirname, '..', 'out'), {
-      branch: 'gh-pages',
-      dotfiles: true
-    }, (err) => {
-      if (err) {
-        console.error('gh-pages error:', err);
-      } else {
-        console.log('🎉 Başarıyla gh-pages dalına yüklendi!');
-      }
-    });
+  if (fs.existsSync(apiPath)) {
+    fs.renameSync(apiPath, backupPath);
+    movedApi = true;
   }
-} catch (e) {
-  console.error('Build/Deploy error:', e.message);
+
+  process.env.GITHUB_PAGES = "true";
+  console.log("📦 Next.js statik export yapılıyor (basePath: /hattrickdashboard)...");
+  execSync("npx next build", {
+    stdio: "inherit",
+    env: { ...process.env, GITHUB_PAGES: "true" },
+  });
+
+  // Create .nojekyll in out/
+  const noJekyllPath = path.join(__dirname, "../out/.nojekyll");
+  fs.writeFileSync(noJekyllPath, "");
+  console.log("✅ .nojekyll oluşturuldu.");
+
+  // Deploy to gh-pages branch
+  console.log("🚀 out/ klasörü gh-pages dalına yükleniyor...");
+  execSync("npx gh-pages -d out --dotfiles -b gh-pages", { stdio: "inherit" });
+
+  console.log("🎉 Başarıyla gh-pages dalına yüklendi!");
+} catch (error) {
+  console.error("❌ Hata oluştu:", error);
+  process.exitCode = 1;
+} finally {
+  if (movedApi && fs.existsSync(backupPath)) {
+    fs.renameSync(backupPath, apiPath);
+    console.log("🔄 API rotaları geri yüklendi.");
+  }
 }
