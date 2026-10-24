@@ -18,6 +18,9 @@ import {
   SIGN_MOTTOS,
   SYNASTRY_INTERPRETATIONS,
   DARAKARAKA_INTERPRETATIONS,
+  SPOUSE_BY_7TH_SIGN,
+  SPOUSE_MEETING_BY_RULER_HOUSE,
+  ANNUAL_PROFECTIONS,
 } from "./natal-interpretations";
 
 export const ZODIAC_SIGNS = [
@@ -86,6 +89,7 @@ export interface CalculateChartParams {
   timezone?: string;
   houseSystem?: HouseSystem;
   ayanamsaSystem?: AyanamsaSystem;
+  gender?: "kadin" | "erkek" | "belirtilmemis";
 }
 
 /**
@@ -356,6 +360,7 @@ export function calculateNatalChart(params: CalculateChartParams): NatalChartDat
     lon,
     houseSystem = "placidus",
     ayanamsaSystem = "tropical",
+    gender = "belirtilmemis",
   } = params;
   const timezone = params.timezone || "Europe/Istanbul";
 
@@ -701,6 +706,70 @@ export function calculateNatalChart(params: CalculateChartParams): NatalChartDat
     rulerHouse,
   };
 
+  // Spouse Profile Calculation
+  const spouseInfo = SPOUSE_BY_7TH_SIGN[house7.sign] || SPOUSE_BY_7TH_SIGN["Koç"];
+  const meetingByRuler =
+    SPOUSE_MEETING_BY_RULER_HOUSE[rulerHouse] ||
+    "Sosyal çevre, ortak idealler veya iş ortamları vesilesiyle tanışacaksınız.";
+
+  const mars = planets.find((p) => p.name === "Mars") || planets[4];
+  const venus = planets.find((p) => p.name === "Venüs") || planets[3];
+
+  let genderPerspective = "";
+  if (gender === "kadin") {
+    genderPerspective = `Kadın haritasında Güneş (${sun.sign} burcu, ${sun.house}. ev) eşinizin toplumsal saygınlığını, liderliğini ve bilinçli karakterini; Mars (${mars.sign} burcu, ${mars.house}. ev) ise eşinizin dinamizmini, tutkusunu ve eyleme geçme tarzını simgeler.`;
+  } else if (gender === "erkek") {
+    genderPerspective = `Erkek haritasında Ay (${moon.sign} burcu, ${moon.house}. ev) eşinizin şefkatini, iç dünyasını ve yuvanın huzurunu; Venüs (${venus.sign} burcu, ${venus.house}. ev) ise eşinizin estetik zarafetini, aşk dilini ve romantik çekimini simgeler.`;
+  } else {
+    genderPerspective = `Eril göstergeler (Güneş: ${sun.sign}, Mars: ${mars.sign}) eşinizin kararlılığını ve liderliğini; dişil göstergeler (Ay: ${moon.sign}, Venüs: ${venus.sign}) ise duygusal şefkatini ve zarafetini simgeler.`;
+  }
+
+  const spouseProfile = {
+    sign: house7.sign,
+    summary: spouseInfo.summary,
+    karakter: spouseInfo.karakter,
+    fiziksel: spouseInfo.fiziksel,
+    meslek: spouseInfo.meslek,
+    tanisma: spouseInfo.tanisma,
+    dinamik: spouseInfo.dinamik,
+    memleket: spouseInfo.memleket,
+    yasFarki: spouseInfo.yasFarki,
+    aileYapisi: spouseInfo.aileYapisi,
+    iletisimTarzi: spouseInfo.iletisimTarzi,
+    hobiler: spouseInfo.hobiler,
+    muhtemelBurclar: spouseInfo.muhtemelBurclar,
+    ilkIntiba: spouseInfo.ilkIntiba,
+    evlilikSonrasiDegisim: spouseInfo.evlilikSonrasiDegisim,
+    evlilikZamanlamasi: spouseInfo.evlilikZamanlamasi,
+    meetingByRulerHouse: meetingByRuler,
+    genderPerspective,
+  };
+
+  // Annual Profection (Yıllık Profeksiyon)
+  const now = new Date();
+  const birthD = new Date(Date.UTC(year, month - 1, day));
+  let age = now.getUTCFullYear() - birthD.getUTCFullYear();
+  const mDiff = now.getUTCMonth() - birthD.getUTCMonth();
+  if (mDiff < 0 || (mDiff === 0 && now.getUTCDate() < birthD.getUTCDate())) {
+    age--;
+  }
+  if (age < 0) age = 0;
+  const profectionHouse = (age % 12) + 1;
+  const profHouseCusp = houses[profectionHouse - 1];
+  const profRuler = SIGN_RULERS[profHouseCusp.sign] || "Güneş";
+  const profData = ANNUAL_PROFECTIONS[profectionHouse] || {
+    theme: `${profectionHouse}. Ev Teması`,
+    desc: `Bu yıl ${profectionHouse}. evin getirdiği yaşam temaları ve ${profRuler} gezegeninin döngüsü ön plandadır.`,
+  };
+
+  const profection = {
+    age,
+    house: profectionHouse,
+    houseTheme: profData.theme,
+    ruler: profRuler,
+    desc: profData.desc,
+  };
+
   const chartData: NatalChartData = {
     name,
     birthDate,
@@ -714,6 +783,7 @@ export function calculateNatalChart(params: CalculateChartParams): NatalChartDat
     houseSystem,
     ayanamsaSystem,
     ayanamsaValue: Number(ayanamsaValue.toFixed(4)),
+    gender,
     ascendant: {
       sign: ascSign,
       degree: Math.floor(ascDeg % 30),
@@ -750,6 +820,8 @@ export function calculateNatalChart(params: CalculateChartParams): NatalChartDat
     vargottamaPlanets,
     darakaraka,
     seventhHouse,
+    spouseProfile,
+    profection,
     svgWheel: "",
     svgD9Wheel: "",
   };

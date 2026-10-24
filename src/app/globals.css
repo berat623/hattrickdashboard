@@ -96,3 +96,13 @@ body {
 .animate-pulse-glow {
   animation: pulseGlow 2s infinite ease-in-out;
 }
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+  header, nav, button, input {
+    display: none !important;
+  }
+}

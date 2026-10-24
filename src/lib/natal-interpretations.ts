@@ -1,4 +1,227 @@
-// Astroloji.org ve profesyonel astroloji tabanlı ultra-detaylı kütüphane
+// Astroloji.org ve profesyonel astroloji tabanlı ultra-zengin kütüphane
+
+export const NAKSHATRA_DATA = [
+  {
+    "name": "Ashwini",
+    "lord": "Ketu",
+    "deity": "Ashwini Kumaras",
+    "desc": "Hızlı iyileşme, öncülük, canlılık ve yeni girişimler."
+  },
+  {
+    "name": "Bharani",
+    "lord": "Venüs",
+    "deity": "Yama",
+    "desc": "Dönüşüm, derin tutku, sabır ve yaratıcı doğum enerjisi."
+  },
+  {
+    "name": "Krittika",
+    "lord": "Güneş",
+    "deity": "Agni",
+    "desc": "Keskin zeka, arındırıcı ateş, kararlılık ve liderlik."
+  },
+  {
+    "name": "Rohini",
+    "lord": "Ay",
+    "deity": "Brahma",
+    "desc": "Güzellik, çekicilik, bereket, sanatsal incelik ve duygusal derinlik."
+  },
+  {
+    "name": "Mrigashira",
+    "lord": "Mars",
+    "deity": "Soma",
+    "desc": "Arayış, merak, araştırma tutkusu ve zihinsel çeviklik."
+  },
+  {
+    "name": "Ardra",
+    "lord": "Rahu",
+    "deity": "Rudra",
+    "desc": "Fırtınalı aydınlanma, dönüşüm, entelektüel derinlik ve gözyaşından doğan güç."
+  },
+  {
+    "name": "Punarvasu",
+    "lord": "Jüpiter",
+    "deity": "Aditi",
+    "desc": "Yeniden doğuş, bereket, affedicilik ve ruhsal koruma."
+  },
+  {
+    "name": "Pushya",
+    "lord": "Satürn",
+    "deity": "Brihaspati",
+    "desc": "En hayırlı ay konağı; besleyicilik, maneviyat, bilgelik ve istikrar."
+  },
+  {
+    "name": "Ashlesha",
+    "lord": "Merkür",
+    "deity": "Nagas",
+    "desc": "Sezgisel zeka, derin psikolojik kavrayış ve koruyucu enerji."
+  },
+  {
+    "name": "Magha",
+    "lord": "Ketu",
+    "deity": "Pitris",
+    "desc": "Soy bağı, asalet, ataların mirası, otorite ve gurur."
+  },
+  {
+    "name": "Purva Phalguni",
+    "lord": "Venüs",
+    "deity": "Bhaga",
+    "desc": "Romantizm, dinlenme, aşk, şans ve sosyal zevkler."
+  },
+  {
+    "name": "Uttara Phalguni",
+    "lord": "Güneş",
+    "deity": "Aryaman",
+    "desc": "Dostluk, kalıcı ittifaklar, cömertlik ve nezaket."
+  },
+  {
+    "name": "Hasta",
+    "lord": "Ay",
+    "deity": "Savitr",
+    "desc": "Becerikli eller, zanaatkarlık, şifa, mizah ve usta detaycılık."
+  },
+  {
+    "name": "Chitra",
+    "lord": "Mars",
+    "deity": "Vishvakarma",
+    "desc": "Göz kamaştırıcı estetik, mimari zeka, tasarım ve görsel yetenek."
+  },
+  {
+    "name": "Swati",
+    "lord": "Rahu",
+    "deity": "Vayu",
+    "desc": "Özgür rüzgar, bağımsızlık, ticaret kabiliyeti ve esneklik."
+  },
+  {
+    "name": "Vishakha",
+    "lord": "Jüpiter",
+    "deity": "Indra-Agni",
+    "desc": "Odaklanmış hedef, amaca adanmışlık, zafer ve kararlılık."
+  },
+  {
+    "name": "Anuradha",
+    "lord": "Satürn",
+    "deity": "Mitra",
+    "desc": "Sadakat, dostluk, derin bağlılık ve zorlukları aşan kalp."
+  },
+  {
+    "name": "Jyeshtha",
+    "lord": "Merkür",
+    "deity": "Indra",
+    "desc": "Kıdem, koruyucu liderlik, zihinsel güç ve cesaret."
+  },
+  {
+    "name": "Mula",
+    "lord": "Ketu",
+    "deity": "Nirriti",
+    "desc": "Kökleri araştırma, derin gerçekleri ortaya çıkarma ve felsefi radikallik."
+  },
+  {
+    "name": "Purva Ashadha",
+    "lord": "Venüs",
+    "deity": "Apas",
+    "desc": "Yenilmezlik, inanç, arındırıcı sular ve popülerlik."
+  },
+  {
+    "name": "Uttara Ashadha",
+    "lord": "Güneş",
+    "deity": "Vishwadevas",
+    "desc": "Kalıcı zafer, erdem, dürüstlük ve sarsılmaz ilkeler."
+  },
+  {
+    "name": "Shravana",
+    "lord": "Ay",
+    "deity": "Vishnu",
+    "desc": "Dinleme sanatı, öğrenme, bilgelik ve sözlü aktarım."
+  },
+  {
+    "name": "Dhanishta",
+    "lord": "Mars",
+    "deity": "Eight Vasus",
+    "desc": "Ritim, müzik yeteneği, zenginlik ve topluluk liderliği."
+  },
+  {
+    "name": "Shatabhisha",
+    "lord": "Rahu",
+    "deity": "Varuna",
+    "desc": "Yüz şifacı, gizem, alternatif tıp, vizyonerlik ve bağımsızlık."
+  },
+  {
+    "name": "Purva Bhadrapada",
+    "lord": "Jüpiter",
+    "deity": "Aja Ekapada",
+    "desc": "Derin mistisizm, ruhsal tutku ve dönüştürücü zeka."
+  },
+  {
+    "name": "Uttara Bhadrapada",
+    "lord": "Satürn",
+    "deity": "Ahirbudhnya",
+    "desc": "Derin denizler, içsel huzur, bilgelik, sabır ve aydınlanma."
+  },
+  {
+    "name": "Revati",
+    "lord": "Merkür",
+    "deity": "Pushan",
+    "desc": "Zodyakın son konağı; yol göstericilik, şefkat, bolluk ve ruhsal tamamlanma."
+  }
+];
+
+export const HOUSE_SYSTEM_DETAILS = {
+  "placidus": {
+    "name": "Placidus",
+    "desc": "Modern astrolojinin en yaygın sistemi. Gündüz ve gece yarı-yaylarının zamana göre bölünmesine dayanır."
+  },
+  "whole_sign": {
+    "name": "Whole Sign (Tüm Burç)",
+    "desc": "Hellenistik ve Vedik astrolojinin en eski sistemi. Yükselen burcun tamamını 1. ev kabul eder."
+  },
+  "equal": {
+    "name": "Equal House (Eşit Ev)",
+    "desc": "Yükselen derecesinden itibaren her evi tam 30 derecelik eşit aralıklarla böler."
+  },
+  "porphyry": {
+    "name": "Porphyry",
+    "desc": "ASC ve MC arasındaki 4 kadranı tam 3 eşit dilime bölerek ev sınırlarını hesaplar."
+  },
+  "koch": {
+    "name": "Koch (Doğum Yeri)",
+    "desc": "Doğum enlemine göre gök ekvatoru yükseliş farklarına dayanan hassas kadran sistemi."
+  },
+  "regiomontanus": {
+    "name": "Regiomontanus",
+    "desc": "Gök ekvatorunu ufuk düzlemine göre 12 eşit parçaya bölen Rönesans sistemi."
+  },
+  "campanus": {
+    "name": "Campanus",
+    "desc": "Birincil düşey çemberi (Prime Vertical) 12 parçaya bölen uzamsal sistem."
+  }
+};
+
+export const AYANAMSA_DETAILS = {
+  "tropical": {
+    "name": "Tropikal (Batı)",
+    "desc": "İlkbahar ekinoksunu (0° Koç) başlangıç kabul eder. Mevsimsel döngülere dayanır."
+  },
+  "lahiri": {
+    "name": "Lahiri (Chitrapaksha - Vedik)",
+    "desc": "Hint hükümeti ve klasik Vedik astrolojinin resmi sidereal ayanamsa standardı."
+  },
+  "kp": {
+    "name": "Krishnamurti Paddhati (KP)",
+    "desc": "KP Vedik astrolojisi için optimize edilmiş, olay zamanlamasında çok kullanılan ayanamsa."
+  },
+  "raman": {
+    "name": "B.V. Raman",
+    "desc": "Ünlü astrolog B.V. Raman tarafından geliştirilen geleneksel Vedik ayanamsa."
+  },
+  "fagan_bradley": {
+    "name": "Fagan / Bradley",
+    "desc": "Batı sidereal astrolojisinin öncüsü, Aldebaran ve Antares yıldızlarına sabitlenmiş sistem."
+  },
+  "yukteshwar": {
+    "name": "Sri Yukteshwar",
+    "desc": "Yuga döngüleri ve kadim manevi astronomi öğretilerine dayanan kutsal ayanamsa."
+  }
+};
 
 export const SIGN_MOTTOS: Record<string, string> = {
   "Koç": "Öncülük etmek, cesaret ve girişim ruhu.",
@@ -268,60 +491,153 @@ export const SPOUSE_BY_7TH_SIGN: Record<string, {
   meslek: string;
   tanisma: string;
   dinamik: string;
+  memleket: string;
+  yasFarki: string;
+  aileYapisi: string;
+  iletisimTarzi: string;
+  hobiler: string;
+  muhtemelBurclar: string[];
+  ilkIntiba: string;
+  evlilikSonrasiDegisim: string;
+  evlilikZamanlamasi: string;
 }> = {
   "Koç": {
     "sign": "Koç",
     "summary": "Dinamik, cesur, doğrudan ve lider ruhlu bir eş.",
     "karakter": "Eşiniz son derece enerjik, girişimci, sözünü esirgemeyen ve hayatı hızlı yaşayan bir karakter olacaktır. Kararsızlıktan hoşlanmaz; liderlik vasıfları yüksektir ve sorunlar karşısında hızla harekete geçer. Tutkulu ve dürüst biridir.",
     "fiziksel": "Genellikle atletik veya fit vücut yapısı, belirgin kemik yapısı, keskin ve canlı bakışlar, hızlı ve kararlı yürüyüş. Sportif ve modern bir giyim tarzı.",
-    "meslek": "Girişimci, şirket kurucusu, mühendis, sporcu, asker/polis, cerrah veya bağımsız yönetici.",
-    "tanisma": "Spor salonunda, bir yarışma veya etkinlikte, trafikte, anlık bir tartışma/iddialaşma esnasında ya da cesurca doğrudan yanınıza gelip tanışmasıyla.",
-    "dinamik": "İlişkiniz asla monoton olmaz; yüksek tutku, canlılık ve zaman zaman tatlı rekabetler evliliğinizi diri tutar."
+    "meslek": "Girişimci, şirket kurucusu, mühendis, profesyonel sporcu, asker/polis, cerrah, yönetici veya savunma sanayi uzmanı.",
+    "tanisma": "Spor salonunda, bir yarışma veya etkinlikte, trafikte, anlık bir iddialaşma esnasında ya da cesurca doğrudan yanınıza gelip tanışmasıyla.",
+    "dinamik": "İlişkiniz asla monoton olmaz; yüksek tutku, canlılık ve zaman zaman tatlı rekabetler evliliğinizi diri tutar.",
+    "memleket": "Ateş ve hareket enerjisi taşıyan dinamik, sanayisi veya sporuyla bilinen büyük bir metropolden ya da dağlık/hareketli bir bölgeden gelecektir. Kendi köklerinden bağımsızlaşmış biridir.",
+    "yasFarki": "Genellikle sizinle yaşıt veya 1-3 yaş farkı olan, ancak ruhu ve fiziksel enerjisi daima çok genç ve hareketli bir partnerdir.",
+    "aileYapisi": "Bağımsız bireylerden oluşan, herkesin kendi ayakları üzerinde durduğu, hareketli, dobra ve doğrudan iletişim kuran bir aile kültürü.",
+    "iletisimTarzi": "Doğrudan, net ve dolaysız. Aklındakini filtrelemeden söyler; lafı dolandırmaz. Tartışmalarda aniden parlayabilir ama kin tutmaz, kısa sürede yatışır.",
+    "hobiler": "Ekstrem sporlar, fitness, araba/motor sürme, kamp, dövüş sporları ve açık hava maceraları.",
+    "muhtemelBurclar": [
+      "Koç",
+      "Aslan",
+      "Yay",
+      "Terazi"
+    ],
+    "ilkIntiba": "Onu ilk gördüğünüz an yaydığı dinamizm ve özgüven dikkatinizi çekecektir. Göz teması çok güçlüdür; size doğru kararlı yürüyüşü kalbinizi hızlandıracaktır.",
+    "evlilikSonrasiDegisim": "Bu evlilikle birlikte hayatınızda muazzam bir cesaret, girişim gücü ve hareketlilik başlayacaktır. Ertelediğiniz hayalleri gerçekleştirmek için arkanızda sarsılmaz bir itici güç bulacaksınız.",
+    "evlilikZamanlamasi": "Erken veya orta yaş döneminde (22-26 veya 29-33 yaş aralığında), aniden ve hızlı gelişen bir kararla evlilik ihtimali çok yüksektir."
   },
   "Boğa": {
     "sign": "Boğa",
     "summary": "Sakin, güvenilir, estetik değerleri yüksek ve sarsılmaz bir hayat arkadaşı.",
     "karakter": "Eşiniz son derece sadık, sabırlı, huzur veren ve güvenilir bir karaktere sahiptir. Aile birliğine ve maddi güvenceye büyük önem verir. Konforu, lezzetli yemekleri ve kaliteli yaşamı sever.",
-    "fiziksel": "Çekici ve dengeli vücut hatları, pürüzsüz ten, hoş bir ses tonu ve sakin/dingin bakışlar. Kaliteli kumaşlar ve şık, zamansız giyim tarzı.",
-    "meslek": "Bankacı, finansçı, gayrimenkul uzmanı, mimar, gıda/gastronomi uzmanı, sanatçı veya peyzaj mimarı.",
+    "fiziksel": "Çekici ve dengeli vücut hatları, pürüzsüz ten, hoş ve etkileyici bir ses tonu, sakin bakışlar. Kaliteli kumaşlar ve şık, zamansız giyim tarzı.",
+    "meslek": "Bankacı, finans direktörü, gayrimenkul uzmanı, mimar, gıda/gastronomi uzmanı, sanat galerisi yöneticisi veya peyzaj mimarı.",
     "tanisma": "Güzel bir restoranda, bir sanat galerisinde, doğa yürüyüşünde, finansal bir işlem esnasında veya güvenilir aile dostları aracılığıyla.",
-    "dinamik": "Evliliğiniz sarsılmaz bir sadakat, fiziksel şefkat, huzur ve maddi-manevi zenginlik üzerine kurulacaktır."
+    "dinamik": "Evliliğiniz sarsılmaz bir sadakat, fiziksel şefkat, huzur ve maddi-manevi zenginlik üzerine kurulacaktır.",
+    "memleket": "Yeşillikleri, tarımı, gastronomisi veya tarihi zenginlikleriyle ünlü, bereketli ve köklü bir coğrafyadan gelir. Huzurlu bir kıyı şehri veya zengin bir ovadır.",
+    "yasFarki": "Sizinle benzer yaşta veya 2-4 yaş olgun, hayatını erken düzene sokmuş, dengeli ve oturaklı bir eştir.",
+    "aileYapisi": "Geleneklerine, mülklerine ve sofrasına bağlı, aile meclislerine önem veren, birbirine maddi-manevi destek olan köklü bir aile.",
+    "iletisimTarzi": "Sakin, düşünerek ve tane tane konuşur. Ses tonu güven vericidir. Tartışmalarda acele etmez; inatçı olabilir ama asla kırıcı ve kaba davranmaz.",
+    "hobiler": "Gurme yemekler yapmak, bahçe ve çiçek bakımı, masaj/spa, müzik dinlemek, doğa gezileri ve antika/sanat koleksiyonu.",
+    "muhtemelBurclar": [
+      "Boğa",
+      "Başak",
+      "Oğlak",
+      "Akrep"
+    ],
+    "ilkIntiba": "İlk karşılaşmada sakinliği, oturaklı duruşu ve yaydığı huzur sizi büyüleyecektir. Sanki yıllardır tanıyormuş gibi sarsılmaz bir güven hissedeceksiniz.",
+    "evlilikSonrasiDegisim": "Bu evlilik maddi güvencenizi katlayacak, evinizde bereket, lüks, huzur ve sağlam bir mülk temeli oluşturacaktır. Yaşam standartlarınız belirgin şekilde yükselecektir.",
+    "evlilikZamanlamasi": "Maddi temellerin ve kariyerin sağlamlaştığı 25-29 veya 31-34 yaş aralığında, iyice düşünülüp taşınılarak yapılan sağlam bir evlilik."
   },
   "İkizler": {
     "sign": "İkizler",
     "summary": "Zeki, esprili, konuşkan ve genç ruhlu bir entelektüel.",
     "karakter": "Eşinizle asla sohbetiniz tükenmeyecektir! Çok meraklı, öğrenmeye ve aktarmaya aşık, sosyal ve zeki bir mizaca sahiptir. Espri kabiliyeti yüksektir; hayatı oyun ve macera gibi algılar.",
     "fiziksel": "İnce, çevik bir beden, genç ve dinamik yüz ifadesi, konuşurken ellerini ve mimiklerini çok kullanan hareketli bir görünüm.",
-    "meslek": "Gazeteci, yazar, yazılımcı, pazarlama uzmanı, öğretmen, tercüman veya dijital medya yöneticisi.",
+    "meslek": "Gazeteci, yazar, yazılım mühendisi, pazarlama direktörü, akademisyen, çevirmen veya dijital medya yöneticisi.",
     "tanisma": "Bir kütüphanede, eğitim veya seminerde, sosyal medyada, bir kitapçıda veya seyahat esnasında zekice bir sohbetle.",
-    "dinamik": "İlişkiniz sadece bir evlilik değil, aynı zamanda harika bir dostluk, zihinsel ortaklık ve tükenmeyen bir neşe kaynağıdır."
+    "dinamik": "İlişkiniz sadece bir evlilik değil, aynı zamanda harika bir dostluk, zihinsel ortaklık ve tükenmeyen bir neşe kaynağıdır.",
+    "memleket": "İki yakası olan, ulaşım ağlarının kesiştiği, ticaret veya eğitimle öne çıkan hareketli bir metropolden ya da liman/köprü şehrinden gelecektir.",
+    "yasFarki": "Yaşı kaç olursa olsun sizden daha genç gösteren, yaşıt veya birkaç yaş küçük olabilecek, esprili ve dinamik bir partnerdir.",
+    "aileYapisi": "Eğitimli, öğretmen, tüccar veya gazeteci akrabaların bol olduğu, evde sürekli kitapların ve sohbetlerin döndüğü konuşkan bir aile.",
+    "iletisimTarzi": "Zeki, esprili, kelime oyunlarıyla dolu ve çok konuşkan. Tartışmaları mantık ve argümanlarla çözer; esprileriyle ortamı yumuşatır.",
+    "hobiler": "Kitap okumak, podcast dinlemek, seyahat etmek, teknolojik aletleri kurcalamak, blog yazmak ve masa oyunları.",
+    "muhtemelBurclar": [
+      "İkizler",
+      "Terazi",
+      "Kova",
+      "Yay"
+    ],
+    "ilkIntiba": "İlk anda zekası ve esprileriyle dikkatinizi çekecektir. Sohbet o kadar akıcı ve keyifli başlayacaktır ki zamanın nasıl geçtiğini unutacaksınız.",
+    "evlilikSonrasiDegisim": "Bu evlilik sosyal çevrenizi genişletecek, yeni eğitimler, seyahatler ve zihinsel projelerle hayatınızı rengarenk bir bilgi ve neşe şölenine çevirecektir.",
+    "evlilikZamanlamasi": "Genç yaşlarda (23-27 yaş) veya hayatın hareketli bir eğitim/kariyer döneminde (30-33 yaş) evlilik ihtimali yüksektir."
   },
   "Yengeç": {
     "sign": "Yengeç",
     "summary": "Şefkatli, anaç/koruyucu, duygusal ve evine son derece bağlı bir eş.",
     "karakter": "Eşiniz sizi sarıp sarmalayan, duygularınızı anında hisseden ve aileyi her şeyin üstünde tutan bir karaktere sahiptir. Sevdiklerine karşı aşırı koruyucudur; evini bir kale gibi görür.",
     "fiziksel": "Yumuşak ve sevecen yüz hatları, parlak ve derin gözler, sıcak bir tebessüm ve rahatlatıcı bir vücut aurası.",
-    "meslek": "Doktor, hemşire, pedagog/öğretmen, mimar/dekoratör, aşçı/otel yöneticisi veya tarihçi.",
+    "meslek": "Doktor, çocuk doktoru, psikolog, mimar/iç mimar, otel/restoran işletmecisi veya eğitimci.",
     "tanisma": "Bir aile meclisinde, ev ortamında, memleket ziyaretinde, sahil kenarında veya su/deniz yakınlarında duygusal bir ortamda.",
-    "dinamik": "Derin duygusal bağ, evde geçirilen sıcacık akşamlar, güven dolu bir yuva ve çocuklara adanmış sevgi."
+    "dinamik": "Derin duygusal bağ, evde geçirilen sıcacık akşamlar, güven dolu bir yuva ve çocuklara adanmış sevgi.",
+    "memleket": "Deniz kıyısında, göl kenarında veya su kaynaklarıyla ünlü bir memleketten gelir. Aile bağlarının çok güçlü olduğu geleneksel bir kökene sahiptir.",
+    "yasFarki": "Yaşıt veya yaşça olgun; fakat asıl belirgin özelliği sizi şefkatle koruyacak anaç/koruyucu olgunluğa sahip olmasıdır.",
+    "aileYapisi": "Birbirine sımsıkı bağlı, anne figürünün merkezde olduğu, geleneksel, sıcak ve geniş bir aile yapısı.",
+    "iletisimTarzi": "Duygusal, şefkatli ve sezgisel. Kelimelerinden çok ses tonu ve bakışlarıyla konuşur. Kırıldığında içine kapanabilir; ilgi ve şefkatle açılır.",
+    "hobiler": "Ev dekorasyonu, aile yemekleri hazırlamak, deniz kenarında vakit geçirmek, fotoğraf albümleri ve nostaljik filmler.",
+    "muhtemelBurclar": [
+      "Yengeç",
+      "Akrep",
+      "Balık",
+      "Oğlak"
+    ],
+    "ilkIntiba": "Gözlerindeki derinlik, samimiyet ve şefkatli bakış ilk anda içinizi ısıtacaktır. Yanında kendinizi evinizdeymiş gibi güvende hissedeceksiniz.",
+    "evlilikSonrasiDegisim": "Bu evlilik ruhsal huzurunuzu tamamlayacak, kök salmanızı ve sıcacık bir yuva kurmanızı sağlayacaktır. Çocuklar ve aile saadeti hayatınızın merkezine yerleşecektir.",
+    "evlilikZamanlamasi": "Aile kurma arzusunun olgunlaştığı 24-28 veya 30-34 yaş aralıklarında duygusal evlilik dönemi."
   },
   "Aslan": {
     "sign": "Aslan",
     "summary": "Karizmatik, asil, cömert ve gurur verici bir hayat arkadaşı.",
     "karakter": "Eşiniz toplumda parlayan, herkesin saygı duyduğu, cömert ve asil ruhlu biridir. Eşine ve ailesine büyük değer verir; onları korumak ve şımartmak için elinden geleni yapar.",
     "fiziksel": "Gür ve dikkat çekici saçlar, dik ve kendinden emin duruş, sıcak tebessüm ve girdiği yerde hemen dikkat çeken bir aura.",
-    "meslek": "Yönetici, CEO, sahne/sanat lideri, oyuncu, organizatör, siyasetçi veya mücevher/lüks marka uzmanı.",
+    "meslek": "Üst düzey yönetici, CEO, kreatif direktör, oyuncu/sanatçı, organizatör, siyasetçi veya lüks marka kurucusu.",
     "tanisma": "Büyük bir kutlamada, tiyatro/konser salonunda, lüks bir etkinlikte veya bir ödül/başarı ortamında.",
-    "dinamik": "Birbirinizle gurur duyacağınız, tutkunun, saygının ve cömertliğin hiç eksilmediği ışıltılı bir birliktelik."
+    "dinamik": "Birbirinizle gurur duyacağınız, tutkunun, saygının ve cömertliğin hiç eksilmediği ışıltılı bir birliktelik.",
+    "memleket": "Tarihi sarayları, başkent veya kültürel mirasıyla tanınan, görkemli ve merkezi bir ilden gelir. Ailesi toplumda tanınan bir geçmişe sahiptir.",
+    "yasFarki": "Genellikle sizden 2-5 yaş olgun veya kariyerinde hızla yükselmiş, saygınlık kazanmış bir eştir.",
+    "aileYapisi": "Toplumda saygın, prestijli, gururlu ve aile şerefine büyük önem veren, misafirperver ve cömert bir aile.",
+    "iletisimTarzi": "Etkileyici, cömertçe iltifat eden ve asil. Gururu kırılmadığı sürece son derece sevgi dolu ve koruyucudur; övgüyü ve takdir edilmeyi sever.",
+    "hobiler": "Tiyatro ve konserlere gitmek, lüks restoranları keşfetmek, şık davetler vermek, fotoğrafçılık ve sahne sanatları.",
+    "muhtemelBurclar": [
+      "Aslan",
+      "Koç",
+      "Yay",
+      "Kova"
+    ],
+    "ilkIntiba": "Odaya girdiği anda tüm dikkatleri üzerine çeken aurası ve ışıltısı ilk göze çarpan detay olacaktır. Gururlu ama bir o kadar da sıcak tebessümü sizi etkileyecektir.",
+    "evlilikSonrasiDegisim": "Bu evlilik toplumsal statünüzü ve saygınlığınızı zirveye taşıyacaktır. Çevrenizde parlayan, takdir edilen ve örnek gösterilen prestijli bir konuma ulaşacaksınız.",
+    "evlilikZamanlamasi": "Kariyerde ve toplumda kendinizi kanıtladığınız 26-30 veya 32-35 yaş aralıklarında görkemli bir evlilik."
   },
   "Başak": {
     "sign": "Başak",
     "summary": "Titiz, zeki, güvenilir, hayatı organize eden ve çalışkan bir eş.",
     "karakter": "Eşiniz hayatınızı düzene sokan, her detayla özenle ilgilenen, alçakgönüllü ve pratik zekaya sahip biridir. Gösterişten hoşlanmaz; sevgisini sözlerle değil, hayatınızı kolaylaştırarak gösterir.",
     "fiziksel": "Zarif ve orantılı bir görünüm, temiz ve sade bir giyim, dikkatli bakan gözler ve bakımlı bir genel duruş.",
-    "meslek": "Mühendis, veri analisti, doktor/eczacı, akademisyen, muhasebeci veya operasyon yöneticisi.",
+    "meslek": "Mühendis, veri analisti, doktor/eczacı, akademisyen, mali müşavir veya operasyon yöneticisi.",
     "tanisma": "İş ortamında, bir araştırma projesinde, sağlık merkezinde veya günlük hayatın rutin bir işini çözerken.",
-    "dinamik": "Kaosu ortadan kaldıran, birbirine destek olan, düzenli, sağlıklı ve karşılıklı güvene dayalı sağlam bir evlilik."
+    "dinamik": "Kaosu ortadan kaldıran, birbirine destek olan, düzenli, sağlıklı ve karşılıklı güvene dayalı sağlam bir evlilik.",
+    "memleket": "Düzenli, planlı, tarım veya zanaatıyla bilinen, çalışkan ve eğitim seviyesi yüksek sakin bir ilden gelecektir.",
+    "yasFarki": "Yaşıt veya 1-3 yaş olgun; hayat tecrübesi ve pratik zekasıyla sizden daha kıdemli hissettiren bir yapısı vardır.",
+    "aileYapisi": "Disiplinli, alçakgönüllü, sağlığına ve çalışkanlığına önem veren, gösterişten uzak dürüst bir aile.",
+    "iletisimTarzi": "Mantıklı, detaycı ve çözüm odaklı. Sorun olduğunda duygusal drama yerine pratik adımlara odaklanır. Eleştirileri daima yapıcıdır.",
+    "hobiler": "Sağlıklı beslenme araştırmaları, marangozluk/el işleri, yoga, bulmaca/strateji oyunları ve kitap kulüpleri.",
+    "muhtemelBurclar": [
+      "Başak",
+      "Boğa",
+      "Oğlak",
+      "Balık"
+    ],
+    "ilkIntiba": "Özenli, temiz ve sade zarafeti ilk anda fark edilecektir. Dikkatli bakışları ve ölçülü kibar tavrı size büyük bir saygı uyandıracaktır.",
+    "evlilikSonrasiDegisim": "Bu evlilik hayatınızdaki tüm düzensizlikleri ve kaosu çözecektir. Hem sağlığınız, hem kariyeriniz hem de günlük düzeniniz kusursuz bir ritme oturacaktır.",
+    "evlilikZamanlamasi": "İş ve düzenin tam oturduğu 26-31 yaş aralığında, mantığın ve sevginin birleştiği olgun bir evlilik."
   },
   "Terazi": {
     "sign": "Terazi",
@@ -330,16 +646,44 @@ export const SPOUSE_BY_7TH_SIGN: Record<string, {
     "fiziksel": "Göz alıcı bir güzellik/yakışıklılık, simetrik yüz hatları, gamzeler veya tatlı bir tebessüm, çok şık giyim tarzı.",
     "meslek": "Avukat, diplomat, moda tasarımcısı, halkla ilişkiler uzmanı, mimar veya sanat danışmanı.",
     "tanisma": "Bir düğünde, sergi açılışında, hukuk/danışmanlık ortamında veya şık bir sosyal davette.",
-    "dinamik": "Aşkın, zarafetin, romantik akşam yemeklerinin ve karşılıklı saygının ömür boyu sürdüğü bir peri masalı."
+    "dinamik": "Aşkın, zarafetin, romantik akşam yemeklerinin ve karşılıklı saygının ömür boyu sürdüğü bir peri masalı.",
+    "memleket": "Sanat, moda, turizm veya diplomasisiyle ünlü, estetik mimariye sahip bir kültür başkentinden ya da zarif bir kıyı şehrinden gelecektir.",
+    "yasFarki": "Akran veya 1-2 yaş farkı olan; tam bir denklik ve eşitlik ilişkisi kuracağınız dengeli bir yaştadır.",
+    "aileYapisi": "Sosyal, nazik, sanata ve görgü kurallarına dikkat eden, diplomatik ve uyumlu bir aile.",
+    "iletisimTarzi": "Son derece nazik, kibar ve tatlı dilli. Tartışırken bile sesini yükseltmez; ortak bir orta yol bulmaya çalışır. Romantik sözleri çok sever.",
+    "hobiler": "Sanat sergileri, moda ve stil takibi, dans, tasarım, müze gezileri ve romantik hafta sonu kaçamakları.",
+    "muhtemelBurclar": [
+      "Terazi",
+      "İkizler",
+      "Kova",
+      "Koç"
+    ],
+    "ilkIntiba": "Kusursuz nezaketi, büyüleyici tebessümü ve zarafeti karşısında adeta büyüleneceksiniz. Bir film sahnesindeymiş gibi romantik bir çekim doğacaktır.",
+    "evlilikSonrasiDegisim": "Bu evlilik hayatınıza zarafet, diplomasi, güçlü ortaklıklar ve estetik katacaktır. Sosyal yaşamda büyük takdir toplayan örnek bir çift olacaksınız.",
+    "evlilikZamanlamasi": "24-28 yaş aralığında veya 30-33 yaş döngüsünde, romantik bir aşkla başlayan evlilik potansiyeli."
   },
   "Akrep": {
     "sign": "Akrep",
     "summary": "Derin, tutkulu, manyetik çekimli ve sarsılmaz sadakate sahip bir eş.",
     "karakter": "Eşiniz son derece karizmatik, gizemli ve güçlü bir ruhtur. Sevgisi yüzeysel değildir; sizi tüm ruhuyla sever ve sahiplenir. Zor zamanlarınızda en güçlü sığınağınız olacaktır.",
     "fiziksel": "Derin ve delici bakışlar, karizmatik ve manyetik bir hava, gizemli ve çekici bir genel duruş.",
-    "meslek": "Dedektif, cerrah, psikiyatrist, kriz yöneticisi, finans/yatırım uzmanı veya araştırmacı.",
+    "meslek": "Dedektif, cerrah, psikiyatrist, kriz yöneticisi, finans/yatırım uzmanı, istihbaratçı veya araştırmacı.",
     "tanisma": "Krizli veya dönüştürücü bir olay esnasında, gizemli bir ortamda, derin bir psikolojik sohbette veya anlık bir bakışmayla.",
-    "dinamik": "Ruhların birleştiği, olağanüstü yüksek bir tutku ve sadakatle mühürlenmiş ömürlük bir bağ."
+    "dinamik": "Ruhların birleştiği, olağanüstü yüksek bir tutku ve sadakatle mühürlenmiş ömürlük bir bağ.",
+    "memleket": "Gizemli, tarihi derinliği olan, kaplıcaları, madenleri veya antik geçmişiyle bilinen, köklü ve dönüştürücü bir coğrafyadan gelir.",
+    "yasFarki": "Sizden 3-6 yaş büyük olabileceği gibi, yaşıt olsa dahi hayatın zorluklarını erken yaşta görmüş, derin bir olgunluğa sahiptir.",
+    "aileYapisi": "Gizliliğe önem veren, dışarıya çok açılmayan, kendi içinde çok güçlü ve birbirine kenetli bir aile.",
+    "iletisimTarzi": "Derin, anlamlı ve etkileyici. Az konuşur ama tam hedeften vurur. Gözleriyle iletişim kurar; samimiyetsizliği anında yakalar.",
+    "hobiler": "Psikoloji ve gizem kitapları, meditasyon, dalış, dedektiflik dizileri, okült araştırmalar ve gece yürüyüşleri.",
+    "muhtemelBurclar": [
+      "Akrep",
+      "Yengeç",
+      "Balık",
+      "Boğa"
+    ],
+    "ilkIntiba": "Derin, delici ve gizemli bakışları adeta ruhunuzun en derin köşesine dokunacaktır. Aranızda izahı zor, elektrikli bir manyetik çekim hissedeceksiniz.",
+    "evlilikSonrasiDegisim": "Bu evlilik ruhsal ve maddi anlamda büyük bir dönüşüm getirecektir. Birbirinize kattığınız güç sayesinde hem finansal hem de manevi olarak çok zenginleşeceksiniz.",
+    "evlilikZamanlamasi": "Hayatınızın önemli bir dönüşüm evresinden sonra (27-32 veya 33-36 yaş aralığında) sarsılmaz bir bağlılıkla gelen evlilik."
   },
   "Yay": {
     "sign": "Yay",
@@ -348,7 +692,21 @@ export const SPOUSE_BY_7TH_SIGN: Record<string, {
     "fiziksel": "Uzun boylu veya atletik duruş, neşeli ve açık bir yüz ifadesi, samimi gülüş ve rahat giyim tarzı.",
     "meslek": "Akademisyen, pilot/kabin amiri, diplomat, uluslararası ihracatçı, yayıncı veya rehber/turizmci.",
     "tanisma": "Yurt dışı gezisinde, havalimanında, bir üniversite kampüsünde veya doğa kampında.",
-    "dinamik": "Birlikte dünyayı gezeceğiniz, vizyonunuzu büyüteceğiniz ve her günü bayram gibi yaşayacağınız bir ortaklık."
+    "dinamik": "Birlikte dünyayı gezeceğiniz, vizyonunuzu büyüteceğiniz ve her günü bayram gibi yaşayacağınız bir ortaklık.",
+    "memleket": "Farklı bir şehirden, başka bir bölgeden ve hatta yabancı bir ülkeden gelme ihtimali en yüksek burçtur. Uluslararası bir kökene sahiptir.",
+    "yasFarki": "Yaş farkı esnektir; ilişkide yaşa değil zihinsel ve vizyoner uyuma, ortak macera tutkusuna bakar.",
+    "aileYapisi": "Özgürlükçü, farklı şehir veya ülkelere dağılmış, hoşgörülü ve vizyoner bir aile.",
+    "iletisimTarzi": "Neşeli, açık sözlü, kahkahalarla dolu ve dürüst. Felsefi tartışmaları sever; niyeti daima yapıcı ve saftır.",
+    "hobiler": "Dünya seyahatleri, kampçılık, at binme, yabancı diller öğrenme, felsefe seminerleri ve doğa keşifleri.",
+    "muhtemelBurclar": [
+      "Yay",
+      "Koç",
+      "Aslan",
+      "İkizler"
+    ],
+    "ilkIntiba": "Güler yüzü, pozitif yaşam enerjisi ve içten kahkahası sizi anında kendine çekecektir. Hayatınıza taze bir bahar rüzgarı esmiş gibi hissedeceksiniz.",
+    "evlilikSonrasiDegisim": "Bu evlilik vizyonunuzu küresel düzeye taşıyacaktır. Birlikte yapacağınız yurt dışı seyahatleri, felsefi ve entelektüel keşifler hayatınızı baştan yaratacaktır.",
+    "evlilikZamanlamasi": "Gezip gördükten, vizyonunuzu genişlettikten sonra (27-33 yaş aralığında) seyahat veya eğitim esnasında evlilik."
   },
   "Oğlak": {
     "sign": "Oğlak",
@@ -357,31 +715,73 @@ export const SPOUSE_BY_7TH_SIGN: Record<string, {
     "fiziksel": "Asil ve kemikli yüz hatları, dik bir duruş, klasik ve kaliteli giyim, vakur ve oturaklı bir aura.",
     "meslek": "Üst düzey yönetici, şirket sahibi, mimar, mühendis, finansal denetçi veya devlet yetkilisi.",
     "tanisma": "Kariyer toplantısında, kurumsal bir konferansta, iş ilişkileri veya saygın aile büyükleri vasıtasıyla.",
-    "dinamik": "Yıllar geçtikçe daha da güçlenen, toplumsal saygınlığı yüksek, güvenli ve zengin bir evlilik."
+    "dinamik": "Yıllar geçtikçe daha da güçlenen, toplumsal saygınlığı yüksek, güvenli ve zengin bir evlilik.",
+    "memleket": "Tarihi çok eski, taş yapıları ve köklü devlet geleneğiyle bilinen, dağlık veya kışları sert bir ilden gelir. Ailesi saygın bir soyadı taşır.",
+    "yasFarki": "Klasik astrolojide yaşça en olgun eş göstergesidir. Sizden 4-8 yaş büyük olabilir veya yaşıt olsa dahi büyük bir tecrübe ciddiyetindedir.",
+    "aileYapisi": "Geleneksel, kuralları olan, toplumda saygın bir itibar taşıyan, disiplinli ve ciddi bir aile.",
+    "iletisimTarzi": "Ölçülü, ciddi, sözünün eri ve vakur. Boş laf yapmaz; yapamayacağı şeyin sözünü vermez. Sevgisini konuşarak değil sorumluluk alarak gösterir.",
+    "hobiler": "Tarih araştırmaları, mimari geziler, dağ tırmanışı, satranç, borsa/yatırım takibi ve klasik müzik.",
+    "muhtemelBurclar": [
+      "Oğlak",
+      "Boğa",
+      "Başak",
+      "Yengeç"
+    ],
+    "ilkIntiba": "Ağırbaşlı, olgun ve son derece saygın duruşu sizi derinden etkileyecektir. Boş laflar etmeyen, güven veren duruşu kalbinizi fethedecektir.",
+    "evlilikSonrasiDegisim": "Bu evlilik kalıcı bir servet, büyük bir saygınlık ve sarsılmaz bir toplumsal itibar getirecektir. Yıllar geçtikçe zenginleşen ve güçlenen bir aile imparatorluğu kuracaksınız.",
+    "evlilikZamanlamasi": "Kariyerin sağlamlaştığı ve olgunluğun pekiştiği 28-35 yaş aralığında (Satürn döngüsü sonrası) ömürlük bir evlilik."
   },
   "Kova": {
     "sign": "Kova",
     "summary": "Orijinal, modern, en iyi dostunuz olan, bağımsız ve vizyoner bir eş.",
     "karakter": "Eşiniz kalıplara sığmayan, son derece zeki, hümanist ve özgürlükçü bir karaktere sahiptir. Evlilikte baskı kurmaz; önce en yakın dostunuz, sonra hayat arkadaşınız olur.",
     "fiziksel": "Sıradışı ve modern bir tarz, zeki ve aydınlık gözler, özgün saç stili ve genç bir enerji.",
-    "meslek": "Yazılım mühendisi, yapay zeka uzmanı, bilim insanı, pilot, sivil toplum lideri veya tasarımcı.",
+    "meslek": "Yazılım mimarı, yapay zeka uzmanı, bilim insanı, pilot, sivil toplum lideri veya endüstriyel tasarımcı.",
     "tanisma": "Bir teknoloji fuarında, arkadaş grubunun buluşmasında, sosyal yardım projesinde veya dijital bir toplulukta.",
-    "dinamik": "Geleneksel sınırları aşan, karşılıklı özgürlüğe saygı duyan ve geleceği birlikte inşa eden modern bir evlilik."
+    "dinamik": "Geleneksel sınırları aşan, karşılıklı özgürlüğe saygı duyan ve geleceği birlikte inşa eden modern bir evlilik.",
+    "memleket": "Modern, üniversite şehri, teknoloji merkezi veya kozmopolit, özgürlükçü bir sahil metropolünden gelir. Çağdaş bir kökene sahiptir.",
+    "yasFarki": "Yaş kavramına hiç takılmaz; ruh olarak zamanın ötesinde, genç ve arkadaş canlısı biridir. Akran veya sıra dışı yaş farkı olabilir.",
+    "aileYapisi": "Modern, sıra dışı, herkesin kendi özgürlüğüne sahip olduğu, entelektüel ve çağdaş bir aile.",
+    "iletisimTarzi": "Entelektüel, arkadaşça, tarafsız ve esprili. Olaylara mantık ve objektiflikle bakar; duygusal baskıdan hoşlanmaz, özgür düşünceye saygılıdır.",
+    "hobiler": "Astronomi ve bilimkurgu, yapay zeka, elektronik aletler, sivil toplum gönüllülüğü ve yenilikçi projeler.",
+    "muhtemelBurclar": [
+      "Kova",
+      "İkizler",
+      "Terazi",
+      "Aslan"
+    ],
+    "ilkIntiba": "Sıradışı tarzı, zeki ve orijinal fikirleri ilk anda merakınızı uyandıracaktır. Onun diğer insanlardan çok farklı olduğunu hemen anlayacaksınız.",
+    "evlilikSonrasiDegisim": "Bu evlilikle birlikte hayatınızda yeni ufuklar, özgürlük ve toplumsal başarı kapıları açılacaktır. Birlikte çağın ötesinde projelere imza atacaksınız.",
+    "evlilikZamanlamasi": "Geleneksel evlilik baskılarından sıyrıldığınız 26-32 yaş aralığında, dostlukla başlayıp evliliğe evrilen bir süreç."
   },
   "Balık": {
     "sign": "Balık",
     "summary": "Ruh eşiniz, derin empatiye sahip, sanatsal, masalsı ve şifacı bir eş.",
     "karakter": "Eşiniz sizinle kelimeler olmadan dahi anlaşabilen, sınırsız bir şefkat ve sevgiyle dolu, ruhsal derinliği yüksek biridir. Sanata, müziğe ve maneviyata yatkındır.",
     "fiziksel": "Büyüleyici ve rüyamsı bakışlar, yumuşak yüz hatları, masalsı bir tebessüm ve zarafet.",
-    "meslek": "Müzisyen, ressam, sinemacı, psikolog, veteriner, alternatif tıp uzmanı veya denizci.",
+    "meslek": "Müzisyen, ressam, sinemacı, psikolog, veteriner, alternatif tıp uzmanı, denizci veya şifacı.",
     "tanisma": "Manevi bir ortamda, deniz kenarında, bir konserde, sanat atölyesinde veya kaderin mucizevi bir rastlantısıyla.",
-    "dinamik": "Ruhların bütünleştiği, karşılıksız sevgi ve yüksek manevi huzurla dolu kutsal bir yuva."
+    "dinamik": "Ruhların bütünleştiği, karşılıksız sevgi ve yüksek manevi huzurla dolu kutsal bir yuva.",
+    "memleket": "Deniz kıyısı, ada, balıkçı kasabası veya mistik/manevi türbeleriyle bilinen rüyamsı bir coğrafyadan gelecektir. Ailesinde sanatçı veya denizciler bulunur.",
+    "yasFarki": "Ruhsal olarak çok yaşlı (kadim ruh), fakat günlük hayatta masum ve genç bir kalbe sahip bir eştir.",
+    "aileYapisi": "Şefkatli, fedakar, maneviyatı veya sanatsal yönü yüksek, duygusal bağları kuvvetli bir aile.",
+    "iletisimTarzi": "Şiirsel, masalsı, empatik ve şefkatli. Sizi can kulağıyla dinler; kelimelerinizin ardındaki acıyı ve sevinci hisseder.",
+    "hobiler": "Müzik aleti çalmak, resim yapmak, şiir yazmak, meditasyon, deniz kenarında yalnız yürüyüşler ve hayvan bakımı.",
+    "muhtemelBurclar": [
+      "Balık",
+      "Yengeç",
+      "Akrep",
+      "Başak"
+    ],
+    "ilkIntiba": "Gözlerindeki derin şefkat ve masalsı bakış ilk andan itibaren kalbinize işleyecektir. Ruh eşinizi bulduğunuzu fısıldayan güçlü bir sezgi hissedeceksiniz.",
+    "evlilikSonrasiDegisim": "Bu evlilik ruhunuzu şifalandıracak, sanatsal ve manevi yeteneklerinizi ortaya çıkaracaktır. Dünyevi kaygılardan arınmış, sevgi dolu kutsal bir yuva inşa edeceksiniz.",
+    "evlilikZamanlamasi": "Ruhsal olarak hazır olduğunuz 25-30 veya 32-36 yaş döneminde, kaderin mucizevi bir zamanlamasıyla gelen evlilik."
   }
 };
 
 export const SPOUSE_MEETING_BY_RULER_HOUSE: Record<number, string> = {
   "1": "7. Ev yöneticiniz 1. Evde: Eşiniz doğrudan sizin hayatınıza adım atar; ilk adımı genellikle o atar. Fiziksel çekim ilk andan itibaren çok güçlüdür.",
-  "2": "7. Ev yöneticiniz 2. Evde: Eşinizle finansal ortamlarda, banka, alışveriş, lüks mekanlar veya ortak maddi hedefler vesilesiyle tanışacaksınız.",
+  "2": "7. Ev yöneticiniz 2. Evde: Eşinizle finansal ortamlarda, banka, alışveriş, lüks mekanlar veya ortak maddi hedeflerin konuşulduğu ortamlarda tanışacaksınız.",
   "3": "7. Ev yöneticiniz 3. Evde: Eşinizle bir eğitim kursunda, kısa bir seyahatte, sosyal medyada veya kardeşler/komşular vasıtasıyla tanışacaksınız.",
   "4": "7. Ev yöneticiniz 4. Evde: Eşinizle aile ortamında, memleketinizde, ev partisinde veya gayrimenkul/inşaat konuları vesilesiyle karşılaşacaksınız.",
   "5": "7. Ev yöneticiniz 5. Evde: Eşinizle tatilde, eğlence mekanında, bir konserde, hobilerinizle ilgilenirken veya romantik bir ortamda tanışacaksınız.",
@@ -404,226 +804,54 @@ export const DARAKARAKA_INTERPRETATIONS: Record<string, string> = {
   "Satürn": "Darakaraka Satürn: Eşiniz olgun, ağırbaşlı, sarsılmaz bir sadakate sahip ve son derece güvenilirdir. Ömürlük bir hayat arkadaşıdır."
 };
 
-export const NAKSHATRA_DATA = [
-  {
-    "name": "Ashwini",
-    "lord": "Ketu",
-    "deity": "Ashwini Kumaras",
-    "desc": "Hızlı iyileşme, öncülük, canlılık ve yeni girişimler."
+export const ANNUAL_PROFECTIONS: Record<number, { theme: string; desc: string }> = {
+  "1": {
+    "theme": "1. Ev Yılı (Yeni Benlik & Başlangıçlar)",
+    "desc": "Kişisel kimlik, fiziksel beden, sağlık ve yeni hedeflere cesurca başlama yılı. Hayatınızda yepyeni bir 12 yıllık döngü başlar."
   },
-  {
-    "name": "Bharani",
-    "lord": "Venüs",
-    "deity": "Yama",
-    "desc": "Dönüşüm, derin tutku, sabır ve yaratıcı doğum enerjisi."
+  "2": {
+    "theme": "2. Ev Yılı (Maddi Güvence & Gelirler)",
+    "desc": "Para kazanma, yeni gelir kapıları, finansal yatırımlar ve kişisel özdeğer odaklı bir büyüme yılıdır."
   },
-  {
-    "name": "Krittika",
-    "lord": "Güneş",
-    "deity": "Agni",
-    "desc": "Keskin zeka, arındırıcı ateş, kararlılık ve liderlik."
+  "3": {
+    "theme": "3. Ev Yılı (İletişim, Eğitim & Yakın Çevre)",
+    "desc": "Yeni beceriler öğrenme, sertifikalar, yazışmalar, kısa seyahatler, kardeşler ve sosyal çevre trafiği."
   },
-  {
-    "name": "Rohini",
-    "lord": "Ay",
-    "deity": "Brahma",
-    "desc": "Güzellik, çekicilik, bereket, sanatsal incelik ve duygusal derinlik."
+  "4": {
+    "theme": "4. Ev Yılı (Ev, Yuva & Kökler)",
+    "desc": "Evlilik hazırlığı, ev alma/taşınma, aile kurma, gayrimenkul ve içsel huzuru inşa etme yılıdır."
   },
-  {
-    "name": "Mrigashira",
-    "lord": "Mars",
-    "deity": "Soma",
-    "desc": "Arayış, merak, araştırma tutkusu ve zihinsel çeviklik."
+  "5": {
+    "theme": "5. Ev Yılı (Aşk, Yaratıcılık & Neşe)",
+    "desc": "Romantizm, flört, yaratıcı yeteneklerin parlaması, çocuklar ve yaşam sevincinin zirve yaptığı yıl!"
   },
-  {
-    "name": "Ardra",
-    "lord": "Rahu",
-    "deity": "Rudra",
-    "desc": "Fırtınalı aydınlanma, dönüşüm, entelektüel derinlik ve gözyaşından doğan güç."
+  "6": {
+    "theme": "6. Ev Yılı (Çalışma Düzeni & Sağlık)",
+    "desc": "Günlük rutinleri düzene sokma, iş hayatında ustalaşma, hizmet etme ve bedensel sağlık bakımı yılıdır."
   },
-  {
-    "name": "Punarvasu",
-    "lord": "Jüpiter",
-    "deity": "Aditi",
-    "desc": "Yeniden doğuş, bereket, affedicilik ve ruhsal koruma."
+  "7": {
+    "theme": "7. Ev Yılı (İlişkiler, Ortaklık & Evlilik Yılı)",
+    "desc": "Ciddi bir ilişkiye başlama, nişan, evlilik veya önemli bir ortaklık kurma ihtimalinin en yüksek olduğu altın yıldır!"
   },
-  {
-    "name": "Pushya",
-    "lord": "Satürn",
-    "deity": "Brihaspati",
-    "desc": "En hayırlı ay konağı; besleyicilik, maneviyat, bilgelik ve istikrar."
+  "8": {
+    "theme": "8. Ev Yılı (Dönüşüm & Ortak Kaynaklar)",
+    "desc": "Finansal dönüşümler, ortak bütçe, yatırımlar, miras/kredi ve derin psikolojik yenilenme yılıdır."
   },
-  {
-    "name": "Ashlesha",
-    "lord": "Merkür",
-    "deity": "Nagas",
-    "desc": "Sezgisel zeka, derin psikolojik kavrayış ve koruyucu enerji."
+  "9": {
+    "theme": "9. Ev Yılı (Uzak Seyahatler & Yüksek Vizyon)",
+    "desc": "Yurt dışı seyahatleri, üniversite/akademik atılımlar, inançlar ve felsefi dünya görüşünün genişlemesi."
   },
-  {
-    "name": "Magha",
-    "lord": "Ketu",
-    "deity": "Pitris",
-    "desc": "Soy bağı, asalet, ataların mirası, otorite ve gurur."
+  "10": {
+    "theme": "10. Ev Yılı (Kariyer Zirvesi & Toplumsal Statü)",
+    "desc": "Toplumda saygınlık, terfi, kariyerde büyük başarı ve hedeflerin meyvesini toplama yılıdır."
   },
-  {
-    "name": "Purva Phalguni",
-    "lord": "Venüs",
-    "deity": "Bhaga",
-    "desc": "Romantizm, dinlenme, aşk, şans ve sosyal zevkler."
+  "11": {
+    "theme": "11. Ev Yılı (Dostluklar & Büyük Hayaller)",
+    "desc": "Sosyal çevre genişlemesi, dernekler, ortak projeler ve uzun vadeli umutların bir bir gerçekleştiği yıl."
   },
-  {
-    "name": "Uttara Phalguni",
-    "lord": "Güneş",
-    "deity": "Aryaman",
-    "desc": "Dostluk, kalıcı ittifaklar, cömertlik ve nezaket."
-  },
-  {
-    "name": "Hasta",
-    "lord": "Ay",
-    "deity": "Savitr",
-    "desc": "Becerikli eller, zanaatkarlık, şifa, mizah ve usta detaycılık."
-  },
-  {
-    "name": "Chitra",
-    "lord": "Mars",
-    "deity": "Vishvakarma",
-    "desc": "Göz kamaştırıcı estetik, mimari zeka, tasarım ve görsel yetenek."
-  },
-  {
-    "name": "Swati",
-    "lord": "Rahu",
-    "deity": "Vayu",
-    "desc": "Özgür rüzgar, bağımsızlık, ticaret kabiliyeti ve esneklik."
-  },
-  {
-    "name": "Vishakha",
-    "lord": "Jüpiter",
-    "deity": "Indra-Agni",
-    "desc": "Odaklanmış hedef, amaca adanmışlık, zafer ve kararlılık."
-  },
-  {
-    "name": "Anuradha",
-    "lord": "Satürn",
-    "deity": "Mitra",
-    "desc": "Sadakat, dostluk, derin bağlılık ve zorlukları aşan kalp."
-  },
-  {
-    "name": "Jyeshtha",
-    "lord": "Merkür",
-    "deity": "Indra",
-    "desc": "Kıdem, koruyucu liderlik, zihinsel güç ve cesaret."
-  },
-  {
-    "name": "Mula",
-    "lord": "Ketu",
-    "deity": "Nirriti",
-    "desc": "Kökleri araştırma, derin gerçekleri ortaya çıkarma ve felsefi radikallik."
-  },
-  {
-    "name": "Purva Ashadha",
-    "lord": "Venüs",
-    "deity": "Apas",
-    "desc": "Yenilmezlik, inanç, arındırıcı sular ve popülerlik."
-  },
-  {
-    "name": "Uttara Ashadha",
-    "lord": "Güneş",
-    "deity": "Vishwadevas",
-    "desc": "Kalıcı zafer, erdem, dürüstlük ve sarsılmaz ilkeler."
-  },
-  {
-    "name": "Shravana",
-    "lord": "Ay",
-    "deity": "Vishnu",
-    "desc": "Dinleme sanatı, öğrenme, bilgelik ve sözlü aktarım."
-  },
-  {
-    "name": "Dhanishta",
-    "lord": "Mars",
-    "deity": "Eight Vasus",
-    "desc": "Ritim, müzik yeteneği, zenginlik ve topluluk liderliği."
-  },
-  {
-    "name": "Shatabhisha",
-    "lord": "Rahu",
-    "deity": "Varuna",
-    "desc": "Yüz şifacı, gizem, alternatif tıp, vizyonerlik ve bağımsızlık."
-  },
-  {
-    "name": "Purva Bhadrapada",
-    "lord": "Jüpiter",
-    "deity": "Aja Ekapada",
-    "desc": "Derin mistisizm, ruhsal tutku ve dönüştürücü zeka."
-  },
-  {
-    "name": "Uttara Bhadrapada",
-    "lord": "Satürn",
-    "deity": "Ahirbudhnya",
-    "desc": "Derin denizler, içsel huzur, bilgelik, sabır ve aydınlanma."
-  },
-  {
-    "name": "Revati",
-    "lord": "Merkür",
-    "deity": "Pushan",
-    "desc": "Zodyakın son konağı; yol göstericilik, şefkat, bolluk ve ruhsal tamamlanma."
-  }
-];
-
-export const HOUSE_SYSTEM_DETAILS = {
-  "placidus": {
-    "name": "Placidus",
-    "desc": "Modern astrolojinin en yaygın sistemi. Gündüz ve gece yarı-yaylarının zamana göre bölünmesine dayanır."
-  },
-  "whole_sign": {
-    "name": "Whole Sign (Tüm Burç)",
-    "desc": "Hellenistik ve Vedik astrolojinin en eski sistemi. Yükselen burcun tamamını 1. ev kabul eder."
-  },
-  "equal": {
-    "name": "Equal House (Eşit Ev)",
-    "desc": "Yükselen derecesinden itibaren her evi tam 30 derecelik eşit aralıklarla böler."
-  },
-  "porphyry": {
-    "name": "Porphyry",
-    "desc": "ASC ve MC arasındaki 4 kadranı tam 3 eşit dilime bölerek ev sınırlarını hesaplar."
-  },
-  "koch": {
-    "name": "Koch (Doğum Yeri)",
-    "desc": "Doğum enlemine göre gök ekvatoru yükseliş farklarına dayanan hassas kadran sistemi."
-  },
-  "regiomontanus": {
-    "name": "Regiomontanus",
-    "desc": "Gök ekvatorunu ufuk düzlemine göre 12 eşit parçaya bölen Rönesans sistemi."
-  },
-  "campanus": {
-    "name": "Campanus",
-    "desc": "Birincil düşey çemberi (Prime Vertical) 12 parçaya bölen uzamsal sistem."
-  }
-};
-
-export const AYANAMSA_DETAILS = {
-  "tropical": {
-    "name": "Tropikal (Batı)",
-    "desc": "İlkbahar ekinoksunu (0° Koç) başlangıç kabul eder. Mevsimsel döngülere dayanır."
-  },
-  "lahiri": {
-    "name": "Lahiri (Chitrapaksha - Vedik)",
-    "desc": "Hint hükümeti ve klasik Vedik astrolojinin resmi sidereal ayanamsa standardı."
-  },
-  "kp": {
-    "name": "Krishnamurti Paddhati (KP)",
-    "desc": "KP Vedik astrolojisi için optimize edilmiş, olay zamanlamasında çok kullanılan ayanamsa."
-  },
-  "raman": {
-    "name": "B.V. Raman",
-    "desc": "Ünlü astrolog B.V. Raman tarafından geliştirilen geleneksel Vedik ayanamsa."
-  },
-  "fagan_bradley": {
-    "name": "Fagan / Bradley",
-    "desc": "Batı sidereal astrolojisinin öncüsü, Aldebaran ve Antares yıldızlarına sabitlenmiş sistem."
-  },
-  "yukteshwar": {
-    "name": "Sri Yukteshwar",
-    "desc": "Yuga döngüleri ve kadim manevi astronomi öğretilerine dayanan kutsal ayanamsa."
+  "12": {
+    "theme": "12. Ev Yılı (İçsel Arınma & Maneviyat)",
+    "desc": "Bilinçdışının şifalanması, inziva, maneviyat, eski yükleri bırakma ve döngünün tamamlanması yılıdır."
   }
 };
 

@@ -134,6 +134,7 @@ export interface NatalChartData {
     ascendantMotto: string;
   };
   vargottamaPlanets: string[];
+  gender?: "kadin" | "erkek" | "belirtilmemis";
   darakaraka?: {
     planet: string;
     symbol: string;
@@ -148,6 +149,33 @@ export interface NatalChartData {
     minute: number;
     ruler: string;
     rulerHouse: number;
+  };
+  spouseProfile?: {
+    sign: string;
+    summary: string;
+    karakter: string;
+    fiziksel: string;
+    meslek: string;
+    tanisma: string;
+    dinamik: string;
+    memleket: string;
+    yasFarki: string;
+    aileYapisi: string;
+    iletisimTarzi: string;
+    hobiler: string;
+    muhtemelBurclar: string[];
+    ilkIntiba: string;
+    evlilikSonrasiDegisim: string;
+    evlilikZamanlamasi: string;
+    meetingByRulerHouse: string;
+    genderPerspective: string;
+  };
+  profection?: {
+    age: number;
+    house: number;
+    houseTheme: string;
+    ruler: string;
+    desc: string;
   };
   svgWheel: string;
   svgD9Wheel: string;

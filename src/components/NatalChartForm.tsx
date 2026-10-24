@@ -38,6 +38,7 @@ const DEFAULT_CITY: CityInfo = CITIES.find((c) => c.city === "İstanbul") || {
 
 export function NatalChartForm({ onCalculate, loading }: NatalChartFormProps) {
   const [name, setName] = useState<string>("");
+  const [gender, setGender] = useState<"kadin" | "erkek" | "belirtilmemis">("kadin");
   const [birthDate, setBirthDate] = useState<string>("1995-05-15");
   const [birthTime, setBirthTime] = useState<string>("14:30");
 
@@ -105,6 +106,7 @@ export function NatalChartForm({ onCalculate, loading }: NatalChartFormProps) {
 
     onCalculate({
       name: name.trim() || "Harita Sahibi",
+      gender,
       birthDate,
       birthTime,
       city,
@@ -127,13 +129,13 @@ export function NatalChartForm({ onCalculate, loading }: NatalChartFormProps) {
           <span>Detaylı Doğum & D9 Navamsha Haritası</span>
         </h2>
         <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
-          Gezegenlerin hassas boylamları, 7 ev sistemi, 6 ayanamsa seçeneği, 27 Nakshatra ve D9 Navamsha harmoni analizi.
+          Gezegenlerin hassas boylamları, 7 ev sistemi, 6 ayanamsa seçeneği, 27 Nakshatra, D9 Navamsha ve detaylı evlilik/eş analizi.
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
         {/* Name input */}
-        <div className="space-y-1.5 sm:col-span-2">
+        <div className="space-y-1.5 sm:col-span-1">
           <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
             <User className="w-3.5 h-3.5 text-zinc-400" />
             <span>İsminiz (Opsiyonel)</span>
@@ -145,6 +147,49 @@ export function NatalChartForm({ onCalculate, loading }: NatalChartFormProps) {
             placeholder="Örn: Burak"
             className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-all"
           />
+        </div>
+
+        {/* Gender selector for partner archetypes */}
+        <div className="space-y-1.5 sm:col-span-1">
+          <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-rose-500" />
+            <span>Cinsiyet (Eş Arketip Analizi)</span>
+          </label>
+          <div className="grid grid-cols-3 gap-1 bg-zinc-100 dark:bg-zinc-800/60 p-1 rounded-xl">
+            <button
+              type="button"
+              onClick={() => setGender("kadin")}
+              className={`py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                gender === "kadin"
+                  ? "bg-rose-500 text-white shadow-xs"
+                  : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+              }`}
+            >
+              Kadın
+            </button>
+            <button
+              type="button"
+              onClick={() => setGender("erkek")}
+              className={`py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                gender === "erkek"
+                  ? "bg-sky-500 text-white shadow-xs"
+                  : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+              }`}
+            >
+              Erkek
+            </button>
+            <button
+              type="button"
+              onClick={() => setGender("belirtilmemis")}
+              className={`py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+                gender === "belirtilmemis"
+                  ? "bg-zinc-700 text-white dark:bg-zinc-600 shadow-xs"
+                  : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+              }`}
+            >
+              Farketmez
+            </button>
+          </div>
         </div>
 
         {/* Birth Date */}

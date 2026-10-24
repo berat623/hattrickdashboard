@@ -12,6 +12,7 @@ import {
   Sparkles,
   Layers,
   Compass,
+  Printer,
 } from "lucide-react";
 
 interface SynastryResultProps {
@@ -65,14 +66,24 @@ export function SynastryResult({ data, onReset }: SynastryResultProps) {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={onReset}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-          <span>Yeni Sinastri</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+          >
+            <Printer className="w-3.5 h-3.5 text-zinc-500" />
+            <span>Yazdır / PDF</span>
+          </button>
+          <button
+            type="button"
+            onClick={onReset}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Yeni Sinastri</span>
+          </button>
+        </div>
       </div>
 
       {/* Hero Compatibility Score Card */}

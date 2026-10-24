@@ -30,6 +30,18 @@ import {
   Briefcase,
   MapPin,
   Sparkle,
+  Printer,
+  Search,
+  X,
+  Globe,
+  Users,
+  MessageSquare,
+  Hourglass,
+  TrendingUp,
+  Palette,
+  Eye,
+  Calendar,
+  Clock,
 } from "lucide-react";
 
 interface NatalChartResultProps {
@@ -43,6 +55,7 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
   >("interpretations");
 
   const [activeWheelView, setActiveWheelView] = useState<"d1" | "d9">("d1");
+  const [interpSearch, setInterpSearch] = useState<string>("");
 
   const houseSysTitle =
     HOUSE_SYSTEM_DETAILS[data.houseSystem]?.name || data.houseSystem;
@@ -56,9 +69,30 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
       ? SPOUSE_MEETING_BY_RULER_HOUSE[data.seventhHouse.rulerHouse]
       : "Eşinizle sosyal ortamlar veya ortak iş hedefleri vesilesiyle karşılaşacaksınız.";
 
+  const spouse = data.spouseProfile || {
+    sign: seventhHouseSign,
+    summary: spouseInfo.summary,
+    karakter: spouseInfo.karakter,
+    fiziksel: spouseInfo.fiziksel,
+    meslek: spouseInfo.meslek,
+    tanisma: spouseInfo.tanisma,
+    dinamik: spouseInfo.dinamik,
+    memleket: spouseInfo.memleket,
+    yasFarki: spouseInfo.yasFarki,
+    aileYapisi: spouseInfo.aileYapisi,
+    iletisimTarzi: spouseInfo.iletisimTarzi,
+    hobiler: spouseInfo.hobiler,
+    muhtemelBurclar: spouseInfo.muhtemelBurclar || [],
+    ilkIntiba: spouseInfo.ilkIntiba,
+    evlilikSonrasiDegisim: spouseInfo.evlilikSonrasiDegisim,
+    evlilikZamanlamasi: spouseInfo.evlilikZamanlamasi,
+    meetingByRulerHouse: meetingInfo,
+    genderPerspective: "",
+  };
+
   return (
     <div className="space-y-4">
-      {/* Top Header & Reset */}
+      {/* Top Header & Actions */}
       <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 flex flex-wrap items-center justify-between gap-3 shadow-xs">
         <div>
           <h1 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white flex items-center gap-2">
@@ -70,14 +104,25 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={onReset}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-          <span>Yeni Hesaplama</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+          >
+            <Printer className="w-3.5 h-3.5 text-zinc-500" />
+            <span>Yazdır / PDF</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={onReset}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Yeni Hesaplama</span>
+          </button>
+        </div>
       </div>
 
       {/* Summary Info Banner */}
@@ -177,6 +222,27 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
         </div>
       </div>
 
+      {/* Annual Profection (Yıllık Profeksiyon) Highlight Card */}
+      {data.profection && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-purple-500/10 to-indigo-500/10 border border-amber-500/30 space-y-2">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-500 text-white flex items-center gap-1.5 shadow-xs">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Yıllık Profeksiyon: {data.profection.age} Yaş • {data.profection.house}. Ev Yılı</span>
+            </span>
+            <span className="text-xs font-semibold text-zinc-600 dark:text-zinc-300">
+              Yılın Zaman Yöneticisi: <strong className="text-amber-600 dark:text-amber-400 font-bold">{data.profection.ruler}</strong>
+            </span>
+          </div>
+          <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white">
+            {data.profection.houseTheme}
+          </h3>
+          <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            {data.profection.desc}
+          </p>
+        </div>
+      )}
+
       {/* Main Sub-Navigation Tabs */}
       <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-800/80 p-1 rounded-xl overflow-x-auto scrollbar-none">
         <button
@@ -274,7 +340,7 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="px-3 py-1 rounded-full text-xs font-bold bg-rose-500 text-white flex items-center gap-1.5 shadow-xs">
                 <Heart className="w-3.5 h-3.5 fill-current" />
-                <span>Gelecekteki Eşiniz: {seventhHouseSign} Arketipi</span>
+                <span>Gelecekteki Eşiniz: {spouse.sign} Arketipi</span>
               </span>
               <span className="text-xs text-zinc-500 dark:text-zinc-400">
                 7. Ev (Alçalan - DSC) Noktası
@@ -282,15 +348,28 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
             </div>
 
             <h2 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white">
-              {spouseInfo.summary}
+              {spouse.summary}
             </h2>
 
             <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-              Doğum haritanızda 7. Ev (Alçalan Burç), evlilikte hayatınızı birleştireceğiniz kişinin temel mizaç ve ruhsal niteliklerini simgeler. Sizin 7. eviniz <strong>{seventhHouseSign}</strong> burcundadır.
+              Doğum haritanızda 7. Ev (Alçalan Burç), evlilikte hayatınızı birleştireceğiniz kişinin temel mizaç ve ruhsal niteliklerini simgeler. Sizin 7. eviniz <strong>{spouse.sign}</strong> burcundadır.
             </p>
           </div>
 
-          {/* 4 Pillars of Spouse Details */}
+          {/* Gender Perspective Archetype (Eril / Dişil Partner Göstergesi) */}
+          {spouse.genderPerspective && (
+            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-rose-500/10 via-purple-500/10 to-amber-500/10 border border-rose-500/25 space-y-2">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-rose-500" />
+                <span>Haritanızdaki Eril & Dişil Partner Göstergeleri</span>
+              </h3>
+              <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                {spouse.genderPerspective}
+              </p>
+            </div>
+          )}
+
+          {/* Ultra Detailed Spouse Grid (12 Kartlık Kapsamlı Profil) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             {/* Karakter & Mizaç */}
             <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2 shadow-xs">
@@ -299,7 +378,7 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
                 <span>Karakter ve Kişilik Yapısı</span>
               </h3>
               <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
-                {spouseInfo.karakter}
+                {spouse.karakter}
               </p>
             </div>
 
@@ -310,7 +389,62 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
                 <span>Fiziksel Özellikler & Dış Görünüş</span>
               </h3>
               <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
-                {spouseInfo.fiziksel}
+                {spouse.fiziksel}
+              </p>
+            </div>
+
+            {/* Memleketi ve Coğrafi Kökeni */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2 shadow-xs">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <Globe className="w-4 h-4 text-sky-500" />
+                <span>Memleketi ve Coğrafi Kökeni</span>
+              </h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                {spouse.memleket}
+              </p>
+            </div>
+
+            {/* Yaş Farkı & Olgunluk Düzeyi */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2 shadow-xs">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <Clock className="w-4 h-4 text-indigo-500" />
+                <span>Yaş Farkı & Olgunluk Düzeyi</span>
+              </h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                {spouse.yasFarki}
+              </p>
+            </div>
+
+            {/* Aile Yapısı ve Sosyo-Ekonomik Durumu */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2 shadow-xs">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <Users className="w-4 h-4 text-emerald-500" />
+                <span>Aile Yapısı ve Sosyo-Ekonomik Çevresi</span>
+              </h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                {spouse.aileYapisi}
+              </p>
+            </div>
+
+            {/* İletişim Tarzı & Tartışma Çözme Üslubu */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2 shadow-xs">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <MessageSquare className="w-4 h-4 text-teal-500" />
+                <span>İletişim ve Tartışma Üslubu</span>
+              </h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                {spouse.iletisimTarzi}
+              </p>
+            </div>
+
+            {/* Hobileri ve Boş Zaman Uğraşları */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2 shadow-xs">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <Palette className="w-4 h-4 text-violet-500" />
+                <span>Hobileri ve İlgi Alanları</span>
+              </h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                {spouse.hobiler}
               </p>
             </div>
 
@@ -321,7 +455,7 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
                 <span>Muhtemel Meslek & Kariyer Alanları</span>
               </h3>
               <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
-                {spouseInfo.meslek}
+                {spouse.meslek}
               </p>
             </div>
 
@@ -332,10 +466,66 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
                 <span>Nerede ve Nasıl Tanışacaksınız?</span>
               </h3>
               <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
-                {spouseInfo.tanisma}
+                {spouse.tanisma}
+              </p>
+            </div>
+
+            {/* İlk Karşılaşma Anı ve İlk İntiba */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2 shadow-xs">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <Eye className="w-4 h-4 text-pink-500" />
+                <span>İlk Karşılaşma Anı & İlk İntiba</span>
+              </h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                {spouse.ilkIntiba}
+              </p>
+            </div>
+
+            {/* Evlilik Sonrası Hayatınızdaki Büyük Değişim */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2 shadow-xs">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-amber-600" />
+                <span>Evlilik Sonrası Hayatınızdaki Büyük Değişim</span>
+              </h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                {spouse.evlilikSonrasiDegisim}
+              </p>
+            </div>
+
+            {/* Evlilik Zamanlaması ve Uygun Dönemler */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2 shadow-xs">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <Hourglass className="w-4 h-4 text-purple-500" />
+                <span>Evlilik Zamanlaması & Uygun Yaşlar</span>
+              </h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                {spouse.evlilikZamanlamasi}
               </p>
             </div>
           </div>
+
+          {/* En Muhtemel Burçlar (Pill badges) */}
+          {spouse.muhtemelBurclar && spouse.muhtemelBurclar.length > 0 && (
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2.5 shadow-xs">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <Star className="w-4 h-4 text-amber-500" />
+                <span>Eşinizin En Muhtemel Güneş / Yükselen Burçları</span>
+              </h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400">
+                Astrolojik 7. ev aksınız ve trigon açılarınızla en yüksek manyetik uyumu yakalayan burçlar:
+              </p>
+              <div className="flex flex-wrap gap-2 pt-1">
+                {spouse.muhtemelBurclar.map((bName, bIdx) => (
+                  <span
+                    key={bIdx}
+                    className="px-3 py-1.5 rounded-xl bg-amber-500/10 text-amber-800 dark:text-amber-300 text-xs font-semibold border border-amber-500/20"
+                  >
+                    ★ {bName}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* 7th House Ruler & Meeting Scenario */}
           {data.seventhHouse && (
@@ -347,7 +537,7 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
                 </span>
               </h3>
               <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed">
-                {meetingInfo}
+                {spouse.meetingByRulerHouse}
               </p>
             </div>
           )}
@@ -377,175 +567,256 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
               <span>Evlilik ve Birliktelik Dinamiğiniz</span>
             </h3>
             <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
-              {spouseInfo.dinamik}
+              {spouse.dinamik}
             </p>
           </div>
         </div>
       )}
 
       {/* TAB: ASTROLOJİ.ORG FORMATINDA DETAYLI YORUMLAR (HER GEZEGEN VE DERECE TEK TEK) */}
-      {activeTab === "interpretations" && (
-        <div className="space-y-4 animate-in fade-in duration-200">
-          <div className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200/80 dark:border-zinc-700/60 text-xs text-zinc-600 dark:text-zinc-300">
-            Doğum haritanızdaki tüm gezegenlerin, yükselen burcunuzun ve gök noktalarının burç yerleşimleri, ev konumları ve tam derecelerine göre detaylı açıklamaları aşağıda listelenmiştir.
-          </div>
+      {activeTab === "interpretations" && (() => {
+        const query = interpSearch.trim().toLocaleLowerCase("tr");
+        const ascInterp = ASCENDANT_INTERPRETATIONS[data.ascendant.sign];
+        const mcInterp = MIDHEAVEN_INTERPRETATIONS[data.midheaven.sign];
 
-          {/* 1. Yükselen Burç (ASC) Detaylı Yorumu */}
-          {(() => {
-            const ascInterp = ASCENDANT_INTERPRETATIONS[data.ascendant.sign];
-            return (
-              <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs space-y-3 border-l-4 border-l-emerald-500">
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 dark:border-zinc-800/60 pb-2.5">
-                  <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-                    <span className="text-emerald-500 text-base">ASC</span>
-                    <span>
-                      Yükselen {data.ascendant.sign} Burcunda (1. Ev)
-                    </span>
-                  </h3>
-                  <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
-                    {data.ascendant.degree}°{String(data.ascendant.minute).padStart(2, "0")}&apos;
-                  </span>
-                </div>
+        const showAsc =
+          !query ||
+          "yükselen".includes(query) ||
+          "asc".includes(query) ||
+          data.ascendant.sign.toLocaleLowerCase("tr").includes(query) ||
+          (ascInterp?.detail || "").toLocaleLowerCase("tr").includes(query) ||
+          (ascInterp?.traits || []).some((t) => t.toLocaleLowerCase("tr").includes(query));
 
-                <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-                  {ascInterp?.detail || "Yükselen burcunuz hayata yaklaşımınızı, dış dünyaya verdiğiniz ilk izlenimi ve bedensel enerjinizi yansıtır."}
-                </p>
+        const showMc =
+          !query ||
+          "mc".includes(query) ||
+          "tepe noktası".includes(query) ||
+          "kariyer".includes(query) ||
+          data.midheaven.sign.toLocaleLowerCase("tr").includes(query) ||
+          (mcInterp?.desc || "").toLocaleLowerCase("tr").includes(query);
 
-                {ascInterp?.traits && (
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {ascInterp.traits.map((trait, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 text-[11px] font-medium"
-                      >
-                        ✓ {trait}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })()}
+        const filteredPlanets = data.planets.filter((p) => {
+          if (!query) return true;
+          const pComments = PLANET_SIGN_INTERPRETATIONS[p.name]?.[p.sign] || [];
+          const retroC = p.isRetrograde ? RETRO_INTERPRETATIONS[p.name] || [] : [];
+          return (
+            p.name.toLocaleLowerCase("tr").includes(query) ||
+            p.sign.toLocaleLowerCase("tr").includes(query) ||
+            `${p.house}. ev`.includes(query) ||
+            (p.isRetrograde && "retro".includes(query)) ||
+            (p.isVargottama && "vargottama".includes(query)) ||
+            pComments.some((c) => c.toLocaleLowerCase("tr").includes(query)) ||
+            retroC.some((c) => c.toLocaleLowerCase("tr").includes(query))
+          );
+        });
 
-          {/* 2. Tepe Noktası (MC) Detaylı Yorumu */}
-          {(() => {
-            const mcInterp = MIDHEAVEN_INTERPRETATIONS[data.midheaven.sign];
-            return (
-              <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs space-y-2.5 border-l-4 border-l-amber-600">
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 dark:border-zinc-800/60 pb-2.5">
-                  <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-                    <span className="text-amber-600 text-base">MC</span>
-                    <span>
-                      Tepe Noktası (MC) {data.midheaven.sign} Burcunda (10. Ev)
-                    </span>
-                  </h3>
-                  <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
-                    {data.midheaven.degree}°{String(data.midheaven.minute).padStart(2, "0")}&apos;
-                  </span>
-                </div>
+        const filteredSensitive = data.sensitivePoints.filter((sp) => {
+          if (!query) return true;
+          return (
+            sp.name.toLocaleLowerCase("tr").includes(query) ||
+            sp.sign.toLocaleLowerCase("tr").includes(query) ||
+            `${sp.house}. ev`.includes(query) ||
+            sp.desc.toLocaleLowerCase("tr").includes(query)
+          );
+        });
 
-                <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-                  {mcInterp?.desc || "Tepe Noktası (Medium Coeli), hayatınızda ulaşacağınız en yüksek kariyer hedeflerini, toplumsal saygınlığınızı ve mesleki yöneliminizi simgeler."}
-                </p>
-              </div>
-            );
-          })()}
+        const hasAnyResult = showAsc || showMc || filteredPlanets.length > 0 || filteredSensitive.length > 0;
 
-          {/* 3. Tüm Gezegenler (Güneş, Ay, Merkür, Venüs, Mars, Jüpiter, Satürn, Uranüs, Neptün, Plüton) */}
-          {data.planets.map((p) => {
-            const planetComments =
-              PLANET_SIGN_INTERPRETATIONS[p.name]?.[p.sign] || [];
-            const retroComment = p.isRetrograde
-              ? RETRO_INTERPRETATIONS[p.name]
-              : null;
-
-            return (
-              <div
-                key={p.name}
-                className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs space-y-3"
-              >
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 dark:border-zinc-800/60 pb-2.5">
-                  <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-                    <span className="text-amber-500 text-base">{p.symbol}</span>
-                    <span>
-                      {p.name} {p.sign} Burcunda ({p.house}. Ev)
-                    </span>
-                    {p.isRetrograde && (
-                      <span className="text-[10px] bg-amber-500/15 text-amber-600 dark:text-amber-400 font-bold px-1.5 py-0.5 rounded">
-                        Retro
-                      </span>
-                    )}
-                    {p.isVargottama && (
-                      <span className="text-[10px] bg-yellow-500/20 text-yellow-800 dark:text-yellow-300 font-bold px-1.5 py-0.5 rounded">
-                        Vargottama
-                      </span>
-                    )}
-                  </h3>
-                  <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
-                    {p.degree}°{String(p.minute).padStart(2, "0")}&apos;
-                  </span>
-                </div>
-
-                {planetComments.length > 0 ? (
-                  <ul className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 space-y-2 leading-relaxed">
-                    {planetComments.map((c, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <span className="text-amber-500 font-bold mt-0.5">•</span>
-                        <span>{c}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-xs text-zinc-600 dark:text-zinc-300">
-                    {p.name} enerjisi {p.sign} burcunda ve {p.house}. evde hayatınızda belirgin bir odaklanma ve güç alanı yaratır.
-                  </p>
-                )}
-
-                {/* Retro interpretation if active */}
-                {p.isRetrograde && retroComment && retroComment.length > 0 && (
-                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-800 dark:text-amber-300 space-y-1">
-                    <strong className="font-semibold block flex items-center gap-1">
-                      <span>⚡ Retro (R) Karma & İçselleşme Etkisi:</span>
-                    </strong>
-                    <p>{retroComment[0]}</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-
-          {/* 4. Hassas Noktalar (Rahu, Ketu, Lilith, Şiron, Pars Fortunae) */}
-          <div className="space-y-3 pt-2">
-            <h4 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white">
-              Hassas Noktalar ve Karmik Eksen Açıklamaları
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {data.sensitivePoints.map((sp) => (
-                <div
-                  key={sp.name}
-                  className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/70 dark:border-zinc-700/60 space-y-1.5"
+        return (
+          <div className="space-y-4 animate-in fade-in duration-200">
+            {/* Search Input Bar */}
+            <div className="flex items-center gap-2 bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-xs">
+              <Search className="w-4 h-4 text-zinc-400 ml-1 shrink-0" />
+              <input
+                type="text"
+                value={interpSearch}
+                onChange={(e) => setInterpSearch(e.target.value)}
+                placeholder="Yorumlarda ara (Örn: Güneş, Merkür, Koç, Retro, 10. ev, Kariyer, İletişim)..."
+                className="bg-transparent text-xs sm:text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none w-full"
+              />
+              {interpSearch && (
+                <button
+                  type="button"
+                  onClick={() => setInterpSearch("")}
+                  className="p-1 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-pointer"
+                  title="Aramayı temizle"
                 >
-                  <div className="flex items-center justify-between text-xs font-bold text-zinc-900 dark:text-white">
-                    <span className="flex items-center gap-1.5">
-                      <span className="text-amber-500">{sp.symbol}</span>
-                      <span>{sp.name}</span>
-                    </span>
-                    <span className="font-mono text-zinc-500 text-[11px]">
-                      {sp.degree}°{String(sp.minute).padStart(2, "0")}&apos;
-                    </span>
-                  </div>
-                  <div className="text-[11px] font-medium text-amber-700 dark:text-amber-400">
-                    {sp.sign} Burcunda ({sp.house}. Ev)
-                  </div>
-                  <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
-                    {sp.desc}
-                  </p>
-                </div>
-              ))}
+                  <X className="w-4 h-4" />
+                </button>
+              )}
             </div>
+
+            {!hasAnyResult ? (
+              <div className="p-8 text-center rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 text-zinc-500 dark:text-zinc-400 text-xs sm:text-sm space-y-2">
+                <p className="font-semibold text-zinc-700 dark:text-zinc-300">
+                  &quot;{interpSearch}&quot; ile eşleşen bir gezegen veya yorum bulunamadı.
+                </p>
+                <p className="text-xs">Farklı bir gezegen ismi, burç veya ev numarası aramayı deneyebilirsiniz.</p>
+                <button
+                  type="button"
+                  onClick={() => setInterpSearch("")}
+                  className="mt-2 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-amber-500 text-white font-medium cursor-pointer"
+                >
+                  Filtreyi Temizle
+                </button>
+              </div>
+            ) : (
+              <>
+                {/* 1. Yükselen Burç (ASC) Detaylı Yorumu */}
+                {showAsc && (
+                  <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs space-y-3 border-l-4 border-l-emerald-500">
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 dark:border-zinc-800/60 pb-2.5">
+                      <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                        <span className="text-emerald-500 text-base">ASC</span>
+                        <span>
+                          Yükselen {data.ascendant.sign} Burcunda (1. Ev)
+                        </span>
+                      </h3>
+                      <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
+                        {data.ascendant.degree}°{String(data.ascendant.minute).padStart(2, "0")}&apos;
+                      </span>
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                      {ascInterp?.detail || "Yükselen burcunuz hayata yaklaşımınızı, dış dünyaya verdiğiniz ilk izlenimi ve bedensel enerjinizi yansıtır."}
+                    </p>
+
+                    {ascInterp?.traits && (
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {ascInterp.traits.map((trait, tIdx) => (
+                          <span
+                            key={tIdx}
+                            className="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 text-[11px] font-medium"
+                          >
+                            ✓ {trait}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 2. Tepe Noktası (MC) Detaylı Yorumu */}
+                {showMc && (
+                  <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs space-y-2.5 border-l-4 border-l-amber-600">
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 dark:border-zinc-800/60 pb-2.5">
+                      <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                        <span className="text-amber-600 text-base">MC</span>
+                        <span>
+                          Tepe Noktası (MC) {data.midheaven.sign} Burcunda (10. Ev)
+                        </span>
+                      </h3>
+                      <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
+                        {data.midheaven.degree}°{String(data.midheaven.minute).padStart(2, "0")}&apos;
+                      </span>
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                      {mcInterp?.desc || "Tepe Noktası (Medium Coeli), hayatınızda ulaşacağınız en yüksek kariyer hedeflerini, toplumsal saygınlığınızı ve mesleki yöneliminizi simgeler."}
+                    </p>
+                  </div>
+                )}
+
+                {/* 3. Tüm Gezegenler */}
+                {filteredPlanets.map((p) => {
+                  const planetComments =
+                    PLANET_SIGN_INTERPRETATIONS[p.name]?.[p.sign] || [];
+                  const retroComment = p.isRetrograde
+                    ? RETRO_INTERPRETATIONS[p.name]
+                    : null;
+
+                  return (
+                    <div
+                      key={p.name}
+                      className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs space-y-3"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 dark:border-zinc-800/60 pb-2.5">
+                        <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                          <span className="text-amber-500 text-base">{p.symbol}</span>
+                          <span>
+                            {p.name} {p.sign} Burcunda ({p.house}. Ev)
+                          </span>
+                          {p.isRetrograde && (
+                            <span className="text-[10px] bg-amber-500/15 text-amber-600 dark:text-amber-400 font-bold px-1.5 py-0.5 rounded">
+                              Retro
+                            </span>
+                          )}
+                          {p.isVargottama && (
+                            <span className="text-[10px] bg-yellow-500/20 text-yellow-800 dark:text-yellow-300 font-bold px-1.5 py-0.5 rounded">
+                              Vargottama
+                            </span>
+                          )}
+                        </h3>
+                        <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
+                          {p.degree}°{String(p.minute).padStart(2, "0")}&apos;
+                        </span>
+                      </div>
+
+                      {planetComments.length > 0 ? (
+                        <ul className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 space-y-2 leading-relaxed">
+                          {planetComments.map((c, i) => (
+                            <li key={i} className="flex items-start gap-2">
+                              <span className="text-amber-500 font-bold mt-0.5">•</span>
+                              <span>{c}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-xs text-zinc-600 dark:text-zinc-300">
+                          {p.name} enerjisi {p.sign} burcunda ve {p.house}. evde hayatınızda belirgin bir odaklanma ve güç alanı yaratır.
+                        </p>
+                      )}
+
+                      {/* Retro interpretation if active */}
+                      {p.isRetrograde && retroComment && retroComment.length > 0 && (
+                        <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-800 dark:text-amber-300 space-y-1">
+                          <strong className="font-semibold block flex items-center gap-1">
+                            <span>⚡ Retro (R) Karma & İçselleşme Etkisi:</span>
+                          </strong>
+                          <p>{retroComment[0]}</p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+
+                {/* 4. Hassas Noktalar (Rahu, Ketu, Lilith, Şiron, Pars Fortunae) */}
+                {filteredSensitive.length > 0 && (
+                  <div className="space-y-3 pt-2">
+                    <h4 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white">
+                      Hassas Noktalar ve Karmik Eksen Açıklamaları
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {filteredSensitive.map((sp) => (
+                        <div
+                          key={sp.name}
+                          className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/70 dark:border-zinc-700/60 space-y-1.5"
+                        >
+                          <div className="flex items-center justify-between text-xs font-bold text-zinc-900 dark:text-white">
+                            <span className="flex items-center gap-1.5">
+                              <span className="text-amber-500">{sp.symbol}</span>
+                              <span>{sp.name}</span>
+                            </span>
+                            <span className="font-mono text-zinc-500 text-[11px]">
+                              {sp.degree}°{String(sp.minute).padStart(2, "0")}&apos;
+                            </span>
+                          </div>
+                          <div className="text-[11px] font-medium text-amber-700 dark:text-amber-400">
+                            {sp.sign} Burcunda ({sp.house}. Ev)
+                          </div>
+                          <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                            {sp.desc}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* TAB: HARİTA ÇARKI (D1 / D9 TOGGLE) */}
       {activeTab === "chart" && (
