@@ -177,11 +177,76 @@ export interface NatalChartData {
     ruler: string;
     desc: string;
   };
+  karmicProfile?: KarmicProfile;
   svgWheel: string;
   svgD9Wheel: string;
 }
 
+export interface KarmicPointAnalysis {
+  name: string;
+  symbol: string;
+  sign: string;
+  degree: number;
+  minute: number;
+  house: number;
+  title: string;
+  soulMission: string;
+  pastLifeKarma: string;
+  releaseAdvice: string;
+  karmicGift: string;
+}
+
+export interface KarmicProfile {
+  rahu: KarmicPointAnalysis;
+  ketu: KarmicPointAnalysis;
+  saturn: {
+    sign: string;
+    house: number;
+    title: string;
+    karmicDebt: string;
+    lifeLesson: string;
+    masteryGift: string;
+  };
+  pluto: {
+    sign: string;
+    house: number;
+    title: string;
+    transformationTheme: string;
+    shadowRelease: string;
+    rebirthPower: string;
+  };
+  chiron: {
+    sign: string;
+    house: number;
+    title: string;
+    coreWound: string;
+    healingGift: string;
+  };
+  vertex: {
+    sign: string;
+    house: number;
+    title: string;
+    fatedEncounters: string;
+    destinyCall: string;
+  };
+  lilith: {
+    sign: string;
+    house: number;
+    title: string;
+    tabooTheme: string;
+    rawAuthenticity: string;
+  };
+  summaryText: string;
+}
+
 // Synastry Types
+export interface SynastryKarmicBond {
+  title: string;
+  type: "Ruh Eşi / İkiz Alev" | "Geçmiş Yaşam Bağlantısı" | "Karmik Borç & Sınav" | "Kadersel Dönüşüm" | "Ruhsal Şifa";
+  description: string;
+  significance: "Çok Yüksek" | "Yüksek" | "Orta";
+}
+
 export interface SynastryAspect {
   planet1: string; // Kişi 1 Gezegeni
   planet2: string; // Kişi 2 Gezegeni
@@ -228,5 +293,6 @@ export interface SynastryChartData {
   aspects: SynastryAspect[];
   houseOverlays?: SynastryHouseOverlay[];
   zodiacMatches?: SynastryZodiacMatch[];
+  karmicBonds?: SynastryKarmicBond[];
   summaryText: string;
 }

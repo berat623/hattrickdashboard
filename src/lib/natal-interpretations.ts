@@ -1469,61 +1469,1762 @@ export const PLANET_SIGN_INTERPRETATIONS: Record<string, Record<string, string[]
   }
 };
 
+export const PLANET_HOUSE_INTERPRETATIONS: Record<string, Record<number, string>> = {
+  "Güneş": {
+    "1": "Güneş 1. evde kişiliğinize muazzam bir canlılık, doğal bir liderlik karizması ve güçlü bir benlik bilinci katar. Hayata kendi damganızı vurmak istersiniz; başkalarının gölgesinde kalmak size göre değildir. İlk izleniminizde ışıldayan, özgüvenli ve yaşam enerjisi yüksek bir duruş sergilersiniz.",
+    "2": "Güneş 2. evde dikkatinizi maddi güvenceye, somut değerlere ve kendi yeteneklerinizle para kazanmaya yöneltir. Maddi bağımsızlık sizin için bir özgüven meselesidir; kendi emeğinizle zenginlik ve kalıcı bir istikrar inşa etmek temel yaşam amacınız haline gelir.",
+    "3": "Güneş 3. evde zihinsel canlılık, merak, etkileyici iletişim yeteneği ve geniş bir çevre kazandırır. Fikirlerinizle parlar, yazarlık, konuşmacılık veya ticaret yoluyla kendinizi güçlü şekilde ifade edersiniz. Kardeşler ve yakın çevreyle olan bağlarınız kimliğinizi besler.",
+    "4": "Güneş 4. evde köklerinize, ailenize ve içsel mahremiyetinize derin bir bağlılık verir. Gerçek gücünüzü dış dünyanın gürültüsünde değil, kendi yuvanızın huzurunda ve içsel dünyanızda bulursunuz. Yaşamın ikinci yarısında çok daha köklü ve saygın bir konuma ulaşırsınız.",
+    "5": "Güneş 5. evde kendi doğal yuvasındadır! Yaratıcılık, sahne sanatları, aşk, flört ve hayattan keyif alma tutkunuz çok yüksektir. İçinizdeki çocuğu daima canlı tutar, risk almaktan ve yeteneklerinizi cömertçe sergileyip alkış toplamaktan büyük haz duyarsınız.",
+    "6": "Güneş 6. evde çalışma ahlakınızı, hizmet etme bilincinizi ve günlük rutinlerdeki ustalığınızı parlatır. İşinizi mükemmel yapmak, detayları kusursuzca düzenlemek ve başkalarına somut fayda sağlamak sizin için en büyük tatmin kaynağıdır. Sağlık ve beden disiplini hayatınızın temel direğidir.",
+    "7": "Güneş 7. evde kimliğinizi ve yaşam amacınızı ikili ilişkiler ve ortaklıklar aynasında keşfetmenizi sağlar. Güçlü, karizmatik ve saygın partnerlere çekilirsiniz; evlilik ve iş ortaklıkları hayatınızın en büyük büyüme ve kendini tanıma sahasıdır.",
+    "8": "Güneş 8. evde derin bir psikolojik zeka, krizleri aşma gücü ve görünmeyenin ardındaki sırları çözme merakı verir. Hayatınız boyunca büyük dönüşümlerden geçer ve her krizden küllerinizden yeniden doğarak çıkarsınız. Finansal ortaklıklar ve okült konular ilginizi çeker.",
+    "9": "Güneş 9. evde yüksek felsefe, uluslararası ufuklar, akademi, inanç ve uzak seyahat tutkusunu aydınlatır. Hayatın anlamını arayan bilge bir ruha sahipsinizdir; sınırları aşmak, yeni kültürler tanımak ve bir vizyon insanı olmak sizin kadersel çağrınızdır.",
+    "10": "Güneş 10. evde haritanın en parlak zirvesindedir! Kariyerde başarı, toplumda yüksek saygınlık, liderlik makamı ve kalıcı bir iz bırakma arzusu çok güçlüdür. Otorite figürü olmak, kendi alanınızda en tepeye tırmanmak sizin için doğal bir varoluş biçimidir.",
+    "11": "Güneş 11. evde sosyal ideallerinizi, dostluklarınızı ve kolektif projelere liderlik etme yeteneğinizi öne çıkarır. Toplumu ileriye taşıyacak dernekler, gruplar ve vizyoner hedefler içinde yer alarak ışıldarsınız. Geleceğe dair umutlarınız ve geniş bir dostluk ağınız vardır.",
+    "12": "Güneş 12. evde derin bir maneviyat, güçlü sezgiler ve içsel bir inziva bilgeliği verir. Ruhunuz sessizlikte, meditasyonda, sanatta ve perde arkasında çalışırken en büyük gücüne kavuşur. Egoyu aşarak evrensel bilinçle bütünleşen mistik bir yaşam yolculuğunuz vardır."
+  },
+  "Ay": {
+    "1": "Ay 1. evde son derece hassas, sezgisel ve duygularını doğrudan yüzünden ve beden dilinden yansıtan bir mizaç verir. İnsanların duygusal ihtiyaçlarını anında hissedersiniz; sıcak, besleyici ve şefkatli tavrınızla girdiğiniz her ortamda güven uyandırırsınız.",
+    "2": "Ay 2. evde duygusal huzurunuzun maddi güvenceye ve somut değerlere sıkı sıkıya bağlı olduğunu gösterir. Birikim yapmak ve sevdiklerinizin ihtiyaçlarını karşılamak size içsel bir sükunet verir. Gelir kaynaklarınızda zaman zaman dalgalanmalar olsa da bereketiniz yüksektir.",
+    "3": "Ay 3. evde zihninizi duygularınızla ve güçlü sezgilerinizle besler. İletişim kurarken sadece mantığınızla değil, kalbinizle konuşursunuz. Hafızanız son derece kuvvetlidir; geçmiş anılar, aile hikayeleri ve yakın çevreyle olan duygusal bağlar sizin için çok kıymetlidir.",
+    "4": "Ay 4. evde kendi tahtındadır! Ev, yuva, anne bağı ve kökler hayatınızın en kutsal sığınağıdır. Kendi evinizde huzurlu bir atmosfer yaratmak, sevdiklerinize güvenli bir liman sunmak ve manevi köklerinize sarılmak ruhunuzu besleyen en temel unsurdur.",
+    "5": "Ay 5. evde aşka, çocuklara ve yaratıcı sanatlara çocuksu ve tutkulu bir duygusal bağ kazandırır. Aşık olduğunuzda tüm kalbinizle bağlanır, sevginizi şiirsel, sanatsal veya romantik sürprizlerle ifade edersiniz. Sevinç ve coşku ruhunuzun ilacıdır.",
+    "6": "Ay 6. evde başkalarına hizmet etme, yardım eli uzatma ve günlük yaşamı düzene sokma arzusunu duygusal bir tatmine dönüştürür. Çalışma ortamınızdaki huzur sağlığınızı doğrudan etkiler. Şifacılık, beslenme, sağlık ve evcil hayvan bakımı ruhunuza çok iyi gelir.",
+    "7": "Ay 7. evde duygusal dengenizi ikili ilişkilerde bulduğunuzu gösterir. Şefkatli, koruyucu ve duygularınızı anlayan bir hayat arkadaşına derin bir ihtiyaç duyarsınız. Evlilikte empati ve duygusal güvenlik sizin vazgeçilmez temel şartınızdır.",
+    "8": "Ay 8. evde muazzam bir sezgisel ve telepatik güç, derin bir psikolojik algı ve gizemli duygular verir. İnsanların sakladığı niyetleri anında hissedersiniz. Duygusal krizler yaşasanız da her defasında ruhsal olarak arınır ve çok daha bilgeleşirsiniz.",
+    "9": "Ay 9. evde ruhsal inançlara, felsefeye ve yabancı diyarlara duygusal bir aidiyet hissi kazandırır. Uzak seyahatler, farklı kültürler ve manevi öğretiler ruhunuzu besler. Evrensel bir hakikat arayışıyla hayatın anlamına duygusal olarak bağlanırsınız.",
+    "10": "Ay 10. evde mesleğinizde ve toplumsal duruşunuzda halkın sevgisini, popülariteyi ve güven hissini getirir. İnsanlara şefkatle dokunan, kadınlarla veya halkla ilişkili alanlarda parlayan bir kariyeriniz olur. Saygınlığınız duygusal zekanızdan beslenir.",
+    "11": "Ay 11. evde arkadaş gruplarında ve sosyal çevrede anaç, birleştirici ve koruyucu bir bağ kurmanızı sağlar. Dostlarınız sizin aileniz gibidir; hümanist idealler ve ortak gelecek hayalleri ruhunuzu motive eder.",
+    "12": "Ay 12. evde sınırsız bir empati, derin bir rüya dünyası ve evrensel bir şefkat hazinesi saklar. Başkalarının acılarını kendi içinizde hissedebilirsiniz. Yalnız kalarak ruhunuzu dinlendirmek, dua ve meditasyon sizin en büyük şifa kaynağınızdır."
+  },
+  "Merkür": {
+    "1": "Merkür 1. evde keskin bir zeka, hızlı konuşma kabiliyeti, meraklı bakışlar ve genç kalan dinamik bir zihniyet verir. Her şeyi öğrenmek, sorular sormak ve fikirlerinizi anında paylaşmak istersiniz. Zihinsel çevikliğiniz kişiliğinizin en belirgin imzasıdır.",
+    "2": "Merkür 2. evde ticari zeka, parayı yönetme becerisi ve fikirleri somut kazanca dönüştürme yeteneği kazandırır. Zihniniz sürekli üretken finansal planlar yapar; kelimeleriniz ve iletişim kabiliyetiniz en büyük sermayenizdir.",
+    "3": "Merkür 3. evde kendi yönetim alanındadır! Üstün bir dil yeteneği, hızlı öğrenme, yazarlık dehası ve kıvrak bir zihinsel esneklik verir. Bilgi akışının merkezinde yer alır, kardeşler ve yakın çevreyle sürekli fikir alışverişinde bulunursunuz.",
+    "4": "Merkür 4. evde ev ortamınızda zengin bir kütüphane, derin sohbetler ve ailevi araştırmalar yaratır. Evinizde çalışmaktan, okumaktan ve köklerinizin tarihini öğrenmekten keyif alırsınız. Zihniniz güvenlik ve huzur bulduğu ortamda en yüksek verimine ulaşır.",
+    "5": "Merkür 5. evde zekanızı yaratıcı oyunlara, mizaha, sahne sanatlarına ve eğlenceli sohbetlere döker. Kelime oyunlarında ustasınızdır; aşkta flörtöz, esprili ve zihinsel olarak sizi heyecanlandıran partnerlere çekilirsiniz.",
+    "6": "Merkür 6. evde üstün bir analiz kabiliyeti, detaycılık, eleştirel düşünce ve mükemmel problem çözme gücü sunar. İş ortamınızda karmaşık süreçleri basitleştirir, verimlilik ve organizasyon dehanızla aranılan vazgeçilmez bir uzman olursunuz.",
+    "7": "Merkür 7. evde zihinsel uyumun evlilik ve ortaklıklardaki hayati önemini vurgular. Birlikte saatlerce konuşabileceğiniz, tartışabileceğiniz ve fikirlerinizi paylaşabileceğiniz zeki bir eş ararsınız. Müzakere ve diplomasi yeteneğiniz çok kuvvetlidir.",
+    "8": "Merkür 8. evde araştırmacı bir dedektif zihni, psikolojik derinlik ve sırların ardını görme yeteneği bahşeder. Yüzeysel konuşmalardan nefret eder, tabu konuları, gizemleri ve finansal ortaklıkların matematiksel dengesini ustalıkla çözersiniz.",
+    "9": "Merkür 9. evde felsefe, yabancı diller, hukuk, akademi ve uluslararası yayıncılık alanlarında geniş bir zihinsel vizyon verir. Büyük resmi görme kabiliyetiniz yüksektir; fikirlerinizi evrensel ilkelere dayandırarak aktarmayı seversiniz.",
+    "10": "Merkür 10. evde kariyerinizde konuşmacılık, danışmanlık, yöneticilik veya medya alanında söz sahibi olmanızı sağlar. Toplum sizi aklınızla, stratejik kararlarınızla ve net iletişiminizle tanır ve takdir eder.",
+    "11": "Merkür 11. evde vizyoner fikirleri olan gruplar, entelektüel çevreler ve toplumsal projeler içinde zihinsel liderlik verir. Arkadaşlarınızla beyin fırtınaları yapmak ve geleceğin projelerini tasarlamak sizin en büyük tutkunuzdur.",
+    "12": "Merkür 12. evde telepatik bir sezgi, bilinçaltı kavrayışı ve sembollerle düşünen sanatsal bir zihin verir. Mantığınız kelimelerin ötesindeki anlamları yakalar; şiir, psikoloji, rüya analizi ve gizli araştırmalarda üstün bir kavrayışa sahipsinizdir."
+  },
+  "Venüs": {
+    "1": "Venüs 1. evde doğal bir güzellik, çekicilik, zarafet ve diplomatik bir tatlı dillilik verir. İnsanlar yanınızda kendilerini rahat ve değerli hisseder; estetik duruşunuz, giyim zevkiniz ve güler yüzünüz ilk andan itibaren hayranlık uyandırır.",
+    "2": "Venüs 2. evde kendi burcunun gücündedir! Maddi bolluk, konfor, lüks zevkler ve sağlam bir özdeğer duygusu kazandırır. Sanat, güzellik, gastronomi ve finans yoluyla kolaylıkla servet biriktirme şansına sahipsinizdir.",
+    "3": "Venüs 3. evde tatlı dilli, zarif ve barışçıl bir iletişim tarzı kazandırır. Kelimeleriniz insanları büyüler; yazarlık, müzik ve sosyal ilişkilerde büyük bir çekiciliğiniz vardır. Yakın çevreniz ve kardeşlerinizle sevgi dolu bir bağ paylaşırsınız.",
+    "4": "Venüs 4. evde evinizde saray gibi zarif, estetik ve konforlu bir atmosfer kurmanızı sağlar. Ailenizle bir arada olmak, evinize güzel eşyalar seçmek ve sevdiklerinize lezzetli sofralar kurmak size derin bir huzur verir.",
+    "5": "Venüs 5. evde romantizmin, aşkın, flörtün ve yaratıcı sanatların zirvesindedir! Hayatı bir sanat eseri gibi yaşarsınız; aşk sizin en büyük ilham kaynağınızdır. Çekiciliğinizle sahnede ve sosyal hayatta göz kamaştırırsınız.",
+    "6": "Venüs 6. evde çalışma ortamınıza zarafet, barış ve uyum getirir. İş arkadaşlarınızla harika ilişkiler kurar, işinizi sevgiyle ve estetik bir özenle yaparsınız. Sağlık, güzellik ve bakım alanlarında başarılı olursunuz.",
+    "7": "Venüs 7. evde kendi evindedir! Evlilikte, aşktan doğan kalıcı bir uyum ve karşılıklı derin bir saygı vadeder. Eşiniz genellikle çekici, zarif, adil ve hayatınıza neşe katan bir ruhtur. İkili ilişkilerde sevgiyle büyürsünüz.",
+    "8": "Venüs 8. evde derin, tutkulu, manyetik ve dönüştürücü bir aşk anlayışı verir. Yüzeysel sevemezsiniz; sevdiğinizde ruhunuzun en derin köşeleriyle bağlanırsınız. Ortak finansal kaynaklarda ve miras konularında büyük şans getirir.",
+    "9": "Venüs 9. evde yabancı kültürlere, uzak seyahatlere, sanata ve felsefeye derin bir sevgi verir. Farklı bir ülkeden veya kültürden biriyle evlenme veya uluslararası alanda sanat ve diplomasi yoluyla başarı yakalama potansiyeliniz yüksektir.",
+    "10": "Venüs 10. evde kariyerinizde saygınlık, popülarite, diplomatik başarı ve üst düzey ilişkiler sağlar. Toplum sizi zarafetinizle ve adaletli duruşunuzla sever; moda, sanat, halkla ilişkiler veya yönetimde parıldarsınız.",
+    "11": "Venüs 11. evde sosyal çevrenizde çok sevilen, popüler ve aranan bir dost olmanızı sağlar. Arkadaşlarınız genellikle sanatçı, zarif ve destekleyici insanlardır. Toplumsal iyilik ve güzellik projelerinde sevgiyle yer alırsınız.",
+    "12": "Venüs 12. evde koşulsuz ve ilahi bir aşk anlayışı, mistik bir zarafet ve gizli romantizm zenginliği verir. Başkalarına karşılık beklemeden yardım eder, sevginizi sessiz ama çok derin bir şefkatle sunarsınız."
+  },
+  "Mars": {
+    "1": "Mars 1. evde sınırsız bir fiziksel enerji, cesaret, doğrudanlık ve savaşçı bir yaşam azmi katar. Meydan okumalardan asla kaçmaz, hedefinize dosdoğru ve hızla koşarsınız. Kararlı duruşunuz ve gözü pekliğinizle etrafınıza liderlik edersiniz.",
+    "2": "Mars 2. evde para kazanma ve kendi kaynaklarını savunma konusunda hırslı ve mücadeleci bir enerji verir. Finansal hedeflerinize ulaşmak için çok çalışırsınız; ancak dürtüsel harcamalara karşı bilinçli olmanız gerekir.",
+    "3": "Mars 3. evde keskin, doğrudan, tartışmacı ve cesur bir iletişim tarzı sunar. Düşündüğünüzü hiç çekinmeden söylersiniz; zihinsel hızınız ve refleksleriniz olağanüstüdür. Ticari girişimlerde ve kısa seyahatlerde çok aktifsizdir.",
+    "4": "Mars 4. evde yuva ve aile alanında güçlü bir koruma içgüdüsü ama zaman zaman içsel gerilimler yaratır. Kendi hanenizin reisi ve savunucusu olursunuz; evinizde fiziksel olarak aktif olmak ve tadilat işleriyle uğraşmak enerjinizi dengeler.",
+    "5": "Mars 5. evde aşka, spora, rekabete ve yaratıcı projelere muazzam bir tutku ve ateş katar. Aşkta cesur bir avcısınızdır; risk almaktan, sahnede olmaktan ve adrenalini hissetmekten büyük zevk alırsınız.",
+    "6": "Mars 6. evde dur durak bilmeyen bir çalışma temposu, iş ahlakı ve zorlukları aşma kararlılığı verir. En zor görevlerin altından bile tek başınıza kalkarsınız; ancak bedeninizi aşırı yormamaya ve iş stresini kontrol etmeye dikkat etmelisiniz.",
+    "7": "Mars 7. evde ikili ilişkilerde dinamik, tutkulu ama zaman zaman rekabetçi bir ortaklık yapısı gösterir. Güçlü, mücadeleci ve karakterli partnerlere çekilirsiniz; ilişkideki kıvılcımı tartışmalar yerine ortak hedeflere yönlendirmek harika sonuç verir.",
+    "8": "Mars 8. evde muazzam bir psikolojik dayanıklılık, krizleri cesaretle yönetme gücü ve yüksek bir cinsel çekim verir. En zorlu hayat fırtınalarından bile yenilmeden, güçlenerek çıkarsınız; finansal mücadelelerde stratejik bir dehanız vardır.",
+    "9": "Mars 9. evde inançları, idealleri ve dünya görüşü için cesurca savaşan bir hakikat savaşçısı yaratır. Uzak seyahatler, maceralar ve yüksek felsefe peşinde koşmaktan asla vazgeçmezsiniz.",
+    "10": "Mars 10. evde kariyerde zirveye tırmanmak için durdurulamaz bir azim, hırs ve liderlik kudreti verir. Otorite kurar, kendi alanınızda öncü bir girişimci olur ve engelleri cesaretle aşarak kalıcı bir zafer elde edersiniz.",
+    "11": "Mars 11. evde toplumsal davalar, devrimci hedefler ve arkadaş grupları içinde öncü bir eylem liderliği sunar. Geleceği inşa etmek için insanları organize eder ve haksızlıklara karşı kolektif bir cesaret sergilersiniz.",
+    "12": "Mars 12. evde enerjisini perde arkasında, derin stratejilerde ve ruhsal mücadelelerde kullanan bir güç verir. Öfkenizi dışarı saçmak yerine içsel bir disipline dönüştürür; gizli rakipleri ve görünmeyen engelleri sessizce alt edersiniz."
+  },
+  "Jüpiter": {
+    "1": "Jüpiter 1. evde şansın, bereketin, neşenin ve bilgeliğin kişiliğinizde parlamasını sağlar. Cömert, iyimser ve etrafına umut saçan bir duruşunuz vardır; hayat size kapılarını kolaylıkla açar ve adınız saygıyla anılır.",
+    "2": "Jüpiter 2. evde maddi zenginlik, kazanç kapılarının ardına kadar açılması ve kalıcı bolluk bereketi getirir. Para kazanma konusunda doğal bir şansınız vardır; cömert davrandıkça evren size fazlasıyla geri verir.",
+    "3": "Jüpiter 3. evde zihinsel zenginlik, yazarlık, eğitim, medya ve ticarette büyük fırsatlar sunar. Sözleriniz insanlara umut aşılar; geniş bir network ve şanslı yolculuklar hayatınızı renklendirir.",
+    "4": "Jüpiter 4. evde ailede büyük bereket, geniş ve ferah bir ev, atalardan gelen manevi ve maddi koruma sağlar. Yuvanız huzur ve bereket dolu bir mabettir; hayatınızın son dönemleri çok daha zengin geçer.",
+    "5": "Jüpiter 5. evde aşkta büyük şans, yaratıcı sanatlarda parlayan başarı, sağlıklı ve hayırlı evlatlar bahşeder. Hayatın neşesini yaşamayı bilir, eğlenceli ve şanslı fırsatlarla karşılaşırsınız.",
+    "6": "Jüpiter 6. evde çalışma hayatında hızla yükselme, iyi niyetli meslektaşlar ve sağlıkta güçlü bir toparlanma yeteneği verir. Başkalarına yardım eden, hizmeti bilgeliğe dönüştüren bir kariyere sahip olursunuz.",
+    "7": "Jüpiter 7. evde evlilikte büyük şans, soylu, cömert, varlıklı ve bilge bir hayat arkadaşı müjdeler. Ortaklıklar yoluyla zenginleşir, ikili ilişkiler sayesinde toplumda büyük saygınlık kazanırsınız.",
+    "8": "Jüpiter 8. evde ortak finansal kaynaklarda, mirasta ve krizleri aşmada ilahi bir koruma sunar. Derin okült ilimlerde ve psikolojide usta bir kavrayışınız vardır; krizler sizin için birer zenginleşme basamağıdır.",
+    "9": "Jüpiter 9. evde kendi asıl tahtındadır! Uluslararası alanda büyük şans, akademik başarı, bilge bir hayat felsefesi ve ilahi bir manevi rehberlik getirir. Hayatınız bir keşif ve bilgelik yolculuğudur.",
+    "10": "Jüpiter 10. evde kariyerde en yüksek makamlara ulaşma, toplum önünde büyük saygınlık ve saygı duyulan bir otorite olma şansı verir. Mesleğinizde herkesin sevdiği, adil bir lider olursunuz.",
+    "11": "Jüpiter 11. evde tüm hayallerinizin ve gelecek umutlarınızın gerçekleşme potansiyelini katlar. Varlıklı ve vizyoner dostlar edinir, toplumsal projelerde büyük başarılar elde edersiniz.",
+    "12": "Jüpiter 12. evde ilahi bir görünmez koruyucu melek etkisi yaratır! En zor anlarda bile mucizevi bir şekilde kurtulursunuz; manevi derinliğiniz, sezgileriniz ve içsel huzurunuz sonsuz bir hazinedir."
+  },
+  "Satürn": {
+    "1": "Satürn 1. evde erken yaşta olgunlaşma, ağırbaşlılık, ciddiyet ve sarsılmaz bir sorumluluk bilinci kazandırır. Hayatınızın ilk yılları sınavlarla dolu olsa da zaman geçtikçe büyük bir saygınlık, bilgelik ve kalıcı bir otorite inşa edersiniz.",
+    "2": "Satürn 2. evde maddi kaynakları yönetirken sabrı, tutumluluğu ve özdeğeri inşa etmeyi öğretir. Emek vermeden gelen paraya güvenmez, adım adım biriktirerek ömür boyu yıkılmayacak kalıcı bir servet kurarsınız.",
+    "3": "Satürn 3. evde zihinsel disiplin, derin ve analitik düşünme, ciddiyetle konuşma ve doğru bilgiye odaklanma yeteneği verir. Sözleriniz ağırlık taşır; usta bir araştırmacı, yazar veya uzman olursunuz.",
+    "4": "Satürn 4. evde aile sorumluluklarının erken yaşta omuzlarınıza binmesini simgeler. Kendi içsel güvenliğinizi ve yuvanızı sabırla inşa edersiniz; olgunluk döneminde ailenin en güvenilir direği haline gelirsiniz.",
+    "5": "Satürn 5. evde aşka ve eğlenceye karşı ciddiyetle yaklaşmanızı sağlar. Geçici hevesler peşinde koşmaz, kalıcı ve derin sevgiler ararsınız. Yaratıcı yetenekleriniz disiplinli çalışmayla olgunlaşarak büyük bir ustalığa dönüşür.",
+    "6": "Satürn 6. evde iş ahlakının, göreve adanmışlığın ve çalışma disiplininin doruk noktasıdır. En zorlu görevleri sabırla tamamlar, işinizde benzersiz bir uzmanlık kazanır ve vazgeçilmez bir yönetici olursunuz.",
+    "7": "Satürn 7. evde evliliğe ve ortaklıklara kutsal bir sorumluluk gibi yaklaşmanızı sağlar. Genellikle olgun yaşta veya kendinizden yaşça büyük, sorumluluk sahibi biriyle evlenirsiniz; bu evlilik zamanla çelik gibi sağlamlaşır.",
+    "8": "Satürn 8. evde derin korkularla yüzleşme, ortak kaynakları titizlikle yönetme ve ruhsal krizleri aşma sabrı verir. Yaşamın karanlık ve gizemli yönlerini ciddiyetle araştırır ve içsel bir çelik zırh kazanırsınız.",
+    "9": "Satürn 9. evde inançları ve hayat görüşünü sağlam temellere oturtma disiplini getirir. Dogmatik inanışları reddeder, bilgelik yolunda adım adım yürüyerek saygın bir akademisyen veya felsefeci olursunuz.",
+    "10": "Satürn 10. evde kendi burcunun kudretindedir! Kariyerde zirveye ulaşmak için muazzam bir azim, sabır ve ahlak verir. Kolay yoldan değil, alın teriyle en tepeye tırmanır ve toplumda silinmez bir iz bırakırsınız.",
+    "11": "Satürn 11. evde az ama öz, sarsılmaz dostluklar kurmanızı sağlar. Sosyal hedeflerinize ve ideallerinize sabırla yürür, kurumsal yapılarda veya toplumsal organizasyonlarda güvenilir bir yapı kurucu olursunuz.",
+    "12": "Satürn 12. evde geçmiş karmik borçların arınmasını, içsel yalnızlıkta güçlenmeyi ve derin bir manevi disiplini gösterir. Yalnız kaldığınızda ruhunuzun efendisi olur, perde arkasında büyük işler başarırsınız."
+  },
+  "Uranüs": {
+    "1": "Uranüs 1. evde son derece özgün, sıra dışı, bağımsız ve kuralları yıkan devrimci bir kişilik verir. Kimseye benzemezsiniz; elektrikli auranız, yenilikçi fikirleriniz ve ani kararlarınızla insanları şaşırtırsınız.",
+    "2": "Uranüs 2. evde finansal alanda ani iniş çıkışlar, beklenmedik kazanç kapıları ve teknoloji veya yenilikçi yollarla para kazanma fırsatları sunar. Geleneksel para sistemlerine bağlı kalmaz, özgürlüğünüzü her şeyin üstünde tutarsınız.",
+    "3": "Uranüs 3. evde deha düzeyinde zihinsel kıvılcımlar, vizyoner fikirler ve kalıpların ötesinde bir iletişim tarzı verir. Yazılım, yapay zeka, bilim ve icatlara büyük ilgi duyarsınız.",
+    "4": "Uranüs 4. evde geleneksel aile kalıplarının ötesinde, özgür ve sıradışı bir ev ortamı yaratır. Evinizde teknoloji ve modernlik hakimdir; sık sık yer değiştirme veya sıradışı bir mekanda yaşama isteği duyabilirsiniz.",
+    "5": "Uranüs 5. evde aşkta ani başlangıçlar, sıradışı partnerler ve tabuları yıkan sanatsal yaratıcılık verir. Aşkta özgürlüğünüz kısıtlandığında kaçarsınız; yaratıcı projeleriniz çığır açıcıdır.",
+    "6": "Uranüs 6. evde geleneksel 9-5 mesai düzenine başkaldırı ve teknolojik, serbest çalışma ortamlarında başarı getirir. Alternatif sağlık yöntemleri ve teknolojik inovasyonlar işinizin parçası olur.",
+    "7": "Uranüs 7. evde evlilikte ve ortaklıklarda bağımsızlığın ve karşılıklı özgürlük alanının korunmasını şart koşar. Partneriniz genellikle sıradışı, dahi ruhlu, entelektüel ve özgürlüğüne düşkün biridir.",
+    "8": "Uranüs 8. evde metafizik uyanışlar, okült alanlarda ani aydınlanmalar ve ortak finansal kaynaklarda beklenmedik sürprizler yaratır. Krizleri beklenmedik yaratıcı çözümlerle aşarsınız.",
+    "9": "Uranüs 9. evde dogmatik inançları yıkan, evrensel bilinci ve uzay çağının felsefesini kucaklayan devrimci bir zihin sunar. Sıradışı uzak seyahatler ufkunuzu açar.",
+    "10": "Uranüs 10. evde kariyerinizde ani sıçramalar, teknoloji, havacılık, bilim veya devrimci sektörlerde öncülük vadeder. Otoriteye boyun eğmez, kendi kurallarınızı koyarak fark yaratırsınız.",
+    "11": "Uranüs 11. evde kendi asıl yuvasındadır! Küresel vizyon, insaniyet idealleri, aktivizm ve vizyoner dostlukların merkezinde yer alırsınız. Geleceğin dünyasını inşa eden grupların liderisinizdir.",
+    "12": "Uranüs 12. evde bilinçaltında ani aydınlanmalar, geleceği sezen rüyalar ve özgürleşme tutkusu saklar. Gizli sezgisel dehanızla krizleri mucizevi şekilde öngörürsünüz."
+  },
+  "Neptün": {
+    "1": "Neptün 1. evde büyüleyici, gizemli, rüya gibi bir aura ve tarifsiz bir çekicilik kazandırır. Bakışlarınız derin ve anlamlıdır; sınırları belirsiz bir empatiyle herkesin hissiyatını üzerinize çekersiniz.",
+    "2": "Neptün 2. evde paraya ruhsal ve manevi bir anlam yüklemenizi sağlar. Sanat, müzik, sinema ve şifa yoluyla sezgisel kazançlar elde edersiniz; ancak maddi konularda gerçekçi hesaplar yapmaya özen göstermelisiniz.",
+    "3": "Neptün 3. evde şiirsel bir zihin, telepatik bir sezgi ve kelimelerle büyüleme yeteneği bahşeder. Düşünceleriniz mantıktan ziyade hayaller ve sembollerle işler; sanatsal yazarlıkta parıldarsınız.",
+    "4": "Neptün 4. evde evinizde huzurlu bir tapınak ve ruhsal bir sığınak arayışı verir. Ailenize karşı koşulsuz bir sevgi beslersiniz; su kenarında veya mistik bir atmosferde yaşamak ruhunuza iyi gelir.",
+    "5": "Neptün 5. evde romantizmin ve sanatsal ilhamın doruk noktasıdır. Aşkı bir masal gibi yaşamak istersiniz; sinema, müzik, resim veya tiyatroda muazzam bir ilham akışına sahipsinizdir.",
+    "6": "Neptün 6. evde çalışma hayatında şifa, sanat ve başkalarına fedakarca yardım etme isteği verir. Alternatif tıp, psikoloji ve şifa sanatlarında usta olursunuz; stresli ortamlardan uzak durmalısınız.",
+    "7": "Neptün 7. evde ruh eşinizi arama arzusu çok güçlüdür. Evlilikte koşulsuz sevgi ve ruhsal bir bütünleşme beklersiniz; partnerinizi idealleştirmeden, olduğu gibi sevmeyi öğrenmek en büyük dersinizdir.",
+    "8": "Neptün 8. evde derin okült sezgiler, görünmeyenin ardındaki mistik sırlar ve psişik yetenekler sunar. Ortak paylaşımlarda sınırların eridiği, ruhsal olarak birbirine karışan derin bir bağ ararsınız.",
+    "9": "Neptün 9. evde evrensel sevgiye dayanan yüksek bir inanç, mistik felsefeler ve sınırları aşan ilahi teslimiyet getirir. Uzak diyarlarda ruhsal aydınlanmalar yaşarsınız.",
+    "10": "Neptün 10. evde kariyerinizde sanat, sinema, müzik, fotoğrafçılık, hayır kurumları veya şifa alanlarında ilham veren bir figür olmanızı sağlar. Toplum sizi ideallerinizle ve merhametinizle tanır.",
+    "11": "Neptün 11. evde evrensel kardeşlik, insani yardım projeleri ve manevi idealleri paylaşan dostluklar kurmanızı sağlar. Dünyayı daha şefkatli bir yer yapma hayaliniz vardır.",
+    "12": "Neptün 12. evde kendi kutsal mabedindedir! Sınırsız bir ilahi koruma, rüyalarda gelen rehberlikler, evrensel sevgi ve derin bir mistik deha bahşeder. Ruhunuz evrenle birdir."
+  },
+  "Plüton": {
+    "1": "Plüton 1. evde manyetik, sarsıcı, son derece güçlü ve gözleriyle insanın ruhunu delen bir varoluş verir. Bulunduğunuz odayı auranızla doldurursunuz; hiçbir kriz sizi yıkamaz, her darbeden sonra katbekat güçlenerek küllerinizden doğarsınız.",
+    "2": "Plüton 2. evde maddi kaynaklar, servet ve özdeğer konusunda radikal dönüşümler yaratır. Yokluktan bile muazzam finansal imparatorluklar kurma kudretine sahipsinizdir; kendi değerinizi kimseden onay beklemeden tayin edersiniz.",
+    "3": "Plüton 3. evde kelimeleriyle insanları dönüştüren, hipnotik bir konuşma ve derin bir psikolojik dedektif zihni verir. Yalanı milisaniyeler içinde anlarsınız; gizli araştırmalarda ve stratejik analizlerde rakipsizsinizdir.",
+    "4": "Plüton 4. evde köklerin, ailenin ve bilinçaltının derin dönüşümünü simgeler. Ailenin geçmişten gelen karmik düğümlerini çözerek kendi içsel ve bağımsız kalenizi inşa edersiniz.",
+    "5": "Plüton 5. evde aşkta derin, tutkulu, kıskanç ve dönüştürücü bir dinamik yaratır. Yüzeysel flörtler size göre değildir; aşık olduğunuzda hayatınız kökten değişir. Yaratıcılığınız sarsıcı ve büyüleyicidir.",
+    "6": "Plüton 6. evde çalışma ortamında derin bir kontrol, dayanıklılık ve sistemleri kökten yenileme kudreti verir. Sağlığınızda krizleri mucizevi bir şekilde iyileştiren derin bir rejenerasyon gücünüz vardır.",
+    "7": "Plüton 7. evde evlilik ve ortaklıklar yoluyla hayatınızın baştan aşağı dönüştüğünü gösterir. Güçlü, karizmatik ve ruhunuzu derinden sarsan partnerlere çekilirsiniz; güç savaşlarını aşıp saf güven inşa etmek ilişkinizi ölümsüzleştirir.",
+    "8": "Plüton 8. evde kendi tahtındadır! Krizleri yönetme, okült sırlar, miraslar ve büyük finansal güç alanında sınırsız bir kudret verir. Korkusuz bir ruhunuz vardır; ölümün ötesindeki yeniden doğuş gerçeğini içsel olarak bilirsiniz.",
+    "9": "Plüton 9. evde inanç sistemlerini, felsefi tabuları ve dünya görüşünü kökünden yıkarak dönüştürür. Hakikati en derinine kadar araştırır, felsefi dogmaları yıkan güçlü bir rehber olursunuz.",
+    "10": "Plüton 10. evde kariyerde muazzam bir güç, karizma, liderlik ve zirveye ulaşma kudreti bahşeder. Çürümüş sistemleri yıkar, yerine sarsılmaz yeni yapılar kurarsınız; toplumda büyük bir otorite figürü haline gelirsiniz.",
+    "11": "Plüton 11. evde toplumsal hareketler, devrimci gruplar ve kitlesel dönüşümlerde kilit bir güç olmanızı sağlar. Geleceği şekillendiren güçlü ve etkili insanlarla kadersel bağlar kurarsınız.",
+    "12": "Plüton 12. evde bilinçaltındaki tüm korkuları, gölge benliği ve geçmiş yaşam karmalarını kökten arındırma gücü verir. En karanlık içsel süreçlerden muazzam bir aydınlanma ve manevi kudretle çıkarsınız."
+  }
+};
+
+export const PLANET_DEEP_INTERPRETATIONS: Record<string, Record<string, {
+  summary: string;
+  karakter: string;
+  gucluYonler: string;
+  golgeYonler: string;
+  askVeIliskiler: string;
+  kariyerVePara: string;
+  karmikDers: string;
+}>> = {
+  "Güneş": {
+    "Koç": {
+      "summary": "Güneş Koç burcunda yücelir! Öncü, cesur, doğrudan ve bağımsız bir yaşam enerjisi.",
+      "karakter": "Güneş Koç yerleşimi, saf yaşam kıvılcımını ve durdurulamaz bir girişim ruhunu temsil eder. Kararsızlıktan ve beklemekten hoşlanmaz; bir fikir zihnine düştüğü an hemen harekete geçer. Olayların arkasından sürüklenmek yerine olayları başlatan lider güç olmayı seçer.",
+      "gucluYonler": "Yüksek cesaret, kriz anlarında saniyeler içinde inisiyatif alma kabiliyeti, dürüstlük, dobra tavır ve ilham veren dinamizm.",
+      "golgeYonler": "Sabırsızlık, başkalarının fikirlerini dinlemekte zorlanma, fevrilik ve çabuk öfkelenip başladığı işi bitirmekte zorlanma riski.",
+      "askVeIliskiler": "Aşkta tutkulu, açık sözlü ve heyecan arayan bir aşıktır. Avcı ruhludur; flörtte ilk adımı atmaktan çekinmez, net ve cesur partnerlerden etkilenir.",
+      "kariyerVePara": "Girişimcilik, yöneticilik, kendi işini kurma ve rekabetçi sektörlerde hızla parlar. Risk almaktan çekinmez ve kendi başarısının mimarı olur.",
+      "karmikDers": "Cesaretini bencillikle değil, başkalarını da yüceltecek bir bilgelikle birleştirmeyi ve sabır erdemini öğrenmek."
+    },
+    "Boğa": {
+      "summary": "Güneş Boğa burcunda sağlam, üretken, sabırlı ve sarsılmaz bir yaşam enerjisi sunar.",
+      "karakter": "Güneş Boğa insanı, hayatı sağlam temeller üzerine inşa etmeye odaklanır. Acele kararlardan kaçınır; toprağa ekilen bir tohum gibi sabırla, adım adım büyümeyi tercih eder. Huzur, doğallık ve elle tutulur somut başarılar onun temel güven kaynağıdır.",
+      "gucluYonler": "Üstün sabır, güvenilirlik, sadakat, estetik ve kalite zevki, finansal öngörü ve kriz anlarında sarsılmaz bir sükunet.",
+      "golgeYonler": "Değişime karşı aşırı inatçılık, konfor alanına saplanıp kalma, maddi güvence takıntısı ve yeniliklere direnme.",
+      "askVeIliskiler": "İlişkilerde güven ve sadakat her şeydir. Dokunsal, romantik ve kalıcı bir yuva kurmak ister; geçici maceralara prim vermez.",
+      "kariyerVePara": "Finans, gayrimenkul, tarım, mimarlık, gastronomi veya lüks tüketim alanlarında kalıcı ve zengin bir kariyer inşa eder.",
+      "karmikDers": "Maddiyata aşırı tutunmayı bırakıp ruhsal esnekliği ve hayatın değişen akışına güvenmeyi öğrenmek."
+    },
+    "İkizler": {
+      "summary": "Güneş İkizler burcunda meraklı, entelektüel, hızlı ve çok yönlü bir zihin ışığı saçar.",
+      "karakter": "Sürekli öğrenen, bilgi toplayan ve bunu etrafına aktaran bir zihin dünyasına sahiptir. Monotonluktan nefret eder; hayatı keşfedilecek sonsuz bir kütüphane gibi görür. Esprili, kıvrak zekalı ve iletişim ağlarının merkezindedir.",
+      "gucluYonler": "Hızlı kavrayış, üstün dil ve hitabet yeteneği, aynı anda birden fazla konuyu yönetebilme ve yüksek adaptasyon gücü.",
+      "golgeYonler": "Zihinsel huzursuzluk, odaklanma güçlüğü, yüzeysellik riski ve kararsızlık içinde oradan oraya savrulma.",
+      "askVeIliskiler": "Aşkta her şeyden önce zihinsel uyum arar. Saatlerce konuşamadığı, espri anlayışının uyuşmadığı biriyle duygusal bağ kuramaz.",
+      "kariyerVePara": "Medya, yazarlık, gazetecilik, halkla ilişkiler, ticaret ve teknoloji alanlarında hızla yükselir.",
+      "karmikDers": "Bilgiyi yüzeysel tüketmek yerine bir konuda derinleşmeyi ve zihinsel kararlılığı hayatına katmak."
+    },
+    "Yengeç": {
+      "summary": "Güneş Yengeç burcunda koruyucu, şefkatli, sezgisel ve köklerine bağlı bir güç verir.",
+      "karakter": "Duygusal zekası son derece yüksektir; sevdiklerini korumak ve beslemek onun en büyük yaşam amacıdır. Dış dünyaya karşı kabuğu sert görünse de içinde kırılgan ve derin bir sevgi denizi barındırır. Güven hissettiği yerde mucizeler yaratır.",
+      "gucluYonler": "Derin empati, telepatik sezgiler, eşsiz bir vefa duygusu, anaç koruyuculuk ve yaratıcı hayal gücü.",
+      "golgeYonler": "Aşırı alınganlık, geçmişe takılı kalma, kurban rolüne bürünme ve duygusal bağımlılık geliştirme riski.",
+      "askVeIliskiler": "Aşkta tam bir yuva insanıdır. Sevdiğini sarıp sarmalar, aile kurmak ve sonsuz güven duyacağı bir bağ inşa etmek ister.",
+      "kariyerVePara": "İnsan kaynakları, psikoloji, sağlık, gastronomi, tarih, gayrimenkul ve sosyal sorumluluk alanlarında çok başarılıdır.",
+      "karmikDers": "Duygusal geçmişin yüklerini affederek geride bırakmak ve kendi içindeki bağımsız güven kalesini kurmak."
+    },
+    "Aslan": {
+      "summary": "Güneş Aslan burcunda kendi tahtındadır! Cömert, karizmatik, yaratıcı ve asil bir lider.",
+      "karakter": "Güneş bu burçta en parlak halindedir. Hayata neşe, gurur ve asil bir duruşla yaklaşır. Sahnenin merkezinde olmayı, sevdiklerini himaye etmeyi ve cömertliğiyle ışık saçmayı doğal bir hak olarak görür. Küçük hesaplar ona göre değildir.",
+      "gucluYonler": "Doğal liderlik karizması, tükenmeyen yaşam enerjisi, cömert yürek, yaratıcı sanatsal vizyon ve ilham verici özgüven.",
+      "golgeYonler": "Kibir, gurur yaralanması, aşırı onay ve alkış bağımlılığı, eleştiriye kapalı olma ve gösterişe kaçma.",
+      "askVeIliskiler": "Aşkı bir krallık gibi yaşar. Partnerini el üstünde tutar, gurur duyacağı bir ilişki ister ve sadakatten asla taviz vermez.",
+      "kariyerVePara": "Yöneticilik, sahne sanatları, lüks tasarım, kurumsal liderlik ve eğlence sektöründe zirveye oynar.",
+      "karmikDers": "Egoyu alçakgönüllülükle terbiye ederek ışığını başkalarını aydınlatmak için karşılıksız sunmayı öğrenmek."
+    },
+    "Başak": {
+      "summary": "Güneş Başak burcunda analitik, usta, düzenleyici, mütevazı ve hizmet odaklı bir güçtür.",
+      "karakter": "Kaosu düzene sokmak, detaylardaki kusurları ayıklamak ve hayatı daha işlevsel hale getirmek onun dehasıdır. Gösterişten uzaktır; değerini yaptığı işin kalitesiyle ve ustalığıyla kanıtlar. Pratik aklı hayat kurtarır.",
+      "gucluYonler": "Kusursuz gözlem yeteneği, disiplin, üstün iş ahlakı, analitik problem çözme ve şifacı yaklaşım.",
+      "golgeYonler": "Aşırı eleştirellik, vesvese, mükemmeliyetçilik kaygısıyla kendini ve başkalarını tüketme, büyük resmi kaçırma.",
+      "askVeIliskiler": "Sevgisini süslü sözlerle değil, partnerinin hayatını kolaylaştıran somut jestlerle ve sadakatle gösterir.",
+      "kariyerVePara": "Tıp, eczacılık, denetim, yazılım mimarisi, araştırma, veri analizi ve zanaatkarlıkta rakipsizdir.",
+      "karmikDers": "Kusurluluğun da evrensel bir güzellik olduğunu kabul etmek ve aşırı kaygıyı teslimiyete bırakmak."
+    },
+    "Terazi": {
+      "summary": "Güneş Terazi burcunda diplomatik, adil, estetik ve ortaklıklarda parlayan bir zarafettir.",
+      "karakter": "Hayatın her alanında denge, uyum ve güzellik arar. Çatışmalardan hoşlanmaz; arabuluculuk yeteneğiyle karşıt fikirleri ustalıkla uzlaştırır. Nezaket, zarafet ve adalet onun temel varoluş felsefesidir.",
+      "gucluYonler": "Üstün diplomasi, estetik vizyon, empati, adalet duygusu, sosyal zeka ve insanları birleştiren zarafet.",
+      "golgeYonler": "Kararsızlık, çatışmadan kaçmak için sahte uyum sağlama, yalnız kalma korkusu ve kendi isteklerini erteleme.",
+      "askVeIliskiler": "İlişkiler onun yaşam aynasıdır. Romantik, saygılı, eşit ve estetik bir birliktelik arar; kaba tavırlara katlanamaz.",
+      "kariyerVePara": "Hukuk, diplomasi, halkla ilişkiler, moda, sanat galerileri ve danışmanlıkta parlar.",
+      "karmikDers": "Başkalarını memnun etmek adına kendi doğrularından taviz vermemeyi ve net kararlar almayı öğrenmek."
+    },
+    "Akrep": {
+      "summary": "Güneş Akrep burcunda derin, tutkulu, sezgisel, manyetik ve küllerinden doğan bir güçtür.",
+      "karakter": "Yüzeysel olan hiçbir şey onu tatmin etmez. Hayatın en derin sırlarını, insanların gizli motivasyonlarını ve ruhsal hakikatleri çözmek ister. Sarsılmaz bir iradeye ve krizlerden güçlenerek çıkma kabiliyetine sahiptir.",
+      "gucluYonler": "Psikolojik derinlik, manyetik çekim, sarsılmaz kararlılık, sezgisel deha ve krizleri şifalandırma gücü.",
+      "golgeYonler": "Aşırı şüphecilik, kıskançlık, kontrol takıntısı, kin tutma ve güç savaşlarına girme riski.",
+      "askVeIliskiler": "Aşkta \"ya hep ya hiç\" ilkesiyle hareket eder. Tutkulu, koruyucu ve ölesiye sadıktır; ihaneti asla affetmez.",
+      "kariyerVePara": "Psikoloji, dedektiflik, kriz yönetimi, cerrahi, yatırım fonları, okültizm ve strateji alanlarında liderdir.",
+      "karmikDers": "Kontrol etme arzusunu bırakıp hayatın akışına ve ilahi adalete güvenerek kalbini arındırmayı öğrenmek."
+    },
+    "Yay": {
+      "summary": "Güneş Yay burcunda felsefi, vizyoner, maceraperest ve ufukları genişleten bir ruhtur.",
+      "karakter": "Hayatı büyük bir keşif yolculuğu olarak görür. İyimserliği, neşesi ve inancı bulaşıcıdır. Dar kalıplara sığamaz; fiziksel ve zihinsel sınırları aşmak, yeni ülkeler görmek ve hakikati öğrenmek onun yakıtıdır.",
+      "gucluYonler": "Yüksek vizyon, engin dünya görüşü, samimiyet, cömertlik, umut aşılayan bilgelik ve espri anlayışı.",
+      "golgeYonler": "Aşırı abartı, patavatsızlık, sorumluluklardan kaçma eğilimi, fanatizm ve gerçekleri küçümseme.",
+      "askVeIliskiler": "İlişkide özgürlük alanı ve ortak bir hayat vizyonu şarttır. Birlikte seyahat edebileceği ve gülebileceği bir partner arar.",
+      "kariyerVePara": "Akademi, uluslararası ticaret, turizm, yayıncılık, felsefe, hukuk ve spor alanlarında parlar.",
+      "karmikDers": "Vaatlerinin arkasında durmayı, detaylara saygı göstermeyi ve manevi bilgeliği tevazuyla taşımayı öğrenmek."
+    },
+    "Oğlak": {
+      "summary": "Güneş Oğlak burcunda disiplinli, sabırlı, stratejik ve zirveye odaklı bir mimardır.",
+      "karakter": "Hayatın sorumluluğunu erken yaşta üstlenir. Boş hayallerle vakit kaybetmez; somut hedefler koyar ve sabırla zirveye tırmanır. Toplumda saygınlık, kalıcı bir eser bırakmak ve güvenilir bir otorite olmak onun rotasıdır.",
+      "gucluYonler": "Sarsılmaz irade, organizasyon dehası, dayanıklılık, pratik akıl, stratejik sabır ve güvenilirlik.",
+      "golgeYonler": "Aşırı katılık, duyguları bastırma, işkoliklik, başarısızlık korkusu ve insanlara mesafeli soğuk duruş.",
+      "askVeIliskiler": "Aşkta ciddiyet ve sadakat arar. Geçici heveslerle ilgilenmez; uzun vadeli, saygın ve güvenli bir gelecek kurmak ister.",
+      "kariyerVePara": "Üst düzey yöneticilik, devlet kadroları, inşaat, mühendislik, finans ve kurumsal liderlikte zirveye yerleşir.",
+      "karmikDers": "Başarının sadece kariyerden ibaret olmadığını anlamak, kalbini sevgiye açmak ve duygularını paylaşmak."
+    },
+    "Kova": {
+      "summary": "Güneş Kova burcunda vizyoner, özgürlükçü, yenilikçi ve kolektif bilinci uyandıran bir dehadır.",
+      "karakter": "Toplumun dayattığı normları sorgular; geleceğin dünyasını şimdiden yaşar. Bireysel özgürlüğüne son derece düşkündür ama kalbi insanlığın iyiliği için çarpar. Özgün, sıra dışı ve zihinsel olarak çığır açıcıdır.",
+      "gucluYonler": "Yüksek entelektüel vizyon, hümanizm, önyargısız yaklaşım, yenilikçi fikirler ve güçlü dostluk bağları.",
+      "golgeYonler": "Duygusal mesafelilik, aşırı dik başlılık, asi olmak uğruna her şeye karşı çıkma ve soyutlaşma.",
+      "askVeIliskiler": "Önce en yakın dost, sonra aşık olur. Bağımsızlığına saygı duyan, zeki ve entelektüel partnerlerden etkilenir.",
+      "kariyerVePara": "Bilişim, yapay zeka, bilim, uzay, sivil toplum kuruluşları, icatlar ve astrolojide parlar.",
+      "karmikDers": "Fikirleri kadar duygularının da kıymetli olduğunu fark etmek ve kalpten sıcak bağlar kurmayı öğrenmek."
+    },
+    "Balık": {
+      "summary": "Güneş Balık burcunda sezgisel, mistik, ilahi şefkat dolu ve sanatsal bir ruhtur.",
+      "karakter": "Maddi dünyanın ötesindeki ruhsal titreşimleri doğrudan algılar. Sınırsız bir merhameti ve zengin bir hayal dünyası vardır. Bütünsel hisseder; doğanın, hayvanların ve tüm insanların acısını kendi içinde taşır.",
+      "gucluYonler": "Muazzam sezgi, evrensel empati, sanatsal ilham, fedakarlık, şifacı enerji ve ilahi teslimiyet.",
+      "golgeYonler": "Gerçeklerden kaçış eğilimi, kurban psikolojisi, sınır çizememe, hayal kırıklığı ve bağımlılık riski.",
+      "askVeIliskiler": "Aşkta ruhsal bir bütünleşme ve masalsı bir romantizm arar. Sevdiği kişiyi koşulsuz sever ve her şeyini feda edebilir.",
+      "kariyerVePara": "Sinema, müzik, fotoğrafçılık, psikoloji, alternatif tıp, denizcilik ve manevi rehberlikte çok başarılıdır.",
+      "karmikDers": "Sağlıklı kişisel sınırlar çizmeyi öğrenmek, kendini kurban etmeden ilahi sevgiyi dünyada somutlaştırmak."
+    }
+  },
+  "Ay": {
+    "Koç": {
+      "summary": "Ay Koç burcunda: Cesaret, inisiyatif, bağımsızlık ve öncülük.",
+      "karakter": "Ay Koç yerleşimi, harita sahibinin duygusal güvenlik ve ruhsal hafıza alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; duygusal tatmin, aidiyet ve şefkat arayışını cesaret, inisiyatif, bağımsızlık ve öncülük vasıtasıyla somutlaştırır. İçsel dünyasında Koç burcunun yönetici gezegeni Mars enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Cesaret, inisiyatif, bağımsızlık ve öncülük konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Koç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Ay Koç enerjisi, partnerden cesaret, inisiyatif, bağımsızlık ve öncülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. cesaret, inisiyatif, bağımsızlık ve öncülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; cesaret, inisiyatif, bağımsızlık ve öncülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Boğa": {
+      "summary": "Ay Boğa burcunda: İstikrar, güven, somut üretim ve sadakat.",
+      "karakter": "Ay Boğa yerleşimi, harita sahibinin duygusal güvenlik ve ruhsal hafıza alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; duygusal tatmin, aidiyet ve şefkat arayışını i̇stikrar, güven, somut üretim ve sadakat vasıtasıyla somutlaştırır. İçsel dünyasında Boğa burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İstikrar, güven, somut üretim ve sadakat konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Boğa burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Ay Boğa enerjisi, partnerden i̇stikrar, güven, somut üretim ve sadakat anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. i̇stikrar, güven, somut üretim ve sadakat gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇stikrar, güven, somut üretim ve sadakat potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "İkizler": {
+      "summary": "Ay İkizler burcunda: Merak, iletişim, zihinsel esneklik ve çok yönlülük.",
+      "karakter": "Ay İkizler yerleşimi, harita sahibinin duygusal güvenlik ve ruhsal hafıza alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; duygusal tatmin, aidiyet ve şefkat arayışını merak, iletişim, zihinsel esneklik ve çok yönlülük vasıtasıyla somutlaştırır. İçsel dünyasında İkizler burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Merak, iletişim, zihinsel esneklik ve çok yönlülük konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "İkizler burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Ay İkizler enerjisi, partnerden merak, iletişim, zihinsel esneklik ve çok yönlülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. merak, iletişim, zihinsel esneklik ve çok yönlülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; merak, iletişim, zihinsel esneklik ve çok yönlülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yengeç": {
+      "summary": "Ay Yengeç burcunda: Şefkat, duygusal derinlik, aidiyet ve koruyuculuk.",
+      "karakter": "Ay Yengeç yerleşimi, harita sahibinin duygusal güvenlik ve ruhsal hafıza alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; duygusal tatmin, aidiyet ve şefkat arayışını şefkat, duygusal derinlik, aidiyet ve koruyuculuk vasıtasıyla somutlaştırır. İçsel dünyasında Yengeç burcunun yönetici gezegeni Ay enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Şefkat, duygusal derinlik, aidiyet ve koruyuculuk konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yengeç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Ay Yengeç enerjisi, partnerden şefkat, duygusal derinlik, aidiyet ve koruyuculuk anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. şefkat, duygusal derinlik, aidiyet ve koruyuculuk gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; şefkat, duygusal derinlik, aidiyet ve koruyuculuk potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Aslan": {
+      "summary": "Ay Aslan burcunda: Işıltı, yaratıcılık, cömert liderlik ve asalet.",
+      "karakter": "Ay Aslan yerleşimi, harita sahibinin duygusal güvenlik ve ruhsal hafıza alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; duygusal tatmin, aidiyet ve şefkat arayışını işıltı, yaratıcılık, cömert liderlik ve asalet vasıtasıyla somutlaştırır. İçsel dünyasında Aslan burcunun yönetici gezegeni Güneş enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Işıltı, yaratıcılık, cömert liderlik ve asalet konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Aslan burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Ay Aslan enerjisi, partnerden işıltı, yaratıcılık, cömert liderlik ve asalet anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. işıltı, yaratıcılık, cömert liderlik ve asalet gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; işıltı, yaratıcılık, cömert liderlik ve asalet potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Başak": {
+      "summary": "Ay Başak burcunda: Analiz, ustalık, pratik fayda ve şifa.",
+      "karakter": "Ay Başak yerleşimi, harita sahibinin duygusal güvenlik ve ruhsal hafıza alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; duygusal tatmin, aidiyet ve şefkat arayışını analiz, ustalık, pratik fayda ve şifa vasıtasıyla somutlaştırır. İçsel dünyasında Başak burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Analiz, ustalık, pratik fayda ve şifa konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Başak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Ay Başak enerjisi, partnerden analiz, ustalık, pratik fayda ve şifa anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. analiz, ustalık, pratik fayda ve şifa gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; analiz, ustalık, pratik fayda ve şifa potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Terazi": {
+      "summary": "Ay Terazi burcunda: Uyum, estetik, diplomasi, adalet ve ortaklık.",
+      "karakter": "Ay Terazi yerleşimi, harita sahibinin duygusal güvenlik ve ruhsal hafıza alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; duygusal tatmin, aidiyet ve şefkat arayışını uyum, estetik, diplomasi, adalet ve ortaklık vasıtasıyla somutlaştırır. İçsel dünyasında Terazi burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Uyum, estetik, diplomasi, adalet ve ortaklık konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Terazi burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Ay Terazi enerjisi, partnerden uyum, estetik, diplomasi, adalet ve ortaklık anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. uyum, estetik, diplomasi, adalet ve ortaklık gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; uyum, estetik, diplomasi, adalet ve ortaklık potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Akrep": {
+      "summary": "Ay Akrep burcunda: Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm.",
+      "karakter": "Ay Akrep yerleşimi, harita sahibinin duygusal güvenlik ve ruhsal hafıza alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; duygusal tatmin, aidiyet ve şefkat arayışını tutku, sezgisel güç, psikolojik derinlik ve dönüşüm vasıtasıyla somutlaştırır. İçsel dünyasında Akrep burcunun yönetici gezegeni Mars ve Plüton enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Akrep burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Ay Akrep enerjisi, partnerden tutku, sezgisel güç, psikolojik derinlik ve dönüşüm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. tutku, sezgisel güç, psikolojik derinlik ve dönüşüm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; tutku, sezgisel güç, psikolojik derinlik ve dönüşüm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yay": {
+      "summary": "Ay Yay burcunda: Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik.",
+      "karakter": "Ay Yay yerleşimi, harita sahibinin duygusal güvenlik ve ruhsal hafıza alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; duygusal tatmin, aidiyet ve şefkat arayışını hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik vasıtasıyla somutlaştırır. İçsel dünyasında Yay burcunun yönetici gezegeni Jüpiter enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yay burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Ay Yay enerjisi, partnerden hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Oğlak": {
+      "summary": "Ay Oğlak burcunda: Disiplin, sorumluluk, kalıcı başarı ve otorite.",
+      "karakter": "Ay Oğlak yerleşimi, harita sahibinin duygusal güvenlik ve ruhsal hafıza alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; duygusal tatmin, aidiyet ve şefkat arayışını disiplin, sorumluluk, kalıcı başarı ve otorite vasıtasıyla somutlaştırır. İçsel dünyasında Oğlak burcunun yönetici gezegeni Satürn enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Disiplin, sorumluluk, kalıcı başarı ve otorite konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Oğlak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Ay Oğlak enerjisi, partnerden disiplin, sorumluluk, kalıcı başarı ve otorite anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. disiplin, sorumluluk, kalıcı başarı ve otorite gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; disiplin, sorumluluk, kalıcı başarı ve otorite potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Kova": {
+      "summary": "Ay Kova burcunda: Özgünlük, kolektif idealler, devrimci zeka ve hümanizm.",
+      "karakter": "Ay Kova yerleşimi, harita sahibinin duygusal güvenlik ve ruhsal hafıza alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; duygusal tatmin, aidiyet ve şefkat arayışını özgünlük, kolektif idealler, devrimci zeka ve hümanizm vasıtasıyla somutlaştırır. İçsel dünyasında Kova burcunun yönetici gezegeni Satürn ve Uranüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Özgünlük, kolektif idealler, devrimci zeka ve hümanizm konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Kova burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Ay Kova enerjisi, partnerden özgünlük, kolektif idealler, devrimci zeka ve hümanizm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. özgünlük, kolektif idealler, devrimci zeka ve hümanizm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; özgünlük, kolektif idealler, devrimci zeka ve hümanizm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Balık": {
+      "summary": "Ay Balık burcunda: İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi.",
+      "karakter": "Ay Balık yerleşimi, harita sahibinin duygusal güvenlik ve ruhsal hafıza alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; duygusal tatmin, aidiyet ve şefkat arayışını i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi vasıtasıyla somutlaştırır. İçsel dünyasında Balık burcunun yönetici gezegeni Jüpiter ve Neptün enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Balık burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Ay Balık enerjisi, partnerden i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    }
+  },
+  "Merkür": {
+    "Koç": {
+      "summary": "Merkür Koç burcunda: Cesaret, inisiyatif, bağımsızlık ve öncülük.",
+      "karakter": "Merkür Koç yerleşimi, harita sahibinin zihinsel odak ve i̇letişim zekası alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; bilgi işleme, analiz ve ifade tarzı arayışını cesaret, inisiyatif, bağımsızlık ve öncülük vasıtasıyla somutlaştırır. İçsel dünyasında Koç burcunun yönetici gezegeni Mars enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Cesaret, inisiyatif, bağımsızlık ve öncülük konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Koç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Merkür Koç enerjisi, partnerden cesaret, inisiyatif, bağımsızlık ve öncülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. cesaret, inisiyatif, bağımsızlık ve öncülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; cesaret, inisiyatif, bağımsızlık ve öncülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Boğa": {
+      "summary": "Merkür Boğa burcunda: İstikrar, güven, somut üretim ve sadakat.",
+      "karakter": "Merkür Boğa yerleşimi, harita sahibinin zihinsel odak ve i̇letişim zekası alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; bilgi işleme, analiz ve ifade tarzı arayışını i̇stikrar, güven, somut üretim ve sadakat vasıtasıyla somutlaştırır. İçsel dünyasında Boğa burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İstikrar, güven, somut üretim ve sadakat konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Boğa burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Merkür Boğa enerjisi, partnerden i̇stikrar, güven, somut üretim ve sadakat anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. i̇stikrar, güven, somut üretim ve sadakat gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇stikrar, güven, somut üretim ve sadakat potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "İkizler": {
+      "summary": "Merkür İkizler burcunda: Merak, iletişim, zihinsel esneklik ve çok yönlülük.",
+      "karakter": "Merkür İkizler yerleşimi, harita sahibinin zihinsel odak ve i̇letişim zekası alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; bilgi işleme, analiz ve ifade tarzı arayışını merak, iletişim, zihinsel esneklik ve çok yönlülük vasıtasıyla somutlaştırır. İçsel dünyasında İkizler burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Merak, iletişim, zihinsel esneklik ve çok yönlülük konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "İkizler burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Merkür İkizler enerjisi, partnerden merak, iletişim, zihinsel esneklik ve çok yönlülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. merak, iletişim, zihinsel esneklik ve çok yönlülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; merak, iletişim, zihinsel esneklik ve çok yönlülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yengeç": {
+      "summary": "Merkür Yengeç burcunda: Şefkat, duygusal derinlik, aidiyet ve koruyuculuk.",
+      "karakter": "Merkür Yengeç yerleşimi, harita sahibinin zihinsel odak ve i̇letişim zekası alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; bilgi işleme, analiz ve ifade tarzı arayışını şefkat, duygusal derinlik, aidiyet ve koruyuculuk vasıtasıyla somutlaştırır. İçsel dünyasında Yengeç burcunun yönetici gezegeni Ay enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Şefkat, duygusal derinlik, aidiyet ve koruyuculuk konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yengeç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Merkür Yengeç enerjisi, partnerden şefkat, duygusal derinlik, aidiyet ve koruyuculuk anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. şefkat, duygusal derinlik, aidiyet ve koruyuculuk gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; şefkat, duygusal derinlik, aidiyet ve koruyuculuk potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Aslan": {
+      "summary": "Merkür Aslan burcunda: Işıltı, yaratıcılık, cömert liderlik ve asalet.",
+      "karakter": "Merkür Aslan yerleşimi, harita sahibinin zihinsel odak ve i̇letişim zekası alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; bilgi işleme, analiz ve ifade tarzı arayışını işıltı, yaratıcılık, cömert liderlik ve asalet vasıtasıyla somutlaştırır. İçsel dünyasında Aslan burcunun yönetici gezegeni Güneş enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Işıltı, yaratıcılık, cömert liderlik ve asalet konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Aslan burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Merkür Aslan enerjisi, partnerden işıltı, yaratıcılık, cömert liderlik ve asalet anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. işıltı, yaratıcılık, cömert liderlik ve asalet gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; işıltı, yaratıcılık, cömert liderlik ve asalet potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Başak": {
+      "summary": "Merkür Başak burcunda: Analiz, ustalık, pratik fayda ve şifa.",
+      "karakter": "Merkür Başak yerleşimi, harita sahibinin zihinsel odak ve i̇letişim zekası alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; bilgi işleme, analiz ve ifade tarzı arayışını analiz, ustalık, pratik fayda ve şifa vasıtasıyla somutlaştırır. İçsel dünyasında Başak burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Analiz, ustalık, pratik fayda ve şifa konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Başak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Merkür Başak enerjisi, partnerden analiz, ustalık, pratik fayda ve şifa anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. analiz, ustalık, pratik fayda ve şifa gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; analiz, ustalık, pratik fayda ve şifa potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Terazi": {
+      "summary": "Merkür Terazi burcunda: Uyum, estetik, diplomasi, adalet ve ortaklık.",
+      "karakter": "Merkür Terazi yerleşimi, harita sahibinin zihinsel odak ve i̇letişim zekası alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; bilgi işleme, analiz ve ifade tarzı arayışını uyum, estetik, diplomasi, adalet ve ortaklık vasıtasıyla somutlaştırır. İçsel dünyasında Terazi burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Uyum, estetik, diplomasi, adalet ve ortaklık konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Terazi burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Merkür Terazi enerjisi, partnerden uyum, estetik, diplomasi, adalet ve ortaklık anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. uyum, estetik, diplomasi, adalet ve ortaklık gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; uyum, estetik, diplomasi, adalet ve ortaklık potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Akrep": {
+      "summary": "Merkür Akrep burcunda: Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm.",
+      "karakter": "Merkür Akrep yerleşimi, harita sahibinin zihinsel odak ve i̇letişim zekası alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; bilgi işleme, analiz ve ifade tarzı arayışını tutku, sezgisel güç, psikolojik derinlik ve dönüşüm vasıtasıyla somutlaştırır. İçsel dünyasında Akrep burcunun yönetici gezegeni Mars ve Plüton enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Akrep burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Merkür Akrep enerjisi, partnerden tutku, sezgisel güç, psikolojik derinlik ve dönüşüm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. tutku, sezgisel güç, psikolojik derinlik ve dönüşüm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; tutku, sezgisel güç, psikolojik derinlik ve dönüşüm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yay": {
+      "summary": "Merkür Yay burcunda: Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik.",
+      "karakter": "Merkür Yay yerleşimi, harita sahibinin zihinsel odak ve i̇letişim zekası alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; bilgi işleme, analiz ve ifade tarzı arayışını hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik vasıtasıyla somutlaştırır. İçsel dünyasında Yay burcunun yönetici gezegeni Jüpiter enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yay burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Merkür Yay enerjisi, partnerden hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Oğlak": {
+      "summary": "Merkür Oğlak burcunda: Disiplin, sorumluluk, kalıcı başarı ve otorite.",
+      "karakter": "Merkür Oğlak yerleşimi, harita sahibinin zihinsel odak ve i̇letişim zekası alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; bilgi işleme, analiz ve ifade tarzı arayışını disiplin, sorumluluk, kalıcı başarı ve otorite vasıtasıyla somutlaştırır. İçsel dünyasında Oğlak burcunun yönetici gezegeni Satürn enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Disiplin, sorumluluk, kalıcı başarı ve otorite konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Oğlak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Merkür Oğlak enerjisi, partnerden disiplin, sorumluluk, kalıcı başarı ve otorite anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. disiplin, sorumluluk, kalıcı başarı ve otorite gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; disiplin, sorumluluk, kalıcı başarı ve otorite potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Kova": {
+      "summary": "Merkür Kova burcunda: Özgünlük, kolektif idealler, devrimci zeka ve hümanizm.",
+      "karakter": "Merkür Kova yerleşimi, harita sahibinin zihinsel odak ve i̇letişim zekası alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; bilgi işleme, analiz ve ifade tarzı arayışını özgünlük, kolektif idealler, devrimci zeka ve hümanizm vasıtasıyla somutlaştırır. İçsel dünyasında Kova burcunun yönetici gezegeni Satürn ve Uranüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Özgünlük, kolektif idealler, devrimci zeka ve hümanizm konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Kova burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Merkür Kova enerjisi, partnerden özgünlük, kolektif idealler, devrimci zeka ve hümanizm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. özgünlük, kolektif idealler, devrimci zeka ve hümanizm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; özgünlük, kolektif idealler, devrimci zeka ve hümanizm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Balık": {
+      "summary": "Merkür Balık burcunda: İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi.",
+      "karakter": "Merkür Balık yerleşimi, harita sahibinin zihinsel odak ve i̇letişim zekası alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; bilgi işleme, analiz ve ifade tarzı arayışını i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi vasıtasıyla somutlaştırır. İçsel dünyasında Balık burcunun yönetici gezegeni Jüpiter ve Neptün enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Balık burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Merkür Balık enerjisi, partnerden i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    }
+  },
+  "Venüs": {
+    "Koç": {
+      "summary": "Venüs Koç burcunda: Cesaret, inisiyatif, bağımsızlık ve öncülük.",
+      "karakter": "Venüs Koç yerleşimi, harita sahibinin aşk dili, estetik değerler ve çekim gücü alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; romantik bağ kurma ve özdeğer algısı arayışını cesaret, inisiyatif, bağımsızlık ve öncülük vasıtasıyla somutlaştırır. İçsel dünyasında Koç burcunun yönetici gezegeni Mars enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Cesaret, inisiyatif, bağımsızlık ve öncülük konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Koç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Venüs Koç enerjisi, partnerden cesaret, inisiyatif, bağımsızlık ve öncülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. cesaret, inisiyatif, bağımsızlık ve öncülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; cesaret, inisiyatif, bağımsızlık ve öncülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Boğa": {
+      "summary": "Venüs Boğa burcunda: İstikrar, güven, somut üretim ve sadakat.",
+      "karakter": "Venüs Boğa yerleşimi, harita sahibinin aşk dili, estetik değerler ve çekim gücü alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; romantik bağ kurma ve özdeğer algısı arayışını i̇stikrar, güven, somut üretim ve sadakat vasıtasıyla somutlaştırır. İçsel dünyasında Boğa burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İstikrar, güven, somut üretim ve sadakat konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Boğa burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Venüs Boğa enerjisi, partnerden i̇stikrar, güven, somut üretim ve sadakat anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. i̇stikrar, güven, somut üretim ve sadakat gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇stikrar, güven, somut üretim ve sadakat potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "İkizler": {
+      "summary": "Venüs İkizler burcunda: Merak, iletişim, zihinsel esneklik ve çok yönlülük.",
+      "karakter": "Venüs İkizler yerleşimi, harita sahibinin aşk dili, estetik değerler ve çekim gücü alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; romantik bağ kurma ve özdeğer algısı arayışını merak, iletişim, zihinsel esneklik ve çok yönlülük vasıtasıyla somutlaştırır. İçsel dünyasında İkizler burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Merak, iletişim, zihinsel esneklik ve çok yönlülük konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "İkizler burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Venüs İkizler enerjisi, partnerden merak, iletişim, zihinsel esneklik ve çok yönlülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. merak, iletişim, zihinsel esneklik ve çok yönlülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; merak, iletişim, zihinsel esneklik ve çok yönlülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yengeç": {
+      "summary": "Venüs Yengeç burcunda: Şefkat, duygusal derinlik, aidiyet ve koruyuculuk.",
+      "karakter": "Venüs Yengeç yerleşimi, harita sahibinin aşk dili, estetik değerler ve çekim gücü alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; romantik bağ kurma ve özdeğer algısı arayışını şefkat, duygusal derinlik, aidiyet ve koruyuculuk vasıtasıyla somutlaştırır. İçsel dünyasında Yengeç burcunun yönetici gezegeni Ay enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Şefkat, duygusal derinlik, aidiyet ve koruyuculuk konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yengeç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Venüs Yengeç enerjisi, partnerden şefkat, duygusal derinlik, aidiyet ve koruyuculuk anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. şefkat, duygusal derinlik, aidiyet ve koruyuculuk gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; şefkat, duygusal derinlik, aidiyet ve koruyuculuk potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Aslan": {
+      "summary": "Venüs Aslan burcunda: Işıltı, yaratıcılık, cömert liderlik ve asalet.",
+      "karakter": "Venüs Aslan yerleşimi, harita sahibinin aşk dili, estetik değerler ve çekim gücü alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; romantik bağ kurma ve özdeğer algısı arayışını işıltı, yaratıcılık, cömert liderlik ve asalet vasıtasıyla somutlaştırır. İçsel dünyasında Aslan burcunun yönetici gezegeni Güneş enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Işıltı, yaratıcılık, cömert liderlik ve asalet konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Aslan burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Venüs Aslan enerjisi, partnerden işıltı, yaratıcılık, cömert liderlik ve asalet anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. işıltı, yaratıcılık, cömert liderlik ve asalet gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; işıltı, yaratıcılık, cömert liderlik ve asalet potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Başak": {
+      "summary": "Venüs Başak burcunda: Analiz, ustalık, pratik fayda ve şifa.",
+      "karakter": "Venüs Başak yerleşimi, harita sahibinin aşk dili, estetik değerler ve çekim gücü alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; romantik bağ kurma ve özdeğer algısı arayışını analiz, ustalık, pratik fayda ve şifa vasıtasıyla somutlaştırır. İçsel dünyasında Başak burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Analiz, ustalık, pratik fayda ve şifa konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Başak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Venüs Başak enerjisi, partnerden analiz, ustalık, pratik fayda ve şifa anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. analiz, ustalık, pratik fayda ve şifa gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; analiz, ustalık, pratik fayda ve şifa potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Terazi": {
+      "summary": "Venüs Terazi burcunda: Uyum, estetik, diplomasi, adalet ve ortaklık.",
+      "karakter": "Venüs Terazi yerleşimi, harita sahibinin aşk dili, estetik değerler ve çekim gücü alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; romantik bağ kurma ve özdeğer algısı arayışını uyum, estetik, diplomasi, adalet ve ortaklık vasıtasıyla somutlaştırır. İçsel dünyasında Terazi burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Uyum, estetik, diplomasi, adalet ve ortaklık konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Terazi burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Venüs Terazi enerjisi, partnerden uyum, estetik, diplomasi, adalet ve ortaklık anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. uyum, estetik, diplomasi, adalet ve ortaklık gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; uyum, estetik, diplomasi, adalet ve ortaklık potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Akrep": {
+      "summary": "Venüs Akrep burcunda: Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm.",
+      "karakter": "Venüs Akrep yerleşimi, harita sahibinin aşk dili, estetik değerler ve çekim gücü alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; romantik bağ kurma ve özdeğer algısı arayışını tutku, sezgisel güç, psikolojik derinlik ve dönüşüm vasıtasıyla somutlaştırır. İçsel dünyasında Akrep burcunun yönetici gezegeni Mars ve Plüton enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Akrep burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Venüs Akrep enerjisi, partnerden tutku, sezgisel güç, psikolojik derinlik ve dönüşüm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. tutku, sezgisel güç, psikolojik derinlik ve dönüşüm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; tutku, sezgisel güç, psikolojik derinlik ve dönüşüm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yay": {
+      "summary": "Venüs Yay burcunda: Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik.",
+      "karakter": "Venüs Yay yerleşimi, harita sahibinin aşk dili, estetik değerler ve çekim gücü alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; romantik bağ kurma ve özdeğer algısı arayışını hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik vasıtasıyla somutlaştırır. İçsel dünyasında Yay burcunun yönetici gezegeni Jüpiter enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yay burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Venüs Yay enerjisi, partnerden hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Oğlak": {
+      "summary": "Venüs Oğlak burcunda: Disiplin, sorumluluk, kalıcı başarı ve otorite.",
+      "karakter": "Venüs Oğlak yerleşimi, harita sahibinin aşk dili, estetik değerler ve çekim gücü alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; romantik bağ kurma ve özdeğer algısı arayışını disiplin, sorumluluk, kalıcı başarı ve otorite vasıtasıyla somutlaştırır. İçsel dünyasında Oğlak burcunun yönetici gezegeni Satürn enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Disiplin, sorumluluk, kalıcı başarı ve otorite konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Oğlak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Venüs Oğlak enerjisi, partnerden disiplin, sorumluluk, kalıcı başarı ve otorite anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. disiplin, sorumluluk, kalıcı başarı ve otorite gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; disiplin, sorumluluk, kalıcı başarı ve otorite potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Kova": {
+      "summary": "Venüs Kova burcunda: Özgünlük, kolektif idealler, devrimci zeka ve hümanizm.",
+      "karakter": "Venüs Kova yerleşimi, harita sahibinin aşk dili, estetik değerler ve çekim gücü alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; romantik bağ kurma ve özdeğer algısı arayışını özgünlük, kolektif idealler, devrimci zeka ve hümanizm vasıtasıyla somutlaştırır. İçsel dünyasında Kova burcunun yönetici gezegeni Satürn ve Uranüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Özgünlük, kolektif idealler, devrimci zeka ve hümanizm konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Kova burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Venüs Kova enerjisi, partnerden özgünlük, kolektif idealler, devrimci zeka ve hümanizm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. özgünlük, kolektif idealler, devrimci zeka ve hümanizm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; özgünlük, kolektif idealler, devrimci zeka ve hümanizm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Balık": {
+      "summary": "Venüs Balık burcunda: İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi.",
+      "karakter": "Venüs Balık yerleşimi, harita sahibinin aşk dili, estetik değerler ve çekim gücü alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; romantik bağ kurma ve özdeğer algısı arayışını i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi vasıtasıyla somutlaştırır. İçsel dünyasında Balık burcunun yönetici gezegeni Jüpiter ve Neptün enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Balık burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Venüs Balık enerjisi, partnerden i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    }
+  },
+  "Mars": {
+    "Koç": {
+      "summary": "Mars Koç burcunda: Cesaret, inisiyatif, bağımsızlık ve öncülük.",
+      "karakter": "Mars Koç yerleşimi, harita sahibinin eylem gücü, tutku ve mücadele azmi alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; inisiyatif alma, arzu ve cesaret arayışını cesaret, inisiyatif, bağımsızlık ve öncülük vasıtasıyla somutlaştırır. İçsel dünyasında Koç burcunun yönetici gezegeni Mars enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Cesaret, inisiyatif, bağımsızlık ve öncülük konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Koç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Mars Koç enerjisi, partnerden cesaret, inisiyatif, bağımsızlık ve öncülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. cesaret, inisiyatif, bağımsızlık ve öncülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; cesaret, inisiyatif, bağımsızlık ve öncülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Boğa": {
+      "summary": "Mars Boğa burcunda: İstikrar, güven, somut üretim ve sadakat.",
+      "karakter": "Mars Boğa yerleşimi, harita sahibinin eylem gücü, tutku ve mücadele azmi alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; inisiyatif alma, arzu ve cesaret arayışını i̇stikrar, güven, somut üretim ve sadakat vasıtasıyla somutlaştırır. İçsel dünyasında Boğa burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İstikrar, güven, somut üretim ve sadakat konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Boğa burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Mars Boğa enerjisi, partnerden i̇stikrar, güven, somut üretim ve sadakat anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. i̇stikrar, güven, somut üretim ve sadakat gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇stikrar, güven, somut üretim ve sadakat potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "İkizler": {
+      "summary": "Mars İkizler burcunda: Merak, iletişim, zihinsel esneklik ve çok yönlülük.",
+      "karakter": "Mars İkizler yerleşimi, harita sahibinin eylem gücü, tutku ve mücadele azmi alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; inisiyatif alma, arzu ve cesaret arayışını merak, iletişim, zihinsel esneklik ve çok yönlülük vasıtasıyla somutlaştırır. İçsel dünyasında İkizler burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Merak, iletişim, zihinsel esneklik ve çok yönlülük konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "İkizler burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Mars İkizler enerjisi, partnerden merak, iletişim, zihinsel esneklik ve çok yönlülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. merak, iletişim, zihinsel esneklik ve çok yönlülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; merak, iletişim, zihinsel esneklik ve çok yönlülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yengeç": {
+      "summary": "Mars Yengeç burcunda: Şefkat, duygusal derinlik, aidiyet ve koruyuculuk.",
+      "karakter": "Mars Yengeç yerleşimi, harita sahibinin eylem gücü, tutku ve mücadele azmi alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; inisiyatif alma, arzu ve cesaret arayışını şefkat, duygusal derinlik, aidiyet ve koruyuculuk vasıtasıyla somutlaştırır. İçsel dünyasında Yengeç burcunun yönetici gezegeni Ay enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Şefkat, duygusal derinlik, aidiyet ve koruyuculuk konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yengeç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Mars Yengeç enerjisi, partnerden şefkat, duygusal derinlik, aidiyet ve koruyuculuk anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. şefkat, duygusal derinlik, aidiyet ve koruyuculuk gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; şefkat, duygusal derinlik, aidiyet ve koruyuculuk potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Aslan": {
+      "summary": "Mars Aslan burcunda: Işıltı, yaratıcılık, cömert liderlik ve asalet.",
+      "karakter": "Mars Aslan yerleşimi, harita sahibinin eylem gücü, tutku ve mücadele azmi alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; inisiyatif alma, arzu ve cesaret arayışını işıltı, yaratıcılık, cömert liderlik ve asalet vasıtasıyla somutlaştırır. İçsel dünyasında Aslan burcunun yönetici gezegeni Güneş enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Işıltı, yaratıcılık, cömert liderlik ve asalet konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Aslan burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Mars Aslan enerjisi, partnerden işıltı, yaratıcılık, cömert liderlik ve asalet anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. işıltı, yaratıcılık, cömert liderlik ve asalet gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; işıltı, yaratıcılık, cömert liderlik ve asalet potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Başak": {
+      "summary": "Mars Başak burcunda: Analiz, ustalık, pratik fayda ve şifa.",
+      "karakter": "Mars Başak yerleşimi, harita sahibinin eylem gücü, tutku ve mücadele azmi alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; inisiyatif alma, arzu ve cesaret arayışını analiz, ustalık, pratik fayda ve şifa vasıtasıyla somutlaştırır. İçsel dünyasında Başak burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Analiz, ustalık, pratik fayda ve şifa konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Başak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Mars Başak enerjisi, partnerden analiz, ustalık, pratik fayda ve şifa anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. analiz, ustalık, pratik fayda ve şifa gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; analiz, ustalık, pratik fayda ve şifa potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Terazi": {
+      "summary": "Mars Terazi burcunda: Uyum, estetik, diplomasi, adalet ve ortaklık.",
+      "karakter": "Mars Terazi yerleşimi, harita sahibinin eylem gücü, tutku ve mücadele azmi alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; inisiyatif alma, arzu ve cesaret arayışını uyum, estetik, diplomasi, adalet ve ortaklık vasıtasıyla somutlaştırır. İçsel dünyasında Terazi burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Uyum, estetik, diplomasi, adalet ve ortaklık konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Terazi burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Mars Terazi enerjisi, partnerden uyum, estetik, diplomasi, adalet ve ortaklık anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. uyum, estetik, diplomasi, adalet ve ortaklık gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; uyum, estetik, diplomasi, adalet ve ortaklık potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Akrep": {
+      "summary": "Mars Akrep burcunda: Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm.",
+      "karakter": "Mars Akrep yerleşimi, harita sahibinin eylem gücü, tutku ve mücadele azmi alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; inisiyatif alma, arzu ve cesaret arayışını tutku, sezgisel güç, psikolojik derinlik ve dönüşüm vasıtasıyla somutlaştırır. İçsel dünyasında Akrep burcunun yönetici gezegeni Mars ve Plüton enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Akrep burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Mars Akrep enerjisi, partnerden tutku, sezgisel güç, psikolojik derinlik ve dönüşüm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. tutku, sezgisel güç, psikolojik derinlik ve dönüşüm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; tutku, sezgisel güç, psikolojik derinlik ve dönüşüm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yay": {
+      "summary": "Mars Yay burcunda: Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik.",
+      "karakter": "Mars Yay yerleşimi, harita sahibinin eylem gücü, tutku ve mücadele azmi alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; inisiyatif alma, arzu ve cesaret arayışını hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik vasıtasıyla somutlaştırır. İçsel dünyasında Yay burcunun yönetici gezegeni Jüpiter enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yay burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Mars Yay enerjisi, partnerden hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Oğlak": {
+      "summary": "Mars Oğlak burcunda: Disiplin, sorumluluk, kalıcı başarı ve otorite.",
+      "karakter": "Mars Oğlak yerleşimi, harita sahibinin eylem gücü, tutku ve mücadele azmi alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; inisiyatif alma, arzu ve cesaret arayışını disiplin, sorumluluk, kalıcı başarı ve otorite vasıtasıyla somutlaştırır. İçsel dünyasında Oğlak burcunun yönetici gezegeni Satürn enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Disiplin, sorumluluk, kalıcı başarı ve otorite konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Oğlak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Mars Oğlak enerjisi, partnerden disiplin, sorumluluk, kalıcı başarı ve otorite anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. disiplin, sorumluluk, kalıcı başarı ve otorite gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; disiplin, sorumluluk, kalıcı başarı ve otorite potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Kova": {
+      "summary": "Mars Kova burcunda: Özgünlük, kolektif idealler, devrimci zeka ve hümanizm.",
+      "karakter": "Mars Kova yerleşimi, harita sahibinin eylem gücü, tutku ve mücadele azmi alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; inisiyatif alma, arzu ve cesaret arayışını özgünlük, kolektif idealler, devrimci zeka ve hümanizm vasıtasıyla somutlaştırır. İçsel dünyasında Kova burcunun yönetici gezegeni Satürn ve Uranüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Özgünlük, kolektif idealler, devrimci zeka ve hümanizm konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Kova burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Mars Kova enerjisi, partnerden özgünlük, kolektif idealler, devrimci zeka ve hümanizm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. özgünlük, kolektif idealler, devrimci zeka ve hümanizm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; özgünlük, kolektif idealler, devrimci zeka ve hümanizm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Balık": {
+      "summary": "Mars Balık burcunda: İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi.",
+      "karakter": "Mars Balık yerleşimi, harita sahibinin eylem gücü, tutku ve mücadele azmi alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; inisiyatif alma, arzu ve cesaret arayışını i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi vasıtasıyla somutlaştırır. İçsel dünyasında Balık burcunun yönetici gezegeni Jüpiter ve Neptün enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Balık burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Mars Balık enerjisi, partnerden i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    }
+  },
+  "Jüpiter": {
+    "Koç": {
+      "summary": "Jüpiter Koç burcunda: Cesaret, inisiyatif, bağımsızlık ve öncülük.",
+      "karakter": "Jüpiter Koç yerleşimi, harita sahibinin bolluk, genişleme ve hayat felsefesi alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; büyüme, şans kapıları ve manevi vizyon arayışını cesaret, inisiyatif, bağımsızlık ve öncülük vasıtasıyla somutlaştırır. İçsel dünyasında Koç burcunun yönetici gezegeni Mars enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Cesaret, inisiyatif, bağımsızlık ve öncülük konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Koç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Jüpiter Koç enerjisi, partnerden cesaret, inisiyatif, bağımsızlık ve öncülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. cesaret, inisiyatif, bağımsızlık ve öncülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; cesaret, inisiyatif, bağımsızlık ve öncülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Boğa": {
+      "summary": "Jüpiter Boğa burcunda: İstikrar, güven, somut üretim ve sadakat.",
+      "karakter": "Jüpiter Boğa yerleşimi, harita sahibinin bolluk, genişleme ve hayat felsefesi alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; büyüme, şans kapıları ve manevi vizyon arayışını i̇stikrar, güven, somut üretim ve sadakat vasıtasıyla somutlaştırır. İçsel dünyasında Boğa burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İstikrar, güven, somut üretim ve sadakat konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Boğa burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Jüpiter Boğa enerjisi, partnerden i̇stikrar, güven, somut üretim ve sadakat anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. i̇stikrar, güven, somut üretim ve sadakat gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇stikrar, güven, somut üretim ve sadakat potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "İkizler": {
+      "summary": "Jüpiter İkizler burcunda: Merak, iletişim, zihinsel esneklik ve çok yönlülük.",
+      "karakter": "Jüpiter İkizler yerleşimi, harita sahibinin bolluk, genişleme ve hayat felsefesi alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; büyüme, şans kapıları ve manevi vizyon arayışını merak, iletişim, zihinsel esneklik ve çok yönlülük vasıtasıyla somutlaştırır. İçsel dünyasında İkizler burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Merak, iletişim, zihinsel esneklik ve çok yönlülük konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "İkizler burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Jüpiter İkizler enerjisi, partnerden merak, iletişim, zihinsel esneklik ve çok yönlülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. merak, iletişim, zihinsel esneklik ve çok yönlülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; merak, iletişim, zihinsel esneklik ve çok yönlülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yengeç": {
+      "summary": "Jüpiter Yengeç burcunda: Şefkat, duygusal derinlik, aidiyet ve koruyuculuk.",
+      "karakter": "Jüpiter Yengeç yerleşimi, harita sahibinin bolluk, genişleme ve hayat felsefesi alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; büyüme, şans kapıları ve manevi vizyon arayışını şefkat, duygusal derinlik, aidiyet ve koruyuculuk vasıtasıyla somutlaştırır. İçsel dünyasında Yengeç burcunun yönetici gezegeni Ay enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Şefkat, duygusal derinlik, aidiyet ve koruyuculuk konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yengeç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Jüpiter Yengeç enerjisi, partnerden şefkat, duygusal derinlik, aidiyet ve koruyuculuk anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. şefkat, duygusal derinlik, aidiyet ve koruyuculuk gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; şefkat, duygusal derinlik, aidiyet ve koruyuculuk potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Aslan": {
+      "summary": "Jüpiter Aslan burcunda: Işıltı, yaratıcılık, cömert liderlik ve asalet.",
+      "karakter": "Jüpiter Aslan yerleşimi, harita sahibinin bolluk, genişleme ve hayat felsefesi alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; büyüme, şans kapıları ve manevi vizyon arayışını işıltı, yaratıcılık, cömert liderlik ve asalet vasıtasıyla somutlaştırır. İçsel dünyasında Aslan burcunun yönetici gezegeni Güneş enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Işıltı, yaratıcılık, cömert liderlik ve asalet konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Aslan burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Jüpiter Aslan enerjisi, partnerden işıltı, yaratıcılık, cömert liderlik ve asalet anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. işıltı, yaratıcılık, cömert liderlik ve asalet gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; işıltı, yaratıcılık, cömert liderlik ve asalet potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Başak": {
+      "summary": "Jüpiter Başak burcunda: Analiz, ustalık, pratik fayda ve şifa.",
+      "karakter": "Jüpiter Başak yerleşimi, harita sahibinin bolluk, genişleme ve hayat felsefesi alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; büyüme, şans kapıları ve manevi vizyon arayışını analiz, ustalık, pratik fayda ve şifa vasıtasıyla somutlaştırır. İçsel dünyasında Başak burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Analiz, ustalık, pratik fayda ve şifa konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Başak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Jüpiter Başak enerjisi, partnerden analiz, ustalık, pratik fayda ve şifa anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. analiz, ustalık, pratik fayda ve şifa gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; analiz, ustalık, pratik fayda ve şifa potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Terazi": {
+      "summary": "Jüpiter Terazi burcunda: Uyum, estetik, diplomasi, adalet ve ortaklık.",
+      "karakter": "Jüpiter Terazi yerleşimi, harita sahibinin bolluk, genişleme ve hayat felsefesi alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; büyüme, şans kapıları ve manevi vizyon arayışını uyum, estetik, diplomasi, adalet ve ortaklık vasıtasıyla somutlaştırır. İçsel dünyasında Terazi burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Uyum, estetik, diplomasi, adalet ve ortaklık konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Terazi burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Jüpiter Terazi enerjisi, partnerden uyum, estetik, diplomasi, adalet ve ortaklık anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. uyum, estetik, diplomasi, adalet ve ortaklık gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; uyum, estetik, diplomasi, adalet ve ortaklık potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Akrep": {
+      "summary": "Jüpiter Akrep burcunda: Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm.",
+      "karakter": "Jüpiter Akrep yerleşimi, harita sahibinin bolluk, genişleme ve hayat felsefesi alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; büyüme, şans kapıları ve manevi vizyon arayışını tutku, sezgisel güç, psikolojik derinlik ve dönüşüm vasıtasıyla somutlaştırır. İçsel dünyasında Akrep burcunun yönetici gezegeni Mars ve Plüton enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Akrep burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Jüpiter Akrep enerjisi, partnerden tutku, sezgisel güç, psikolojik derinlik ve dönüşüm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. tutku, sezgisel güç, psikolojik derinlik ve dönüşüm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; tutku, sezgisel güç, psikolojik derinlik ve dönüşüm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yay": {
+      "summary": "Jüpiter Yay burcunda: Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik.",
+      "karakter": "Jüpiter Yay yerleşimi, harita sahibinin bolluk, genişleme ve hayat felsefesi alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; büyüme, şans kapıları ve manevi vizyon arayışını hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik vasıtasıyla somutlaştırır. İçsel dünyasında Yay burcunun yönetici gezegeni Jüpiter enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yay burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Jüpiter Yay enerjisi, partnerden hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Oğlak": {
+      "summary": "Jüpiter Oğlak burcunda: Disiplin, sorumluluk, kalıcı başarı ve otorite.",
+      "karakter": "Jüpiter Oğlak yerleşimi, harita sahibinin bolluk, genişleme ve hayat felsefesi alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; büyüme, şans kapıları ve manevi vizyon arayışını disiplin, sorumluluk, kalıcı başarı ve otorite vasıtasıyla somutlaştırır. İçsel dünyasında Oğlak burcunun yönetici gezegeni Satürn enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Disiplin, sorumluluk, kalıcı başarı ve otorite konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Oğlak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Jüpiter Oğlak enerjisi, partnerden disiplin, sorumluluk, kalıcı başarı ve otorite anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. disiplin, sorumluluk, kalıcı başarı ve otorite gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; disiplin, sorumluluk, kalıcı başarı ve otorite potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Kova": {
+      "summary": "Jüpiter Kova burcunda: Özgünlük, kolektif idealler, devrimci zeka ve hümanizm.",
+      "karakter": "Jüpiter Kova yerleşimi, harita sahibinin bolluk, genişleme ve hayat felsefesi alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; büyüme, şans kapıları ve manevi vizyon arayışını özgünlük, kolektif idealler, devrimci zeka ve hümanizm vasıtasıyla somutlaştırır. İçsel dünyasında Kova burcunun yönetici gezegeni Satürn ve Uranüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Özgünlük, kolektif idealler, devrimci zeka ve hümanizm konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Kova burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Jüpiter Kova enerjisi, partnerden özgünlük, kolektif idealler, devrimci zeka ve hümanizm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. özgünlük, kolektif idealler, devrimci zeka ve hümanizm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; özgünlük, kolektif idealler, devrimci zeka ve hümanizm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Balık": {
+      "summary": "Jüpiter Balık burcunda: İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi.",
+      "karakter": "Jüpiter Balık yerleşimi, harita sahibinin bolluk, genişleme ve hayat felsefesi alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; büyüme, şans kapıları ve manevi vizyon arayışını i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi vasıtasıyla somutlaştırır. İçsel dünyasında Balık burcunun yönetici gezegeni Jüpiter ve Neptün enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Balık burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Jüpiter Balık enerjisi, partnerden i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    }
+  },
+  "Satürn": {
+    "Koç": {
+      "summary": "Satürn Koç burcunda: Cesaret, inisiyatif, bağımsızlık ve öncülük.",
+      "karakter": "Satürn Koç yerleşimi, harita sahibinin karmik sorumluluk, zaman ve ustalık alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; disiplin, hayat sınavları ve kalıcı başarı arayışını cesaret, inisiyatif, bağımsızlık ve öncülük vasıtasıyla somutlaştırır. İçsel dünyasında Koç burcunun yönetici gezegeni Mars enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Cesaret, inisiyatif, bağımsızlık ve öncülük konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Koç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Satürn Koç enerjisi, partnerden cesaret, inisiyatif, bağımsızlık ve öncülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. cesaret, inisiyatif, bağımsızlık ve öncülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; cesaret, inisiyatif, bağımsızlık ve öncülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Boğa": {
+      "summary": "Satürn Boğa burcunda: İstikrar, güven, somut üretim ve sadakat.",
+      "karakter": "Satürn Boğa yerleşimi, harita sahibinin karmik sorumluluk, zaman ve ustalık alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; disiplin, hayat sınavları ve kalıcı başarı arayışını i̇stikrar, güven, somut üretim ve sadakat vasıtasıyla somutlaştırır. İçsel dünyasında Boğa burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İstikrar, güven, somut üretim ve sadakat konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Boğa burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Satürn Boğa enerjisi, partnerden i̇stikrar, güven, somut üretim ve sadakat anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. i̇stikrar, güven, somut üretim ve sadakat gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇stikrar, güven, somut üretim ve sadakat potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "İkizler": {
+      "summary": "Satürn İkizler burcunda: Merak, iletişim, zihinsel esneklik ve çok yönlülük.",
+      "karakter": "Satürn İkizler yerleşimi, harita sahibinin karmik sorumluluk, zaman ve ustalık alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; disiplin, hayat sınavları ve kalıcı başarı arayışını merak, iletişim, zihinsel esneklik ve çok yönlülük vasıtasıyla somutlaştırır. İçsel dünyasında İkizler burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Merak, iletişim, zihinsel esneklik ve çok yönlülük konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "İkizler burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Satürn İkizler enerjisi, partnerden merak, iletişim, zihinsel esneklik ve çok yönlülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. merak, iletişim, zihinsel esneklik ve çok yönlülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; merak, iletişim, zihinsel esneklik ve çok yönlülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yengeç": {
+      "summary": "Satürn Yengeç burcunda: Şefkat, duygusal derinlik, aidiyet ve koruyuculuk.",
+      "karakter": "Satürn Yengeç yerleşimi, harita sahibinin karmik sorumluluk, zaman ve ustalık alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; disiplin, hayat sınavları ve kalıcı başarı arayışını şefkat, duygusal derinlik, aidiyet ve koruyuculuk vasıtasıyla somutlaştırır. İçsel dünyasında Yengeç burcunun yönetici gezegeni Ay enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Şefkat, duygusal derinlik, aidiyet ve koruyuculuk konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yengeç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Satürn Yengeç enerjisi, partnerden şefkat, duygusal derinlik, aidiyet ve koruyuculuk anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. şefkat, duygusal derinlik, aidiyet ve koruyuculuk gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; şefkat, duygusal derinlik, aidiyet ve koruyuculuk potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Aslan": {
+      "summary": "Satürn Aslan burcunda: Işıltı, yaratıcılık, cömert liderlik ve asalet.",
+      "karakter": "Satürn Aslan yerleşimi, harita sahibinin karmik sorumluluk, zaman ve ustalık alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; disiplin, hayat sınavları ve kalıcı başarı arayışını işıltı, yaratıcılık, cömert liderlik ve asalet vasıtasıyla somutlaştırır. İçsel dünyasında Aslan burcunun yönetici gezegeni Güneş enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Işıltı, yaratıcılık, cömert liderlik ve asalet konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Aslan burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Satürn Aslan enerjisi, partnerden işıltı, yaratıcılık, cömert liderlik ve asalet anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. işıltı, yaratıcılık, cömert liderlik ve asalet gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; işıltı, yaratıcılık, cömert liderlik ve asalet potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Başak": {
+      "summary": "Satürn Başak burcunda: Analiz, ustalık, pratik fayda ve şifa.",
+      "karakter": "Satürn Başak yerleşimi, harita sahibinin karmik sorumluluk, zaman ve ustalık alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; disiplin, hayat sınavları ve kalıcı başarı arayışını analiz, ustalık, pratik fayda ve şifa vasıtasıyla somutlaştırır. İçsel dünyasında Başak burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Analiz, ustalık, pratik fayda ve şifa konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Başak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Satürn Başak enerjisi, partnerden analiz, ustalık, pratik fayda ve şifa anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. analiz, ustalık, pratik fayda ve şifa gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; analiz, ustalık, pratik fayda ve şifa potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Terazi": {
+      "summary": "Satürn Terazi burcunda: Uyum, estetik, diplomasi, adalet ve ortaklık.",
+      "karakter": "Satürn Terazi yerleşimi, harita sahibinin karmik sorumluluk, zaman ve ustalık alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; disiplin, hayat sınavları ve kalıcı başarı arayışını uyum, estetik, diplomasi, adalet ve ortaklık vasıtasıyla somutlaştırır. İçsel dünyasında Terazi burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Uyum, estetik, diplomasi, adalet ve ortaklık konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Terazi burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Satürn Terazi enerjisi, partnerden uyum, estetik, diplomasi, adalet ve ortaklık anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. uyum, estetik, diplomasi, adalet ve ortaklık gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; uyum, estetik, diplomasi, adalet ve ortaklık potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Akrep": {
+      "summary": "Satürn Akrep burcunda: Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm.",
+      "karakter": "Satürn Akrep yerleşimi, harita sahibinin karmik sorumluluk, zaman ve ustalık alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; disiplin, hayat sınavları ve kalıcı başarı arayışını tutku, sezgisel güç, psikolojik derinlik ve dönüşüm vasıtasıyla somutlaştırır. İçsel dünyasında Akrep burcunun yönetici gezegeni Mars ve Plüton enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Akrep burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Satürn Akrep enerjisi, partnerden tutku, sezgisel güç, psikolojik derinlik ve dönüşüm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. tutku, sezgisel güç, psikolojik derinlik ve dönüşüm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; tutku, sezgisel güç, psikolojik derinlik ve dönüşüm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yay": {
+      "summary": "Satürn Yay burcunda: Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik.",
+      "karakter": "Satürn Yay yerleşimi, harita sahibinin karmik sorumluluk, zaman ve ustalık alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; disiplin, hayat sınavları ve kalıcı başarı arayışını hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik vasıtasıyla somutlaştırır. İçsel dünyasında Yay burcunun yönetici gezegeni Jüpiter enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yay burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Satürn Yay enerjisi, partnerden hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Oğlak": {
+      "summary": "Satürn Oğlak burcunda: Disiplin, sorumluluk, kalıcı başarı ve otorite.",
+      "karakter": "Satürn Oğlak yerleşimi, harita sahibinin karmik sorumluluk, zaman ve ustalık alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; disiplin, hayat sınavları ve kalıcı başarı arayışını disiplin, sorumluluk, kalıcı başarı ve otorite vasıtasıyla somutlaştırır. İçsel dünyasında Oğlak burcunun yönetici gezegeni Satürn enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Disiplin, sorumluluk, kalıcı başarı ve otorite konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Oğlak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Satürn Oğlak enerjisi, partnerden disiplin, sorumluluk, kalıcı başarı ve otorite anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. disiplin, sorumluluk, kalıcı başarı ve otorite gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; disiplin, sorumluluk, kalıcı başarı ve otorite potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Kova": {
+      "summary": "Satürn Kova burcunda: Özgünlük, kolektif idealler, devrimci zeka ve hümanizm.",
+      "karakter": "Satürn Kova yerleşimi, harita sahibinin karmik sorumluluk, zaman ve ustalık alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; disiplin, hayat sınavları ve kalıcı başarı arayışını özgünlük, kolektif idealler, devrimci zeka ve hümanizm vasıtasıyla somutlaştırır. İçsel dünyasında Kova burcunun yönetici gezegeni Satürn ve Uranüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Özgünlük, kolektif idealler, devrimci zeka ve hümanizm konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Kova burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Satürn Kova enerjisi, partnerden özgünlük, kolektif idealler, devrimci zeka ve hümanizm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. özgünlük, kolektif idealler, devrimci zeka ve hümanizm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; özgünlük, kolektif idealler, devrimci zeka ve hümanizm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Balık": {
+      "summary": "Satürn Balık burcunda: İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi.",
+      "karakter": "Satürn Balık yerleşimi, harita sahibinin karmik sorumluluk, zaman ve ustalık alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; disiplin, hayat sınavları ve kalıcı başarı arayışını i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi vasıtasıyla somutlaştırır. İçsel dünyasında Balık burcunun yönetici gezegeni Jüpiter ve Neptün enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Balık burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Satürn Balık enerjisi, partnerden i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    }
+  },
+  "Uranüs": {
+    "Koç": {
+      "summary": "Uranüs Koç burcunda: Cesaret, inisiyatif, bağımsızlık ve öncülük.",
+      "karakter": "Uranüs Koç yerleşimi, harita sahibinin bireysel özgürlük ve kolektif uyanış alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; özgünlük, devrim ve tabuları yıkma arayışını cesaret, inisiyatif, bağımsızlık ve öncülük vasıtasıyla somutlaştırır. İçsel dünyasında Koç burcunun yönetici gezegeni Mars enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Cesaret, inisiyatif, bağımsızlık ve öncülük konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Koç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Uranüs Koç enerjisi, partnerden cesaret, inisiyatif, bağımsızlık ve öncülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. cesaret, inisiyatif, bağımsızlık ve öncülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; cesaret, inisiyatif, bağımsızlık ve öncülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Boğa": {
+      "summary": "Uranüs Boğa burcunda: İstikrar, güven, somut üretim ve sadakat.",
+      "karakter": "Uranüs Boğa yerleşimi, harita sahibinin bireysel özgürlük ve kolektif uyanış alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; özgünlük, devrim ve tabuları yıkma arayışını i̇stikrar, güven, somut üretim ve sadakat vasıtasıyla somutlaştırır. İçsel dünyasında Boğa burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İstikrar, güven, somut üretim ve sadakat konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Boğa burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Uranüs Boğa enerjisi, partnerden i̇stikrar, güven, somut üretim ve sadakat anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. i̇stikrar, güven, somut üretim ve sadakat gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇stikrar, güven, somut üretim ve sadakat potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "İkizler": {
+      "summary": "Uranüs İkizler burcunda: Merak, iletişim, zihinsel esneklik ve çok yönlülük.",
+      "karakter": "Uranüs İkizler yerleşimi, harita sahibinin bireysel özgürlük ve kolektif uyanış alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; özgünlük, devrim ve tabuları yıkma arayışını merak, iletişim, zihinsel esneklik ve çok yönlülük vasıtasıyla somutlaştırır. İçsel dünyasında İkizler burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Merak, iletişim, zihinsel esneklik ve çok yönlülük konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "İkizler burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Uranüs İkizler enerjisi, partnerden merak, iletişim, zihinsel esneklik ve çok yönlülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. merak, iletişim, zihinsel esneklik ve çok yönlülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; merak, iletişim, zihinsel esneklik ve çok yönlülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yengeç": {
+      "summary": "Uranüs Yengeç burcunda: Şefkat, duygusal derinlik, aidiyet ve koruyuculuk.",
+      "karakter": "Uranüs Yengeç yerleşimi, harita sahibinin bireysel özgürlük ve kolektif uyanış alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; özgünlük, devrim ve tabuları yıkma arayışını şefkat, duygusal derinlik, aidiyet ve koruyuculuk vasıtasıyla somutlaştırır. İçsel dünyasında Yengeç burcunun yönetici gezegeni Ay enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Şefkat, duygusal derinlik, aidiyet ve koruyuculuk konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yengeç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Uranüs Yengeç enerjisi, partnerden şefkat, duygusal derinlik, aidiyet ve koruyuculuk anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. şefkat, duygusal derinlik, aidiyet ve koruyuculuk gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; şefkat, duygusal derinlik, aidiyet ve koruyuculuk potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Aslan": {
+      "summary": "Uranüs Aslan burcunda: Işıltı, yaratıcılık, cömert liderlik ve asalet.",
+      "karakter": "Uranüs Aslan yerleşimi, harita sahibinin bireysel özgürlük ve kolektif uyanış alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; özgünlük, devrim ve tabuları yıkma arayışını işıltı, yaratıcılık, cömert liderlik ve asalet vasıtasıyla somutlaştırır. İçsel dünyasında Aslan burcunun yönetici gezegeni Güneş enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Işıltı, yaratıcılık, cömert liderlik ve asalet konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Aslan burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Uranüs Aslan enerjisi, partnerden işıltı, yaratıcılık, cömert liderlik ve asalet anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. işıltı, yaratıcılık, cömert liderlik ve asalet gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; işıltı, yaratıcılık, cömert liderlik ve asalet potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Başak": {
+      "summary": "Uranüs Başak burcunda: Analiz, ustalık, pratik fayda ve şifa.",
+      "karakter": "Uranüs Başak yerleşimi, harita sahibinin bireysel özgürlük ve kolektif uyanış alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; özgünlük, devrim ve tabuları yıkma arayışını analiz, ustalık, pratik fayda ve şifa vasıtasıyla somutlaştırır. İçsel dünyasında Başak burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Analiz, ustalık, pratik fayda ve şifa konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Başak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Uranüs Başak enerjisi, partnerden analiz, ustalık, pratik fayda ve şifa anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. analiz, ustalık, pratik fayda ve şifa gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; analiz, ustalık, pratik fayda ve şifa potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Terazi": {
+      "summary": "Uranüs Terazi burcunda: Uyum, estetik, diplomasi, adalet ve ortaklık.",
+      "karakter": "Uranüs Terazi yerleşimi, harita sahibinin bireysel özgürlük ve kolektif uyanış alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; özgünlük, devrim ve tabuları yıkma arayışını uyum, estetik, diplomasi, adalet ve ortaklık vasıtasıyla somutlaştırır. İçsel dünyasında Terazi burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Uyum, estetik, diplomasi, adalet ve ortaklık konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Terazi burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Uranüs Terazi enerjisi, partnerden uyum, estetik, diplomasi, adalet ve ortaklık anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. uyum, estetik, diplomasi, adalet ve ortaklık gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; uyum, estetik, diplomasi, adalet ve ortaklık potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Akrep": {
+      "summary": "Uranüs Akrep burcunda: Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm.",
+      "karakter": "Uranüs Akrep yerleşimi, harita sahibinin bireysel özgürlük ve kolektif uyanış alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; özgünlük, devrim ve tabuları yıkma arayışını tutku, sezgisel güç, psikolojik derinlik ve dönüşüm vasıtasıyla somutlaştırır. İçsel dünyasında Akrep burcunun yönetici gezegeni Mars ve Plüton enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Akrep burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Uranüs Akrep enerjisi, partnerden tutku, sezgisel güç, psikolojik derinlik ve dönüşüm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. tutku, sezgisel güç, psikolojik derinlik ve dönüşüm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; tutku, sezgisel güç, psikolojik derinlik ve dönüşüm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yay": {
+      "summary": "Uranüs Yay burcunda: Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik.",
+      "karakter": "Uranüs Yay yerleşimi, harita sahibinin bireysel özgürlük ve kolektif uyanış alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; özgünlük, devrim ve tabuları yıkma arayışını hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik vasıtasıyla somutlaştırır. İçsel dünyasında Yay burcunun yönetici gezegeni Jüpiter enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yay burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Uranüs Yay enerjisi, partnerden hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Oğlak": {
+      "summary": "Uranüs Oğlak burcunda: Disiplin, sorumluluk, kalıcı başarı ve otorite.",
+      "karakter": "Uranüs Oğlak yerleşimi, harita sahibinin bireysel özgürlük ve kolektif uyanış alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; özgünlük, devrim ve tabuları yıkma arayışını disiplin, sorumluluk, kalıcı başarı ve otorite vasıtasıyla somutlaştırır. İçsel dünyasında Oğlak burcunun yönetici gezegeni Satürn enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Disiplin, sorumluluk, kalıcı başarı ve otorite konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Oğlak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Uranüs Oğlak enerjisi, partnerden disiplin, sorumluluk, kalıcı başarı ve otorite anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. disiplin, sorumluluk, kalıcı başarı ve otorite gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; disiplin, sorumluluk, kalıcı başarı ve otorite potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Kova": {
+      "summary": "Uranüs Kova burcunda: Özgünlük, kolektif idealler, devrimci zeka ve hümanizm.",
+      "karakter": "Uranüs Kova yerleşimi, harita sahibinin bireysel özgürlük ve kolektif uyanış alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; özgünlük, devrim ve tabuları yıkma arayışını özgünlük, kolektif idealler, devrimci zeka ve hümanizm vasıtasıyla somutlaştırır. İçsel dünyasında Kova burcunun yönetici gezegeni Satürn ve Uranüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Özgünlük, kolektif idealler, devrimci zeka ve hümanizm konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Kova burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Uranüs Kova enerjisi, partnerden özgünlük, kolektif idealler, devrimci zeka ve hümanizm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. özgünlük, kolektif idealler, devrimci zeka ve hümanizm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; özgünlük, kolektif idealler, devrimci zeka ve hümanizm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Balık": {
+      "summary": "Uranüs Balık burcunda: İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi.",
+      "karakter": "Uranüs Balık yerleşimi, harita sahibinin bireysel özgürlük ve kolektif uyanış alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; özgünlük, devrim ve tabuları yıkma arayışını i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi vasıtasıyla somutlaştırır. İçsel dünyasında Balık burcunun yönetici gezegeni Jüpiter ve Neptün enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Balık burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Uranüs Balık enerjisi, partnerden i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    }
+  },
+  "Neptün": {
+    "Koç": {
+      "summary": "Neptün Koç burcunda: Cesaret, inisiyatif, bağımsızlık ve öncülük.",
+      "karakter": "Neptün Koç yerleşimi, harita sahibinin i̇lahi sevgi, sezgi ve mistik i̇lham alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; evrensel empati, teslimiyet ve sanatsal hayal gücü arayışını cesaret, inisiyatif, bağımsızlık ve öncülük vasıtasıyla somutlaştırır. İçsel dünyasında Koç burcunun yönetici gezegeni Mars enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Cesaret, inisiyatif, bağımsızlık ve öncülük konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Koç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Neptün Koç enerjisi, partnerden cesaret, inisiyatif, bağımsızlık ve öncülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. cesaret, inisiyatif, bağımsızlık ve öncülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; cesaret, inisiyatif, bağımsızlık ve öncülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Boğa": {
+      "summary": "Neptün Boğa burcunda: İstikrar, güven, somut üretim ve sadakat.",
+      "karakter": "Neptün Boğa yerleşimi, harita sahibinin i̇lahi sevgi, sezgi ve mistik i̇lham alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; evrensel empati, teslimiyet ve sanatsal hayal gücü arayışını i̇stikrar, güven, somut üretim ve sadakat vasıtasıyla somutlaştırır. İçsel dünyasında Boğa burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İstikrar, güven, somut üretim ve sadakat konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Boğa burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Neptün Boğa enerjisi, partnerden i̇stikrar, güven, somut üretim ve sadakat anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. i̇stikrar, güven, somut üretim ve sadakat gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇stikrar, güven, somut üretim ve sadakat potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "İkizler": {
+      "summary": "Neptün İkizler burcunda: Merak, iletişim, zihinsel esneklik ve çok yönlülük.",
+      "karakter": "Neptün İkizler yerleşimi, harita sahibinin i̇lahi sevgi, sezgi ve mistik i̇lham alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; evrensel empati, teslimiyet ve sanatsal hayal gücü arayışını merak, iletişim, zihinsel esneklik ve çok yönlülük vasıtasıyla somutlaştırır. İçsel dünyasında İkizler burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Merak, iletişim, zihinsel esneklik ve çok yönlülük konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "İkizler burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Neptün İkizler enerjisi, partnerden merak, iletişim, zihinsel esneklik ve çok yönlülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. merak, iletişim, zihinsel esneklik ve çok yönlülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; merak, iletişim, zihinsel esneklik ve çok yönlülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yengeç": {
+      "summary": "Neptün Yengeç burcunda: Şefkat, duygusal derinlik, aidiyet ve koruyuculuk.",
+      "karakter": "Neptün Yengeç yerleşimi, harita sahibinin i̇lahi sevgi, sezgi ve mistik i̇lham alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; evrensel empati, teslimiyet ve sanatsal hayal gücü arayışını şefkat, duygusal derinlik, aidiyet ve koruyuculuk vasıtasıyla somutlaştırır. İçsel dünyasında Yengeç burcunun yönetici gezegeni Ay enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Şefkat, duygusal derinlik, aidiyet ve koruyuculuk konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yengeç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Neptün Yengeç enerjisi, partnerden şefkat, duygusal derinlik, aidiyet ve koruyuculuk anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. şefkat, duygusal derinlik, aidiyet ve koruyuculuk gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; şefkat, duygusal derinlik, aidiyet ve koruyuculuk potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Aslan": {
+      "summary": "Neptün Aslan burcunda: Işıltı, yaratıcılık, cömert liderlik ve asalet.",
+      "karakter": "Neptün Aslan yerleşimi, harita sahibinin i̇lahi sevgi, sezgi ve mistik i̇lham alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; evrensel empati, teslimiyet ve sanatsal hayal gücü arayışını işıltı, yaratıcılık, cömert liderlik ve asalet vasıtasıyla somutlaştırır. İçsel dünyasında Aslan burcunun yönetici gezegeni Güneş enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Işıltı, yaratıcılık, cömert liderlik ve asalet konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Aslan burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Neptün Aslan enerjisi, partnerden işıltı, yaratıcılık, cömert liderlik ve asalet anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. işıltı, yaratıcılık, cömert liderlik ve asalet gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; işıltı, yaratıcılık, cömert liderlik ve asalet potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Başak": {
+      "summary": "Neptün Başak burcunda: Analiz, ustalık, pratik fayda ve şifa.",
+      "karakter": "Neptün Başak yerleşimi, harita sahibinin i̇lahi sevgi, sezgi ve mistik i̇lham alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; evrensel empati, teslimiyet ve sanatsal hayal gücü arayışını analiz, ustalık, pratik fayda ve şifa vasıtasıyla somutlaştırır. İçsel dünyasında Başak burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Analiz, ustalık, pratik fayda ve şifa konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Başak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Neptün Başak enerjisi, partnerden analiz, ustalık, pratik fayda ve şifa anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. analiz, ustalık, pratik fayda ve şifa gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; analiz, ustalık, pratik fayda ve şifa potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Terazi": {
+      "summary": "Neptün Terazi burcunda: Uyum, estetik, diplomasi, adalet ve ortaklık.",
+      "karakter": "Neptün Terazi yerleşimi, harita sahibinin i̇lahi sevgi, sezgi ve mistik i̇lham alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; evrensel empati, teslimiyet ve sanatsal hayal gücü arayışını uyum, estetik, diplomasi, adalet ve ortaklık vasıtasıyla somutlaştırır. İçsel dünyasında Terazi burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Uyum, estetik, diplomasi, adalet ve ortaklık konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Terazi burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Neptün Terazi enerjisi, partnerden uyum, estetik, diplomasi, adalet ve ortaklık anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. uyum, estetik, diplomasi, adalet ve ortaklık gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; uyum, estetik, diplomasi, adalet ve ortaklık potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Akrep": {
+      "summary": "Neptün Akrep burcunda: Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm.",
+      "karakter": "Neptün Akrep yerleşimi, harita sahibinin i̇lahi sevgi, sezgi ve mistik i̇lham alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; evrensel empati, teslimiyet ve sanatsal hayal gücü arayışını tutku, sezgisel güç, psikolojik derinlik ve dönüşüm vasıtasıyla somutlaştırır. İçsel dünyasında Akrep burcunun yönetici gezegeni Mars ve Plüton enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Akrep burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Neptün Akrep enerjisi, partnerden tutku, sezgisel güç, psikolojik derinlik ve dönüşüm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. tutku, sezgisel güç, psikolojik derinlik ve dönüşüm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; tutku, sezgisel güç, psikolojik derinlik ve dönüşüm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yay": {
+      "summary": "Neptün Yay burcunda: Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik.",
+      "karakter": "Neptün Yay yerleşimi, harita sahibinin i̇lahi sevgi, sezgi ve mistik i̇lham alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; evrensel empati, teslimiyet ve sanatsal hayal gücü arayışını hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik vasıtasıyla somutlaştırır. İçsel dünyasında Yay burcunun yönetici gezegeni Jüpiter enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yay burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Neptün Yay enerjisi, partnerden hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Oğlak": {
+      "summary": "Neptün Oğlak burcunda: Disiplin, sorumluluk, kalıcı başarı ve otorite.",
+      "karakter": "Neptün Oğlak yerleşimi, harita sahibinin i̇lahi sevgi, sezgi ve mistik i̇lham alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; evrensel empati, teslimiyet ve sanatsal hayal gücü arayışını disiplin, sorumluluk, kalıcı başarı ve otorite vasıtasıyla somutlaştırır. İçsel dünyasında Oğlak burcunun yönetici gezegeni Satürn enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Disiplin, sorumluluk, kalıcı başarı ve otorite konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Oğlak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Neptün Oğlak enerjisi, partnerden disiplin, sorumluluk, kalıcı başarı ve otorite anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. disiplin, sorumluluk, kalıcı başarı ve otorite gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; disiplin, sorumluluk, kalıcı başarı ve otorite potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Kova": {
+      "summary": "Neptün Kova burcunda: Özgünlük, kolektif idealler, devrimci zeka ve hümanizm.",
+      "karakter": "Neptün Kova yerleşimi, harita sahibinin i̇lahi sevgi, sezgi ve mistik i̇lham alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; evrensel empati, teslimiyet ve sanatsal hayal gücü arayışını özgünlük, kolektif idealler, devrimci zeka ve hümanizm vasıtasıyla somutlaştırır. İçsel dünyasında Kova burcunun yönetici gezegeni Satürn ve Uranüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Özgünlük, kolektif idealler, devrimci zeka ve hümanizm konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Kova burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Neptün Kova enerjisi, partnerden özgünlük, kolektif idealler, devrimci zeka ve hümanizm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. özgünlük, kolektif idealler, devrimci zeka ve hümanizm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; özgünlük, kolektif idealler, devrimci zeka ve hümanizm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Balık": {
+      "summary": "Neptün Balık burcunda: İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi.",
+      "karakter": "Neptün Balık yerleşimi, harita sahibinin i̇lahi sevgi, sezgi ve mistik i̇lham alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; evrensel empati, teslimiyet ve sanatsal hayal gücü arayışını i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi vasıtasıyla somutlaştırır. İçsel dünyasında Balık burcunun yönetici gezegeni Jüpiter ve Neptün enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Balık burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Neptün Balık enerjisi, partnerden i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    }
+  },
+  "Plüton": {
+    "Koç": {
+      "summary": "Plüton Koç burcunda: Cesaret, inisiyatif, bağımsızlık ve öncülük.",
+      "karakter": "Plüton Koç yerleşimi, harita sahibinin küllerinden doğma, güç ve ruhsal dönüşüm alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; psikolojik arınma, kriz yönetimi ve manyetizma arayışını cesaret, inisiyatif, bağımsızlık ve öncülük vasıtasıyla somutlaştırır. İçsel dünyasında Koç burcunun yönetici gezegeni Mars enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Cesaret, inisiyatif, bağımsızlık ve öncülük konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Koç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Plüton Koç enerjisi, partnerden cesaret, inisiyatif, bağımsızlık ve öncülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. cesaret, inisiyatif, bağımsızlık ve öncülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; cesaret, inisiyatif, bağımsızlık ve öncülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Boğa": {
+      "summary": "Plüton Boğa burcunda: İstikrar, güven, somut üretim ve sadakat.",
+      "karakter": "Plüton Boğa yerleşimi, harita sahibinin küllerinden doğma, güç ve ruhsal dönüşüm alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; psikolojik arınma, kriz yönetimi ve manyetizma arayışını i̇stikrar, güven, somut üretim ve sadakat vasıtasıyla somutlaştırır. İçsel dünyasında Boğa burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İstikrar, güven, somut üretim ve sadakat konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Boğa burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Plüton Boğa enerjisi, partnerden i̇stikrar, güven, somut üretim ve sadakat anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. i̇stikrar, güven, somut üretim ve sadakat gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇stikrar, güven, somut üretim ve sadakat potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "İkizler": {
+      "summary": "Plüton İkizler burcunda: Merak, iletişim, zihinsel esneklik ve çok yönlülük.",
+      "karakter": "Plüton İkizler yerleşimi, harita sahibinin küllerinden doğma, güç ve ruhsal dönüşüm alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; psikolojik arınma, kriz yönetimi ve manyetizma arayışını merak, iletişim, zihinsel esneklik ve çok yönlülük vasıtasıyla somutlaştırır. İçsel dünyasında İkizler burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Merak, iletişim, zihinsel esneklik ve çok yönlülük konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "İkizler burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Plüton İkizler enerjisi, partnerden merak, iletişim, zihinsel esneklik ve çok yönlülük anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. merak, iletişim, zihinsel esneklik ve çok yönlülük gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; merak, iletişim, zihinsel esneklik ve çok yönlülük potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yengeç": {
+      "summary": "Plüton Yengeç burcunda: Şefkat, duygusal derinlik, aidiyet ve koruyuculuk.",
+      "karakter": "Plüton Yengeç yerleşimi, harita sahibinin küllerinden doğma, güç ve ruhsal dönüşüm alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; psikolojik arınma, kriz yönetimi ve manyetizma arayışını şefkat, duygusal derinlik, aidiyet ve koruyuculuk vasıtasıyla somutlaştırır. İçsel dünyasında Yengeç burcunun yönetici gezegeni Ay enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Şefkat, duygusal derinlik, aidiyet ve koruyuculuk konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yengeç burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Plüton Yengeç enerjisi, partnerden şefkat, duygusal derinlik, aidiyet ve koruyuculuk anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. şefkat, duygusal derinlik, aidiyet ve koruyuculuk gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; şefkat, duygusal derinlik, aidiyet ve koruyuculuk potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Aslan": {
+      "summary": "Plüton Aslan burcunda: Işıltı, yaratıcılık, cömert liderlik ve asalet.",
+      "karakter": "Plüton Aslan yerleşimi, harita sahibinin küllerinden doğma, güç ve ruhsal dönüşüm alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; psikolojik arınma, kriz yönetimi ve manyetizma arayışını işıltı, yaratıcılık, cömert liderlik ve asalet vasıtasıyla somutlaştırır. İçsel dünyasında Aslan burcunun yönetici gezegeni Güneş enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Işıltı, yaratıcılık, cömert liderlik ve asalet konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Aslan burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Plüton Aslan enerjisi, partnerden işıltı, yaratıcılık, cömert liderlik ve asalet anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. işıltı, yaratıcılık, cömert liderlik ve asalet gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; işıltı, yaratıcılık, cömert liderlik ve asalet potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Başak": {
+      "summary": "Plüton Başak burcunda: Analiz, ustalık, pratik fayda ve şifa.",
+      "karakter": "Plüton Başak yerleşimi, harita sahibinin küllerinden doğma, güç ve ruhsal dönüşüm alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; psikolojik arınma, kriz yönetimi ve manyetizma arayışını analiz, ustalık, pratik fayda ve şifa vasıtasıyla somutlaştırır. İçsel dünyasında Başak burcunun yönetici gezegeni Merkür enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Analiz, ustalık, pratik fayda ve şifa konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Başak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Plüton Başak enerjisi, partnerden analiz, ustalık, pratik fayda ve şifa anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. analiz, ustalık, pratik fayda ve şifa gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; analiz, ustalık, pratik fayda ve şifa potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Terazi": {
+      "summary": "Plüton Terazi burcunda: Uyum, estetik, diplomasi, adalet ve ortaklık.",
+      "karakter": "Plüton Terazi yerleşimi, harita sahibinin küllerinden doğma, güç ve ruhsal dönüşüm alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; psikolojik arınma, kriz yönetimi ve manyetizma arayışını uyum, estetik, diplomasi, adalet ve ortaklık vasıtasıyla somutlaştırır. İçsel dünyasında Terazi burcunun yönetici gezegeni Venüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Uyum, estetik, diplomasi, adalet ve ortaklık konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Terazi burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Plüton Terazi enerjisi, partnerden uyum, estetik, diplomasi, adalet ve ortaklık anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. uyum, estetik, diplomasi, adalet ve ortaklık gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; uyum, estetik, diplomasi, adalet ve ortaklık potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Akrep": {
+      "summary": "Plüton Akrep burcunda: Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm.",
+      "karakter": "Plüton Akrep yerleşimi, harita sahibinin küllerinden doğma, güç ve ruhsal dönüşüm alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; psikolojik arınma, kriz yönetimi ve manyetizma arayışını tutku, sezgisel güç, psikolojik derinlik ve dönüşüm vasıtasıyla somutlaştırır. İçsel dünyasında Akrep burcunun yönetici gezegeni Mars ve Plüton enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Tutku, sezgisel güç, psikolojik derinlik ve dönüşüm konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Akrep burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Plüton Akrep enerjisi, partnerden tutku, sezgisel güç, psikolojik derinlik ve dönüşüm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. tutku, sezgisel güç, psikolojik derinlik ve dönüşüm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; tutku, sezgisel güç, psikolojik derinlik ve dönüşüm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Yay": {
+      "summary": "Plüton Yay burcunda: Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik.",
+      "karakter": "Plüton Yay yerleşimi, harita sahibinin küllerinden doğma, güç ve ruhsal dönüşüm alanında son derece belirgin bir mizaç yaratır. Kişi Ateş elementinin getirdiği doğallıkla hareket eder; psikolojik arınma, kriz yönetimi ve manyetizma arayışını hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik vasıtasıyla somutlaştırır. İçsel dünyasında Yay burcunun yönetici gezegeni Jüpiter enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik konusunda doğuştan gelen üstün kavrayış, Ateş niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Yay burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Plüton Yay enerjisi, partnerden hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Ateş elementinin sunduğu stratejik avantajlarla hareket eder. hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; hakikat arayışı, felsefi vizyon, özgürlük ve iyimserlik potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Oğlak": {
+      "summary": "Plüton Oğlak burcunda: Disiplin, sorumluluk, kalıcı başarı ve otorite.",
+      "karakter": "Plüton Oğlak yerleşimi, harita sahibinin küllerinden doğma, güç ve ruhsal dönüşüm alanında son derece belirgin bir mizaç yaratır. Kişi Toprak elementinin getirdiği doğallıkla hareket eder; psikolojik arınma, kriz yönetimi ve manyetizma arayışını disiplin, sorumluluk, kalıcı başarı ve otorite vasıtasıyla somutlaştırır. İçsel dünyasında Oğlak burcunun yönetici gezegeni Satürn enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Disiplin, sorumluluk, kalıcı başarı ve otorite konusunda doğuştan gelen üstün kavrayış, Toprak niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Oğlak burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında öncü niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Plüton Oğlak enerjisi, partnerden disiplin, sorumluluk, kalıcı başarı ve otorite anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Toprak elementinin sunduğu stratejik avantajlarla hareket eder. disiplin, sorumluluk, kalıcı başarı ve otorite gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; disiplin, sorumluluk, kalıcı başarı ve otorite potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Kova": {
+      "summary": "Plüton Kova burcunda: Özgünlük, kolektif idealler, devrimci zeka ve hümanizm.",
+      "karakter": "Plüton Kova yerleşimi, harita sahibinin küllerinden doğma, güç ve ruhsal dönüşüm alanında son derece belirgin bir mizaç yaratır. Kişi Hava elementinin getirdiği doğallıkla hareket eder; psikolojik arınma, kriz yönetimi ve manyetizma arayışını özgünlük, kolektif idealler, devrimci zeka ve hümanizm vasıtasıyla somutlaştırır. İçsel dünyasında Kova burcunun yönetici gezegeni Satürn ve Uranüs enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "Özgünlük, kolektif idealler, devrimci zeka ve hümanizm konusunda doğuştan gelen üstün kavrayış, Hava niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Kova burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında sabit niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Plüton Kova enerjisi, partnerden özgünlük, kolektif idealler, devrimci zeka ve hümanizm anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Hava elementinin sunduğu stratejik avantajlarla hareket eder. özgünlük, kolektif idealler, devrimci zeka ve hümanizm gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; özgünlük, kolektif idealler, devrimci zeka ve hümanizm potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    },
+    "Balık": {
+      "summary": "Plüton Balık burcunda: İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi.",
+      "karakter": "Plüton Balık yerleşimi, harita sahibinin küllerinden doğma, güç ve ruhsal dönüşüm alanında son derece belirgin bir mizaç yaratır. Kişi Su elementinin getirdiği doğallıkla hareket eder; psikolojik arınma, kriz yönetimi ve manyetizma arayışını i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi vasıtasıyla somutlaştırır. İçsel dünyasında Balık burcunun yönetici gezegeni Jüpiter ve Neptün enerjisini güçlü bir biçimde taşır.",
+      "gucluYonler": "İlahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi konusunda doğuştan gelen üstün kavrayış, Su niteliğinin sağladığı doğal akış, kriz anlarında sarsılmaz bir duruş ve hedeflere sadakatle bağlanabilme yeteneği.",
+      "golgeYonler": "Balık burcunun aşırıya kaçan enerjisinde takılı kalma riski; dengesizlik anında değişken niteliğin getirdiği aşırı inatçılık veya sabırsızlık; duygusal veya zihinsel esnekliği yitirme tehlikesi.",
+      "askVeIliskiler": "İlişkilerde Plüton Balık enerjisi, partnerden i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi anlayışı ve derin bir samimiyet bekler. Güven kurulduğunda son derece sadık, besleyici ve karşılıklı gelişimi destekleyen bir ortaklık inşa eder.",
+      "kariyerVePara": "Çalışma hayatında Su elementinin sunduğu stratejik avantajlarla hareket eder. i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi gerektiren mesleklerde hızla takdir toplar; maddi ve manevi hedeflerine kararlılıkla ulaşır.",
+      "karmikDers": "Bu yerleşimin ruha yüklediği tekamül dersi; i̇lahi teslimiyet, evrensel empati, sanatsal ilham ve koşulsuz sevgi potansiyelini bencillikten arındırarak hem kendi hayatını hem de etrafındaki dünyayı güzelleştirecek bir bilgeliğe dönüştürmektir."
+    }
+  }
+};
+
+export const KARMIC_NODE_AXIS_INTERPRETATIONS: Record<string, {
+  title: string;
+  pastLifeKarma: string;
+  soulMission: string;
+  releaseAdvice: string;
+  karmicGift: string;
+}> = {
+  "Koç": {
+    "title": "Kuzey Düğüm Koç / Güney Düğüm Terazi: Bağımsızlık ve Cesaret İnisiyatifi",
+    "pastLifeKarma": "Geçmiş yaşamlarda sürekli başkalarının beklentilerini karşılamaya çalışmış, ilişkilerde onay bağımlılığı geliştirmiş ve yalnız kalma korkusuyla kendi isteklerinizi feda etmişsiniz. Adalet ve uyum sağlama adına kendi kimliğinizden vazgeçme karması taşımaktasınız.",
+    "soulMission": "Bu yaşamdaki kadersel rotanız; kendi ayaklarınız üzerinde durmayı öğrenmek, cesaretle inisiyatif almak, gerektiğinde çatışmaktan korkmamak ve bağımsız bireysel kimliğinizi inşa etmektir. Kendi kaderinizin kahramanı olmalısınız.",
+    "releaseAdvice": "Sürekli onay arayışını, aşırı kararsızlığı, başkalarını memnun etme takıntısını ve yalnız kalma korkusunu geride bırakmalısınız.",
+    "karmicGift": "Adil, bağımsız, öncü ve başkalarına cesaret aşılayan ilham verici bir liderlik gücü."
+  },
+  "Boğa": {
+    "title": "Kuzey Düğüm Boğa / Güney Düğüm Akrep: İçsel Güven ve Kendi Değerini İnşa Etme",
+    "pastLifeKarma": "Geçmiş yaşamlarda yoğun krizler, güç savaşları, ihanetler, travmatik kayıplar ve başkalarının kaynaklarına aşırı bağımlılık deneyimlemişsiniz. Her an bir tehlike kapıdaymış gibi tetikte olma ve krizlerden beslenme karması getirmişsiniz.",
+    "soulMission": "Bu yaşamdaki kadersel rotanız; sükuneti, huzuru, doğallığı ve kendi öz kaynaklarınızla sağlam bir güven alanı inşa etmeyi öğrenmektir. Kendi emeğinizle üretmeli, hayata güvenmeli ve basit mutlulukların kıymetini bilmelisiniz.",
+    "releaseAdvice": "Sürekli kriz ve şüphe üretmeyi, başkalarını kontrol etme takıntısını, intikam duygusunu ve kurban-kurtarıcı rollerini bırakmalısınız.",
+    "karmicGift": "Sarsılmaz bir içsel huzur, üretkenlik bereketi, sağlam karakter ve güven veren güvenilirlik."
+  },
+  "İkizler": {
+    "title": "Kuzey Düğüm İkizler / Güney Düğüm Yay: Dinleme Sanatı, Merak ve Zihinsel Esneklik",
+    "pastLifeKarma": "Geçmiş yaşamlarda bilge, din adamı, filozof veya gezgin olarak yaşamış; her şeyi bildiğini varsayan dogmatik ve yargılayıcı bir zihniyet geliştirmişsiniz. İnsanların arasına karışmak yerine yüksek fildişi kulelerden ahkam kesme karması bulunmaktadır.",
+    "soulMission": "Bu yaşamdaki kadersel rotanız; dinlemeyi öğrenmek, peşin hükümlerden sıyrılmak, çocuksu bir merakla soru sormak ve insanlarla doğrudan, samimi iletişim köprüleri kurmaktır. Gerçeği tekeline almak yerine her fikirden öğrenmeye açık olmalısınız.",
+    "releaseAdvice": "Fanatizmi, kibirli bilgelik taslamayı, genellemelerle insanları etiketlemeyi ve detayları küçümsemeyi bırakmalısınız.",
+    "karmicGift": "Kelimelerin büyücüsü olma, insanları bir araya getiren köprü zihniyet ve esnek problem çözme kabiliyeti."
+  },
+  "Yengeç": {
+    "title": "Kuzey Düğüm Yengeç / Güney Düğüm Oğlak: Kalbini Açmak, Şefkat ve Duygusal Yuva",
+    "pastLifeKarma": "Geçmiş yaşamlarda katı görev insanı, yüksek rütbeli yönetici veya otorite figürü olarak yaşamış; duyguları bir zayıflık olarak görüp bastırmışsınız. Sadece statü, başarı ve saygınlık için duygusal sıcaklıktan feragat etme karması taşımaktasınız.",
+    "soulMission": "Bu yaşamdaki kadersel rotanız; duygularınızı özgürce ifade etmek, kalbinizi açmak, şefkat göstermek ve ruhsal olarak besleyici bir aile ve yuva ortamı kurmaktır. Savunmasız olmanın en büyük cesaret olduğunu kavramalısınız.",
+    "releaseAdvice": "Duygusal duvarları, aşırı işkolikliği, insanları kontrol etme ihtiyacını ve zayıf görünme korkusunu bırakmalısınız.",
+    "karmicGift": "Muazzam bir sezgisel bilgelik, derin bir şefkat, koşulsuz sevgi ve ruhları sarıp sarmalayan anaç koruyuculuk."
+  },
+  "Aslan": {
+    "title": "Kuzey Düğüm Aslan / Güney Düğüm Kova: Sahneye Çıkmak, Yaratıcı Özgüven ve Kalpten Yaşamak",
+    "pastLifeKarma": "Geçmiş yaşamlarda kalabalıklar arasında kaybolmuş, kendinizi bir grubun veya davanın arkasına saklamış, duygusal olarak mesafeli ve entelektüel olarak soğuk kalmışsınız. Kendi bireysel ışığınızı parlatmaktan çekinme karması getirmişsiniz.",
+    "soulMission": "Bu yaşamdaki kadersel rotanız; sahnenin merkezine geçmek, kalbinizin sesini dinlemek, yaratıcılığınızı cesurca sergilemek ve bireysel varlığınızla parıldamaktır. Başkalarının takdirine bağımlı olmadan kendi değerinizi kutlamalısınız.",
+    "releaseAdvice": "Duygusal soğukluğu, kalabalıkların arkasına saklanmayı, alaycı mesafeliliği ve sıradanlığa sığınmayı bırakmalısınız.",
+    "karmicGift": "Cömert bir yürek, insanları peşinden sürükleyen karizma, sanatsal deha ve ilham verici sıcak liderlik."
+  },
+  "Başak": {
+    "title": "Kuzey Düğüm Başak / Güney Düğüm Balık: Gerçekçilik, Somut Düzen ve Hizmet Ustalığı",
+    "pastLifeKarma": "Geçmiş yaşamlarda dünyevi sorumluluklardan kaçmış, hayaller dünyasında veya manastırlarda kaybolmuş, kurban rolünü benimsemişsiniz. Sınır çizememe, aşırı fedakarlık yüzünden tükenme ve somut dünyayı reddetme karması taşımaktasınız.",
+    "soulMission": "Bu yaşamdaki kadersel rotanız; ayaklarınızı yere sağlam basmak, hayatınıza pratik bir düzen getirmek, detaylara özen göstermek ve somut olarak insanlara faydalı olacak bir zanaat ve hizmet alanı geliştirmektir.",
+    "releaseAdvice": "Kurban psikolojisini, gerçeklerden kaçış bağımlılıklarını, dağınıklığı ve sınır koyamamayı bırakmalısınız.",
+    "karmicGift": "Üstün analiz yeteneği, şifacı eller, pratik problem çözme dehası ve hayatı kusursuzca düzenleme ustalığı."
+  },
+  "Terazi": {
+    "title": "Kuzey Düğüm Terazi / Güney Düğüm Koç: Biz Bilinci, Diplomasi ve Ortaklık Erdemi",
+    "pastLifeKarma": "Geçmiş yaşamlarda yalnız bir savaşçı, bencil bir lider veya tek başına mücadele eden biri olarak yaşamış; başkalarının duygularını ve ihtiyaçlarını göz ardı etmişsiniz. \"Önce ben\" diyerek ilişkileri yıpratma karması getirdiniz.",
+    "soulMission": "Bu yaşamdaki kadersel rotanız; ortaklık kurmayı, dinlemeyi, empati yapmayı, diplomasiyi ve gerçek bir sevgi bağı içinde \"biz\" olmayı öğrenmektir. Hayatınızı tamamlayacak ruhla eşit ve adil bir paylaşım kurmalısınız.",
+    "releaseAdvice": "Bencil sabırsızlığı, her şeyi tek başına yapma inadını, fevriliği ve başkalarının fikirlerini hiçe saymayı bırakmalısınız.",
+    "karmicGift": "Zarif bir diplomasi, estetik zevk, adaletli rehberlik ve hayat boyu sürecek derin, dengeli ortaklıklar."
+  },
+  "Akrep": {
+    "title": "Kuzey Düğüm Akrep / Güney Düğüm Boğa: Ruhsal Dönüşüm, Maddi Bağımlılıkları Bırakma ve Derinleşme",
+    "pastLifeKarma": "Geçmiş yaşamlarda sadece konfora, maddi mala, lükse ve statükoya yapışmış; değişime direnmişsiniz. Güvende hissetmek için ruhsal derinleşmeyi reddetme ve madde dünyasında uyuşma karması getirdiniz.",
+    "soulMission": "Bu yaşamdaki kadersel rotanız; kontrolü bırakıp ruhsal dönüşüme teslim olmak, görünmeyenin ardındaki psikolojik hakikatleri keşfetmek ve küllerinizden yeniden doğmayı öğrenmektir. Krizleri manevi büyümenin bir aracı yapmalısınız.",
+    "releaseAdvice": "Maddi takıntıları, değişime karşı katı direnci, cimriliği ve yüzeysel konfor alanına hapsolmayı bırakmalısınız.",
+    "karmicGift": "Dönüştürücü bir sezgi, muazzam bir içsel dayanıklılık, okült bilgelik ve başkalarının krizlerini iyileştirme gücü."
+  },
+  "Yay": {
+    "title": "Kuzey Düğüm Yay / Güney Düğüm İkizler: Yüksek Vizyon, İnanç ve Hayata Güven",
+    "pastLifeKarma": "Geçmiş yaşamlarda dedikodularla, yüzeysel dedikodu ve bilgi kırıntılarıyla vakit kaybetmiş, derinleşememiş ve hiçbir şeye tam olarak inanamamışsınız. Kararsızlık ve zihinsel kararsızlık içinde oradan oraya savrulma karması taşımaktasınız.",
+    "soulMission": "Bu yaşamdaki kadersel rotanız; hayatınıza bir anlam ve yüksek felsefe katmak, sezgilerinize ve evrene güvenmek, büyük resmi görmek ve sınırların ötesine açılmaktır. Kendi inanç sisteminizi inşa edip bilgeliğe yürümelisiniz.",
+    "releaseAdvice": "Yüzeysel kararsızlığı, dedikoduyu, zihinsel şüpheciliği ve küçük detaylarda boğulup büyük resmi kaçırmayı bırakmalısınız.",
+    "karmicGift": "Engin bir dünya görüşü, iyimserlik, manevi vizyon, uluslararası başarı ve bilgece bir hayat felsefesi."
+  },
+  "Oğlak": {
+    "title": "Kuzey Düğüm Oğlak / Güney Düğüm Yengeç: Duygusal Olgunluk, Sorumluluk ve Hayatın Liderliği",
+    "pastLifeKarma": "Geçmiş yaşamlarda aşırı bağımlı, çocuksu bir ruh haliyle başkalarının kanatları altına sığınmış, sorumluluk almaktan kaçmışsınız. Sürekli geçmişe ve nostaljiye takılıp bugünü inşa etmeme karması getirdiniz.",
+    "soulMission": "Bu yaşamdaki kadersel rotanız; kendi hayatınızın sorumluluğunu elinize almak, duygusal olgunluğa erişmek, sabırla hedeflerinize yürümek ve toplumda kalıcı bir saygınlık ve eser bırakmaktır. Kendi kendinizin koruyucusu olmalısınız.",
+    "releaseAdvice": "Çocuksu alınganlıkları, geçmişe takılı kalmayı, kurban rolünü ve sorumluluklardan kaçmayı bırakmalısınız.",
+    "karmicGift": "Kalıcı bir başarı, sarsılmaz bir saygınlık, kriz anlarında sığınılacak güvenli bir liman ve liderlik ustalığı."
+  },
+  "Kova": {
+    "title": "Kuzey Düğüm Kova / Güney Düğüm Aslan: Kolektif Vizyon, Birlik Bilinci ve İnsaniyet",
+    "pastLifeKarma": "Geçmiş yaşamlarda kral, kraliçe veya ayrıcalıklı bir soylu olarak yaşamış; herkesin size hizmet etmesini beklemişsiniz. Özel muamele görme isteği, aşırı ego ve kibri besleme karması taşımaktasınız.",
+    "soulMission": "Bu yaşamdaki kadersel rotanız; egonuzu kolektifin hayrına sunmak, insanlığa hizmet eden ideallere katılmak, herkesle eşit ve kardeşçe bağlar kurmak ve dünyayı daha adil bir geleceğe taşımaktır. Bir grubun değerli bir parçası olmayı öğrenmelisiniz.",
+    "releaseAdvice": "Kibri, aşırı gururu, sadece kendi çıkarını düşünmeyi ve başkalarından üstün olduğunu sanma yanılgısını bırakmalısınız.",
+    "karmicGift": "Çığır açan vizyonerlik, hümanist bir adalet duygusu, dahi düzeyinde yenilikçi fikirler ve dostluk gücü."
+  },
+  "Balık": {
+    "title": "Kuzey Düğüm Balık / Güney Düğüm Başak: İlahi Teslimiyet, Sezgi ve Koşulsuz Şefkat",
+    "pastLifeKarma": "Geçmiş yaşamlarda aşırı eleştirel, takıntılı, her şeyi kusursuz yapmaya çalışan ve kaygılarla kendini tüketen biri olarak yaşamışsınız. Kontrol edemediğiniz her şeyden korkma ve ruhsal alemi inkar etme karması getirdiniz.",
+    "soulMission": "Bu yaşamdaki kadersel rotanız; akışa teslim olmayı öğrenmek, evrensel plana güvenmek, mantığın bittiği yerde kalbin ve sezgilerin bilgeliğine sarılmak ve insanlara koşulsuz şefkat göstermektir. Kusurluluğun içindeki ilahi güzelliği görmelisiniz.",
+    "releaseAdvice": "Aşırı eleştirelliği, vesveseyi, mükemmeliyetçilik takıntısını ve her şeyi kontrol etme çabasını bırakmalısınız.",
+    "karmicGift": "Derin bir mistik sezgi, evrensel empati, sanat ve şifa yeteneği, ruhları teskin eden saf manevi ışık."
+  }
+};
+
+export const KARMIC_SATURN_INTERPRETATIONS: Record<string, {
+  karmicDebt: string;
+  lifeLesson: string;
+  masteryGift: string;
+}> = {
+  "Koç": {
+    "karmicDebt": "Geçmiş yaşamlarda öfke, saldırganlık veya sabırsızlıkla başkalarına zarar vermiş olma karması. Kendi gücünü yıkıcı kullanmış olmanın bedeli olarak bu hayatta inisiyatif alırken korku veya engellerle karşılaşma.",
+    "lifeLesson": "Öfkeyi ve dürtüleri disipline etmek, cesareti akılla birleştirmek ve yıkmadan, yapıcı bir şekilde öncülük etmeyi öğrenmek.",
+    "masteryGift": "Zamanla çelik gibi sağlam bir irade, sarsılmaz bir sabır ve asla pes etmeyen bilge bir savaşçı ruhu."
+  },
+  "Boğa": {
+    "karmicDebt": "Geçmiş yaşamlarda maddi kaynakları kötüye kullanma, aşırı cimrilik veya iflas deneyimleri. Maddi güvensizlik ve yokluk korkusu karması.",
+    "lifeLesson": "Kendi öz değerini dışsal maddiyatla değil, içsel erdemle ölçmeyi öğrenmek; sabırla, helal ve kalıcı zenginlik inşa etmek.",
+    "masteryGift": "Finansal deha, krizlerde bile batmayan sağlam bir ekonomi ve sarsılmaz bir özgüven kalesi."
+  },
+  "İkizler": {
+    "karmicDebt": "Geçmişte sözlerle insanları aldatma, dedikoduyla fitne çıkarma veya zihinsel yetenekleri kötüye kullanma karması. Anlaşılmama ve iletişimde engeller yaşama.",
+    "lifeLesson": "Sözlerin sorumluluğunu almak, derin ve doğru bilgiye odaklanmak ve yüzeysel gevezelikten uzak durmak.",
+    "masteryGift": "Usta bir yazar, bilge bir öğretmen, ciddiyetle dinlenen ve derin saygı uyandıran bir entelektüel otorite."
+  },
+  "Yengeç": {
+    "karmicDebt": "Geçmiş yaşamlarda aileyi terk etme, çocukları ihmal etme veya duygusal sorumluluklardan kaçma karması. Ailede soğukluk veya erken yaşta olgunlaşma mecburiyeti.",
+    "lifeLesson": "Kendi içindeki anne-baba şefkatini inşa etmek, duygusal sınırları sağlıklı korumak ve güvenli bir yuva kurmak.",
+    "masteryGift": "Ailesine ve sevdiklerine sarsılmaz bir güvenlik sunan, derin bir duygusal bilgelik ve koruyucu güç."
+  },
+  "Aslan": {
+    "karmicDebt": "Geçmişte kibirli bir tiran gibi davranma, alkış ve ilgiye bağımlı olma, başkalarının ışığını söndürme karması. Takdir görememe veya çocuklarla ilgili sınavlar.",
+    "lifeLesson": "Egoyu terbiye etmek, dış onay beklemeden kendi ışığını kalpten yaymak ve alçakgönüllü bir cömertlik geliştirmek.",
+    "masteryGift": "Gerçek, saygın, gösterişsiz ve etrafına ilham veren asil ve adil bir liderlik mevkii."
+  },
+  "Başak": {
+    "karmicDebt": "Geçmiş yaşamlarda çalışanları ezme, kibirli bir şekilde insanları kusurlu bulup aşağılama veya sağlığı ihmal etme karması.",
+    "lifeLesson": "Hizmet etmenin kutsallığını anlamak, mükemmeliyetçilik kaygısını bırakıp tevazu ile işini en iyi şekilde icra etmek.",
+    "masteryGift": "Eşsiz bir zanaatkarlık, şifa ilimleri ustalığı, kusursuz bir organizasyon yeteneği ve aranılan bir uzmanlık."
+  },
+  "Terazi": {
+    "karmicDebt": "Geçmişte evlilik yeminlerini bozma, adaletsiz yargılarda bulunma veya ortaklıkları suiistimal etme karması. İlişkilerde gecikmeler veya ağır sorumluluklar.",
+    "lifeLesson": "Evlilikte ve ortaklıklarda eşitlik, dürüstlük ve sadakatle bağ kurmak; geçici hevesler yerine kalıcı taahhütler vermek.",
+    "masteryGift": "Satürn burada yücelir! Örnek gösterilen, sarsılmaz bir evlilik, saygın bir adalet ve diplomasi kariyeri."
+  },
+  "Akrep": {
+    "karmicDebt": "Geçmişte okült güçleri, cinselliği veya başkalarının parasını manipülatif kullanma, ihanet etme veya intikam alma karması.",
+    "lifeLesson": "Korkularla yüzleşmek, şüpheciliği bırakıp güven inşa etmek, küllerinden arınarak doğmak ve ilahi adalete teslim olmak.",
+    "masteryGift": "Psikolojik deha, krizleri zenginliğe ve bilgeliğe dönüştürme mucizesi, yenilmez bir ruhsal dayanıklılık."
+  },
+  "Yay": {
+    "karmicDebt": "Geçmişte dini veya felsefi fanatizm, başkalarının inançlarını zorla bastırma veya boş vaatlerle insanları kandırma karması.",
+    "lifeLesson": "Kendi inancını sorgulayarak sağlam temellere oturtmak, hakikat yolunda sabırla yürümek ve dogmatizmden arınmak.",
+    "masteryGift": "Evrensel saygı duyulan bilge bir filozof, dürüst bir akademisyen ve yol gösterici bir ruhsal rehber."
+  },
+  "Oğlak": {
+    "karmicDebt": "Kendi burcunda! Geçmişte ağır sorumluluklar almış ama belki katılık yüzünden yalnız kalmış bir ruh. Başarıyı sadece kariyer ve statü sanma yanılgısı.",
+    "lifeLesson": "Zirveye giden yolda sabırla, ahlakla ve vicdanla yürümek; başarının yanında insanı ve kalbi de unutmamak.",
+    "masteryGift": "Zirvede kalıcı bir başarı, devlet veya kurumsal alanda büyük bir otorite, nesiller boyu anılacak kalıcı eserler."
+  },
+  "Kova": {
+    "karmicDebt": "Geçmişte dostlara ihanet etme, toplumsal davaları satma veya insanlara yukarıdan bakan kibirli bir yalnızlık yaşama karması.",
+    "lifeLesson": "Toplumun ve insanlığın iyiliği için yapı kurmak, vizyoner fikirleri somut projelere dönüştürmek ve gerçek dostluklar edinmek.",
+    "masteryGift": "Geleceği inşa eden bir dahi, sarsılmaz bir toplumsal itibar, küresel vizyon ve devrimci bir sistem kurucu."
+  },
+  "Balık": {
+    "karmicDebt": "Geçmişte kurban rolüne sığınarak sorumluluklardan kaçma, bağımlılıklara kapılma veya başkalarının sırtından geçinme karması.",
+    "lifeLesson": "Ruhsal sınırları net çizmek, sahte gurulardan uzak durup kalbindeki ilahi şefkati somut dünyada yapıcı bir şifaya dönüştürmek.",
+    "masteryGift": "Ermişlik mertebesinde bir ruhsal olgunluk, derin bir mistik bilgelik, koşulsuz sevgi ve ilahi bir iç huzur."
+  }
+};
+
+export const KARMIC_PLUTO_INTERPRETATIONS: Record<string, {
+  transformationTheme: string;
+  shadowRelease: string;
+  rebirthPower: string;
+}> = {
+  "Koç": {
+    "transformationTheme": "Bireysel irade ve savaşçı gücün kökten dönüşümü.",
+    "shadowRelease": "Baskı kurma, saldırganlık ve öfkeyle dünyayı dize getirme takıntısını bırakmak.",
+    "rebirthPower": "Korkusuz, ilkeli ve ilahi bir cesaretle adaleti savunan yenilmez bir güç."
+  },
+  "Boğa": {
+    "transformationTheme": "Maddi değerlerin, servetin ve özsaygının ölüm-yeniden doğum döngüsü.",
+    "shadowRelease": "Maddeye saplantılı bağlanma, kaybetme korkusu ve kontrol hırsından arınmak.",
+    "rebirthPower": "Yokluktan bile muazzam kalıcı zenginlik ve sarsılmaz bir içsel değer yaratma gücü."
+  },
+  "İkizler": {
+    "transformationTheme": "Düşünce biçiminin, zihnin ve iletişimin radikal dönüşümü.",
+    "shadowRelease": "Manipülatif sözler, bilgiyle başkalarını yönetme hırsı ve şüphecilikten kurtulmak.",
+    "rebirthPower": "Kelimeleriyle kitleleri uyandıran, tabuları yıkan dönüştürücü zihinsel deha."
+  },
+  "Yengeç": {
+    "transformationTheme": "Atalardan gelen duygusal travmaların ve köklerin şifalanması.",
+    "shadowRelease": "Duygusal şantaj, geçmişe bağımlılık ve kurban rolünü geride bırakmak.",
+    "rebirthPower": "Nesiller boyu aktarılan karmik yaraları iyileştiren derin bir koruyucu şifa gücü."
+  },
+  "Aslan": {
+    "transformationTheme": "Ego, güç arzusu ve yaratıcı otoritenin arınması.",
+    "shadowRelease": "Kibir, alkış bağımlılığı ve başkalarını gölgede bırakma hırsını bırakmak.",
+    "rebirthPower": "Saf kalpten doğan, kitleleri dönüştüren karizmatik ve cömert bir liderlik nuru."
+  },
+  "Başak": {
+    "transformationTheme": "Çalışma sistemlerinin, bedenin ve hizmet bilincinin kökten yenilenmesi.",
+    "shadowRelease": "Yıkıcı mükemmeliyetçilik, takıntılı eleştiri ve bedensel kaygılardan arınmak.",
+    "rebirthPower": "Tıbbi, biyolojik veya zihinsel düzeyde mucizevi şifa ve kusursuz yenilenme ustalığı."
+  },
+  "Terazi": {
+    "transformationTheme": "İlişkiler, evlilik ve ortaklık anlayışının köklü dönüşümü.",
+    "shadowRelease": "İlişkide kontrol ve güç savaşları, kıskançlık ve kaybetme korkusunu bırakmak.",
+    "rebirthPower": "İki ruhun birbirini küllerinden yeniden yarattığı derin, dönüştürücü ve kutsal bir birliktelik."
+  },
+  "Akrep": {
+    "transformationTheme": "Kendi burcunda! Küllerinden doğmanın, okültizmin ve psikolojik derinleşmenin zirvesi.",
+    "shadowRelease": "İntikam arzusu, şüphe, ölüm korkusu ve gizli manipülasyonları geride bırakmak.",
+    "rebirthPower": "Ölümün ötesine geçen bir ruhsal diriliş, muazzam sezgisel kavrayış ve başkalarını iyileştirme gücü."
+  },
+  "Yay": {
+    "transformationTheme": "İnanç sistemlerinin, dünya görüşünün ve felsefi tabuların yıkılıp yeniden doğuşu.",
+    "shadowRelease": "Fanatizm, ahlaki üstünlük taslama ve kendi doğrusunu herkese dayatma takıntısı.",
+    "rebirthPower": "Evrensel hakikati arayan, kitleleri aydınlatan ve yeni ufuklar açan vizyoner bir bilgelik."
+  },
+  "Oğlak": {
+    "transformationTheme": "Devlet, kurumsal yapılar, kariyer ve geleneksel otoritenin köklü yıkımı ve inşası.",
+    "shadowRelease": "Statü bağımlılığı, güç için duyguları ezme ve katı kontrolcülüğü bırakmak.",
+    "rebirthPower": "Çürümüş yapıları yıkıp yerine sağlam, ahlaklı ve kalıcı yeni bir sistem kurma kudreti."
+  },
+  "Kova": {
+    "transformationTheme": "Kolektif güç, teknoloji, özgürlük ve insanlık bilincinde devrim.",
+    "shadowRelease": "İnsanları soyutlaştırma, duygulardan kopuk teknolojik zorbalık ve dışlanma korkusu.",
+    "rebirthPower": "Toplumları özgürleştiren, eşitlik ve bilimin ışığında geleceği inşa eden öncü bir güç."
+  },
+  "Balık": {
+    "transformationTheme": "Kolektif bilinçaltının arınması, mistisizm ve ruhsal uyanış.",
+    "shadowRelease": "Manevi yanılsamalar, sahte peygamberler, kurban psikolojisi ve kaçış bağımlılıkları.",
+    "rebirthPower": "İlahi sevgiyle tüm yaraları saran, sınırsız empati ve evrensel bir aydınlanma."
+  }
+};
+
+export const KARMIC_CHIRON_INTERPRETATIONS: Record<string, {
+  coreWound: string;
+  healingGift: string;
+}> = {
+  "Koç": {
+    "coreWound": "Var olma hakkı ve benlik yarası. \"Ben kimim, kendi istediğim gibi yaşamaya hakkım var mı?\" sorgulaması.",
+    "healingGift": "Başkalarının kendi cesaretlerini ve özgüvenlerini bulmalarına yardım eden eşsiz bir rehberlik gücü."
+  },
+  "Boğa": {
+    "coreWound": "Özdeğer ve maddi güvenlik yarası. Kendini yetersiz hissetme, sevilmeye layık görmeme veya yokluk korkusu.",
+    "healingGift": "İnsanlara kendi içsel değerlerini ve zenginliklerini hatırlatan güven verici bir şifa enerjisi."
+  },
+  "İkizler": {
+    "coreWound": "İletişim ve zeka yarası. \"Beni kimse dinlemiyor, söylediklerim anlaşılmıyor veya aptal görünüyorum\" korkusu.",
+    "healingGift": "İfade güçlüğü çekenlerin sesi olma, kelimelerle ruhları iyileştirme ve usta bir dinleyicilik."
+  },
+  "Yengeç": {
+    "coreWound": "Aidiyet, kökler ve anaçlık yarası. Sevgisiz kalma, duygusal olarak terk edilme ve güvensizlik acısı.",
+    "healingGift": "Herkese güvenli bir liman sunabilen, kimsesizlerin ruhunu saran derin bir şefkat ve anaçlık."
+  },
+  "Aslan": {
+    "coreWound": "Yaratıcılık, görülme ve onaylanma yarası. Kendi ışığını göstermekten utanma, sahnede küçük düşme korkusu.",
+    "healingGift": "Başkalarının içindeki eşsiz yetenekleri ve yaratıcı cevheri parlatma, onları alkışlama ustalığı."
+  },
+  "Başak": {
+    "coreWound": "Kusursuzluk ve beden sağlığı yarası. Kendini sürekli eksik, yetersiz ve kusurlu hissetme vesvesesi.",
+    "healingGift": "İnsanların bedensel ve ruhsal yaralarını saran, alternatif tıp ve şifa sanatlarında usta bir şifacılık."
+  },
+  "Terazi": {
+    "coreWound": "İlişkiler ve ortaklık yarası. Yalnız kalma korkusu yüzünden adaletsiz ilişkilerde kendini kaybetme.",
+    "healingGift": "İnsanlar arasında barış, uzlaşma ve adil ilişkiler inşa eden zarif bir arabuluculuk gücü."
+  },
+  "Akrep": {
+    "coreWound": "Güven, ihanet ve kayıp yarası. En sevdikleri tarafından sırtından vurulma veya derin ölüm acısı.",
+    "healingGift": "En karanlık psikolojik krizleri aydınlatma, travma yaşamış insanları küllerinden ayağa kaldırma gücü."
+  },
+  "Yay": {
+    "coreWound": "İnanç, anlam ve hayat görüşü yarası. Hayatın anlamsız olduğu hissine kapılma veya inancını yitirme.",
+    "healingGift": "Umutsuz kalplere yeniden yaşama sevinci ve ilahi inanç aşılayan bilgece bir felsefi rehberlik."
+  },
+  "Oğlak": {
+    "coreWound": "Başarı, yetersizlik ve statü yarası. Ne kadar çalışırsa çalışsın hiçbir zaman yetmeyeceği yanılgısı.",
+    "healingGift": "Zorluklarla mücadele eden insanlara sabır, dayanıklılık ve zirveye giden yolu gösteren ustalık."
+  },
+  "Kova": {
+    "coreWound": "Aidiyet ve dışlanma yarası. Kendini hiçbir yere ait hissedememe, \"tuhaf ve yabancı\" görülme acısı.",
+    "healingGift": "Dışlanmış, farklı ve ezilmiş ruhlara kucak açan, onları geleceğin ışığıyla birleştiren hümanizm."
+  },
+  "Balık": {
+    "coreWound": "Evrensel acı ve sınır çekememe yarası. Tüm dünyanın acısını kendi içinde hissetme ve kurban olma.",
+    "healingGift": "İlahi boyuttan gelen saf şefkat, müzik, sanat ve dua ile ruhları arındıran mucizevi bir şifacılık."
+  }
+};
+
+export const KARMIC_VERTEX_INTERPRETATIONS: Record<string, {
+  fatedEncounters: string;
+  destinyCall: string;
+}> = {
+  "Koç": {
+    "fatedEncounters": "Hayatınıza aniden giren, sizi uykunuzdan uyandıran ve cesaretinizi sınayan öncü ve kararlı insanlar.",
+    "destinyCall": "Kendi liderliğinizi ilan etmeniz, korkularınızı aşıp tek başınıza adım atmanız gereken kadersel dönüm noktaları."
+  },
+  "Boğa": {
+    "fatedEncounters": "Sizi maddi ve manevi olarak köklendiren, huzur ve güven aşılayan, ayakları yere basan kadersel ortaklar.",
+    "destinyCall": "Kendi üretkenliğinize ve değerinize sahip çıkarak kalıcı bir hayat kurma yönünde kaçınılmaz kader çağrısı."
+  },
+  "İkizler": {
+    "fatedEncounters": "Sizi zihinsel olarak dönüştüren, yeni bilgiler getiren ve hayat yolunuzu bir sohbetle değiştiren insanlar.",
+    "destinyCall": "İletişim, yazarlık veya eğitim yoluyla kitlelerle bağ kurmanız için önünüze çıkan kadersel fırsatlar."
+  },
+  "Yengeç": {
+    "fatedEncounters": "Sizi duygusal olarak besleyen, aile bağı gibi derin bir sevgiyle bağlanan ruh eşleri ve manevi koruyucular.",
+    "destinyCall": "Kendi ruhsal yuvanızı ve koruyucu merhametinizi keşfetmeniz için hayatınıza dahil olan kadersel süreçler."
+  },
+  "Aslan": {
+    "fatedEncounters": "Sizi sahneye iten, yeteneklerinizi fark ettiren, yaratıcı ve ilham verici karizmatik figürler.",
+    "destinyCall": "Kendi özgün ışığınızı parlatmanız ve kalbinizin tutkusunu takip etmeniz için yaşanan kadersel uyanışlar."
+  },
+  "Başak": {
+    "fatedEncounters": "Hayatınıza düzen, şifa ve ustalık getiren, sizi pratik sorumluluklarla geliştiren insanlar.",
+    "destinyCall": "Bir uzmanlık ve hizmet alanında yeteneklerinizi mükemmelleştirmeniz için karşınıza çıkan kader kapıları."
+  },
+  "Terazi": {
+    "fatedEncounters": "Evlilik veya kadersel ortaklık yoluyla hayatınızı 180 derece değiştiren adil ve zarif ruh ortakları.",
+    "destinyCall": "İkili bir bağ içinde dengeyi, sevgiyi ve uzlaşmayı öğrenmeniz için düzenlenen ilahi karşılaşmalar."
+  },
+  "Akrep": {
+    "fatedEncounters": "Sizi ruhsal olarak sarsan, karanlık taraflarınızla yüzleştiren ve küllerinizden doğuran tutkulu ve güçlü ruhlar.",
+    "destinyCall": "Korkuları geride bırakıp derin bir ruhsal evrime adım atmanız için hazırlanan kadersel krizler."
+  },
+  "Yay": {
+    "fatedEncounters": "Ufkunuzu açan, yabancı kültürlerden veya uzak diyarlardan gelen bilge öğretmenler ve rehberler.",
+    "destinyCall": "Büyük resmi görmeniz, inancınızı tazelemeniz ve dünya çapında bir vizyona kavuşmanız için kaderin müdahalesi."
+  },
+  "Oğlak": {
+    "fatedEncounters": "Sizi olgunlaştıran, kariyerinizde dönüm noktası yaratan kıdemli, otoriter ve bilge kişiler.",
+    "destinyCall": "Kendi hayatınızın mimarı olmanız ve kalıcı bir miras bırakmanız için önünüze çıkan kadersel görevler."
+  },
+  "Kova": {
+    "fatedEncounters": "Sıradışı, vizyoner, devrimci ve sizi tabularınızdan özgürleştiren yenilikçi dostlar ve gruplar.",
+    "destinyCall": "Toplumsal bir amaca hizmet etmeniz ve bireysel özgürlüğünüzü kazanmanız için açılan kadersel kapılar."
+  },
+  "Balık": {
+    "fatedEncounters": "Ruhsal bağı olan, telepatik bir çekim hissettiğiniz, sanki bin yıldır tanıdığınız mistik insanlar.",
+    "destinyCall": "İlahi sevgiye teslim olmanız, affetmeniz ve evrensel bir şifa yolculuğuna çıkmanız için kadersel çağrılar."
+  }
+};
+
+export const KARMIC_LILITH_INTERPRETATIONS: Record<string, {
+  tabooTheme: string;
+  rawAuthenticity: string;
+}> = {
+  "Koç": {
+    "tabooTheme": "Bastırılmış öfke, tavizsiz savaşçı ruh ve bağımsızlık isyanı.",
+    "rawAuthenticity": "Korkusuzca hayır diyebilme, kendi arzularının peşinden gitme ve kimseye boyun eğmeme gücü."
+  },
+  "Boğa": {
+    "tabooTheme": "Tensel zevkler, beden tabuları ve mülkiyet sınırlarını aşma isteği.",
+    "rawAuthenticity": "Kendi bedenine ve zevklerine sahip çıkma, maddi bağımlılıklara meydan okuyan özgür bir özdeğer."
+  },
+  "İkizler": {
+    "tabooTheme": "Yasak fikirler, tabuları yıkan sözler ve sansüre karşı isyan.",
+    "rawAuthenticity": "Düşüncelerini korkusuzca dile getirme, toplumun tabu saydığı hakikatleri seslendirme cesareti."
+  },
+  "Yengeç": {
+    "tabooTheme": "Geleneksel anne-çocuk rollerini reddetme, aile tabularına başkaldırı.",
+    "rawAuthenticity": "Kalıplaşmış fedakarlığı reddedip kendi duygusal özgürlüğünü ve hakiki şefkatini yaşama gücü."
+  },
+  "Aslan": {
+    "tabooTheme": "Kendi parlaklığını bastırmayı reddetme, sahte alçakgönüllülüğe isyan.",
+    "rawAuthenticity": "Göz kamaştırıcı bir özgünlük, tavizsiz bir yaratıcılık ve gururla kendi krallığını kurma hakkı."
+  },
+  "Başak": {
+    "tabooTheme": "Hizmetçi rolünü reddetme, sahte düzene ve dayatılan kurallara isyan.",
+    "rawAuthenticity": "Kendi aklına güvenme, mükemmeliyetçilik baskısını kırıp ham doğallığı kucaklama cesareti."
+  },
+  "Terazi": {
+    "tabooTheme": "Sahte uyum için susmayı reddetme, evlilik ve ilişki tabularını yıkma.",
+    "rawAuthenticity": "Boyun eğmeyen bir adalet arayışı, eşit ve maskesiz bir aşk için sahte dengeleri bozma gücü."
+  },
+  "Akrep": {
+    "tabooTheme": "Yasak arzular, ölüm ve cinsellik tabuları, gücü doğrudan talep etme.",
+    "rawAuthenticity": "Büyüleyici bir manyetizma, manipülasyonlara boyun eğmeme ve karanlığı aydınlatma kudreti."
+  },
+  "Yay": {
+    "tabooTheme": "Dogmalara, din adamlarına ve dar kalıplı inanç sistemlerine isyan.",
+    "rawAuthenticity": "Sınır tanımayan bir özgürlük, kendi hakikatini arama cesareti ve evrensel bir göçebe ruh."
+  },
+  "Oğlak": {
+    "tabooTheme": "Geleneksel otoriteye ve katı bürokrasiye başkaldırı, statü oyunlarını reddetme.",
+    "rawAuthenticity": "Kendi kurallarını koyma, kimseden onay beklemeden kendi zirvesini tek başına inşa etme kudreti."
+  },
+  "Kova": {
+    "tabooTheme": "Sürü psikolojisine isyan, normallik dayatmasını paramparça etme.",
+    "rawAuthenticity": "Radikal bir özgünlük, toplumun ötesinde bir deha ve tavizsiz bir bireysel bağımsızlık."
+  },
+  "Balık": {
+    "tabooTheme": "Kurban rolünü reddetme, manevi manipülasyonlara ve suçluluk duygusuna başkaldırı.",
+    "rawAuthenticity": "Sınırsız mistik güç, sezgilerini kimsenin onayına sunmama ve saf ilahi özgürlük."
+  }
+};
+
+export const SYNASTRY_KARMIC_ASPECT_INTERPRETATIONS: Record<string, {
+  type: string;
+  desc: string;
+  significance: 'Çok Yüksek' | 'Yüksek' | 'Orta';
+}> = {
+  "Güneş-Kuzey Düğüm": {
+    "type": "Ruh Eşi / İkiz Alev",
+    "desc": "Güneş sahibi partner, Düğüm sahibinin bu hayattaki kadersel tekamülünü hızlandırır. Birlikteyken kendinizi geleceğe doğru büyüyor ve asıl kaderinizi yaşıyor gibi hissedersiniz.",
+    "significance": "Çok Yüksek"
+  },
+  "Ay-Kuzey Düğüm": {
+    "type": "Ruh Eşi / İkiz Alev",
+    "desc": "Derin bir duygusal kadersel çekim. Ay partneri, Düğüm sahibine ruhsal huzur ve kadersel yuva hissi sunar; ilişkinin ilk anından itibaren birbirinizi çok iyi tanıyor gibi hissedersiniz.",
+    "significance": "Çok Yüksek"
+  },
+  "Venüs-Kuzey Düğüm": {
+    "type": "Ruh Eşi / İkiz Alev",
+    "desc": "Klasik kadersel aşk işareti! Aşkınız sadece bir çekim değil, her iki ruhun da tekamülü için evren tarafından tasarlanmış ilahi bir hediyedir.",
+    "significance": "Çok Yüksek"
+  },
+  "Güneş-Güney Düğüm": {
+    "type": "Geçmiş Yaşam Bağlantısı",
+    "desc": "Çok güçlü bir geçmiş yaşam tanışıklığı. Birbirinizi ilk gördüğünüz anda gelen aşinalık hissi; ancak bu hayatta eski bağımlılıkları aşmak ve yeni bir bilinçle sevmek sınavınızdır.",
+    "significance": "Yüksek"
+  },
+  "Ay-Güney Düğüm": {
+    "type": "Geçmiş Yaşam Bağlantısı",
+    "desc": "Geçmiş yaşamlarda aile, eş veya çok yakın bir duygusal bağ paylaşılmış. Telepatik düzeyde bir anlayış vardır ancak geçmişin yaralarını birbirine yansıtmama dengesi kurulmalıdır.",
+    "significance": "Yüksek"
+  },
+  "Venüs-Güney Düğüm": {
+    "type": "Geçmiş Yaşam Bağlantısı",
+    "desc": "Geçmiş yaşamda yarım kalmış bir aşk veya evlilik sözleşmesi. Bu hayatta o sevgiyi tamamlamak, borçları helalleşerek şifalandırmak için bir aradasınız.",
+    "significance": "Yüksek"
+  },
+  "Satürn-Güneş": {
+    "type": "Karmik Borç & Sınav",
+    "desc": "Ciddi, ağırbaşlı ve zamanın testine tabi tutulan bir ilişki. Satürn partneri sorumluluk aşılar; sabır ve dürüstlük gösterildiğinde ömür boyu sürecek sarsılmaz bir kale inşa edilir.",
+    "significance": "Yüksek"
+  },
+  "Satürn-Venüs": {
+    "type": "Karmik Borç & Sınav",
+    "desc": "Sonsuz sadakat ve evlilik taahhüdü işareti. Kolay ve yüzeysel bir flört değildir; karşılıklı olgunlaşma ve fedakarlıkla zaman geçtikçe kıymeti katlanan bir bağdır.",
+    "significance": "Yüksek"
+  },
+  "Plüton-Güneş": {
+    "type": "Kadersel Dönüşüm",
+    "desc": "Karşı konulamaz, hipnotik bir manyetik çekim! Birbirinizin hayatına girdiğiniz andan itibaren hiçbir şey eskisi gibi kalmaz; egolar yıkılır ve ruhlar küllerinden doğar.",
+    "significance": "Çok Yüksek"
+  },
+  "Plüton-Ay": {
+    "type": "Kadersel Dönüşüm",
+    "desc": "Duygusal derinliğin doruk noktası. Birbirinizin en gizli yaralarını ve bilinçaltı sırlarını anında görürsünüz; derin bir psikolojik şifa veya yoğun bir tutku bağıdır.",
+    "significance": "Yüksek"
+  },
+  "Plüton-Venüs": {
+    "type": "Kadersel Dönüşüm",
+    "desc": "Aşkın en tutkulu, manyetik ve unutulmaz hali! Uzak kalamayacağınız kadar yoğun bir çekim vardır; güç savaşlarına girmeden saf sevgiye teslim olmak gerekir.",
+    "significance": "Çok Yüksek"
+  },
+  "Şiron-Venüs": {
+    "type": "Ruhsal Şifa",
+    "desc": "Karşılıklı kalp yaralarını saran ilahi bir şifa bağı. Partneriniz sizin sevgiye olan inancınızı tazeler, geçmişteki aşk acılarını unutturur ve kalbinizi yeniden açar.",
+    "significance": "Yüksek"
+  },
+  "Vertex-Güneş": {
+    "type": "Ruh Eşi / İkiz Alev",
+    "desc": "Kaderin kapısının açıldığı o an! Tesadüf süsü verilmiş kadersel bir karşılaşma; hayatınız bu insanla tanıştıktan sonra tamamen yeni bir yöne evrilir.",
+    "significance": "Çok Yüksek"
+  },
+  "Vertex-Venüs": {
+    "type": "Ruh Eşi / İkiz Alev",
+    "desc": "Kaderin bir araya getirdiği iki aşık. Karşılaşma anından itibaren kaçınılmaz bir ruh sözleşmesi yürürlüğe girer.",
+    "significance": "Çok Yüksek"
+  }
+};
+
 export const RETRO_INTERPRETATIONS: Record<string, string[]> = {
   "Merkür": [
-    "Merkür retrosunda iletişim ve planlama süreçlerinde gecikmeler yaşanabilir.",
-    "Eski konuşmalar ve yarım kalan meseleler yeniden gündeme gelebilir.",
-    "Teknolojik aksaklıklara karşı daha dikkatli olmak gerekebilir.",
-    "Karar vermeden önce iki kez düşünme ihtiyacı artabilir.",
-    "Geçmişten gelen mesajlar veya kişiler tekrar ortaya çıkabilir."
+    "Merkür Retro (R): Zihin dış dünyadan ziyade içsel hakikatlere odaklanır. Kişi standart düşünce kalıplarının ötesinde derin felsefi, sezgisel ve çok boyutlu bir kavrayışa sahiptir.",
+    "Geçmiş Yaşam Karması: Geçmiş yaşamlarda sözlerin sorumluluğu tam taşınmamış olabilir; bu yaşamda konuşmadan önce derinlemesine düşünme ve kelimelerin gücünü idrak etme dersi vardır.",
+    "Yaşam Rehberliği: Anlaşılmadığınızı düşündüğünüzde içe kapanmak yerine yazarak, araştırarak ve sanat yoluyla derin düşüncelerinizi ifade edin; sezgisel aklınız en büyük rehberinizdir."
   ],
   "Venüs": [
-    "Venüs retrosu ilişkiler ve maddi konularda geçmişi yeniden değerlendirme süreci yaratabilir.",
-    "Eski ilişkiler veya duygusal meseleler tekrar hatırlanabilir.",
-    "Harcamalarda daha temkinli olma ihtiyacı hissedilebilir.",
-    "Değer verdiğiniz konuları sorgulama eğilimi artabilir.",
-    "Estetik ve zevk konularında kararsızlık görülebilir."
+    "Venüs Retro (R): Aşkı, sevgiyi ve özdeğeri toplumun yüzeysel standartlarında değil, ruhun en derin köşelerinde arar. Sıradan flörtler yerine kadersel, zamansız ve ruhsal bağlar peşindedir.",
+    "Geçmiş Yaşam Karması: Geçmiş yaşamlarda ilişkilerde fedakarlık ve özsaygı dengesi sarsılmış olabilir. Bu hayatta başkalarının onayına bağımlı olmadan kendi öz sevgisini ve değerini inşa etme dersi vardır.",
+    "Yaşam Rehberliği: Sevgiyi dışarıda aramak yerine önce kendi kalbinize şefkat gösterin. Kadersel ruh eşiniz, kendi özdeğerinize tam olarak sahip çıktığınızda hayatınıza girecektir."
   ],
   "Mars": [
-    "Mars retrosunda motivasyon dalgalanmaları ve enerji düşüşleri görülebilir.",
-    "Yarım kalan işleri tamamlama isteği güçlenebilir.",
-    "Öfke kontrolü daha fazla önem kazanabilir.",
-    "Eyleme geçmeden önce plan yapma ihtiyacı artabilir.",
-    "Eski çatışmalar yeniden gündeme gelebilir."
+    "Mars Retro (R): Öfke ve mücadele enerjisi dışarıya taşkınlıkla değil, içsel bir irade ve odaklanmış bir stratejiyle akar. Dürtüsel kavgalar yerine derin planlar yaparak hedefine ulaşır.",
+    "Geçmiş Yaşam Karması: Geçmiş yaşamlarda gücün ve saldırganlığın yıkıcı sonuçları deneyimlenmiş olabilir. Bu yaşamda öfkeyi kontrol etme, pasif agresiflikten kaçınma ve cesareti yapıcı bir kudrete dönüştürme sınavı vardır.",
+    "Yaşam Rehberliği: Enerjinizi bastırmak yerine spor, stratejik iş projeleri veya cerrahi bir disiplinle yapıcı hedeflere yönlendirin."
   ],
   "Jüpiter": [
-    "Jüpiter retrosu içsel büyüme ve geçmiş kararları değerlendirme süreci yaratabilir.",
-    "İnançlar ve hayat görüşü sorgulanabilir.",
-    "Büyük planlar yerine içe dönüş ihtiyacı artabilir.",
-    "Geçmiş fırsatlar yeniden değerlendirilebilir.",
-    "Öğrenme süreci daha içsel ilerleyebilir."
+    "Jüpiter Retro (R): Şansı, bereketi ve hakikati dış dünyadaki popüler dogmalarda değil, kendi içsel felsefesinde ve vicdanında bulur. Doğuştan bilge ve mistik bir ruha sahiptir.",
+    "Geçmiş Yaşam Karması: Geçmiş yaşamlarda inançları veya zenginliği sorgulamadan kabul etme deneyimi yaşamış olabilir. Bu hayatta kendi hakikatini bizzat keşfetme ve içsel ahlakı geliştirme dersi vardır.",
+    "Yaşam Rehberliği: Kendi inanç pusulanıza güvenin; başkalarının hazır reçeteleri yerine kendi kalbinizin rehberliğini dinlediğinizde evrenin kapıları ardına kadar açılır."
   ],
   "Satürn": [
-    "Satürn retrosunda sorumluluklar ve uzun vadeli planlar yeniden gözden geçirilebilir.",
-    "Geçmiş hatalardan ders çıkarma süreci güçlenebilir.",
-    "Disiplin konularında içsel sorgulama artabilir.",
-    "Ertelenen görevler tekrar önünüze gelebilir.",
-    "Sabır testi yaşanabilir."
+    "Satürn Retro (R): Sorumluluk duygusu son derece derindir; kişi sanki omuzlarında yüz yıllık bir yükle doğmuş gibidir. Kendi kendini acımasızca eleştirme eğilimi yüksektir.",
+    "Geçmiş Yaşam Karması: Geçmiş yaşamlarda otoriteyi ya kötüye kullanmış ya da ağır bir baskı altında ezilmiş bir ruhun izleridir. Bu hayatta kendi içsel babasını/otoritesini şefkatle inşa etme dersi vardır.",
+    "Yaşam Rehberliği: Kusursuz olmak zorunda değilsiniz; hata yapma hakkınızı kabul edin. Sabırla ve sevgiyle çalıştığınızda zamanla aşamayacağınız hiçbir engel kalmayacaktır."
   ],
   "Uranüs": [
-    "Uranüs retrosunda içsel değişim isteği daha belirgin hale gelebilir.",
-    "Özgürlük ihtiyacını yeniden tanımlama süreci yaşanabilir.",
-    "Ani kararlar yerine içsel hazırlık önem kazanabilir.",
-    "Geçmişte bastırılan farklılıklar ortaya çıkabilir.",
-    "Beklenmedik içsel farkındalıklar görülebilir."
+    "Uranüs Retro (R): İsyanını ve devrimci doğasını dışarıda bağırmak yerine içsel bir deha ve özgün dünya görüşüyle yaşar. Sessiz ama çığır açan bir mucittir.",
+    "Geçmiş Yaşam Karması: Toplumdan dışlanma ve anlaşılmama travmalarını geride bırakıp özgünlüğünü korkusuzca ama yapıcı biçimde kucaklama görevi vardır."
   ],
   "Neptün": [
-    "Neptün retrosunda belirsiz kalan konular daha net fark edilebilir.",
-    "Hayaller ve gerçekler arasındaki fark daha görünür olabilir.",
-    "Sezgiler güçlenirken kafa karışıklığı da artabilir.",
-    "Geçmiş yanılgılarla yüzleşme yaşanabilir.",
-    "İçe dönüş ve ruhsal arınma ihtiyacı artabilir."
+    "Neptün Retro (R): Hayal kırıklıklarından arınarak doğrudan ilahi hakikate ve saf sezgiye bağlanma kabiliyetidir. İllüzyonların ardındaki gerçeği görme gücü verir.",
+    "Geçmiş Yaşam Karması: Manevi kaçışları ve kurban psikolojisini bırakıp ayaklarını yere basarak ilahi şefkati dünyada somutlaştırma dersi taşır."
   ],
   "Plüton": [
-    "Plüton retrosu derin dönüşüm ve geçmiş meselelerle yüzleşme süreci yaratabilir.",
-    "Kontrol etme isteği sorgulanabilir.",
-    "Gizli kalan konular yüzeye çıkabilir.",
-    "İçsel güçlenme süreci başlayabilir.",
-    "Eski korkularla yüzleşme fırsatı doğabilir."
+    "Plüton Retro (R): İçsel dönüşüm ve psikolojik arınma derinliği olağanüstüdür. Kendi gölgesiyle yüzleşmekten korkmaz; içsel simya ustasıdır.",
+    "Geçmiş Yaşam Karması: Güç savaşlarını, intikamı ve gizli korkuları bırakıp gücünü başkalarını şifalandırmak için kullanma ruhsal taahhüdüdür."
   ]
 };

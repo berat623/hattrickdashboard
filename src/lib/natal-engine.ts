@@ -11,6 +11,9 @@ import {
   SynastryAspect,
   SynastryCategoryScore,
   SynastryChartData,
+  KarmicProfile,
+  KarmicPointAnalysis,
+  SynastryKarmicBond,
 } from "@/types/natal";
 import {
   HOUSE_MEANINGS,
@@ -21,6 +24,15 @@ import {
   SPOUSE_BY_7TH_SIGN,
   SPOUSE_MEETING_BY_RULER_HOUSE,
   ANNUAL_PROFECTIONS,
+  KARMIC_NODE_AXIS_INTERPRETATIONS,
+  KARMIC_SATURN_INTERPRETATIONS,
+  KARMIC_PLUTO_INTERPRETATIONS,
+  KARMIC_CHIRON_INTERPRETATIONS,
+  KARMIC_VERTEX_INTERPRETATIONS,
+  KARMIC_LILITH_INTERPRETATIONS,
+  SYNASTRY_KARMIC_ASPECT_INTERPRETATIONS,
+  PLANET_DEEP_INTERPRETATIONS,
+  PLANET_HOUSE_INTERPRETATIONS,
 } from "./natal-interpretations";
 
 export const ZODIAC_SIGNS = [
@@ -770,6 +782,89 @@ export function calculateNatalChart(params: CalculateChartParams): NatalChartDat
     desc: profData.desc,
   };
 
+  // Karmic Profile & Fated Ties (Kadersel Bağlar ve Ruhsal Evrim)
+  const rahuPt = sensitivePoints.find((p) => p.name.includes("Rahu")) || sensitivePoints[0];
+  const ketuPt = sensitivePoints.find((p) => p.name.includes("Ketu")) || sensitivePoints[1];
+  const chironPt = sensitivePoints.find((p) => p.name.includes("Chiron") || p.name.includes("Şiron")) || sensitivePoints[2];
+  const vertexPt = sensitivePoints.find((p) => p.name.includes("Vertex")) || sensitivePoints[3];
+  const lilithPt = sensitivePoints.find((p) => p.name.includes("Lilith")) || sensitivePoints[4];
+  const saturnPl = planets.find((p) => p.name === "Satürn") || planets[6];
+  const plutoPl = planets.find((p) => p.name === "Plüton") || planets[9];
+
+  const nodeAxis = KARMIC_NODE_AXIS_INTERPRETATIONS[rahuPt.sign] || KARMIC_NODE_AXIS_INTERPRETATIONS["Koç"];
+  const saturnKarmic = KARMIC_SATURN_INTERPRETATIONS[saturnPl.sign] || KARMIC_SATURN_INTERPRETATIONS["Oğlak"];
+  const plutoKarmic = KARMIC_PLUTO_INTERPRETATIONS[plutoPl.sign] || KARMIC_PLUTO_INTERPRETATIONS["Akrep"];
+  const chironKarmic = KARMIC_CHIRON_INTERPRETATIONS[chironPt.sign] || KARMIC_CHIRON_INTERPRETATIONS["Koç"];
+  const vertexKarmic = KARMIC_VERTEX_INTERPRETATIONS[vertexPt.sign] || KARMIC_VERTEX_INTERPRETATIONS["Terazi"];
+  const lilithKarmic = KARMIC_LILITH_INTERPRETATIONS[lilithPt.sign] || KARMIC_LILITH_INTERPRETATIONS["Akrep"];
+
+  const karmicProfile: KarmicProfile = {
+    rahu: {
+      name: "Kuzey Ay Düğümü (Rahu)",
+      symbol: "☊",
+      sign: rahuPt.sign,
+      degree: rahuPt.degree,
+      minute: rahuPt.minute,
+      house: rahuPt.house,
+      title: nodeAxis.title,
+      soulMission: nodeAxis.soulMission,
+      pastLifeKarma: nodeAxis.pastLifeKarma,
+      releaseAdvice: nodeAxis.releaseAdvice,
+      karmicGift: nodeAxis.karmicGift,
+    },
+    ketu: {
+      name: "Güney Ay Düğümü (Ketu)",
+      symbol: "☋",
+      sign: ketuPt.sign,
+      degree: ketuPt.degree,
+      minute: ketuPt.minute,
+      house: ketuPt.house,
+      title: `Güney Düğüm ${ketuPt.sign}: Geçmiş Yaşam Alışkanlıkları`,
+      soulMission: nodeAxis.soulMission,
+      pastLifeKarma: nodeAxis.pastLifeKarma,
+      releaseAdvice: nodeAxis.releaseAdvice,
+      karmicGift: nodeAxis.karmicGift,
+    },
+    saturn: {
+      sign: saturnPl.sign,
+      house: saturnPl.house,
+      title: `Satürn ${saturnPl.sign} (${saturnPl.house}. Ev): Karmanın ve Zamanın Efendisi`,
+      karmicDebt: saturnKarmic.karmicDebt,
+      lifeLesson: saturnKarmic.lifeLesson,
+      masteryGift: saturnKarmic.masteryGift,
+    },
+    pluto: {
+      sign: plutoPl.sign,
+      house: plutoPl.house,
+      title: `Plüton ${plutoPl.sign} (${plutoPl.house}. Ev): Küllerinden Yeniden Doğuş`,
+      transformationTheme: plutoKarmic.transformationTheme,
+      shadowRelease: plutoKarmic.shadowRelease,
+      rebirthPower: plutoKarmic.rebirthPower,
+    },
+    chiron: {
+      sign: chironPt.sign,
+      house: chironPt.house,
+      title: `Şiron ${chironPt.sign} (${chironPt.house}. Ev): Yaralı Şifacı`,
+      coreWound: chironKarmic.coreWound,
+      healingGift: chironKarmic.healingGift,
+    },
+    vertex: {
+      sign: vertexPt.sign,
+      house: vertexPt.house,
+      title: `Vertex ${vertexPt.sign} (${vertexPt.house}. Ev): Kaderin Kapısı`,
+      fatedEncounters: vertexKarmic.fatedEncounters,
+      destinyCall: vertexKarmic.destinyCall,
+    },
+    lilith: {
+      sign: lilithPt.sign,
+      house: lilithPt.house,
+      title: `Lilith ${lilithPt.sign} (${lilithPt.house}. Ev): Karmik Gölge & Özgürleşme`,
+      tabooTheme: lilithKarmic.tabooTheme,
+      rawAuthenticity: lilithKarmic.rawAuthenticity,
+    },
+    summaryText: `Ruhsal evrim yolculuğunuzda Kuzey Ay Düğümünüz ${rahuPt.sign} burcunda (${rahuPt.house}. ev) parlamaktadır. Geçmiş yaşamlardan getirdiğiniz ${ketuPt.sign} alışkanlıklarını aşarak, ${rahuPt.sign} burcunun kadersel erdemlerini hayatınıza katmanız ruhunuzun bu dünyadaki nihai tekamül hedefidir.`,
+  };
+
   const chartData: NatalChartData = {
     name,
     birthDate,
@@ -822,6 +917,7 @@ export function calculateNatalChart(params: CalculateChartParams): NatalChartDat
     seventhHouse,
     spouseProfile,
     profection,
+    karmicProfile,
     svgWheel: "",
     svgD9Wheel: "",
   };
@@ -1269,6 +1365,108 @@ export function calculateSynastryChart(
     },
   ];
 
+  // Kadersel Bağlar (Karmic Ties & Soul Contracts)
+  const karmicBonds: SynastryKarmicBond[] = [];
+  const checkContact = (lon1: number, lon2: number, maxOrb: number = 7) => {
+    const diff = Math.abs(lon1 - lon2);
+    const shortest = diff > 180 ? 360 - diff : diff;
+    return shortest <= maxOrb;
+  };
+
+  const p1Rahu = chart1.sensitivePoints.find((p) => p.name.includes("Rahu"));
+  const p1Ketu = chart1.sensitivePoints.find((p) => p.name.includes("Ketu"));
+  const p2Rahu = chart2.sensitivePoints.find((p) => p.name.includes("Rahu"));
+  const p2Ketu = chart2.sensitivePoints.find((p) => p.name.includes("Ketu"));
+
+  chart2.planets.forEach((p2) => {
+    if (p1Rahu && checkContact(p2.longitude, p1Rahu.longitude)) {
+      const key = `${p2.name}-Kuzey Düğüm`;
+      const def = (SYNASTRY_KARMIC_ASPECT_INTERPRETATIONS as any)[key] || {
+        type: "Ruh Eşi / İkiz Alev",
+        desc: `${p2.name} ile Kuzey Ay Düğümünün kavuşumu, kadersel bir büyüme ve hayat yolunda birbirini yükseltme sözleşmesidir.`,
+        significance: "Çok Yüksek",
+      };
+      karmicBonds.push({
+        title: `${chart2.name} ${p2.name} & ${chart1.name} Kuzey Ay Düğümü Kavuşumu`,
+        type: def.type,
+        description: def.desc,
+        significance: def.significance,
+      });
+    }
+    if (p1Ketu && checkContact(p2.longitude, p1Ketu.longitude)) {
+      const key = `${p2.name}-Güney Düğüm`;
+      const def = (SYNASTRY_KARMIC_ASPECT_INTERPRETATIONS as any)[key] || {
+        type: "Geçmiş Yaşam Bağlantısı",
+        desc: `${p2.name} ile Güney Ay Düğümünün teması, geçmiş yaşamlardan gelen derin bir tanışıklık ve karmik borçların tamamlanmasıdır.`,
+        significance: "Yüksek",
+      };
+      karmicBonds.push({
+        title: `${chart2.name} ${p2.name} & ${chart1.name} Güney Ay Düğümü Kavuşumu`,
+        type: def.type,
+        description: def.desc,
+        significance: def.significance,
+      });
+    }
+  });
+
+  chart1.planets.forEach((p1) => {
+    if (p2Rahu && checkContact(p1.longitude, p2Rahu.longitude)) {
+      const key = `${p1.name}-Kuzey Düğüm`;
+      const def = (SYNASTRY_KARMIC_ASPECT_INTERPRETATIONS as any)[key] || {
+        type: "Ruh Eşi / İkiz Alev",
+        desc: `${p1.name} ile Kuzey Ay Düğümünün kavuşumu kadersel bir tekamül rehberliği vadeder.`,
+        significance: "Çok Yüksek",
+      };
+      karmicBonds.push({
+        title: `${chart1.name} ${p1.name} & ${chart2.name} Kuzey Ay Düğümü Kavuşumu`,
+        type: def.type,
+        description: def.desc,
+        significance: def.significance,
+      });
+    }
+  });
+
+  const p1Venus = chart1.planets.find((p) => p.name === "Venüs") || chart1.planets[3];
+  const p2Venus = chart2.planets.find((p) => p.name === "Venüs") || chart2.planets[3];
+  const p1Pluto = chart1.planets.find((p) => p.name === "Plüton") || chart1.planets[9];
+  const p2Pluto = chart2.planets.find((p) => p.name === "Plüton") || chart2.planets[9];
+  const p1Saturn = chart1.planets.find((p) => p.name === "Satürn") || chart1.planets[6];
+  const p2Saturn = chart2.planets.find((p) => p.name === "Satürn") || chart2.planets[6];
+
+  if (p1Pluto && p2Venus && checkContact(p1Pluto.longitude, p2Venus.longitude, 7)) {
+    karmicBonds.push({
+      title: `${chart1.name} Plüton & ${chart2.name} Venüs Manyetik Teması`,
+      type: "Kadersel Dönüşüm",
+      description: "Karşı konulamaz, manyetik ve unutulmaz bir çekim. Bu ilişki her iki ruhun da aşk anlayışını kökten dönüştürmek üzere kurgulanmıştır.",
+      significance: "Çok Yüksek",
+    });
+  } else if (p2Pluto && p1Venus && checkContact(p2Pluto.longitude, p1Venus.longitude, 7)) {
+    karmicBonds.push({
+      title: `${chart2.name} Plüton & ${chart1.name} Venüs Manyetik Teması`,
+      type: "Kadersel Dönüşüm",
+      description: "Karşı konulamaz, manyetik ve unutulmaz bir çekim. Bu ilişki her iki ruhun da aşk anlayışını kökten dönüştürmek üzere kurgulanmıştır.",
+      significance: "Çok Yüksek",
+    });
+  }
+
+  if (p1Saturn && p2Venus && checkContact(p1Saturn.longitude, p2Venus.longitude, 7)) {
+    karmicBonds.push({
+      title: `${chart1.name} Satürn & ${chart2.name} Venüs Sadakat Bağı`,
+      type: "Karmik Borç & Sınav",
+      description: "Uzun vadeli sadakat, ciddiyet ve evlilik taahhüdü işareti. Birbirinize karşı derin bir sorumluluk taşırsınız.",
+      significance: "Yüksek",
+    });
+  }
+
+  if (karmicBonds.length === 0) {
+    karmicBonds.push({
+      title: "Güneş ve Ay Burçlarının Karmik Rezonansı",
+      type: "Ruh Eşi / İkiz Alev",
+      description: `${chart1.name} (${chart1.summary.sunSign} Güneş, ${chart1.summary.moonSign} Ay) ile ${chart2.name} (${chart2.summary.sunSign} Güneş, ${chart2.summary.moonSign} Ay) arasındaki ruhsal denge, birbirinizin eksik yönlerini tamamlayan bir ayna vazifesi görür.`,
+      significance: "Orta",
+    });
+  }
+
   return {
     person1: chart1,
     person2: chart2,
@@ -1277,6 +1475,7 @@ export function calculateSynastryChart(
     aspects,
     houseOverlays,
     zodiacMatches,
+    karmicBonds,
     summaryText,
   };
 }

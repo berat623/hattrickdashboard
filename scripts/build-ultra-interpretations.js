@@ -554,6 +554,59 @@ const FULL_PLANET_SIGN_INTERPRETATIONS = {
   }
 };
 
+const {
+  KARMIC_NODE_AXIS_INTERPRETATIONS,
+  KARMIC_SATURN_INTERPRETATIONS,
+  KARMIC_PLUTO_INTERPRETATIONS,
+  KARMIC_CHIRON_INTERPRETATIONS,
+  KARMIC_VERTEX_INTERPRETATIONS,
+  KARMIC_LILITH_INTERPRETATIONS,
+  SYNASTRY_KARMIC_ASPECT_INTERPRETATIONS
+} = require('./data/karmic-data');
+
+const { PLANET_HOUSE_INTERPRETATIONS } = require('./data/planet-houses-data');
+const { PLANET_DEEP_INTERPRETATIONS } = require('./data/planet-deep-signs-data');
+
+const RETROGRADE_DEEP_INTERPRETATIONS = {
+  'Merkür': [
+    'Merkür Retro (R): Zihin dış dünyadan ziyade içsel hakikatlere odaklanır. Kişi standart düşünce kalıplarının ötesinde derin felsefi, sezgisel ve çok boyutlu bir kavrayışa sahiptir.',
+    'Geçmiş Yaşam Karması: Geçmiş yaşamlarda sözlerin sorumluluğu tam taşınmamış olabilir; bu yaşamda konuşmadan önce derinlemesine düşünme ve kelimelerin gücünü idrak etme dersi vardır.',
+    'Yaşam Rehberliği: Anlaşılmadığınızı düşündüğünüzde içe kapanmak yerine yazarak, araştırarak ve sanat yoluyla derin düşüncelerinizi ifade edin; sezgisel aklınız en büyük rehberinizdir.'
+  ],
+  'Venüs': [
+    'Venüs Retro (R): Aşkı, sevgiyi ve özdeğeri toplumun yüzeysel standartlarında değil, ruhun en derin köşelerinde arar. Sıradan flörtler yerine kadersel, zamansız ve ruhsal bağlar peşindedir.',
+    'Geçmiş Yaşam Karması: Geçmiş yaşamlarda ilişkilerde fedakarlık ve özsaygı dengesi sarsılmış olabilir. Bu hayatta başkalarının onayına bağımlı olmadan kendi öz sevgisini ve değerini inşa etme dersi vardır.',
+    'Yaşam Rehberliği: Sevgiyi dışarıda aramak yerine önce kendi kalbinize şefkat gösterin. Kadersel ruh eşiniz, kendi özdeğerinize tam olarak sahip çıktığınızda hayatınıza girecektir.'
+  ],
+  'Mars': [
+    'Mars Retro (R): Öfke ve mücadele enerjisi dışarıya taşkınlıkla değil, içsel bir irade ve odaklanmış bir stratejiyle akar. Dürtüsel kavgalar yerine derin planlar yaparak hedefine ulaşır.',
+    'Geçmiş Yaşam Karması: Geçmiş yaşamlarda gücün ve saldırganlığın yıkıcı sonuçları deneyimlenmiş olabilir. Bu yaşamda öfkeyi kontrol etme, pasif agresiflikten kaçınma ve cesareti yapıcı bir kudrete dönüştürme sınavı vardır.',
+    'Yaşam Rehberliği: Enerjinizi bastırmak yerine spor, stratejik iş projeleri veya cerrahi bir disiplinle yapıcı hedeflere yönlendirin.'
+  ],
+  'Jüpiter': [
+    'Jüpiter Retro (R): Şansı, bereketi ve hakikati dış dünyadaki popüler dogmalarda değil, kendi içsel felsefesinde ve vicdanında bulur. Doğuştan bilge ve mistik bir ruha sahiptir.',
+    'Geçmiş Yaşam Karması: Geçmiş yaşamlarda inançları veya zenginliği sorgulamadan kabul etme deneyimi yaşamış olabilir. Bu hayatta kendi hakikatini bizzat keşfetme ve içsel ahlakı geliştirme dersi vardır.',
+    'Yaşam Rehberliği: Kendi inanç pusulanıza güvenin; başkalarının hazır reçeteleri yerine kendi kalbinizin rehberliğini dinlediğinizde evrenin kapıları ardına kadar açılır.'
+  ],
+  'Satürn': [
+    'Satürn Retro (R): Sorumluluk duygusu son derece derindir; kişi sanki omuzlarında yüz yıllık bir yükle doğmuş gibidir. Kendi kendini acımasızca eleştirme eğilimi yüksektir.',
+    'Geçmiş Yaşam Karması: Geçmiş yaşamlarda otoriteyi ya kötüye kullanmış ya da ağır bir baskı altında ezilmiş bir ruhun izleridir. Bu hayatta kendi içsel babasını/otoritesini şefkatle inşa etme dersi vardır.',
+    'Yaşam Rehberliği: Kusursuz olmak zorunda değilsiniz; hata yapma hakkınızı kabul edin. Sabırla ve sevgiyle çalıştığınızda zamanla aşamayacağınız hiçbir engel kalmayacaktır.'
+  ],
+  'Uranüs': [
+    'Uranüs Retro (R): İsyanını ve devrimci doğasını dışarıda bağırmak yerine içsel bir deha ve özgün dünya görüşüyle yaşar. Sessiz ama çığır açan bir mucittir.',
+    'Geçmiş Yaşam Karması: Toplumdan dışlanma ve anlaşılmama travmalarını geride bırakıp özgünlüğünü korkusuzca ama yapıcı biçimde kucaklama görevi vardır.'
+  ],
+  'Neptün': [
+    'Neptün Retro (R): Hayal kırıklıklarından arınarak doğrudan ilahi hakikate ve saf sezgiye bağlanma kabiliyetidir. İllüzyonların ardındaki gerçeği görme gücü verir.',
+    'Geçmiş Yaşam Karması: Manevi kaçışları ve kurban psikolojisini bırakıp ayaklarını yere basarak ilahi şefkati dünyada somutlaştırma dersi taşır.'
+  ],
+  'Plüton': [
+    'Plüton Retro (R): İçsel dönüşüm ve psikolojik arınma derinliği olağanüstüdür. Kendi gölgesiyle yüzleşmekten korkmaz; içsel simya ustasıdır.',
+    'Geçmiş Yaşam Karması: Güç savaşlarını, intikamı ve gizli korkuları bırakıp gücünü başkalarını şifalandırmak için kullanma ruhsal taahhüdüdür.'
+  ]
+};
+
 const tsContent = `// Astroloji.org ve profesyonel astroloji tabanlı ultra-zengin kütüphane
 
 export const NAKSHATRA_DATA = ${JSON.stringify(NAKSHATRA_DATA, null, 2)};
@@ -608,7 +661,60 @@ export const SYNASTRY_INTERPRETATIONS = ${JSON.stringify(SYNASTRY_INTERPRETATION
 
 export const PLANET_SIGN_INTERPRETATIONS: Record<string, Record<string, string[]>> = ${JSON.stringify(FULL_PLANET_SIGN_INTERPRETATIONS, null, 2)};
 
-export const RETRO_INTERPRETATIONS: Record<string, string[]> = ${JSON.stringify(extracted.retroYorumlari || {}, null, 2)};
+export const PLANET_HOUSE_INTERPRETATIONS: Record<string, Record<number, string>> = ${JSON.stringify(PLANET_HOUSE_INTERPRETATIONS, null, 2)};
+
+export const PLANET_DEEP_INTERPRETATIONS: Record<string, Record<string, {
+  summary: string;
+  karakter: string;
+  gucluYonler: string;
+  golgeYonler: string;
+  askVeIliskiler: string;
+  kariyerVePara: string;
+  karmikDers: string;
+}>> = ${JSON.stringify(PLANET_DEEP_INTERPRETATIONS, null, 2)};
+
+export const KARMIC_NODE_AXIS_INTERPRETATIONS: Record<string, {
+  title: string;
+  pastLifeKarma: string;
+  soulMission: string;
+  releaseAdvice: string;
+  karmicGift: string;
+}> = ${JSON.stringify(KARMIC_NODE_AXIS_INTERPRETATIONS, null, 2)};
+
+export const KARMIC_SATURN_INTERPRETATIONS: Record<string, {
+  karmicDebt: string;
+  lifeLesson: string;
+  masteryGift: string;
+}> = ${JSON.stringify(KARMIC_SATURN_INTERPRETATIONS, null, 2)};
+
+export const KARMIC_PLUTO_INTERPRETATIONS: Record<string, {
+  transformationTheme: string;
+  shadowRelease: string;
+  rebirthPower: string;
+}> = ${JSON.stringify(KARMIC_PLUTO_INTERPRETATIONS, null, 2)};
+
+export const KARMIC_CHIRON_INTERPRETATIONS: Record<string, {
+  coreWound: string;
+  healingGift: string;
+}> = ${JSON.stringify(KARMIC_CHIRON_INTERPRETATIONS, null, 2)};
+
+export const KARMIC_VERTEX_INTERPRETATIONS: Record<string, {
+  fatedEncounters: string;
+  destinyCall: string;
+}> = ${JSON.stringify(KARMIC_VERTEX_INTERPRETATIONS, null, 2)};
+
+export const KARMIC_LILITH_INTERPRETATIONS: Record<string, {
+  tabooTheme: string;
+  rawAuthenticity: string;
+}> = ${JSON.stringify(KARMIC_LILITH_INTERPRETATIONS, null, 2)};
+
+export const SYNASTRY_KARMIC_ASPECT_INTERPRETATIONS: Record<string, {
+  type: string;
+  desc: string;
+  significance: 'Çok Yüksek' | 'Yüksek' | 'Orta';
+}> = ${JSON.stringify(SYNASTRY_KARMIC_ASPECT_INTERPRETATIONS, null, 2)};
+
+export const RETRO_INTERPRETATIONS: Record<string, string[]> = ${JSON.stringify(RETROGRADE_DEEP_INTERPRETATIONS, null, 2)};
 `;
 
 fs.writeFileSync(path.join(__dirname, '../src/lib/natal-interpretations.ts'), tsContent);

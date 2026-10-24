@@ -15,6 +15,14 @@ import {
   SPOUSE_BY_7TH_SIGN,
   SPOUSE_MEETING_BY_RULER_HOUSE,
   DARAKARAKA_INTERPRETATIONS,
+  PLANET_DEEP_INTERPRETATIONS,
+  PLANET_HOUSE_INTERPRETATIONS,
+  KARMIC_NODE_AXIS_INTERPRETATIONS,
+  KARMIC_SATURN_INTERPRETATIONS,
+  KARMIC_PLUTO_INTERPRETATIONS,
+  KARMIC_CHIRON_INTERPRETATIONS,
+  KARMIC_VERTEX_INTERPRETATIONS,
+  KARMIC_LILITH_INTERPRETATIONS,
 } from "@/lib/natal-interpretations";
 import {
   RotateCcw,
@@ -51,7 +59,7 @@ interface NatalChartResultProps {
 
 export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
   const [activeTab, setActiveTab] = useState<
-    "chart" | "spouse" | "interpretations" | "planets" | "d9" | "elements" | "aspects"
+    "chart" | "spouse" | "karmic" | "interpretations" | "planets" | "d9" | "elements" | "aspects"
   >("interpretations");
 
   const [activeWheelView, setActiveWheelView] = useState<"d1" | "d9">("d1");
@@ -269,6 +277,19 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
         >
           <Heart className="w-3.5 h-3.5 fill-current" />
           <span>Eşinizin Portresi</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab("karmic")}
+          className={`py-1.5 px-3 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+            activeTab === "karmic"
+              ? "bg-purple-600 text-white shadow-xs font-bold"
+              : "text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300"
+          }`}
+        >
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>Kadersel Bağlar (Karma)</span>
         </button>
 
         <button
@@ -573,6 +594,199 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
         </div>
       )}
 
+      {/* TAB: KADERSEL BAĞLAR, KARMA & RUHSAL EVRİM */}
+      {activeTab === "karmic" && data.karmicProfile && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          {/* Karmic Hero Banner */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-purple-500/15 via-indigo-500/10 to-amber-500/10 border border-purple-500/30 space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple-600 text-white flex items-center gap-1.5 shadow-xs">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Kadersel Bağlar, Karma & Ruhsal Evrim</span>
+              </span>
+              <span className="text-xs text-purple-700 dark:text-purple-300 font-semibold">
+                Ruh Sözleşmeleri ve Yaşam Dersleri
+              </span>
+            </div>
+
+            <h2 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white">
+              Ruhunuzun Bu Yaşamdaki Tekamül ve Aydınlanma Rotası
+            </h2>
+
+            <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+              {data.karmicProfile.summaryText}
+            </p>
+          </div>
+
+          {/* Ay Düğümleri Kadersel Aksı (Kuzey & Güney Düğümler) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            {/* Kuzey Ay Düğümü (Rahu) */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-emerald-500/30 dark:border-emerald-500/30 border-l-4 border-l-emerald-500 space-y-3 shadow-xs">
+              <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-2">
+                <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                  <span className="text-emerald-500 text-base">☊</span>
+                  <span>Kuzey Ay Düğümü (Rahu): {data.karmicProfile.rahu.sign} ({data.karmicProfile.rahu.house}. Ev)</span>
+                </h3>
+                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 font-bold">
+                  Gelecek Rotası
+                </span>
+              </div>
+              <h4 className="text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                {data.karmicProfile.rahu.title}
+              </h4>
+              <div className="space-y-2 text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                <p>
+                  <strong className="text-zinc-900 dark:text-white block mb-0.5">🌌 Ruhun Bu Yaşamdaki Kadersel Çağrısı:</strong>
+                  {data.karmicProfile.rahu.soulMission}
+                </p>
+                <p>
+                  <strong className="text-zinc-900 dark:text-white block mb-0.5">🕊️ Bırakılması Gereken Konfor Alanı:</strong>
+                  {data.karmicProfile.rahu.releaseAdvice}
+                </p>
+                <p>
+                  <strong className="text-emerald-700 dark:text-emerald-400 block mb-0.5">⭐ Kadersel Hediye & Manevi Güç:</strong>
+                  {data.karmicProfile.rahu.karmicGift}
+                </p>
+              </div>
+            </div>
+
+            {/* Güney Ay Düğümü (Ketu) */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-amber-500/30 dark:border-amber-500/30 border-l-4 border-l-amber-500 space-y-3 shadow-xs">
+              <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-2">
+                <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                  <span className="text-amber-500 text-base">☋</span>
+                  <span>Güney Ay Düğümü (Ketu): {data.karmicProfile.ketu.sign} ({data.karmicProfile.ketu.house}. Ev)</span>
+                </h3>
+                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-800 dark:text-amber-300 font-bold">
+                  Geçmiş Yaşam Mirası
+                </span>
+              </div>
+              <h4 className="text-xs font-bold text-amber-700 dark:text-amber-400">
+                {data.karmicProfile.ketu.title}
+              </h4>
+              <div className="space-y-2 text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                <p>
+                  <strong className="text-zinc-900 dark:text-white block mb-0.5">📜 Geçmiş Yaşam Alışkanlıkları ve Karmik Hafıza:</strong>
+                  {data.karmicProfile.ketu.pastLifeKarma}
+                </p>
+                <p>
+                  <strong className="text-zinc-900 dark:text-white block mb-0.5">⛓️ Geride Bırakılması Gereken Prangalar:</strong>
+                  {data.karmicProfile.ketu.releaseAdvice}
+                </p>
+                <p>
+                  <strong className="text-amber-700 dark:text-amber-400 block mb-0.5">💎 Otomatik Pilot Yeteneği:</strong>
+                  Geçmiş yaşamlardan gelen bu yetenekleri reddetmeyin; onları Kuzey Düğümünüzün rotasında birer araç olarak kullanın.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Satürn & Plüton Kadersel Sınav ve Dönüşüm Kartları */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            {/* Satürn: Karmanın ve Zamanın Efendisi */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2.5 shadow-xs border-l-4 border-l-indigo-600">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <Shield className="w-4 h-4 text-indigo-500" />
+                <span>{data.karmicProfile.saturn.title}</span>
+              </h3>
+              <div className="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                <p>
+                  <strong className="text-zinc-900 dark:text-white block">⚖️ Karmik Sınav ve Yükümlülük:</strong>
+                  {data.karmicProfile.saturn.karmicDebt}
+                </p>
+                <p>
+                  <strong className="text-zinc-900 dark:text-white block">📚 Hayatın En Büyük Dersi:</strong>
+                  {data.karmicProfile.saturn.lifeLesson}
+                </p>
+                <p>
+                  <strong className="text-indigo-600 dark:text-indigo-400 block">👑 Ustalık Hediyesi:</strong>
+                  {data.karmicProfile.saturn.masteryGift}
+                </p>
+              </div>
+            </div>
+
+            {/* Plüton: Küllerinden Yeniden Doğuş */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2.5 shadow-xs border-l-4 border-l-rose-600">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <Flame className="w-4 h-4 text-rose-500" />
+                <span>{data.karmicProfile.pluto.title}</span>
+              </h3>
+              <div className="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                <p>
+                  <strong className="text-zinc-900 dark:text-white block">🔥 Kadersel Dönüşüm Teması:</strong>
+                  {data.karmicProfile.pluto.transformationTheme}
+                </p>
+                <p>
+                  <strong className="text-zinc-900 dark:text-white block">🌑 Bırakılması Gereken Gölge:</strong>
+                  {data.karmicProfile.pluto.shadowRelease}
+                </p>
+                <p>
+                  <strong className="text-rose-600 dark:text-rose-400 block">🦅 Diriliş ve Arınma Gücü:</strong>
+                  {data.karmicProfile.pluto.rebirthPower}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Şiron & Vertex & Lilith Kadersel Noktaları (3'lü Grid) */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+            {/* Şiron: Yaralı Şifacı */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2 shadow-xs">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <Heart className="w-4 h-4 text-emerald-500" />
+                <span>{data.karmicProfile.chiron.title}</span>
+              </h3>
+              <div className="space-y-1 text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                <p>
+                  <strong className="text-zinc-800 dark:text-zinc-200 block">🩹 Karmik Çekirdek Yara:</strong>
+                  {data.karmicProfile.chiron.coreWound}
+                </p>
+                <p>
+                  <strong className="text-emerald-700 dark:text-emerald-400 block">🌿 Şifa Hediyesi:</strong>
+                  {data.karmicProfile.chiron.healingGift}
+                </p>
+              </div>
+            </div>
+
+            {/* Vertex: Kaderin Kapısı */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2 shadow-xs">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <Compass className="w-4 h-4 text-indigo-500" />
+                <span>{data.karmicProfile.vertex.title}</span>
+              </h3>
+              <div className="space-y-1 text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                <p>
+                  <strong className="text-zinc-800 dark:text-zinc-200 block">🚪 Kadersel Karşılaşmalar:</strong>
+                  {data.karmicProfile.vertex.fatedEncounters}
+                </p>
+                <p>
+                  <strong className="text-indigo-700 dark:text-indigo-400 block">✨ İlahi Çağrı:</strong>
+                  {data.karmicProfile.vertex.destinyCall}
+                </p>
+              </div>
+            </div>
+
+            {/* Lilith: Karmik Gölge & Özgürleşme */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 space-y-2 shadow-xs">
+              <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                <Star className="w-4 h-4 text-purple-500" />
+                <span>{data.karmicProfile.lilith.title}</span>
+              </h3>
+              <div className="space-y-1 text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                <p>
+                  <strong className="text-zinc-800 dark:text-zinc-200 block">⚡ Tavizsiz Tabu Alanı:</strong>
+                  {data.karmicProfile.lilith.tabooTheme}
+                </p>
+                <p>
+                  <strong className="text-purple-700 dark:text-purple-400 block">🔮 Ham Özgünlük:</strong>
+                  {data.karmicProfile.lilith.rawAuthenticity}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* TAB: ASTROLOJİ.ORG FORMATINDA DETAYLI YORUMLAR (HER GEZEGEN VE DERECE TEK TEK) */}
       {activeTab === "interpretations" && (() => {
         const query = interpSearch.trim().toLocaleLowerCase("tr");
@@ -717,63 +931,122 @@ export function NatalChartResult({ data, onReset }: NatalChartResultProps) {
                   </div>
                 )}
 
-                {/* 3. Tüm Gezegenler */}
+                {/* 3. Tüm Gezegenler (Ultra-Derin Kapsamlı Analiz) */}
                 {filteredPlanets.map((p) => {
-                  const planetComments =
-                    PLANET_SIGN_INTERPRETATIONS[p.name]?.[p.sign] || [];
-                  const retroComment = p.isRetrograde
-                    ? RETRO_INTERPRETATIONS[p.name]
-                    : null;
+                  const houseMeaning = PLANET_HOUSE_INTERPRETATIONS[p.name]?.[p.house];
+                  const deepInterp = PLANET_DEEP_INTERPRETATIONS[p.name]?.[p.sign];
+                  const retroComments = p.isRetrograde ? RETRO_INTERPRETATIONS[p.name] : null;
 
                   return (
                     <div
                       key={p.name}
-                      className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs space-y-3"
+                      className="p-4 sm:p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs space-y-4"
                     >
-                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 dark:border-zinc-800/60 pb-2.5">
-                        <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-                          <span className="text-amber-500 text-base">{p.symbol}</span>
+                      {/* Header */}
+                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 dark:border-zinc-800/60 pb-3">
+                        <h3 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                          <span className="text-amber-500 text-lg">{p.symbol}</span>
                           <span>
                             {p.name} {p.sign} Burcunda ({p.house}. Ev)
                           </span>
                           {p.isRetrograde && (
-                            <span className="text-[10px] bg-amber-500/15 text-amber-600 dark:text-amber-400 font-bold px-1.5 py-0.5 rounded">
-                              Retro
+                            <span className="text-[10px] bg-amber-500/15 text-amber-600 dark:text-amber-400 font-bold px-2 py-0.5 rounded-full">
+                              Retro (R)
                             </span>
                           )}
                           {p.isVargottama && (
-                            <span className="text-[10px] bg-yellow-500/20 text-yellow-800 dark:text-yellow-300 font-bold px-1.5 py-0.5 rounded">
-                              Vargottama
+                            <span className="text-[10px] bg-yellow-500/20 text-yellow-800 dark:text-yellow-300 font-bold px-2 py-0.5 rounded-full">
+                              Vargottama (D9 Gücü)
                             </span>
                           )}
                         </h3>
-                        <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
+                        <span className="font-mono text-xs font-semibold px-2.5 py-1 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
                           {p.degree}°{String(p.minute).padStart(2, "0")}&apos;
                         </span>
                       </div>
 
-                      {planetComments.length > 0 ? (
-                        <ul className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 space-y-2 leading-relaxed">
-                          {planetComments.map((c, i) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <span className="text-amber-500 font-bold mt-0.5">•</span>
-                              <span>{c}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="text-xs text-zinc-600 dark:text-zinc-300">
-                          {p.name} enerjisi {p.sign} burcunda ve {p.house}. evde hayatınızda belirgin bir odaklanma ve güç alanı yaratır.
-                        </p>
+                      {/* 1. Ev Yerleşimi ve Hayat Alanı */}
+                      {houseMeaning && (
+                        <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs sm:text-sm text-zinc-800 dark:text-zinc-200 leading-relaxed space-y-1">
+                          <strong className="text-amber-700 dark:text-amber-400 font-bold block flex items-center gap-1.5">
+                            <span>🏛️ {p.house}. Ev Yerleşimi & Hayat Alanı Etkisi:</span>
+                          </strong>
+                          <p>{houseMeaning}</p>
+                        </div>
                       )}
 
-                      {/* Retro interpretation if active */}
-                      {p.isRetrograde && retroComment && retroComment.length > 0 && (
-                        <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-800 dark:text-amber-300 space-y-1">
-                          <strong className="font-semibold block flex items-center gap-1">
-                            <span>⚡ Retro (R) Karma & İçselleşme Etkisi:</span>
+                      {/* 2. Temel Psikolojik Karakter & Mizaç */}
+                      {deepInterp && (
+                        <div className="space-y-3">
+                          <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                            {deepInterp.karakter}
+                          </p>
+
+                          {/* Güçlü ve Gölge Yönler */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div className="p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/20 space-y-1">
+                              <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+                                <span>✨ Işık & Doğuştan Gelen Üstün Yetenekler:</span>
+                              </span>
+                              <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                                {deepInterp.gucluYonler}
+                              </p>
+                            </div>
+
+                            <div className="p-3.5 rounded-xl bg-rose-500/5 border border-rose-500/20 space-y-1">
+                              <span className="text-xs font-bold text-rose-700 dark:text-rose-400 flex items-center gap-1.5">
+                                <span>⚠️ Gölge Yönler & Sınavlar:</span>
+                              </span>
+                              <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                                {deepInterp.golgeYonler}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Aşk ve Kariyer Dinamikleri */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/60 dark:border-zinc-700/60 space-y-1">
+                              <span className="text-xs font-bold text-zinc-900 dark:text-white flex items-center gap-1.5">
+                                <span>❤️ Aşk ve İlişkilere Yansıması:</span>
+                              </span>
+                              <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                                {deepInterp.askVeIliskiler}
+                              </p>
+                            </div>
+
+                            <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/60 dark:border-zinc-700/60 space-y-1">
+                              <span className="text-xs font-bold text-zinc-900 dark:text-white flex items-center gap-1.5">
+                                <span>💼 Kariyer, Para & Başarı Potansiyeli:</span>
+                              </span>
+                              <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                                {deepInterp.kariyerVePara}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Karmik Tekamül Dersi */}
+                          <div className="p-3.5 rounded-xl bg-purple-500/10 border border-purple-500/25 space-y-1">
+                            <span className="text-xs font-bold text-purple-700 dark:text-purple-400 flex items-center gap-1.5">
+                              <span>🌌 Karmik Yaşam Dersi & Ruhsal Tekamül:</span>
+                            </span>
+                            <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                              {deepInterp.karmikDers}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Retrograde Çok Katmanlı Karmik Açıklama */}
+                      {p.isRetrograde && retroComments && retroComments.length > 0 && (
+                        <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-900 dark:text-amber-200 space-y-2">
+                          <strong className="font-bold flex items-center gap-1.5 text-xs sm:text-sm text-amber-800 dark:text-amber-300">
+                            <span>⚡ Retrograde (R) Karmik İçselleşme & Bilgelik Rehberi:</span>
                           </strong>
-                          <p>{retroComment[0]}</p>
+                          {retroComments.map((rLine, rIdx) => (
+                            <p key={rIdx} className="leading-relaxed">
+                              {rLine}
+                            </p>
+                          ))}
                         </div>
                       )}
                     </div>
