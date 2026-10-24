@@ -1,3 +1,20 @@
+export type HouseSystem =
+  | "placidus"
+  | "whole_sign"
+  | "equal"
+  | "porphyry"
+  | "koch"
+  | "regiomontanus"
+  | "campanus";
+
+export type AyanamsaSystem =
+  | "tropical"
+  | "lahiri"
+  | "raman"
+  | "kp"
+  | "fagan_bradley"
+  | "yukteshwar";
+
 export interface CityInfo {
   city: string;
   lat: number;
@@ -17,6 +34,27 @@ export interface PlanetPosition {
   house: number; // 1..12
   speed: number;
   isRetrograde: boolean;
+  dignity?: "Yönetici" | "Yücelim" | "Zararda" | "Düşük" | "Nötr";
+  // D9 Navamsha Info
+  d9Sign: string;
+  d9SignIndex: number;
+  d9Degree: number;
+  nakshatra: string;
+  nakshatraLord: string;
+  pada: number;
+  isVargottama: boolean;
+  isPushkara: boolean;
+}
+
+export interface SensitivePoint {
+  name: string;
+  symbol: string;
+  longitude: number;
+  sign: string;
+  degree: number;
+  minute: number;
+  house: number;
+  desc: string;
 }
 
 export interface HouseCusp {
@@ -37,6 +75,18 @@ export interface Aspect {
   isHarmonious: boolean;
 }
 
+export interface ElementBalance {
+  fire: number; // Percentage
+  earth: number;
+  air: number;
+  water: number;
+  dominantElement: "Ateş" | "Toprak" | "Hava" | "Su";
+  cardinal: number; // Öncü
+  fixed: number; // Sabit
+  mutable: number; // Değişken
+  dominantModality: "Öncü" | "Sabit" | "Değişken";
+}
+
 export interface NatalChartData {
   name: string;
   birthDate: string; // YYYY-MM-DD
@@ -47,21 +97,32 @@ export interface NatalChartData {
   longitude: number;
   timezone: string;
   utcTime: string;
+  houseSystem: HouseSystem;
+  ayanamsaSystem: AyanamsaSystem;
+  ayanamsaValue: number;
   ascendant: {
     sign: string;
     degree: number;
     minute: number;
     totalDegrees: number;
+    d9Sign: string;
+    nakshatra: string;
+    pada: number;
   };
   midheaven: {
     sign: string;
     degree: number;
     minute: number;
     totalDegrees: number;
+    d9Sign: string;
+    nakshatra: string;
+    pada: number;
   };
   planets: PlanetPosition[];
+  sensitivePoints: SensitivePoint[];
   houses: HouseCusp[];
   aspects: Aspect[];
+  elementBalance: ElementBalance;
   summary: {
     sunSign: string;
     sunHouse: number;
@@ -72,5 +133,40 @@ export interface NatalChartData {
     ascendantSign: string;
     ascendantMotto: string;
   };
+  vargottamaPlanets: string[];
   svgWheel: string;
+  svgD9Wheel: string;
+}
+
+// Synastry Types
+export interface SynastryAspect {
+  planet1: string; // Kişi 1 Gezegeni
+  planet2: string; // Kişi 2 Gezegeni
+  type: "Kavuşum" | "Altmışlık" | "Kare" | "Üçgen" | "Karşıt";
+  angle: number;
+  orb: number;
+  isHarmonious: boolean;
+  category: "ask" | "iletisim" | "tutku" | "istikrar" | "karmik";
+  interpretation: string;
+}
+
+export interface SynastryCategoryScore {
+  title: string;
+  score: number; // 0..100
+  desc: string;
+}
+
+export interface SynastryChartData {
+  person1: NatalChartData;
+  person2: NatalChartData;
+  overallScore: number; // 0..100
+  categories: {
+    love: SynastryCategoryScore;
+    communication: SynastryCategoryScore;
+    passion: SynastryCategoryScore;
+    stability: SynastryCategoryScore;
+    spiritual: SynastryCategoryScore;
+  };
+  aspects: SynastryAspect[];
+  summaryText: string;
 }

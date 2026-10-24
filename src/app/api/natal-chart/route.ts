@@ -4,7 +4,17 @@ import { calculateNatalChart } from "@/lib/natal-engine";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, birthDate, birthTime, city, lat, lon, timezone } = body;
+    const {
+      name,
+      birthDate,
+      birthTime,
+      city,
+      lat,
+      lon,
+      timezone,
+      houseSystem,
+      ayanamsaSystem,
+    } = body;
 
     if (!birthDate || !birthTime || lat === undefined || lon === undefined) {
       return NextResponse.json(
@@ -24,6 +34,8 @@ export async function POST(req: NextRequest) {
       lat: Number(lat),
       lon: Number(lon),
       timezone: timezone || "Europe/Istanbul",
+      houseSystem,
+      ayanamsaSystem,
     });
 
     return NextResponse.json({

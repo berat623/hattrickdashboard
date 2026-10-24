@@ -7,15 +7,21 @@ import {
   ZodiacSignId,
   ZODIAC_SIGNS,
 } from "@/types/horoscope";
-import { NatalChartData } from "@/types/natal";
+import { NatalChartData, SynastryChartData } from "@/types/natal";
 import { getHoroscopesForSign } from "@/lib/horoscope-data";
-import { calculateNatalChart, CalculateChartParams } from "@/lib/natal-engine";
+import {
+  calculateNatalChart,
+  calculateSynastryChart,
+  CalculateChartParams,
+} from "@/lib/natal-engine";
 import { Navbar, NavTab } from "@/components/Navbar";
 import { ZodiacSelector } from "@/components/ZodiacSelector";
 import { DaySelector } from "@/components/DaySelector";
 import { HoroscopeCard } from "@/components/HoroscopeCard";
 import { NatalChartForm } from "@/components/NatalChartForm";
 import { NatalChartResult } from "@/components/NatalChartResult";
+import { SynastryForm } from "@/components/SynastryForm";
+import { SynastryResult } from "@/components/SynastryResult";
 import { Info } from "lucide-react";
 
 export default function HomePage() {
@@ -35,6 +41,12 @@ export default function HomePage() {
     null
   );
   const [natalLoading, setNatalLoading] = useState<boolean>(false);
+
+  // Synastry Chart State
+  const [synastryData, setSynastryData] = useState<SynastryChartData | null>(
+    null
+  );
+  const [synastryLoading, setSynastryLoading] = useState<boolean>(false);
 
   const fetchHoroscope = useCallback(
     async (sign: ZodiacSignId, day: HoroscopeDay) => {
@@ -69,7 +81,6 @@ export default function HomePage() {
   const handleCalculateNatal = useCallback((params: CalculateChartParams) => {
     setNatalLoading(true);
     try {
-      // Immediate client-side calculation using astronomy-engine
       const result = calculateNatalChart(params);
       setNatalChartData(result);
     } catch (err) {
@@ -79,12 +90,29 @@ export default function HomePage() {
     }
   }, []);
 
+  const handleCalculateSynastry = useCallback(
+    (params1: CalculateChartParams, params2: CalculateChartParams) => {
+      setSynastryLoading(true);
+      try {
+        const chart1 = calculateNatalChart(params1);
+        const chart2 = calculateNatalChart(params2);
+        const result = calculateSynastryChart(chart1, chart2);
+        setSynastryData(result);
+      } catch (err) {
+        console.error("Synastry calculation error:", err);
+      } finally {
+        setSynastryLoading(false);
+      }
+    },
+    []
+  );
+
   const currentSign = ZODIAC_SIGNS[selectedSignId];
   const items = data?.items || [];
 
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 selection:bg-zinc-900 selection:text-white dark:selection:bg-white dark:selection:text-zinc-950 font-sans transition-colors pb-8">
-      {/* Top Bar with Nav Tabs (Günlük Burçlar & Doğum Haritası) */}
+      {/* Top Bar with Nav Tabs (Burçlar, Doğum Haritası, Sinastri) */}
       <Navbar
         activeTab={activeNavTab}
         onSelectTab={setActiveNavTab}
@@ -141,7 +169,7 @@ export default function HomePage() {
           </>
         )}
 
-        {/* VIEW 2: Doğum Haritası Hesaplama (Astroloji.org Entegrasyonu) */}
+        {/* VIEW 2: Doğum Haritası & D9 Navamsha Hesaplama */}
         {activeNavTab === "natal" && (
           <section aria-label="Doğum Haritası">
             {!natalChartData ? (
@@ -153,6 +181,23 @@ export default function HomePage() {
               <NatalChartResult
                 data={natalChartData}
                 onReset={() => setNatalChartData(null)}
+              />
+            )}
+          </section>
+        )}
+
+        {/* VIEW 3: Sinastri (İlişki Uyumu Haritası) */}
+        {activeNavTab === "synastry" && (
+          <section aria-label="Sinastri Haritası">
+            {!synastryData ? (
+              <SynastryForm
+                onCalculate={handleCalculateSynastry}
+                loading={synastryLoading}
+              />
+            ) : (
+              <SynastryResult
+                data={synastryData}
+                onReset={() => setSynastryData(null)}
               />
             )}
           </section>
