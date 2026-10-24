@@ -17,6 +17,7 @@ import {
   NAKSHATRA_DATA,
   SIGN_MOTTOS,
   SYNASTRY_INTERPRETATIONS,
+  DARAKARAKA_INTERPRETATIONS,
 } from "./natal-interpretations";
 
 export const ZODIAC_SIGNS = [
@@ -657,6 +658,49 @@ export function calculateNatalChart(params: CalculateChartParams): NatalChartDat
     "0"
   )}:${String(utcDate.getUTCMinutes()).padStart(2, "0")}`;
 
+  // 7. Darakaraka & 7. Ev (Eş Göstergeleri)
+  const classicalBodies = ["Güneş", "Ay", "Merkür", "Venüs", "Mars", "Jüpiter", "Satürn"];
+  const candidatePlanets = planets.filter((p) => classicalBodies.includes(p.name));
+  candidatePlanets.sort((a, b) => (a.longitude % 30) - (b.longitude % 30));
+  const dkPlanet = candidatePlanets[0] || planets[0];
+
+  const SIGN_RULERS: Record<string, string> = {
+    Koç: "Mars",
+    Boğa: "Venüs",
+    İkizler: "Merkür",
+    Yengeç: "Ay",
+    Aslan: "Güneş",
+    Başak: "Merkür",
+    Terazi: "Venüs",
+    Akrep: "Mars",
+    Yay: "Jüpiter",
+    Oğlak: "Satürn",
+    Kova: "Satürn",
+    Balık: "Jüpiter",
+  };
+
+  const house7 = houses[6];
+  const rulerName = SIGN_RULERS[house7.sign] || "Venüs";
+  const rulerObj = planets.find((p) => p.name === rulerName);
+  const rulerHouse = rulerObj ? rulerObj.house : 7;
+
+  const darakaraka = {
+    planet: dkPlanet.name,
+    symbol: dkPlanet.symbol,
+    degree: dkPlanet.degree,
+    minute: dkPlanet.minute,
+    sign: dkPlanet.sign,
+    desc: DARAKARAKA_INTERPRETATIONS[dkPlanet.name] || `${dkPlanet.name} ruh eşinizin temel arketipidir.`,
+  };
+
+  const seventhHouse = {
+    sign: house7.sign,
+    degree: house7.degree,
+    minute: house7.minute,
+    ruler: rulerName,
+    rulerHouse,
+  };
+
   const chartData: NatalChartData = {
     name,
     birthDate,
@@ -704,6 +748,8 @@ export function calculateNatalChart(params: CalculateChartParams): NatalChartDat
       ascendantMotto: SIGN_MOTTOS[ascSign] || "Dış dünyaya yansıyan enerji.",
     },
     vargottamaPlanets,
+    darakaraka,
+    seventhHouse,
     svgWheel: "",
     svgD9Wheel: "",
   };
@@ -1060,12 +1106,105 @@ export function calculateSynastryChart(
 
   aspects.sort((a, b) => a.orb - b.orb);
 
+  // House Overlays & Zodiac Match Calculations
+  const getHouseForLon = (lon: number, hList: HouseCusp[]): number => {
+    for (let h = 0; h < 12; h++) {
+      const currentCusp = hList[h].longitude;
+      const nextCusp = hList[(h + 1) % 12].longitude;
+      const span = (nextCusp - currentCusp + 360) % 360;
+      const dist = (lon - currentCusp + 360) % 360;
+      if (dist < span) return h + 1;
+    }
+    return 1;
+  };
+
+  const houseOverlays: {
+    planet: string;
+    sourcePerson: string;
+    targetPerson: string;
+    targetHouse: number;
+    interpretation: string;
+  }[] = [];
+
+  const OVERLAY_TEXTS: Record<string, Record<number, string>> = {
+    Güneş: {
+      1: "1. Evde: İlk andan itibaren güçlü bir hayranlık ve fiziksel çekim. Varlığınızla partnerinizin hayatına ışık ve özgüven katarsınız.",
+      4: "4. Evde: Derin bir yuva ve aidiyet hissi. Partneriniz sizin yanınızda çocukluğundaki gibi güvende ve huzurlu hisseder.",
+      5: "5. Evde: Aşkın, romantizmin, neşenin ve flörtün zirvesi. Birbirinizin hayatına heyecan ve yaratıcılık katarsınız.",
+      7: "7. Evde: Klasik evlilik ve hayat arkadaşlığı konumu! Partnerinizin gözünde ideal hayat arkadaşı arketipisiniz.",
+      8: "8. Evde: Manyetik, tutkulu ve dönüştürücü bir çekim. Aranızdaki bağ yüzeysel değil, ruhun derinliklerine işleyen cinstendir.",
+      10: "10. Evde: Partnerinizin kariyerini ve toplumsal hedeflerini yücelten, gurur verici ve saygın bir ortaklık.",
+    },
+    Ay: {
+      1: "1. Evde: Duygusal telepatik bağ; kelimelere dökmeden birbirinizin ne hissettiğini anlarsınız.",
+      4: "4. Evde: Birlikte aynı evde yaşamak, yuva kurmak ve evcil huzur için kusursuz bir yerleşim.",
+      5: "5. Evde: Duygusal aşk, kalpten kalbe konuşma ve birlikte içsel çocuk gibi eğlenme.",
+      7: "7. Evde: Kalplerin birbirine kenetlenmesi; duygusal güvene dayalı derin bir evlilik arzusu.",
+      8: "8. Evde: Birbirinizin en gizli duygusal yaralarını şifalandıran sarsıcı bir ruh bağı.",
+    },
+    Venüs: {
+      1: "1. Evde: Karşı konulmaz estetik beğeni ve hayranlık. Partneriniz sizi her anlamda büyüleyici ve zarif bulur.",
+      4: "4. Evde: Ev ortamında huzur, estetik ve konforlu bir yaşam alanı kurma arzusu.",
+      5: "5. Evde: Masalsı romantizm, tutkulu aşk jestleri ve tükenmeyen flört enerjisi.",
+      7: "7. Evde: Ruh eşi aşkı! Sevgi, şefkat, zarafet ve sadakatle mühürlenmiş evlilik.",
+      8: "8. Evde: Yoğun cinsel çekim, paylaşılan değerler ve vazgeçilmez bir tutku.",
+    },
+    Mars: {
+      1: "1. Evde: Yoğun fiziksel kıvılcım ve çekim; aranızdaki enerji ilk andan itibaren hissedilir.",
+      5: "5. Evde: Yüksek voltajlı tutku, heyecan ve sportif/dinamik bir aşk hayatı.",
+      7: "7. Evde: Partnerinizi harekete geçiren, dinamik ve asla sıkıcı olmayan bir ilişki.",
+      8: "8. Evde: Derin fiziksel ve ruhsal çekim, gizemli ve son derece güçlü bir manyetizma.",
+    },
+  };
+
+  const keyBodies = ["Güneş", "Ay", "Venüs", "Mars"];
+  chart1.planets
+    .filter((p) => keyBodies.includes(p.name))
+    .forEach((p) => {
+      const targetH = getHouseForLon(p.longitude, chart2.houses);
+      const textMap = OVERLAY_TEXTS[p.name];
+      const interpretation =
+        textMap?.[targetH] ||
+        `${chart1.name}'in ${p.name}'i ${chart2.name}'in ${targetH}. evine düşerek bu hayat alanına canlılık ve odaklanma getirir.`;
+
+      houseOverlays.push({
+        planet: p.name,
+        sourcePerson: chart1.name,
+        targetPerson: chart2.name,
+        targetHouse: targetH,
+        interpretation,
+      });
+    });
+
+  // Zodiac Matches
+  const sun1 = chart1.planets.find((p) => p.name === "Güneş") || chart1.planets[0];
+  const sun2 = chart2.planets.find((p) => p.name === "Güneş") || chart2.planets[0];
+  const moon1 = chart1.planets.find((p) => p.name === "Ay") || chart1.planets[1];
+  const moon2 = chart2.planets.find((p) => p.name === "Ay") || chart2.planets[1];
+
+  const zodiacMatches = [
+    {
+      title: "Güneş - Güneş (Ego & Yaşam Amacı)",
+      pair: `${sun1.sign} & ${sun2.sign}`,
+      score: chart1.summary.sunSign === chart2.summary.sunSign ? 90 : 82,
+      desc: `${sun1.sign} ve ${sun2.sign} burçlarının temel hayat felsefesi birbirini zenginleştiren bir denge kurar. Karşılıklı saygı temel dayanaktır.`,
+    },
+    {
+      title: "Ay - Ay (Duygusal Dünya & Ruh Bağı)",
+      pair: `${moon1.sign} & ${moon2.sign}`,
+      score: chart1.summary.moonSign === chart2.summary.moonSign ? 95 : 85,
+      desc: `${moon1.sign} ve ${moon2.sign} ay yerleşimleri, ev hayatında ve duygusal ihtiyaçlarda doğal bir empati ve karşılıklı anlayış sağlar.`,
+    },
+  ];
+
   return {
     person1: chart1,
     person2: chart2,
     overallScore,
     categories,
     aspects,
+    houseOverlays,
+    zodiacMatches,
     summaryText,
   };
 }

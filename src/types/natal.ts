@@ -134,6 +134,21 @@ export interface NatalChartData {
     ascendantMotto: string;
   };
   vargottamaPlanets: string[];
+  darakaraka?: {
+    planet: string;
+    symbol: string;
+    degree: number;
+    minute: number;
+    sign: string;
+    desc: string;
+  };
+  seventhHouse?: {
+    sign: string;
+    degree: number;
+    minute: number;
+    ruler: string;
+    rulerHouse: number;
+  };
   svgWheel: string;
   svgD9Wheel: string;
 }
@@ -156,6 +171,21 @@ export interface SynastryCategoryScore {
   desc: string;
 }
 
+export interface SynastryHouseOverlay {
+  planet: string;
+  sourcePerson: string;
+  targetPerson: string;
+  targetHouse: number;
+  interpretation: string;
+}
+
+export interface SynastryZodiacMatch {
+  title: string;
+  pair: string;
+  score: number;
+  desc: string;
+}
+
 export interface SynastryChartData {
   person1: NatalChartData;
   person2: NatalChartData;
@@ -168,5 +198,7 @@ export interface SynastryChartData {
     spiritual: SynastryCategoryScore;
   };
   aspects: SynastryAspect[];
+  houseOverlays?: SynastryHouseOverlay[];
+  zodiacMatches?: SynastryZodiacMatch[];
   summaryText: string;
 }

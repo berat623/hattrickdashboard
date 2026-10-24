@@ -10,7 +10,8 @@ import {
   Flame,
   ShieldCheck,
   Sparkles,
-  ChevronDown,
+  Layers,
+  Compass,
 } from "lucide-react";
 
 interface SynastryResultProps {
@@ -244,11 +245,73 @@ export function SynastryResult({ data, onReset }: SynastryResultProps) {
         </div>
       </div>
 
+      {/* Burç Uyum Kartları (Güneş & Ay) */}
+      {data.zodiacMatches && data.zodiacMatches.length > 0 && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs space-y-3">
+          <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+            <Compass className="w-4 h-4 text-amber-500" />
+            <span>Burçlar Arası Temel Mizaç Uyumu</span>
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {data.zodiacMatches.map((zm, idx) => (
+              <div
+                key={idx}
+                className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/70 dark:border-zinc-700/60 space-y-1.5"
+              >
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-zinc-900 dark:text-white">{zm.title}</span>
+                  <span className="font-semibold text-amber-600 dark:text-amber-400">
+                    {zm.pair}
+                  </span>
+                </div>
+                <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                  {zm.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Ev Çapraz Yerleşimleri (House Overlays) */}
+      {data.houseOverlays && data.houseOverlays.length > 0 && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs space-y-3">
+          <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+            <Layers className="w-4 h-4 text-indigo-500" />
+            <span>Ev Çapraz Yerleşimleri (Partnerinizin Hayatındaki Etkiniz)</span>
+          </h3>
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            Sizin gezegenlerinizin partnerinizin haritasındaki evlere düşüşü, bu ilişkinin hangi hayat alanlarında en yoğun şekilde hissedileceğini gösterir.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {data.houseOverlays.map((ho, idx) => (
+              <div
+                key={idx}
+                className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/70 dark:border-zinc-700/60 space-y-1"
+              >
+                <div className="flex items-center justify-between text-xs font-bold text-zinc-900 dark:text-white">
+                  <span>
+                    {ho.planet} Partnerin {ho.targetHouse}. Evinde
+                  </span>
+                  <span className="text-[11px] font-normal text-indigo-600 dark:text-indigo-400">
+                    Etki Alanı
+                  </span>
+                </div>
+                <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                  {ho.interpretation}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Cross-Aspects Section */}
       <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs space-y-3.5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white">
-            Çapraz Gezegen Açıları & Yorumları ({filteredAspects.length})
+            Çapraz Gezegen Açıları & Detaylı Yorumları ({filteredAspects.length})
           </h3>
 
           {/* Filter Pills */}
