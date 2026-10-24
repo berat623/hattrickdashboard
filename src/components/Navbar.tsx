@@ -1,29 +1,74 @@
 "use client";
 
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Sparkles, Compass } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 
+export type NavTab = "daily" | "natal";
+
 interface NavbarProps {
+  activeTab: NavTab;
+  onSelectTab: (tab: NavTab) => void;
   onRefresh: () => void;
   loading: boolean;
 }
 
-export function Navbar({ onRefresh, loading }: NavbarProps) {
+export function Navbar({
+  activeTab,
+  onSelectTab,
+  onRefresh,
+  loading,
+}: NavbarProps) {
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-white/90 dark:bg-zinc-950/90 border-b border-zinc-200/80 dark:border-zinc-800/80 transition-colors">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 h-12 flex items-center justify-end gap-2">
-        <button
-          type="button"
-          onClick={onRefresh}
-          className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-500/40 transition-all cursor-pointer shadow-xs"
-          title="Yorumları Yenile"
-          aria-label="Yenile"
-        >
-          <RefreshCw
-            className={`w-4 h-4 ${loading ? "animate-spin text-indigo-600 dark:text-indigo-400" : ""}`}
-          />
-        </button>
-        <ThemeToggle />
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+        {/* Navigation Tabs (Günlük Burçlar & Doğum Haritası) */}
+        <nav aria-label="Ana Menü" className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-xl">
+          <button
+            type="button"
+            onClick={() => onSelectTab("daily")}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === "daily"
+                ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs"
+                : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+            <span>Günlük Burçlar</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onSelectTab("natal")}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === "natal"
+                ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs"
+                : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
+            }`}
+          >
+            <Compass className="w-3.5 h-3.5 text-amber-500" />
+            <span>Doğum Haritası</span>
+          </button>
+        </nav>
+
+        {/* Right actions */}
+        <div className="flex items-center gap-2">
+          {activeTab === "daily" && (
+            <button
+              type="button"
+              onClick={onRefresh}
+              className="p-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:text-amber-600 dark:hover:text-amber-400 hover:border-amber-500/40 transition-all cursor-pointer shadow-xs"
+              title="Yorumları Yenile"
+              aria-label="Yenile"
+            >
+              <RefreshCw
+                className={`w-3.5 h-3.5 ${
+                  loading ? "animate-spin text-amber-600 dark:text-amber-400" : ""
+                }`}
+              />
+            </button>
+          )}
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
