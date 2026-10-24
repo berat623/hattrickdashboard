@@ -1,4 +1,4 @@
-:HL["/hattrickdashboard/_next/static/chunks/1zfzrhovisfxb.css","style"]
+:HL["/hattrickdashboard/_next/static/chunks/40lyib8v1nq3l.css","style"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"/_not-found","h":96,"c":"$Q2"}]]
-0:{"b":"KX8bciDOh5DTy_18V5LGI","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"NKSHZobH66VLDhjH9cz6d","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
