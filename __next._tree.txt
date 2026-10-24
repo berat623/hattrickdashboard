@@ -12,4 +12,4 @@
 :HL["/hattrickdashboard/_next/static/media/c875c6f5d3e977ac-s.p.1h18_wedhzk4h.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/hattrickdashboard/_next/static/media/e2334d715941921e-s.p.3o_v2fun1jzxk.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 1:[["children",{"s":"__PAGE__","h":160}]]
-0:{"b":"O5KkL7uRyYbNwYsFtNzv9","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"af1XXSqDTMkAqjMPOVFjt","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
