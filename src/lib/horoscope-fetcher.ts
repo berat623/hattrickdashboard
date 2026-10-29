@@ -60,7 +60,7 @@ export async function fetchAskGanesha(
     let luckyNumber: string | undefined;
 
     const bodyMatch = html.match(
-      /<div class="prediction-container">[\s\S]*?<\/h4>\s*<p>([\s\S]*?)<\/p>/i
+      /<div class="prediction-container">[\s\S]*?<\/h4>\s*<p[^>]*>([\s\S]*?)<\/p>/i
     );
 
     if (bodyMatch) {

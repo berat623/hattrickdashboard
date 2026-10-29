@@ -7,6 +7,13 @@ const backupPath = path.join(__dirname, "../src/api_backup");
 
 console.log("🚀 GitHub Pages için statik derleme başlatılıyor...");
 
+try {
+  console.log("🔄 Günlük burç verileri canlı olarak çekiliyor...");
+  execSync("npx tsx scripts/update-daily-horoscopes.ts", { stdio: "inherit" });
+} catch (e) {
+  console.warn("⚠️ Canlı burç çekimi uyarısı (mevcut veri kullanılacak):", e.message);
+}
+
 let movedApi = false;
 try {
   if (fs.existsSync(apiPath)) {

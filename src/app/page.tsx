@@ -4,11 +4,12 @@ import { useState, useEffect, useCallback } from "react";
 import {
   HoroscopeApiResponse,
   HoroscopeDay,
+  DailyHoroscopeItem,
   ZodiacSignId,
   ZODIAC_SIGNS,
 } from "@/types/horoscope";
 import { NatalChartData, SynastryChartData } from "@/types/natal";
-import { getHoroscopesForSign } from "@/lib/horoscope-data";
+import { getHoroscopesForSign, getFormattedDayDate } from "@/lib/horoscope-data";
 import {
   calculateNatalChart,
   calculateSynastryChart,
@@ -56,17 +57,81 @@ export default function HomePage() {
       setLoading(true);
 
       try {
-        const res = await fetch(`/api/horoscope?sign=${sign}&day=${day}`, {
-          cache: "no-store",
-        });
-        if (res.ok) {
-          const json: HoroscopeApiResponse = await res.json();
-          if (json.success && json.items.length > 0) {
-            setData(json);
+        let loaded = false;
+
+        // 1. Dinamik API rotasını dene (Lokal veya Node sunucu)
+        try {
+          const res = await fetch(`/api/horoscope?sign=${sign}&day=${day}`, {
+            cache: "no-store",
+          });
+          if (res.ok) {
+            const json: HoroscopeApiResponse = await res.json();
+            if (json.success && json.items && json.items.length > 0) {
+              setData(json);
+              loaded = true;
+            }
+          }
+        } catch {
+          // Statik dosyaya geç
+        }
+
+        // 2. Statik GitHub Pages ortamı için güncel JSON verisini çek
+        if (!loaded) {
+          const candidates = [
+            `./data/daily-horoscopes.json?v=${Date.now()}`,
+            `/hattrickdashboard/data/daily-horoscopes.json?v=${Date.now()}`,
+            `/data/daily-horoscopes.json?v=${Date.now()}`,
+          ];
+
+          for (const url of candidates) {
+            try {
+              const res = await fetch(url, { cache: "no-store" });
+              if (res.ok) {
+                const store = await res.json();
+                if (store && store[day] && store[day][sign]) {
+                  const signData = store[day][sign];
+                  const items: DailyHoroscopeItem[] = [];
+                  const formattedDate = getFormattedDayDate(day);
+
+                  if (signData.astrolojiorg && day === "today") {
+                    items.push({ ...signData.astrolojiorg, date: formattedDate });
+                  }
+                  if (signData.askganesha) {
+                    items.push({ ...signData.askganesha, date: formattedDate });
+                  }
+                  if (signData.ganeshaspeaks) {
+                    items.push({ ...signData.ganeshaspeaks, date: formattedDate });
+                  }
+                  if (signData.astrosage && day !== "yesterday") {
+                    items.push({ ...signData.astrosage, date: formattedDate });
+                  }
+
+                  if (items.length > 0) {
+                    setData({
+                      success: true,
+                      day,
+                      date: formattedDate,
+                      sign: ZODIAC_SIGNS[sign],
+                      items,
+                      availableSources:
+                        day === "today"
+                          ? ["astrolojiorg", "askganesha", "ganeshaspeaks", "astrosage"]
+                          : day === "tomorrow"
+                          ? ["askganesha", "ganeshaspeaks", "astrosage"]
+                          : ["askganesha", "ganeshaspeaks"],
+                    });
+                    loaded = true;
+                    break;
+                  }
+                }
+              }
+            } catch {
+              // Sonraki adresi dene
+            }
           }
         }
-      } catch {
-        // Fallback remains active
+      } catch (err) {
+        console.warn("Horoscope sync error:", err);
       } finally {
         setLoading(false);
       }
@@ -74,8 +139,38 @@ export default function HomePage() {
     []
   );
 
+  // Burç veya gün değiştiğinde veri çek
   useEffect(() => {
     fetchHoroscope(selectedSignId, selectedDay);
+  }, [selectedSignId, selectedDay, fetchHoroscope]);
+
+  // Kendi kendine güncellenme ve canlı senkronizasyon (Visibility & Interval)
+  useEffect(() => {
+    // 1. Sekmeye geri dönüldüğünde en güncel veriyi kontrol et
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        fetchHoroscope(selectedSignId, selectedDay);
+      }
+    };
+
+    // 2. Pencereye odaklanıldığında kontrol et
+    const handleFocus = () => {
+      fetchHoroscope(selectedSignId, selectedDay);
+    };
+
+    // 3. Her 10 dakikada bir arka planda otomatik senkronize ol
+    const interval = setInterval(() => {
+      fetchHoroscope(selectedSignId, selectedDay);
+    }, 10 * 60 * 1000);
+
+    window.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("focus", handleFocus);
+
+    return () => {
+      window.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("focus", handleFocus);
+      clearInterval(interval);
+    };
   }, [selectedSignId, selectedDay, fetchHoroscope]);
 
   const handleCalculateNatal = useCallback((params: CalculateChartParams) => {

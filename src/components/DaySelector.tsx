@@ -1,7 +1,8 @@
 "use client";
 
+import { useMemo } from "react";
 import { HoroscopeDay } from "@/types/horoscope";
-import { DAY_DATES } from "@/lib/horoscope-data";
+import { getFormattedDayDate, getShortFormattedDayDate } from "@/lib/horoscope-data";
 import { Calendar } from "lucide-react";
 
 interface DaySelectorProps {
@@ -9,23 +10,25 @@ interface DaySelectorProps {
   onSelectDay: (day: HoroscopeDay) => void;
 }
 
-const DAYS: { id: HoroscopeDay; label: string; shortDate: string }[] = [
-  { id: "yesterday", label: "Dün", shortDate: "23 Ekim" },
-  { id: "today", label: "Bugün", shortDate: "24 Ekim" },
-  { id: "tomorrow", label: "Yarın", shortDate: "25 Ekim" },
-];
-
 export function DaySelector({
   selectedDay,
   onSelectDay,
 }: DaySelectorProps) {
-  const fullDate = DAY_DATES[selectedDay];
+  const fullDate = getFormattedDayDate(selectedDay);
+
+  const days = useMemo(() => {
+    return [
+      { id: "yesterday" as HoroscopeDay, label: "Dün", shortDate: getShortFormattedDayDate("yesterday") },
+      { id: "today" as HoroscopeDay, label: "Bugün", shortDate: getShortFormattedDayDate("today") },
+      { id: "tomorrow" as HoroscopeDay, label: "Yarın", shortDate: getShortFormattedDayDate("tomorrow") },
+    ];
+  }, []);
 
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5">
       {/* Segmented Control */}
       <div className="inline-flex w-full sm:w-auto p-1 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80">
-        {DAYS.map((d) => {
+        {days.map((d) => {
           const isActive = selectedDay === d.id;
           return (
             <button

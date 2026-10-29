@@ -1,12 +1,16 @@
-name: Deploy to GitHub Pages
+name: Deploy and Auto-Update Daily Horoscopes
 
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  schedule:
+    # Her gün gece ve sabah otomatik burç güncelleme ve senkronizasyon (UTC 00:15 ve UTC 06:00)
+    - cron: '15 0 * * *'
+    - cron: '0 6 * * *'
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -29,6 +33,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci || npm install
+
+      - name: Fetch and update daily horoscopes (Canlı Senkronizasyon)
+        run: npx tsx scripts/update-daily-horoscopes.ts
 
       - name: Build static export for GitHub Pages
         run: |
