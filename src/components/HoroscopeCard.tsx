@@ -7,12 +7,13 @@ import {
   ZodiacSignInfo,
 } from "@/types/horoscope";
 import {
+  cleanEmojis,
   formatPredictionSections,
   isEnglishText,
   translateColorToTurkish,
   translateToTurkish,
 } from "@/lib/translator";
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, Loader2 } from "lucide-react";
 
 interface HoroscopeCardProps {
   item: DailyHoroscopeItem;
@@ -27,25 +28,45 @@ const DAY_LABELS: Record<string, string> = {
 
 export function HoroscopeCard({ item, sign }: HoroscopeCardProps) {
   const [copied, setCopied] = useState<boolean>(false);
-  const [predictionText, setPredictionText] = useState<string>(() =>
-    formatPredictionSections(item.predictionTr)
-  );
+
+  // Check if initial content is English
+  const rawInitialText = item.predictionTr || item.predictionEn || "";
+  const initialIsEnglish = isEnglishText(rawInitialText);
+
+  const [isTranslating, setIsTranslating] = useState<boolean>(initialIsEnglish);
+  const [predictionText, setPredictionText] = useState<string>(() => {
+    if (!initialIsEnglish && rawInitialText) {
+      return formatPredictionSections(cleanEmojis(rawInitialText));
+    }
+    return "";
+  });
 
   const sourceMeta = HOROSCOPE_SOURCES[item.sourceId];
 
   // Built-in Lightning-Fast Client Translation Engine & Formatter
   useEffect(() => {
-    // If the text happens to be in English, translate it instantly on the client
-    if (isEnglishText(item.predictionTr)) {
-      translateToTurkish(item.predictionTr).then((translated) => {
-        if (translated && translated.trim().length > 0) {
-          setPredictionText(formatPredictionSections(translated));
-        }
-      });
-    } else {
-      setPredictionText(formatPredictionSections(item.predictionTr));
+    const textToEvaluate = item.predictionTr || item.predictionEn || "";
+
+    if (isEnglishText(textToEvaluate)) {
+      setIsTranslating(true);
+      translateToTurkish(textToEvaluate)
+        .then((translated) => {
+          if (translated && translated.trim().length > 0) {
+            setPredictionText(formatPredictionSections(cleanEmojis(translated)));
+          }
+        })
+        .catch(() => {
+          // If translation completely fails, show formatted text as fallback
+          setPredictionText(formatPredictionSections(cleanEmojis(textToEvaluate)));
+        })
+        .finally(() => {
+          setIsTranslating(false);
+        });
+    } else if (textToEvaluate) {
+      setPredictionText(formatPredictionSections(cleanEmojis(textToEvaluate)));
+      setIsTranslating(false);
     }
-  }, [item.predictionTr]);
+  }, [item.predictionTr, item.predictionEn]);
 
   const handleCopy = async () => {
     const textToCopy = `[${sourceMeta?.name || item.sourceName} • ${sign.nameTr} Burcu • ${item.date}]\n\n${predictionText}`;
@@ -84,7 +105,8 @@ export function HoroscopeCard({ item, sign }: HoroscopeCardProps) {
         <button
           type="button"
           onClick={handleCopy}
-          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+          disabled={isTranslating}
+          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer disabled:opacity-50"
           title="Yorumu Kopyala"
         >
           {copied ? (
@@ -104,33 +126,40 @@ export function HoroscopeCard({ item, sign }: HoroscopeCardProps) {
       </div>
 
       {/* Pure Turkish Prediction Body with Clean Headings & No Emojis */}
-      <div className="space-y-3.5 text-xs sm:text-sm leading-relaxed font-normal">
-        {predictionText
-          .split(/\n\n+/)
-          .map((p) => p.trim())
-          .filter(Boolean)
-          .map((para, idx) => {
-            const headingMatch = para.match(
-              /^([A-Za-zÇçĞğİıÖöŞşÜü\s]{2,25}:)\s*([\s\S]*)/
-            );
-            if (headingMatch) {
-              return (
-                <div key={idx} className="space-y-1">
-                  <span className="font-semibold text-zinc-900 dark:text-zinc-100 block text-xs">
-                    {headingMatch[1]}
-                  </span>
-                  <p className="text-zinc-700 dark:text-zinc-300">
-                    {headingMatch[2]}
-                  </p>
-                </div>
+      <div className="space-y-3.5 text-xs sm:text-sm leading-relaxed font-normal min-h-[60px]">
+        {isTranslating ? (
+          <div className="flex items-center justify-center gap-2 py-6 text-xs text-zinc-500 dark:text-zinc-400">
+            <Loader2 className="w-4 h-4 animate-spin text-zinc-500" />
+            <span>Türkçe&apos;ye çevriliyor...</span>
+          </div>
+        ) : (
+          predictionText
+            .split(/\n\n+/)
+            .map((p) => p.trim())
+            .filter(Boolean)
+            .map((para, idx) => {
+              const headingMatch = para.match(
+                /^([A-Za-zÇçĞğİıÖöŞşÜü\s]{2,25}:)\s*([\s\S]*)/
               );
-            }
-            return (
-              <p key={idx} className="text-zinc-700 dark:text-zinc-300">
-                {para}
-              </p>
-            );
-          })}
+              if (headingMatch) {
+                return (
+                  <div key={idx} className="space-y-1">
+                    <span className="font-semibold text-zinc-900 dark:text-zinc-100 block text-xs">
+                      {headingMatch[1]}
+                    </span>
+                    <p className="text-zinc-700 dark:text-zinc-300">
+                      {headingMatch[2]}
+                    </p>
+                  </div>
+                );
+              }
+              return (
+                <p key={idx} className="text-zinc-700 dark:text-zinc-300">
+                  {para}
+                </p>
+              );
+            })
+        )}
       </div>
 
       {/* Lucky Details (Only Number & Color in Turkish) */}

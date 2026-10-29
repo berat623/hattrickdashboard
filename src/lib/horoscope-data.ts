@@ -66,7 +66,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Silver",
         "luckyColorTr": "Gümüş",
         "luckyNumber": "37",
-        "fetchedAt": "2026-10-29T09:42:38.271Z"
+        "fetchedAt": "2026-10-29T09:55:43.953Z"
       },
       "ganeshaspeaks": {
         "signId": "taurus",
@@ -78,7 +78,7 @@ export const STATIC_HOROSCOPES: Record<
         "predictionEn": "Almost as if crafted by Cervantes himself, you might wake up today feeling passionate and quixotic. Make up and make overs may be on the cards as you will have the urge to be groomed. Once you are done without yourself, you will shower others with attention, says Ganesha.",
         "predictionTr": "Sanki Cervantes'in kendisi tarafından hazırlanmış gibi, bugün tutkulu ve Don Kişotvari hissederek uyanabilirsiniz. Bakımlı olma dürtüsüne sahip olacağınız için makyaj ve makyajlar kartlarda olabilir. Ganesha, kendiniz olmadan işiniz bittiğinde, başkalarına ilgi göstereceksiniz diyor.",
         "luckyColorTr": "",
-        "fetchedAt": "2026-10-29T09:42:38.652Z"
+        "fetchedAt": "2026-10-29T09:55:44.355Z"
       },
       "astrosage": null
     },
@@ -96,7 +96,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Grey",
         "luckyColorTr": "Gri",
         "luckyNumber": "33",
-        "fetchedAt": "2026-10-29T09:42:41.484Z"
+        "fetchedAt": "2026-10-29T09:55:48.810Z"
       },
       "ganeshaspeaks": {
         "signId": "cancer",
@@ -108,7 +108,7 @@ export const STATIC_HOROSCOPES: Record<
         "predictionEn": "With Ganesha&#8217;s grace, whatever you think or peruse will be successful. Students will excel and finish pending work. You can display your imagination excellently. In short, a day of happiness and variety.",
         "predictionTr": "Ganesha'nın lütfuyla, düşündüğünüz veya incelediğiniz her şey başarılı olacaktır. Öğrenciler başarılı olacak ve bekleyen işleri bitireceklerdir. Hayal gücünüzü mükemmel bir şekilde sergileyebilirsiniz. Kısacası mutluluk ve çeşitlilik dolu bir gün.",
         "luckyColorTr": "",
-        "fetchedAt": "2026-10-29T09:42:41.670Z"
+        "fetchedAt": "2026-10-29T09:55:48.993Z"
       },
       "astrosage": null
     },
@@ -126,7 +126,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Maroon",
         "luckyColorTr": "Bordo",
         "luckyNumber": "12",
-        "fetchedAt": "2026-10-29T09:42:44.335Z"
+        "fetchedAt": "2026-10-29T09:55:52.094Z"
       },
       "ganeshaspeaks": {
         "signId": "leo",
@@ -138,7 +138,7 @@ export const STATIC_HOROSCOPES: Record<
         "predictionEn": "When it comes to maintaining a balance in any relationship, you set an example for others to follow. It is like an inner light guides you towards joyful coexistence, though, at times, it may entail making certain acts of sacrifice, says Ganesha. You may choose to lose an argument in order to win hearts. Just remember that losing a battle is sometimes the only way to win the war. Keep your language short and sweet on this wonderful day.",
         "predictionTr": "Herhangi bir ilişkide dengeyi korumak söz konusu olduğunda başkalarının takip edebileceği bir örnek oluşturursunuz. Ganesha, sanki içsel bir ışığın sizi neşeli bir birlikte yaşama doğru yönlendirdiğini, ancak bazen bazı fedakarlık eylemlerinde bulunmayı gerektirebileceğini söylüyor. Kalpleri kazanmak için bir tartışmayı kaybetmeyi seçebilirsiniz. Bir savaşı kaybetmenin bazen savaşı kazanmanın tek yolu olduğunu unutmayın. Bu harika günde dilinizi kısa ve tatlı tutun.",
         "luckyColorTr": "",
-        "fetchedAt": "2026-10-29T09:42:44.542Z"
+        "fetchedAt": "2026-10-29T09:55:52.275Z"
       },
       "astrosage": null
     },
@@ -156,7 +156,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Pink",
         "luckyColorTr": "Pembe",
         "luckyNumber": "4",
-        "fetchedAt": "2026-10-29T09:42:47.166Z"
+        "fetchedAt": "2026-10-29T09:55:54.891Z"
       },
       "ganeshaspeaks": {
         "signId": "virgo",
@@ -168,7 +168,7 @@ export const STATIC_HOROSCOPES: Record<
         "predictionEn": "Avoid all kinds of prejudice and do not allow intolerance to enter your mind today, advises Ganesha. In all likelihood, you will look around yourself in search of love and affection. You will do well to keep negativity at bay as otherwise it may cow you down. Ganesha suggests that you marshal all your courage to live as per your convictions.",
         "predictionTr": "Ganesha, her türlü önyargıdan kaçının ve hoşgörüsüzlüğün bugün aklınıza girmesine izin vermeyin, tavsiyesinde bulunuyor. Büyük ihtimalle sevgi ve şefkat arayışı içinde etrafınıza bakacaksınız. Olumsuzluğu uzak tutmanız iyi olur, aksi takdirde sizi korkutabilir. Ganesha, inançlarınıza göre yaşamak için tüm cesaretinizi toplamanızı öneriyor.",
         "luckyColorTr": "",
-        "fetchedAt": "2026-10-29T09:42:47.505Z"
+        "fetchedAt": "2026-10-29T09:55:55.075Z"
       },
       "astrosage": null
     }
@@ -187,7 +187,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Yeşil",
         "luckyColorTr": "Yeşil",
         "luckyNumber": "6",
-        "fetchedAt": "2026-10-29T09:42:38.785Z"
+        "fetchedAt": "2026-10-29T09:55:44.492Z"
       },
       "askganesha": {
         "signId": "taurus",
@@ -201,7 +201,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Yellow",
         "luckyColorTr": "Sarı",
         "luckyNumber": "9",
-        "fetchedAt": "2026-10-29T09:42:39.145Z"
+        "fetchedAt": "2026-10-29T09:55:44.867Z"
       },
       "ganeshaspeaks": {
         "signId": "taurus",
@@ -215,7 +215,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Deep Pastel Pink",
         "luckyColorTr": "Pembe",
         "luckyNumber": "8",
-        "fetchedAt": "2026-10-29T09:42:39.331Z"
+        "fetchedAt": "2026-10-29T09:55:45.053Z"
       },
       "astrosage": {
         "signId": "taurus",
@@ -231,7 +231,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyNumber": "2",
         "remedy": "Give sweetened rice to needy and poor people to strengthen your economic condition.",
         "remedyTr": "Ekonomik durumunuzu güçlendirmek için ihtiyaç sahibi ve fakir insanlara şekerli pirinç verin.",
-        "fetchedAt": "2026-10-29T09:42:40.033Z"
+        "fetchedAt": "2026-10-29T09:55:46.825Z"
       }
     },
     "cancer": {
@@ -247,7 +247,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Beyaz",
         "luckyColorTr": "Beyaz",
         "luckyNumber": "2",
-        "fetchedAt": "2026-10-29T09:42:41.708Z"
+        "fetchedAt": "2026-10-29T09:55:49.152Z"
       },
       "askganesha": {
         "signId": "cancer",
@@ -261,7 +261,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Brown",
         "luckyColorTr": "Kahverengi",
         "luckyNumber": "23",
-        "fetchedAt": "2026-10-29T09:42:42.068Z"
+        "fetchedAt": "2026-10-29T09:55:49.566Z"
       },
       "ganeshaspeaks": {
         "signId": "cancer",
@@ -273,9 +273,9 @@ export const STATIC_HOROSCOPES: Record<
         "predictionEn": "You are a master of deception, and your sugar-coated comments play a pivotal role in your methods. Today, you will be able to smell trouble from a distance, and will know when to take a U-turn. Your methods may not make you very popular with the so-called moral brigade working with you, but you may think that this is the easiest way to the top. Ganesha, however, is not too sure that these tactics will work on a long-term basis.",
         "predictionTr": "Siz bir aldatma ustasısınız ve şeker kaplı yorumlarınız yöntemlerinizde çok önemli bir rol oynuyor. Bugün, belanın kokusunu uzaktan alabileceksiniz ve ne zaman U dönüşü yapmanız gerektiğini bileceksiniz. Yöntemleriniz, sizinle birlikte çalışan sözde ahlak tugayı arasında sizi pek popüler kılmayabilir, ancak bunun zirveye ulaşmanın en kolay yolu olduğunu düşünebilirsiniz. Ancak Ganesha bu taktiklerin uzun vadede işe yarayacağından pek emin değil.",
         "luckyColor": "Deep Light Blue",
-        "luckyColorTr": "Mavi",
+        "luckyColorTr": "Açık Mavi",
         "luckyNumber": "5",
-        "fetchedAt": "2026-10-29T09:42:42.377Z"
+        "fetchedAt": "2026-10-29T09:55:49.772Z"
       },
       "astrosage": {
         "signId": "cancer",
@@ -291,7 +291,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyNumber": "3",
         "remedy": "Donate black grams, bengal grams, black clothing, and mustard oil to maintain continued good health.",
         "remedyTr": "Sağlığınızı sürdürmek için siyah gram, bengal gram, siyah kıyafet ve hardal yağı bağışlayın.",
-        "fetchedAt": "2026-10-29T09:42:42.873Z"
+        "fetchedAt": "2026-10-29T09:55:50.666Z"
       }
     },
     "leo": {
@@ -307,7 +307,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Altın Sarısı",
         "luckyColorTr": "Altın Sarısı",
         "luckyNumber": "1",
-        "fetchedAt": "2026-10-29T09:42:44.590Z"
+        "fetchedAt": "2026-10-29T09:55:52.333Z"
       },
       "askganesha": {
         "signId": "leo",
@@ -321,7 +321,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Red",
         "luckyColorTr": "Kırmızı",
         "luckyNumber": "40",
-        "fetchedAt": "2026-10-29T09:42:44.943Z"
+        "fetchedAt": "2026-10-29T09:55:52.694Z"
       },
       "ganeshaspeaks": {
         "signId": "leo",
@@ -335,7 +335,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Gold",
         "luckyColorTr": "Altın Sarısı",
         "luckyNumber": "6",
-        "fetchedAt": "2026-10-29T09:42:45.111Z"
+        "fetchedAt": "2026-10-29T09:55:52.886Z"
       },
       "astrosage": {
         "signId": "leo",
@@ -350,8 +350,8 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColorTr": "Gümüş ve Beyaz",
         "luckyNumber": "2",
         "remedy": "Feed young girls below age of 9 to attain good health",
-        "remedyTr": "Sağlıklı olmaları için 9 yaşın altındaki genç kızları besleyin",
-        "fetchedAt": "2026-10-29T09:42:45.709Z"
+        "remedyTr": "Feed young girls below age of 9 to attain good health",
+        "fetchedAt": "2026-10-29T09:55:53.330Z"
       }
     },
     "virgo": {
@@ -367,7 +367,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Lacivert",
         "luckyColorTr": "Lacivert",
         "luckyNumber": "5",
-        "fetchedAt": "2026-10-29T09:42:47.549Z"
+        "fetchedAt": "2026-10-29T09:55:55.121Z"
       },
       "askganesha": {
         "signId": "virgo",
@@ -381,7 +381,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Green",
         "luckyColorTr": "Yeşil",
         "luckyNumber": "27",
-        "fetchedAt": "2026-10-29T09:42:47.912Z"
+        "fetchedAt": "2026-10-29T09:55:55.478Z"
       },
       "ganeshaspeaks": {
         "signId": "virgo",
@@ -395,7 +395,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Beige",
         "luckyColorTr": "Bej",
         "luckyNumber": "7",
-        "fetchedAt": "2026-10-29T09:42:48.083Z"
+        "fetchedAt": "2026-10-29T09:55:55.686Z"
       },
       "astrosage": {
         "signId": "virgo",
@@ -410,8 +410,8 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColorTr": "Kırmızı ve Bordo",
         "luckyNumber": "9",
         "remedy": "Feed sweet food items to birds for professional success.",
-        "remedyTr": "Profesyonel başarı için kuşlara tatlı yiyecekler verin.",
-        "fetchedAt": "2026-10-29T09:42:48.603Z"
+        "remedyTr": "Feed sweet food items to birds for professional success.",
+        "fetchedAt": "2026-10-29T09:55:56.147Z"
       }
     }
   },
@@ -430,7 +430,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Black",
         "luckyColorTr": "Siyah",
         "luckyNumber": "17",
-        "fetchedAt": "2026-10-29T09:42:40.403Z"
+        "fetchedAt": "2026-10-29T09:55:47.205Z"
       },
       "ganeshaspeaks": {
         "signId": "taurus",
@@ -442,7 +442,7 @@ export const STATIC_HOROSCOPES: Record<
         "predictionEn": "This is one of those days when not goes well, warns Ganesha. No matter how hard you try you may not be able to keep problems and difficulties at bay. You may not be pleased or comfortable doing what has been assigned, or required, and could simply sit sullenly, doing nothing. Do not, therefore, take up anything difficult or complex. Stick to simple and easy things. Knowing that this day will pass, you should try to remain positive and optimistic.",
         "predictionTr": "Ganesha, bunun iyi gitmediği günlerden biri olduğu konusunda uyarıyor. Ne kadar çabalarsanız çabalayın, sorunları ve zorlukları uzak tutamayabilirsiniz. Size verilen veya gerekli olanı yapmaktan memnun olmayabilir veya rahat olmayabilirsiniz ve hiçbir şey yapmadan somurtkan bir şekilde oturabilirsiniz. Bu nedenle zor veya karmaşık hiçbir şeyi üstlenmeyin. Basit ve kolay şeylere bağlı kalın. Bu günün geçeceğini bilerek pozitif ve iyimser kalmaya çalışmalısınız.",
         "luckyColorTr": "",
-        "fetchedAt": "2026-10-29T09:42:40.627Z"
+        "fetchedAt": "2026-10-29T09:55:47.442Z"
       },
       "astrosage": {
         "signId": "taurus",
@@ -456,7 +456,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColorTr": "",
         "remedy": "Keep good relations with your boyfriend/girlfriend by distributing chocolates to poor and need young girls.",
         "remedyTr": "Yoksul ve ihtiyaç sahibi genç kızlara çikolata dağıtarak erkek arkadaşınızla/kız arkadaşınızla iyi ilişkiler kurun.",
-        "fetchedAt": "2026-10-29T09:42:41.129Z"
+        "fetchedAt": "2026-10-29T09:55:48.411Z"
       }
     },
     "cancer": {
@@ -473,7 +473,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Silver",
         "luckyColorTr": "Gümüş",
         "luckyNumber": "5",
-        "fetchedAt": "2026-10-29T09:42:43.225Z"
+        "fetchedAt": "2026-10-29T09:55:51.077Z"
       },
       "ganeshaspeaks": {
         "signId": "cancer",
@@ -485,7 +485,7 @@ export const STATIC_HOROSCOPES: Record<
         "predictionEn": "You will focus on financial matters and plan accordingly. Compared to expenses, you will save more. A beneficial day for cashiers, money lenders and petty traders. Ganesha counsels hard work to achieve success.",
         "predictionTr": "Finansal konulara odaklanacak ve buna göre plan yapacaksınız. Giderlerle karşılaştırıldığında daha fazla tasarruf edeceksiniz. Kasiyerler, borç verenler ve küçük tüccarlar için faydalı bir gün. Ganesha başarıya ulaşmak için sıkı çalışmayı tavsiye ediyor.",
         "luckyColorTr": "",
-        "fetchedAt": "2026-10-29T09:42:43.435Z"
+        "fetchedAt": "2026-10-29T09:55:51.283Z"
       },
       "astrosage": {
         "signId": "cancer",
@@ -499,8 +499,8 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "White, cream, red and ye...",
         "luckyColorTr": "Beyaz, Krem, Kırmızı ve ye",
         "remedy": "Sunbathe daily for 15 - 20 minutes (early morning) to get rid of diseases and deficiencies",
-        "remedyTr": "Hastalıklardan ve eksikliklerden kurtulmak için her gün 15 – 20 dakika (sabahın erken saatlerinde) güneşlenin",
-        "fetchedAt": "2026-10-29T09:42:43.958Z"
+        "remedyTr": "Sunbathe daily for 15 - 20 minutes (early morning) to get rid of diseases and deficiencies",
+        "fetchedAt": "2026-10-29T09:55:51.736Z"
       }
     },
     "leo": {
@@ -517,7 +517,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Black",
         "luckyColorTr": "Siyah",
         "luckyNumber": "1",
-        "fetchedAt": "2026-10-29T09:42:46.061Z"
+        "fetchedAt": "2026-10-29T09:55:53.696Z"
       },
       "ganeshaspeaks": {
         "signId": "leo",
@@ -529,7 +529,7 @@ export const STATIC_HOROSCOPES: Record<
         "predictionEn": "You will be filled with extra-ordinary self-confidence and will be able to take on huge risks. Sportspersons will be able to make a lot of progress in their fields. You will square off against any obstacles in your way using your entire might. While it is a good day for you, keep a curb on your speculations, says Ganesha.",
         "predictionTr": "Olağanüstü bir özgüvenle dolu olacaksınız ve büyük riskler alabileceksiniz. Sporcular kendi alanlarında birçok ilerleme kaydedebilecekler. Tüm gücünüzü kullanarak yolunuzdaki her türlü engele karşı mücadele edeceksiniz. Ganesha, sizin için güzel bir gün olsa da spekülasyonlarınızı bir kenara bırakın, diyor.",
         "luckyColorTr": "",
-        "fetchedAt": "2026-10-29T09:42:46.281Z"
+        "fetchedAt": "2026-10-29T09:55:53.869Z"
       },
       "astrosage": {
         "signId": "leo",
@@ -543,7 +543,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColorTr": "",
         "remedy": "Save coins in an earthen piggy bank, and help children and pilgrims with this saved money, for enhanced health benefits.",
         "remedyTr": "Paraları topraktan bir kumbarada biriktirin ve sağlık açısından daha fazla fayda sağlamak için biriktirilen bu parayla çocuklara ve hacılara yardımcı olun.",
-        "fetchedAt": "2026-10-29T09:42:46.796Z"
+        "fetchedAt": "2026-10-29T09:55:54.524Z"
       }
     },
     "virgo": {
@@ -560,7 +560,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColor": "Blue",
         "luckyColorTr": "Mavi",
         "luckyNumber": "42",
-        "fetchedAt": "2026-10-29T09:42:48.987Z"
+        "fetchedAt": "2026-10-29T09:55:56.533Z"
       },
       "ganeshaspeaks": {
         "signId": "virgo",
@@ -572,7 +572,7 @@ export const STATIC_HOROSCOPES: Record<
         "predictionEn": "You will remain engrossed in personal matters at the cost of professionalism. Solve your problems today by taking them head-on. Ganesha warns you not to let your emotions suppress your enterprising spirit, especially in the evening.",
         "predictionTr": "Profesyonellik pahasına kişisel meselelere dalmaya devam edeceksiniz. Sorunlarınızı bugün doğrudan ele alarak çözün. Ganesha, özellikle akşamları duygularınızın girişimci ruhunuzu bastırmasına izin vermemeniz konusunda sizi uyarıyor.",
         "luckyColorTr": "",
-        "fetchedAt": "2026-10-29T09:42:49.159Z"
+        "fetchedAt": "2026-10-29T09:55:56.714Z"
       },
       "astrosage": {
         "signId": "virgo",
@@ -586,7 +586,7 @@ export const STATIC_HOROSCOPES: Record<
         "luckyColorTr": "",
         "remedy": "Offering Dhruva at Lord Ganesha temple will be good for financial life.",
         "remedyTr": "Dhruva'yı Lord Ganesha tapınağında sunmak finansal yaşam için iyi olacaktır.",
-        "fetchedAt": "2026-10-29T09:42:49.666Z"
+        "fetchedAt": "2026-10-29T09:55:57.330Z"
       }
     }
   }

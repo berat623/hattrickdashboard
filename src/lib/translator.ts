@@ -38,6 +38,35 @@ export const COLOR_MAP_TR: Record<string, string> = {
   ruby: "Yakut Kırmızısı",
   emerald: "Zümrüt Yeşili",
   sapphire: "Safir Mavisi",
+  crimson: "Koyu Kırmızı",
+  scarlet: "Al Kırmızı",
+  charcoal: "Kömür Grisi",
+  peach: "Şeftali Rengi",
+  rose: "Gül Kurusu",
+  khaki: "Haki",
+  lilac: "Leylak Moru",
+  aqua: "Su Yeşili",
+  burgundy: "Bordo",
+  platinum: "Platin",
+  rust: "Pas Rengi",
+  tan: "Taba",
+  ochre: "Aşı Boyası Sarısı",
+  lemon: "Limon Sarısı",
+  "lemon yellow": "Limon Sarısı",
+  "sky blue": "Gök Mavisi",
+  "ocean blue": "Okyanus Mavisi",
+  "royal blue": "Kraliyet Mavisi",
+  "deep blue": "Derin Mavi",
+  "pastel green": "Pastel Yeşil",
+  "mint green": "Nane Yeşili",
+  "dark red": "Koyu Kırmızı",
+  "bright red": "Parlak Kırmızı",
+  "bright yellow": "Parlak Sarı",
+  "light yellow": "Açık Sarı",
+  "light pink": "Açık Pembe",
+  "dark pink": "Koyu Pembe",
+  pearl: "İnci Beyazı",
+  "pearl white": "İnci Beyazı",
   "black and blue": "Siyah ve Mavi",
   "red and white": "Kırmızı ve Beyaz",
   "red and maroon": "Kırmızı ve Bordo",
@@ -53,21 +82,20 @@ export const COLOR_MAP_TR: Record<string, string> = {
   "olive green": "Zeytin Yeşili",
   "sea green": "Deniz Yeşili",
   "ruby red": "Yakut Kırmızısı",
-  "pearl white": "İnci Beyazı",
   "light bright yellow": "Açık Parlak Sarı",
   "transparent and pink": "Şeffaf ve Pembe",
 };
 
 function translateSingleColor(c: string): string {
   if (!c) return "";
-  const trimmed = c.trim().toLowerCase().replace(/\.+$/, "");
+  const trimmed = c.trim().toLowerCase().replace(/[.,;:]+$/, "");
   if (!trimmed) return "";
 
   if (COLOR_MAP_TR[trimmed]) return COLOR_MAP_TR[trimmed];
 
-  const isLight = trimmed.includes("light");
-  const isDark = trimmed.includes("dark");
-  const cleanBase = trimmed.replace(/\b(light|dark)\b/g, "").trim();
+  const isLight = trimmed.includes("light") || trimmed.includes("bright");
+  const isDark = trimmed.includes("dark") || trimmed.includes("deep");
+  const cleanBase = trimmed.replace(/\b(light|bright|dark|deep)\b/g, "").trim();
   if (COLOR_MAP_TR[cleanBase]) {
     const base = COLOR_MAP_TR[cleanBase];
     if (isLight) return `Açık ${base}`;
@@ -86,7 +114,7 @@ function translateSingleColor(c: string): string {
  */
 export function translateColorToTurkish(colorEn?: string): string {
   if (!colorEn) return "";
-  const cleaned = colorEn.trim().replace(/\.+$/, "").trim();
+  const cleaned = colorEn.trim().replace(/[.,;:]+$/, "").trim();
   if (!cleaned) return "";
 
   // If already native Turkish or matching a known Turkish name
@@ -168,38 +196,41 @@ export function formatPredictionSections(text: string): string {
 }
 
 /**
- * Checks if a string contains common English indicator words.
+ * Checks if a string contains English indicator words and lacks Turkish characteristics.
  */
 export function isEnglishText(text: string): boolean {
   if (!text) return false;
-  return /\b(the|and|you|with|will|for|are|this|that|your|have|from|today|careful|growth|stability|health)\b/i.test(
-    text
+  const trimmed = text.trim();
+  if (!trimmed) return false;
+
+  const engMatches = trimmed.match(
+    /\b(the|and|you|your|will|with|this|that|have|from|they|their|about|which|there|would|should|could|been|were|what|when|where|today|tomorrow|yesterday|favourable|conflict|balance|career|health|money|because|increase|financial|personal|professional|spoil|peace|harm|mind)\b/gi
   );
+  if (engMatches && engMatches.length >= 2) {
+    return true;
+  }
+
+  return false;
 }
 
 /**
- * Translates English text into Turkish with in-memory caching and fail-safe fallback.
+ * Translates a single text segment using Google GTX API (Tier 1).
+ * Safe in both Browser and Node.js (no forbidden User-Agent header in browser).
  */
-export async function translateToTurkish(textEn: string): Promise<string> {
-  const cleaned = cleanHtmlText(textEn);
-  if (!cleaned) return "";
-
-  if (translationCache.has(cleaned)) {
-    return translationCache.get(cleaned)!;
-  }
-
+async function translateViaGoogleGTX(text: string): Promise<string | null> {
   try {
     const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=tr&dt=t&q=${encodeURIComponent(
-      cleaned
+      text
     )}`;
-    const res = await fetch(url, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
-      },
-      cache: "no-store",
-    });
 
+    // DO NOT set User-Agent in browser environments as it throws TypeError
+    const headers: Record<string, string> = {};
+    if (typeof window === "undefined") {
+      headers["User-Agent"] =
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)";
+    }
+
+    const res = await fetch(url, { headers, cache: "no-store" });
     if (res.ok) {
       const data = await res.json();
       if (Array.isArray(data) && Array.isArray(data[0])) {
@@ -208,18 +239,100 @@ export async function translateToTurkish(textEn: string): Promise<string> {
           .filter(Boolean)
           .join("");
 
-        if (translated && translated.trim().length > 0) {
-          const result = translated.trim();
-          translationCache.set(cleaned, result);
-          return result;
+        if (translated && translated.trim().length > 3) {
+          return translated.trim();
         }
       }
     }
-  } catch (err) {
-    console.warn("Translation API warning:", err);
+  } catch {
+    // Failover to next tier
+  }
+  return null;
+}
+
+/**
+ * Translates a single text segment using MyMemory API (Tier 2).
+ */
+async function translateViaMyMemory(text: string): Promise<string | null> {
+  try {
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
+      text
+    )}&langpair=en|tr`;
+    const res = await fetch(url, { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      const translated = data?.responseData?.translatedText?.trim();
+      if (
+        translated &&
+        translated.length > 3 &&
+        !translated.includes("MYMEMORY WARNING")
+      ) {
+        return cleanHtmlText(translated);
+      }
+    }
+  } catch {
+    // Failover
+  }
+  return null;
+}
+
+/**
+ * Translates English text into Turkish with multi-tier engine,
+ * sentence/paragraph chunking, LRU caching, and fail-safe fallback.
+ */
+export async function translateToTurkish(textEn: string): Promise<string> {
+  const cleaned = cleanHtmlText(textEn);
+  if (!cleaned) return "";
+
+  // If already Turkish, return immediately
+  if (!isEnglishText(cleaned)) {
+    return cleaned;
   }
 
-  return cleaned;
+  if (translationCache.has(cleaned)) {
+    return translationCache.get(cleaned)!;
+  }
+
+  // Handle multi-paragraph texts by splitting
+  const paragraphs = cleaned
+    .split(/\n\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  const translatedParagraphs: string[] = [];
+
+  for (const para of paragraphs) {
+    if (!isEnglishText(para)) {
+      translatedParagraphs.push(para);
+      continue;
+    }
+
+    // Try Tier 1: Google GTX
+    let trans = await translateViaGoogleGTX(para);
+
+    // Try Tier 2: MyMemory
+    if (!trans || isEnglishText(trans)) {
+      trans = await translateViaMyMemory(para);
+    }
+
+    // If still English or failed, return original paragraph cleaned
+    if (!trans) {
+      trans = para;
+    }
+
+    // Clean common translation artifacts
+    trans = trans
+      .replace(/\s*Güneş Burcu Burcu\s*\([^)]*\)/gi, "")
+      .replace(/\s*Güneş Burcu\s*\([^)]*\)/gi, "")
+      .replace(/\bSun sign\b/gi, "Burç")
+      .trim();
+
+    translatedParagraphs.push(trans);
+  }
+
+  const finalResult = translatedParagraphs.join("\n\n").trim();
+  translationCache.set(cleaned, finalResult);
+  return finalResult;
 }
 
 /**
